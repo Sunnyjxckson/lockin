@@ -13,7 +13,9 @@ export function TabBar() {
   return (
     <nav
       aria-label="Main"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/85 pb-[var(--safe-b)] backdrop-blur-xl"
+      // Solid, not see-through: with 15% of the page showing, a dark button or an accent fill scrolling
+      // under the bar pulled the small inactive labels below the contrast floor under light palettes.
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg pb-[var(--safe-b)]"
     >
       <ul className="mx-auto flex h-[var(--tabbar-h)] max-w-[480px] items-stretch px-2">
         {TABS.map((tab) => {

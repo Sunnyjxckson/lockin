@@ -58,7 +58,8 @@ export function DayStrip({ days, today, selected, statusByDate, onSelect, label 
               future && "opacity-35",
             )}
           >
-            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg/70" : "text-ink-3")}>
+            {/* Full strength on the selected chip: faded, this 10px label fell under 7 to 1 on the high contrast base with a palette. */}
+            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg" : "text-ink-3")}>
               {WEEKDAY_SHORT[weekdayOf(date)].slice(0, 2)}
             </span>
             <span className="tnum text-[17px] leading-none font-semibold">{text}</span>

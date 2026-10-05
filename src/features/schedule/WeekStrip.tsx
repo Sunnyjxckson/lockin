@@ -45,7 +45,7 @@ export function WeekStrip({ dates, selected, today, edited, onSelect }: WeekStri
               date < today && !on && "opacity-50",
             )}
           >
-            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg/60" : "text-ink-3")}>
+            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg" : "text-ink-3")}>
               {WEEKDAY_SHORT[weekdayOf(date)].slice(0, 2)}
             </span>
             <span className="tnum text-[17px] leading-none font-semibold">{Number(date.slice(8))}</span>

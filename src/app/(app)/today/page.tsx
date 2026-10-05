@@ -27,7 +27,9 @@ import { allStreaks, fullDayStreak } from "@/lib/logic/streaks";
 import { WEEKDAY_NAMES, type Challenge, type ChecklistItem, type DateStr } from "@/lib/types";
 import { SetupRow } from "@/components/app/SetupRow";
 import BodyTodaySlot from "@/features/body/TodaySlot";
+import { BoardEntry } from "@/features/boards/TodayEntry";
 import CoachTodaySlot from "@/features/coach/TodaySlot";
+import { FocusAction } from "@/features/focus/TodaySlot";
 import { EarnedAction } from "@/features/money/TodaySlot";
 import ScheduleTodaySlot from "@/features/schedule/TodaySlot";
 import VicesTodaySlot from "@/features/vices/TodaySlot";
@@ -238,6 +240,8 @@ export default function TodayPage() {
   // of the day's total. Calories and protein take a typed number until a meal
   // is logged that day. After that the totals come from the meals.
   const actionFor = (r: ItemResult) => {
+    // The focus timer feeds the study item: a way in while idle, the clock while it runs.
+    if (r.item.key === "study" && r.item.type === "yesno") return isToday ? <FocusAction runningOnly={!editable} /> : undefined;
     if (r.item.key === "earned") return <EarnedAction date={date} value={r.log?.value ?? null} done={r.done} disabled={!editable} />;
     if ((r.item.key === "calories" || r.item.key === "protein") && meals.data.length > 0) {
       return (
@@ -449,6 +453,9 @@ export default function TodayPage() {
           </div>
         )}
       </Section>
+
+      {/* The why, under everything that gets checked off, so it never sits between the user and the list. */}
+      {isToday ? <BoardEntry className="mt-8" /> : null}
 
       {moment === date && summary ? (
         <DayComplete title={dayTitle} total={summary.total} streak={fullDayStreak(statusByDate, today, start)} isToday={isToday} onDone={endMoment} />

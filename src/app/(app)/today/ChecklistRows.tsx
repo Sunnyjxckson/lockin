@@ -22,7 +22,10 @@ export interface RowProps {
   onCheck: (checked: boolean) => void;
   onValue: (value: number | null) => void;
   onText: (text: string) => void;
-  /** Number rows: shown in place of the number field (quick add for earnings, a link for meal totals). */
+  /**
+   * Number rows: shown in place of the number field (quick add for earnings, a link for meal totals).
+   * Yes/no rows: shown at the right of the row, beside the tick area (the focus timer on Study).
+   */
   action?: ReactNode;
   /** Called when a tick is refused because the text is empty. */
   onNeedText?: () => void;
@@ -43,12 +46,12 @@ function Sub({ children, warn }: { children: React.ReactNode; warn?: boolean }) 
   return <span className={cn("mt-0.5 block truncate text-[13px]", warn ? "text-warn" : "text-ink-3")}>{children}</span>;
 }
 
-/** A yes/no item. The whole row is the tap target. */
-export function CheckRow({ item, target, state, streak, sub, disabled, onCheck }: RowProps) {
+/** A yes/no item. The whole row is the tap target, apart from an action at its right when it has one. */
+export function CheckRow({ item, target, state, streak, sub, disabled, onCheck, action }: RowProps) {
   const checked = state !== "open";
   const late = state === "off" && target.kind === "check_by";
   const line = late ? "Checked after the cutoff. Does not count." : (sub ?? item.hint ?? describeTarget(target, item.unit));
-  return (
+  const tick = (
     <button
       type="button"
       role="checkbox"
@@ -59,7 +62,10 @@ export function CheckRow({ item, target, state, streak, sub, disabled, onCheck }
         else haptics.done();
         onCheck(!checked);
       }}
-      className="flex min-h-[64px] w-full items-center gap-3.5 px-4 py-2.5 text-left transition-colors active:bg-surface-2 disabled:active:bg-transparent"
+      className={cn(
+        "flex min-h-[64px] items-center gap-3.5 py-2.5 pl-4 text-left transition-colors active:bg-surface-2 disabled:active:bg-transparent",
+        action ? "min-w-0 flex-1 pr-2" : "w-full pr-4",
+      )}
     >
       <CheckMark checked={checked} off={state === "off"} />
       <span className="min-w-0 flex-1">
@@ -70,6 +76,13 @@ export function CheckRow({ item, target, state, streak, sub, disabled, onCheck }
       </span>
       <StreakChip n={streak} />
     </button>
+  );
+  if (!action) return tick;
+  return (
+    <div className="flex items-center">
+      {tick}
+      <div className="shrink-0 pr-4 empty:hidden">{action}</div>
+    </div>
   );
 }
 

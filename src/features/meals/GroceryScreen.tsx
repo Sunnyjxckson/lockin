@@ -198,7 +198,7 @@ export default function GroceryScreen() {
             <p className="t-label mt-0.5">Estimate</p>
           </div>
           <div>
-            <p className={cn("t-num-sm tnum", ba.over && "text-warn")}>{ba.spent > 0 ? dollars(ba.spent) : "$0"}</p>
+            <p className={cn("t-num-sm tnum", ba.over && "text-warn")}>{dollars(ba.spent)}</p>
             <p className="t-label mt-0.5">Spent</p>
           </div>
         </div>

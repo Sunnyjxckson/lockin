@@ -1,13 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeftRight, Check, ChefHat } from "lucide-react";
+import { ArrowLeftRight, Check, ChefHat, Minus, Plus } from "lucide-react";
 import { Button, SegmentedControl, Sheet, cn, useToast } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { formatDateLong } from "@/lib/logic/dates";
 import { amountLabel, dollars, round, servingsLabel, SLOT_LABEL } from "@/lib/logic/meals";
 import { displayName } from "@/lib/logic/mealsGrocery";
-import { applySwap, swapOptions, type SwapOption, type SwapScope } from "@/lib/logic/mealsPlanner";
+import { applySwap, summarizePlan, swapOptions, type SwapOption, type SwapScope } from "@/lib/logic/mealsPlanner";
 import type { DateStr, MealSlot, Recipe } from "@/lib/types";
 import { logCooked, savePlan, type Planned } from "./data";
 import { Est, fmt, macroLine } from "./parts";
@@ -18,7 +18,12 @@ function signedMoney(n: number): string {
   return `${n > 0 ? "+" : "-"}${dollars(Math.abs(n))}`;
 }
 
-/** One planned meal: the recipe scaled to the planned portion, "Cooked, log it", and swap. */
+/** Portions move in quarters, from a quarter serving to four. */
+const PORTION_STEP = 0.25;
+const PORTION_MIN = 0.25;
+const PORTION_MAX = 4;
+
+/** One planned meal: the recipe scaled to the planned portion, the portion itself, "Cooked, log it", and swap. */
 export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; date: DateStr; slot: MealSlot; onClose: () => void }) {
   const toast = useToast();
   const [view, setView] = useState<"cook" | "swap">("cook");
@@ -26,12 +31,22 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
   const [scope, setScope] = useState<SwapScope>("day");
   const [picked, setPicked] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  // The portion being tried. Null until it is changed, then it is saved or put back.
+  const [draft, setDraft] = useState<number | null>(null);
 
   const meal = m.meals.find((x) => x.date === date && x.slot === slot) ?? null;
   const recipe: Recipe | null = meal ? (m.recipeById.get(meal.recipe_id) ?? null) : null;
   const repeats = meal ? m.meals.filter((x) => x.slot === slot && x.recipe_id === meal.recipe_id) : [];
   const weekServings = repeats.reduce((a, x) => a + x.servings, 0);
-  const day = m.summary?.days.find((d) => d.date === date) ?? null;
+  const portion = draft ?? meal?.servings ?? 1;
+  const changed = !!meal && draft !== null && Math.abs(draft - meal.servings) > 0.001;
+  // The week as it would be with this portion: the day's numbers and the week's cost follow every tap.
+  const preview = useMemo(
+    () => (changed && meal ? summarizePlan(m.meals.map((x) => (x.date === date && x.slot === slot ? { ...x, servings: portion } : x)), m.ctx, m.dates) : m.summary),
+    [changed, meal, portion, m.meals, m.ctx, m.dates, m.summary, date, slot],
+  );
+  const savedDay = m.summary?.days.find((d) => d.date === date) ?? null;
+  const day = preview?.days.find((d) => d.date === date) ?? savedDay;
 
   const options: SwapOption[] = useMemo(
     () => (view === "swap" ? swapOptions(m.meals, date, slot, scope, m.ctx) : []),
@@ -51,7 +66,29 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
 
   const logged = !!meal.logged;
   const canLog = date <= m.today && !logged;
-  const scale = (amount === "batch" ? weekServings : meal.servings) / (recipe.servings > 0 ? recipe.servings : 1);
+  const scale = (amount === "batch" ? weekServings - meal.servings + portion : portion) / (recipe.servings > 0 ? recipe.servings : 1);
+  const step = (by: number) => {
+    haptics.tap();
+    const next = Math.min(PORTION_MAX, Math.max(PORTION_MIN, Math.round((portion + by) / PORTION_STEP) * PORTION_STEP));
+    setDraft(Math.abs(next - meal.servings) < 0.001 ? null : next);
+  };
+
+  const savePortion = async () => {
+    if (!changed || busy) return;
+    setBusy(true);
+    try {
+      const next = m.meals.map((x) => (x.date === date && x.slot === slot ? { ...x, servings: portion } : x));
+      await savePlan(m.weekStart, next, m.plan!.budget, m.store, { recipes: m.recipes, book: m.book });
+      haptics.done();
+      toast(`Portion set to ${servingsLabel(portion)}`, { kind: "done" });
+      setDraft(null);
+    } catch (e) {
+      haptics.error();
+      toast(e instanceof Error ? e.message : "Could not save the portion", { kind: "error" });
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const log = async () => {
     if (busy) return;
@@ -181,23 +218,34 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
       title={recipe.name}
       subtitle={`${SLOT_LABEL[slot]}, ${formatDateLong(date)}`}
       footer={
-        <div className="flex gap-2.5">
-          <Button variant="secondary" onClick={() => setView("swap")} disabled={busy || logged} icon={<ArrowLeftRight size={18} aria-hidden />}>
-            Swap
-          </Button>
-          <Button full onClick={log} disabled={!canLog} loading={busy} icon={logged ? <Check size={18} aria-hidden /> : <ChefHat size={18} aria-hidden />}>
-            {logged ? "Logged" : date > m.today ? "Log it on the day" : "Cooked, log it"}
-          </Button>
-        </div>
+        changed ? (
+          <div className="flex gap-2.5">
+            <Button variant="secondary" onClick={() => setDraft(null)} disabled={busy}>
+              Put back
+            </Button>
+            <Button full onClick={savePortion} loading={busy} icon={<Check size={18} aria-hidden />}>
+              Save portion
+            </Button>
+          </div>
+        ) : (
+          <div className="flex gap-2.5">
+            <Button variant="secondary" onClick={() => setView("swap")} disabled={busy || logged} icon={<ArrowLeftRight size={18} aria-hidden />}>
+              Swap
+            </Button>
+            <Button full onClick={log} disabled={!canLog} loading={busy} icon={logged ? <Check size={18} aria-hidden /> : <ChefHat size={18} aria-hidden />}>
+              {logged ? "Logged" : date > m.today ? "Log it on the day" : "Cooked, log it"}
+            </Button>
+          </div>
+        )
       }
     >
       <div className="grid grid-cols-4 gap-2 rounded-[14px] bg-surface-2 px-3 py-3 text-center">
         {(
           [
-            ["kcal", fmt(recipe.calories * meal.servings)],
-            ["protein", `${fmt(recipe.protein * meal.servings)}g`],
-            ["carbs", `${fmt(recipe.carbs * meal.servings)}g`],
-            ["fat", `${fmt(recipe.fat * meal.servings)}g`],
+            ["kcal", fmt(recipe.calories * portion)],
+            ["protein", `${fmt(recipe.protein * portion)}g`],
+            ["carbs", `${fmt(recipe.carbs * portion)}g`],
+            ["fat", `${fmt(recipe.fat * portion)}g`],
           ] as const
         ).map(([k, v]) => (
           <div key={k}>
@@ -206,10 +254,61 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
           </div>
         ))}
       </div>
-      <p className="mt-2.5 text-[14px] text-ink-2">
-        Your portion: <span className="font-semibold text-ink">{servingsLabel(meal.servings)}</span>, <Est>{dollars(round(recipe.est_cost * meal.servings, 2))}</Est>
-        {day ? <span className="text-ink-3">. Day total {macroLine(day.calories, day.protein)}.</span> : null}
-      </p>
+      <div className="mt-3 flex items-center gap-3" data-portion>
+        <div className="min-w-0 flex-1">
+          <p className="t-label">Your portion</p>
+          <p className="mt-0.5 text-[17px] font-semibold tracking-[-0.01em] text-ink" data-portion-value>
+            {servingsLabel(portion)}
+            <span className="font-normal text-ink-2">
+              , <Est>{dollars(round(recipe.est_cost * portion, 2))}</Est>
+            </span>
+          </p>
+        </div>
+        {logged ? null : (
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              aria-label="Smaller portion"
+              disabled={busy || portion <= PORTION_MIN}
+              onClick={() => step(-PORTION_STEP)}
+              className="pressable flex size-11 items-center justify-center rounded-[12px] border border-line bg-surface-2 text-ink disabled:opacity-40"
+            >
+              <Minus size={18} aria-hidden />
+            </button>
+            <button
+              type="button"
+              aria-label="Larger portion"
+              disabled={busy || portion >= PORTION_MAX}
+              onClick={() => step(PORTION_STEP)}
+              className="pressable flex size-11 items-center justify-center rounded-[12px] border border-line bg-surface-2 text-ink disabled:opacity-40"
+            >
+              <Plus size={18} aria-hidden />
+            </button>
+          </div>
+        )}
+      </div>
+      {day && preview ? (
+        <div className="mt-3 rounded-[14px] bg-surface-2 px-4 py-3 text-[14px] leading-snug" role="status" data-portion-effect>
+          <p className="text-ink">
+            <span className="text-ink-3">Day: </span>
+            <span className={cn("tnum", !day.ok && "text-warn")} data-portion-day>
+              {macroLine(day.calories, day.protein)}
+            </span>
+            {day.ok ? null : <span className="text-warn"> (off target)</span>}
+          </p>
+          <p className="mt-0.5 text-ink">
+            <span className="text-ink-3">Week: </span>
+            <span data-portion-week>
+              <Est>{dollars(preview.cost)}</Est>
+            </span>
+            <span className={cn("tnum", preview.cost > preview.budget + 0.004 ? "text-warn" : "text-ink-2")}>
+              {" "}
+              of {dollars(preview.budget)}
+              {changed && m.summary ? ` (${signedMoney(preview.cost - m.summary.cost)})` : ""}
+            </span>
+          </p>
+        </div>
+      ) : null}
 
       {repeats.length > 1 ? (
         <div className="mt-4">
