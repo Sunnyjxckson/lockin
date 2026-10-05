@@ -4,16 +4,14 @@
 // 200 { source: "fallback", reason } when ANTHROPIC_API_KEY is unset or the
 // read fails. The client then opens the form empty with the photo attached.
 
-import Anthropic from "@anthropic-ai/sdk";
+import type Anthropic from "@anthropic-ai/sdk";
+import { aiFallback, anthropicClient, anthropicModel, readImageDataUrl } from "@/lib/ai/server";
 import { requireAuth } from "@/lib/auth/server";
+import { cleanLine } from "@/lib/logic/text";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-const MODEL = "claude-sonnet-4-5";
-const MAX_IMAGE_CHARS = 7_000_000;
-const MEDIA_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"] as const;
-type MediaType = (typeof MEDIA_TYPES)[number];
 
 const SYSTEM = [
   "You estimate the nutrition of a meal from one photo for a personal food log.",
@@ -41,20 +39,6 @@ const TOOL: Anthropic.Tool = {
   },
 };
 
-function fallback(reason: string) {
-  return Response.json({ source: "fallback", reason });
-}
-
-/** Em and en dashes never reach the screen. */
-function clean(text: unknown, max: number): string {
-  if (typeof text !== "string") return "";
-  return text
-    .replace(/\s*[\u2012-\u2015]\s*/g, ", ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, max);
-}
-
 function amount(n: unknown, max: number): number {
   const v = typeof n === "number" ? n : Number(n);
   if (!Number.isFinite(v) || v < 0) return 0;
@@ -65,21 +49,16 @@ export async function POST(request: Request) {
   const denied = await requireAuth();
   if (denied) return denied;
 
-  const body = (await request.json().catch(() => null)) as { image?: unknown } | null;
-  const image = typeof body?.image === "string" ? body.image : "";
-  const match = /^data:(image\/[a-z+.-]+);base64,(.+)$/i.exec(image);
-  if (!match) return Response.json({ error: "Send the photo as a data URL in `image`." }, { status: 400 });
-  if (image.length > MAX_IMAGE_CHARS) return Response.json({ error: "Photo is too large." }, { status: 413 });
-  const mediaType = match[1].toLowerCase() as MediaType;
-  if (!MEDIA_TYPES.includes(mediaType)) return fallback("That image type cannot be read.");
+  const client = anthropicClient();
+  if (!client) return aiFallback("no_key");
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return fallback("ANTHROPIC_API_KEY is not set.");
+  const body = (await request.json().catch(() => null)) as { image?: unknown } | null;
+  const img = readImageDataUrl(body?.image);
+  if ("error" in img) return img.error;
 
   try {
-    const client = new Anthropic({ apiKey });
     const message = await client.messages.create({
-      model: MODEL,
+      model: anthropicModel(),
       max_tokens: 400,
       system: SYSTEM,
       tools: [TOOL],
@@ -88,28 +67,28 @@ export async function POST(request: Request) {
         {
           role: "user",
           content: [
-            { type: "image", source: { type: "base64", media_type: mediaType, data: match[2] } },
+            { type: "image", source: { type: "base64", media_type: img.mediaType, data: img.data } },
             { type: "text", text: "Estimate this meal." },
           ],
         },
       ],
     });
     const call = message.content.find((b) => b.type === "tool_use");
-    if (!call || call.type !== "tool_use") return fallback("The photo could not be read.");
+    if (!call || call.type !== "tool_use") return aiFallback("no_read");
     const input = call.input as Record<string, unknown>;
     return Response.json({
       source: "ai",
       estimate: {
-        name: clean(input.name, 80),
+        name: cleanLine(input.name, 80),
         calories: amount(input.calories, 5000),
         protein: amount(input.protein, 500),
         carbs: amount(input.carbs, 800),
         fat: amount(input.fat, 400),
-        note: clean(input.note, 160),
+        note: cleanLine(input.note, 160),
       },
     });
   } catch (e) {
-    console.error("meal-estimate failed", e);
-    return fallback("The photo could not be read.");
+    console.error("meal-estimate failed", e instanceof Error ? e.message : e);
+    return aiFallback("error");
   }
 }

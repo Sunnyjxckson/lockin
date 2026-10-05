@@ -1,6 +1,8 @@
 // Money rules. Pure: no React, no db.
 //
-// The running total counts every earning from the challenge start date on.
+// The running total counts every earning from the start of the current target
+// on: the challenge start, or the day the target was last reset. The all time
+// total counts everything since the challenge start.
 // The daily floor is a fixed number: being ahead never lowers it.
 
 import type { DateStr } from "../types";
@@ -40,6 +42,12 @@ export function totalsByDate(earnings: readonly EarningLike[]): Map<DateStr, num
 /** Everything earned toward the target: entries dated on or after `from`, up to `to` when given. */
 export function runningTotal(earnings: readonly EarningLike[], from?: DateStr | null, to?: DateStr | null): number {
   return sumAmounts(earnings.filter((e) => (!from || e.date >= from) && (!to || e.date <= to)));
+}
+
+/** The first date that counts toward the current money target. */
+export function targetStart(challenge: { start_date: DateStr; money_target_start?: DateStr | null }): DateStr {
+  const s = challenge.money_target_start;
+  return s && s > challenge.start_date ? s : challenge.start_date;
 }
 
 /** Whole days from today until the deadline. 0 on the deadline day and after it. */
@@ -150,7 +158,11 @@ export function canResetTarget(state: TargetState): boolean {
   return state !== "active";
 }
 
-/** A new target is valid when it is above what is already earned and due today or later. */
+/**
+ * A new target is valid when it is above what already counts toward it and due
+ * today or later. A reset starts a fresh total today, so `total` is what was
+ * earned today.
+ */
 export function validNewTarget(target: number | null, deadline: string, total: number, today: DateStr): boolean {
   return target !== null && Number.isFinite(target) && target > total && /^\d{4}-\d{2}-\d{2}$/.test(deadline) && deadline >= today;
 }
@@ -191,11 +203,6 @@ export function formatHours(h: number): string {
 }
 
 // ---------- reading a screenshot ----------
-
-/** Replace em and en dashes (and their relatives) with a plain hyphen. */
-export function stripDashes(text: string): string {
-  return text.replace(/[\u2012\u2013\u2014\u2015\u2212]/g, "-");
-}
 
 /** Map whatever the model or the user wrote to one of the three apps. Null when it is none of them. */
 export function normalizeApp(raw: unknown): DeliveryApp | null {

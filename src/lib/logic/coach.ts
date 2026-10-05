@@ -39,6 +39,7 @@ import {
 } from "./dates";
 import { summarizeDay, summarizeWeek, type DayStatus, type ItemResult } from "./day";
 import { itemStreak } from "./streaks";
+import { stripDashes } from "./text";
 import { describeTarget, isActiveOn } from "./targets";
 
 // ---------- input ----------
@@ -343,7 +344,9 @@ function sum(ns: number[]): number {
 function buildMoney(data: CoachData): MoneyLine {
   const { challenge: c, today, earnings } = data;
   const counted = earnings.filter((e) => e.date >= c.start_date && e.date <= today);
-  const total = sum(counted.map((e) => e.amount));
+  // Toward the current target: from the day it was last reset, if it was.
+  const since = c.money_target_start && c.money_target_start > c.start_date ? c.money_target_start : c.start_date;
+  const total = sum(counted.filter((e) => e.date >= since).map((e) => e.amount));
   const onDate = (d: DateStr) => sum(counted.filter((e) => e.date === d).map((e) => e.amount));
   const remaining = Math.max(0, Math.round((c.money_target - total) * 100) / 100);
   const daysLeft = today > c.money_deadline ? 0 : diffDays(today, c.money_deadline) + 1;
@@ -675,10 +678,7 @@ export function pickChange(flags: readonly Pick<Flag, "change">[], week: Pick<We
 
 /** No em or en dashes, ever. Ranges become "to", the rest become commas. */
 export function cleanCoachText(text: string): string {
-  return text
-    .replace(/(\d)\s*[\u2012\u2013\u2014\u2015\u2212]\s*(\d)/g, "$1 to $2")
-    .replace(/\s*[\u2012\u2013\u2014\u2015]\s*/g, ", ")
-    .replace(/\u2212/g, "-")
+  return stripDashes(text)
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201c\u201d]/g, '"')
     .replace(/^[ \t]*[-*\u2022][ \t]+/gm, "")

@@ -481,8 +481,3 @@ export function cardData(
 export function countLabel(n: number, unit: "day" | "week"): string {
   return `${n} ${unit}${n === 1 ? "" : "s"}`;
 }
-
-/** Take dashes out of text that came from a model before it is shown. */
-export function stripDashes(text: string): string {
-  return text.replace(/\s*[–—]\s*/g, ", ").replace(/‒|―/g, "-");
-}

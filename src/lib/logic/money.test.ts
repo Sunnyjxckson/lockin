@@ -10,8 +10,8 @@ import {
   normalizeApp,
   parseEarningRead,
   runningTotal,
-  stripDashes,
   surplusBanked,
+  targetStart,
   targetState,
   totalForDate,
   totalsByDate,
@@ -174,9 +174,6 @@ describe("display", () => {
     expect(formatMoney(42.5)).toBe("$42.50");
     expect(formatMoney(0)).toBe("$0");
   });
-  it("strips long dashes", () => {
-    expect(stripDashes("a \u2014 b \u2013 c")).toBe("a - b - c");
-  });
 });
 
 describe("screenshot read", () => {
@@ -199,5 +196,23 @@ describe("screenshot read", () => {
     expect(parseEarningRead({ amount: -5, app: "?", hours: 40 })).toEqual({ amount: null, app: null, hours: null });
     expect(parseEarningRead("nope")).toEqual({ amount: null, app: null, hours: null });
     expect(parseEarningRead(null)).toEqual({ amount: null, app: null, hours: null });
+  });
+});
+
+describe("target start", () => {
+  const rows = [
+    { date: "2026-10-05", amount: 400, hours: null },
+    { date: "2026-10-10", amount: 700, hours: null },
+    { date: "2026-10-16", amount: 120, hours: null },
+  ];
+  it("is the challenge start until the target is reset", () => {
+    expect(targetStart({ start_date: "2026-10-05", money_target_start: null })).toBe("2026-10-05");
+    expect(targetStart({ start_date: "2026-10-05" })).toBe("2026-10-05");
+    expect(targetStart({ start_date: "2026-10-05", money_target_start: "2026-10-01" })).toBe("2026-10-05");
+  });
+  it("a reset starts a fresh running total and leaves the all time total alone", () => {
+    const since = targetStart({ start_date: "2026-10-05", money_target_start: "2026-10-16" });
+    expect(runningTotal(rows, since)).toBe(120);
+    expect(runningTotal(rows, "2026-10-05")).toBe(1220);
   });
 });

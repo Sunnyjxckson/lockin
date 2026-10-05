@@ -12,7 +12,6 @@ import {
   pickPhotos,
   streakHealth,
   streakRows,
-  stripDashes,
   topStreaks,
   weeklyRollups,
   type ProgressInput,
@@ -299,11 +298,5 @@ describe("text helpers", () => {
     expect(countLabel(1, "day")).toBe("1 day");
     expect(countLabel(0, "day")).toBe("0 days");
     expect(countLabel(2, "week")).toBe("2 weeks");
-  });
-
-  it("strips long dashes from model text", () => {
-    const out = stripDashes("Protein held — money slipped. Oct 5–9.");
-    expect(out).toBe("Protein held, money slipped. Oct 5, 9.");
-    expect(/[‒-―]/.test(out)).toBe(false);
   });
 });

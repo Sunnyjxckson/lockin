@@ -18,7 +18,7 @@ import {
   type WeekRollup,
 } from "@/lib/logic/progress";
 import { DaySheet } from "./DaySheet";
-import { WeeklyReview } from "./WeeklyReview";
+import { WeeklyReview } from "@/features/coach/WeeklyReview";
 
 const WEEKDAYS = ["M", "T", "W", "T", "F", "S", "S"];
 
@@ -388,7 +388,9 @@ export function ProgressScreen() {
         </>
       ) : null}
 
-      <WeeklyReview />
+      <Section title="Weekly review">
+        <WeeklyReview />
+      </Section>
 
       <DaySheet cell={openCell} onClose={() => setOpenDate(null)} />
     </Screen>

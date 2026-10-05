@@ -3,17 +3,14 @@
 // form. With no ANTHROPIC_API_KEY, or when the read fails, it answers
 // { source: "fallback" } and the form opens empty.
 
-import Anthropic from "@anthropic-ai/sdk";
+import type Anthropic from "@anthropic-ai/sdk";
+import { aiFallback, anthropicClient, anthropicModel, readImageDataUrl } from "@/lib/ai/server";
 import { requireAuth } from "@/lib/auth/server";
 import { parseEarningRead } from "@/lib/logic/money";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
-const MODEL = "claude-sonnet-5-5";
-const MAX_BASE64 = 7_000_000;
-const MEDIA = ["image/jpeg", "image/png", "image/webp", "image/gif"] as const;
-type Media = (typeof MEDIA)[number];
 
 const PROMPT = [
   "This is a screenshot from a delivery driver app showing earnings.",
@@ -38,30 +35,20 @@ const TOOL: Anthropic.Tool = {
   },
 };
 
-function fallback(reason: string) {
-  return Response.json({ source: "fallback", reason });
-}
-
 export async function POST(request: Request) {
   const denied = await requireAuth();
   if (denied) return denied;
 
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return fallback("no_key");
+  const client = anthropicClient();
+  if (!client) return aiFallback("no_key");
 
   const body = (await request.json().catch(() => null)) as { image?: unknown } | null;
-  const image = typeof body?.image === "string" ? body.image : "";
-  const match = /^data:([a-z/+.-]+);base64,(.+)$/i.exec(image);
-  if (!match) return Response.json({ error: "Send the screenshot as a data URL in image." }, { status: 400 });
-  const media = match[1].toLowerCase() as Media;
-  const data = match[2];
-  if (!MEDIA.includes(media)) return Response.json({ error: "That image type cannot be read." }, { status: 400 });
-  if (data.length > MAX_BASE64) return Response.json({ error: "Screenshot is too large." }, { status: 413 });
+  const img = readImageDataUrl(body?.image);
+  if ("error" in img) return img.error;
 
   try {
-    const client = new Anthropic({ apiKey: key });
     const message = await client.messages.create({
-      model: MODEL,
+      model: anthropicModel(),
       max_tokens: 300,
       tools: [TOOL],
       tool_choice: { type: "tool", name: TOOL.name },
@@ -69,19 +56,19 @@ export async function POST(request: Request) {
         {
           role: "user",
           content: [
-            { type: "image", source: { type: "base64", media_type: media, data } },
+            { type: "image", source: { type: "base64", media_type: img.mediaType, data: img.data } },
             { type: "text", text: PROMPT },
           ],
         },
       ],
     });
     const use = message.content.find((b) => b.type === "tool_use");
-    if (!use || use.type !== "tool_use") return fallback("no_read");
+    if (!use || use.type !== "tool_use") return aiFallback("no_read");
     const read = parseEarningRead(use.input);
-    if (read.amount === null && read.app === null && read.hours === null) return fallback("no_read");
+    if (read.amount === null && read.app === null && read.hours === null) return aiFallback("no_read");
     return Response.json({ source: "ai", ...read });
   } catch (err) {
     console.error("money/read failed", err instanceof Error ? err.message : err);
-    return fallback("error");
+    return aiFallback("error");
   }
 }

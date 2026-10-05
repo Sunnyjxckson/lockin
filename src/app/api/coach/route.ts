@@ -13,7 +13,8 @@
 // - Without a key, or when the call fails, the rule-based text is returned
 //   with source "fallback". Never an error for a valid snapshot.
 
-import Anthropic from "@anthropic-ai/sdk";
+import type Anthropic from "@anthropic-ai/sdk";
+import { aiFallback, anthropicClient, anthropicModel, type FallbackReason } from "@/lib/ai/server";
 import { requireAuth } from "@/lib/auth/server";
 import { cleanCoachText, unknownNumbers, wordCount, type CoachSnapshot } from "@/lib/logic/coach";
 import { coachPrompt, correctionPrompt, fallbackFor, isSnapshot, type CoachKind } from "@/lib/logic/coachWrite";
@@ -21,7 +22,6 @@ import { coachPrompt, correctionPrompt, fallbackFor, isSnapshot, type CoachKind 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-const MODEL = "claude-sonnet-5-5";
 const MAX_BODY = 200_000;
 /** Hard ceilings, well above what the prompt asks for. Past these the reply is not a brief. */
 const MAX_WORDS: Record<CoachKind, number> = { morning: 130, weekly: 220 };
@@ -34,14 +34,13 @@ function textOf(message: Anthropic.Message): string {
     .trim();
 }
 
-async function writeWithModel(key: string, kind: CoachKind, snapshot: CoachSnapshot): Promise<{ body: string } | { reason: string }> {
-  const client = new Anthropic({ apiKey: key, maxRetries: 1, timeout: 40_000 });
+async function writeWithModel(client: Anthropic, kind: CoachKind, snapshot: CoachSnapshot): Promise<{ body: string } | { reason: FallbackReason }> {
   const prompt = coachPrompt(kind, snapshot);
   const messages: Anthropic.MessageParam[] = [{ role: "user", content: prompt.user }];
 
   for (let attempt = 0; attempt < 2; attempt++) {
     const message = await client.messages.create({
-      model: MODEL,
+      model: anthropicModel(),
       max_tokens: prompt.maxTokens,
       system: prompt.system,
       messages,
@@ -84,15 +83,16 @@ export async function POST(request: Request) {
     return Response.json({ error: "That snapshot is missing fields." }, { status: 400 });
   }
 
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return Response.json({ body: fallback, source: "fallback", reason: "no_key" });
+  // The rule-based text rides along on every fallback, so the screen always has a note.
+  const client = anthropicClient();
+  if (!client) return aiFallback("no_key", { body: fallback });
 
   try {
-    const result = await writeWithModel(key, kind, snapshot);
-    if ("body" in result) return Response.json({ body: result.body, source: "ai", model: MODEL });
-    return Response.json({ body: fallback, source: "fallback", reason: result.reason });
+    const result = await writeWithModel(client, kind, snapshot);
+    if ("body" in result) return Response.json({ body: result.body, source: "ai", model: anthropicModel() });
+    return aiFallback(result.reason, { body: fallback });
   } catch (err) {
     console.error("coach failed", err instanceof Error ? err.message : err);
-    return Response.json({ body: fallback, source: "fallback", reason: "error" });
+    return aiFallback("error", { body: fallback });
   }
 }
