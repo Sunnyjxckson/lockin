@@ -24,6 +24,8 @@ export function makeItem(p: Partial<ChecklistItem> = {}): ChecklistItem {
     weekly_day: null,
     with_photo: false,
     tracks_money: false,
+    typical_spend: null,
+    spend_period: null,
     ...p,
   };
 }
@@ -39,6 +41,7 @@ export function makeLog(itemId: string, date: string, p: Partial<DayLog> = {}): 
     checked: false,
     text: null,
     completed_at: null,
+    slips: 0,
     ...p,
   };
 }

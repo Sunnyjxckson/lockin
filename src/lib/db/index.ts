@@ -16,7 +16,7 @@ import { RemoteBackend } from "./remote";
 import type { Backend, Query } from "./types";
 
 export type { Backend, Query } from "./types";
-export { DbError } from "./types";
+export { DbError, isUniqueViolation } from "./types";
 
 // ---------- subscribe / notify ----------
 

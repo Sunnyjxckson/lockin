@@ -5,7 +5,7 @@
 
 import { useMemo } from "react";
 import { db } from "@/lib/db";
-import { addItem, saveItem, setChecked, setItemActive, setValue } from "@/lib/db/helpers";
+import { addItem, saveItem, setChecked, setItemActive, setValue, syncSlipCount } from "@/lib/db/helpers";
 import { useChallenge, useChecklist, useList, useLogs, useToday } from "@/lib/db/hooks";
 import { challengeEndDate } from "@/lib/logic/dates";
 import type { Streak } from "@/lib/logic/streaks";
@@ -14,9 +14,8 @@ import {
   cleanDayCount,
   describeRule,
   dollarsKept,
-  formatSpend,
-  parseSpend,
   sortSlips,
+  spendOf,
   viceDayState,
   viceStreak,
   type DollarsKept,
@@ -72,7 +71,7 @@ export function useVices(): VicesData {
         const log = logs.data.find((l) => l.item_id === item.id && l.date === today) ?? null;
         const slipsToday = mine.filter((s) => s.date === today);
         const target = targetOn(item, versions, today);
-        const spend = parseSpend(item.hint);
+        const spend = spendOf(item);
         return {
           item,
           target,
@@ -111,22 +110,25 @@ export interface SlipInput {
 }
 
 /**
- * Save a slip. For a quit vice the day is also unticked in day_log, so Today
- * shows the same thing. Nothing else is touched: other vices, other streaks
- * and the challenge carry on.
+ * Save a slip, then store the day's slip count on its day_log row. That count
+ * is what makes the day not clean on Today, Progress, streaks and the coach.
+ * The tick and the number are left as they were, so removing a slip logged by
+ * mistake puts the day back exactly. Nothing else is touched: other vices,
+ * other streaks and the challenge carry on.
  */
 export async function saveSlip(input: SlipInput): Promise<ViceSlip> {
   const row = { item_id: input.item.id, date: input.date, time: input.time, trigger: input.trigger, amount: input.amount };
+  const before = input.id ? await db.get("vice_slip", input.id) : null;
   const saved = input.id ? await db.update("vice_slip", input.id, row) : await db.insert("vice_slip", row);
-  if (input.item.type !== "number") {
-    const log = await db.first("day_log", { eq: { date: input.date, item_id: input.item.id } });
-    if (log?.checked) await setChecked(input.item.id, input.date, false);
-  }
+  await syncSlipCount(saved.item_id, saved.date);
+  if (before && (before.date !== saved.date || before.item_id !== saved.item_id)) await syncSlipCount(before.item_id, before.date);
   return saved;
 }
 
-export function removeSlip(id: string): Promise<void> {
-  return db.remove("vice_slip", id);
+export async function removeSlip(id: string): Promise<void> {
+  const slip = await db.get("vice_slip", id);
+  await db.remove("vice_slip", id);
+  if (slip) await syncSlipCount(slip.item_id, slip.date);
 }
 
 /** Tick or untick a quit vice as clean for a date. Same row Today writes. */
@@ -148,11 +150,10 @@ export interface ViceInput {
   spend: TypicalSpend | null;
 }
 
-function fieldsFor(input: ViceInput, previousHint: string | null) {
+function fieldsFor(input: ViceInput) {
   const capped = input.mode === "cap" && input.cap !== null;
   const target: Target = capped ? { kind: "max", max: input.cap as number } : { kind: "check" };
-  // The typical spend lives in the hint. Keep a hint the user wrote himself.
-  const ownHint = parseSpend(previousHint) ? null : previousHint;
+  const spend = input.tracksMoney ? input.spend : null;
   return {
     name: input.name.trim(),
     type: capped ? ("number" as const) : ("yesno" as const),
@@ -160,18 +161,19 @@ function fieldsFor(input: ViceInput, previousHint: string | null) {
     unit: capped ? input.unit : null,
     target,
     tracks_money: input.tracksMoney,
-    hint: input.tracksMoney && input.spend ? formatSpend(input.spend) : ownHint,
+    typical_spend: spend ? spend.amount : null,
+    spend_period: spend ? spend.period : null,
   };
 }
 
 /** Add a vice of the user's own. On from today. */
 export function createVice(input: ViceInput, today: DateStr): Promise<ChecklistItem> {
-  return addItem({ ...fieldsFor(input, null), category: "vice", cadence: "daily" }, today);
+  return addItem({ ...fieldsFor(input), category: "vice", cadence: "daily" }, today);
 }
 
 /** Change a vice's rule, and turn it on. Applies from today forward. */
 export function updateVice(item: ChecklistItem, input: ViceInput, today: DateStr): Promise<ChecklistItem> {
-  return saveItem(item.id, { ...fieldsFor(input, item.hint), active: true }, today);
+  return saveItem(item.id, { ...fieldsFor(input), active: true }, today);
 }
 
 export function turnOn(item: ChecklistItem, today: DateStr): Promise<ChecklistItem> {

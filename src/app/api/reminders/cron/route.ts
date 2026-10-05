@@ -12,7 +12,7 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import { isSupabaseMode } from "@/lib/db";
 import { runCron } from "@/features/reminders/server/cron";
 import { makeSender, vapidConfig } from "@/features/reminders/server/push";
-import { supabaseCronStore } from "@/features/reminders/server/store";
+import { cronStore } from "@/features/reminders/server/store";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -49,7 +49,7 @@ async function handle(request: Request): Promise<Response> {
   if (!config) return Response.json({ error: `Web push is not set up. Missing: ${missing.join(", ")}.` }, { status: 503 });
 
   try {
-    const result = await runCron({ ...supabaseCronStore(), now: new Date(), send: makeSender(config) });
+    const result = await runCron({ ...cronStore(), now: new Date(), send: makeSender(config) });
     return Response.json({ ok: true, ...result });
   } catch (e) {
     return Response.json({ ok: false, error: e instanceof Error ? e.message : "The reminder job failed." }, { status: 500 });

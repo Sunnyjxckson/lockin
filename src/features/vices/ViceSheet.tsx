@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button, NumberField, SegmentedControl, Sheet, TextField, Toggle, useToast } from "@/components/ui";
 import { removeItem } from "@/lib/db/helpers";
-import { CAP_UNITS, parseSpend, type SpendPeriod } from "@/lib/logic/vices";
+import { CAP_UNITS, spendOf, type SpendPeriod } from "@/lib/logic/vices";
 import type { ChecklistItem, DateStr } from "@/lib/types";
 import { createVice, updateVice } from "./data";
 
@@ -19,7 +19,7 @@ export interface ViceSheetProps {
 export function ViceSheet({ item, today, onClose, onSaved }: ViceSheetProps) {
   const toast = useToast();
   const seeded = !!item?.key;
-  const oldSpend = parseSpend(item?.hint);
+  const oldSpend = item ? spendOf(item) : null;
 
   const [name, setName] = useState(item?.name ?? "");
   const [mode, setMode] = useState<"quit" | "cap">(item?.mode === "cap" ? "cap" : "quit");

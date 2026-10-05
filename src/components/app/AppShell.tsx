@@ -6,6 +6,7 @@ import { checkLocalPasscode, createLocalPasscode, hasLocalPasscode, isLocallyUnl
 import { subscribe } from "@/lib/db";
 import { getSettings } from "@/lib/db/helpers";
 import { setHapticsEnabled } from "@/lib/haptics";
+import { upgradeLocalData } from "@/lib/db/upgrade";
 import { ensureSeeded } from "@/lib/seed";
 import { LockScreen } from "./LockScreen";
 
@@ -66,6 +67,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         if (s) setHapticsEnabled(s.haptics);
       });
     ensureSeeded()
+      .then(upgradeLocalData)
       .then(applySettings)
       .then(
         () => live && setReady(true),

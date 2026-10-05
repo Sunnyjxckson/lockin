@@ -21,6 +21,7 @@ export const SEED_CHALLENGE: NewRow<"challenge"> = {
   money_target: 1000,
   money_deadline: "2026-10-14",
   daily_floor: 100,
+  money_target_start: null,
 } satisfies Omit<Challenge, "created_at">;
 
 export const SEED_SETTINGS: Omit<AppSettings, "created_at"> = {
@@ -48,6 +49,8 @@ function habit(p: Partial<ItemSeed> & Pick<ItemSeed, "key" | "name" | "type" | "
     weekly_day: null,
     with_photo: false,
     tracks_money: false,
+    typical_spend: null,
+    spend_period: null,
     ...p,
   };
 }
@@ -67,6 +70,8 @@ function vice(key: string, name: string, active: boolean, tracksMoney = false): 
     weekly_day: null,
     with_photo: false,
     tracks_money: tracksMoney,
+    typical_spend: null,
+    spend_period: null,
   };
 }
 

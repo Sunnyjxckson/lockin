@@ -1,10 +1,15 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { COLUMNS, UNIQUE_KEYS } from "./schema";
 import { TABLE_NAMES } from "../types";
 
-const sql = readFileSync(fileURLToPath(new URL("../../../supabase/migrations/0001_init.sql", import.meta.url)), "utf8");
+const dir = fileURLToPath(new URL("../../../supabase/migrations/", import.meta.url));
+const files = readdirSync(dir)
+  .filter((f) => f.endsWith(".sql"))
+  .sort();
+// Every migration, applied in order.
+const sql = files.map((f) => readFileSync(dir + f, "utf8")).join("\n");
 
 interface ParsedTable {
   columns: Record<string, string>;
@@ -31,11 +36,18 @@ function parse(): Record<string, ParsedTable> {
     }
     out[m[1]] = table;
   }
+  const add = /alter table (\w+) add column "?(\w+)"? (\w+)/g;
+  for (let m = add.exec(sql); m; m = add.exec(sql)) out[m[1]].columns[m[2]] = m[3];
   return out;
 }
 
-describe("0001_init.sql matches types.ts", () => {
+describe("the migrations match types.ts", () => {
   const parsed = parse();
+
+  it("are numbered 0001 upward with no gaps", () => {
+    expect(files.map((f) => f.slice(0, 4))).toEqual(files.map((_, i) => String(i + 1).padStart(4, "0")));
+    for (const f of files) expect(f).toMatch(/^\d{4}_[a-z0-9_]+\.sql$/);
+  });
 
   it("has exactly the tables in TABLE_NAMES", () => {
     expect(Object.keys(parsed).sort()).toEqual([...TABLE_NAMES].sort());

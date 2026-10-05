@@ -33,6 +33,15 @@ export interface Backend {
   removeWhere<K extends TableName>(table: K, eq: Partial<Row<K>>): Promise<number>;
 }
 
+/** Postgres code for a unique index violation. The local backend uses it too. */
+export const UNIQUE_VIOLATION = "23505";
+
+/** True when a write failed because a row with the same unique key is already there. */
+export function isUniqueViolation(e: unknown): boolean {
+  const cause = e instanceof DbError ? e.cause : e;
+  return !!cause && typeof cause === "object" && (cause as { code?: unknown }).code === UNIQUE_VIOLATION;
+}
+
 export class DbError extends Error {
   constructor(message: string, readonly cause?: unknown) {
     super(message);

@@ -55,11 +55,11 @@ export function buildCoachFixture(today: DateStr, items: readonly ChecklistItem[
 
   const check = (key: string, date: DateStr, time = "21:30", onDate: DateStr = date) => {
     const item = id(key);
-    if (item) fx.day_log.push({ date, item_id: item, value: null, checked: true, text: null, completed_at: at(onDate, time) });
+    if (item) fx.day_log.push({ date, item_id: item, value: null, checked: true, text: null, completed_at: at(onDate, time), slips: 0 });
   };
   const value = (key: string, date: DateStr, n: number) => {
     const item = id(key);
-    if (item) fx.day_log.push({ date, item_id: item, value: n, checked: true, text: null, completed_at: at(date, "21:00") });
+    if (item) fx.day_log.push({ date, item_id: item, value: n, checked: true, text: null, completed_at: at(date, "21:00"), slips: 0 });
   };
 
   // Nights the bedtime was missed, counted back from today. 1 is last night,
@@ -92,7 +92,7 @@ export function buildCoachFixture(today: DateStr, items: readonly ChecklistItem[
     if (n !== 7 && n !== 13) check("study", d, "22:45");
     if (n !== 11) {
       const item = id("business");
-      if (item) fx.day_log.push({ date: d, item_id: item, value: null, checked: true, text: businessMoves[n % businessMoves.length], completed_at: at(d, "20:10") });
+      if (item) fx.day_log.push({ date: d, item_id: item, value: null, checked: true, text: businessMoves[n % businessMoves.length], completed_at: at(d, "20:10"), slips: 0 });
     }
     // Bed for night d is ticked the next morning. Last night is still open.
     if (n > 1 && !lateNights.has(n)) check("bed", d, "05:50", addDays(d, 1));

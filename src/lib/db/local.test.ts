@@ -19,6 +19,7 @@ const log = (date: string, item_id: string, p: Partial<NewRow<"day_log">> = {}):
   checked: false,
   text: null,
   completed_at: null,
+  slips: 0,
   ...p,
 });
 

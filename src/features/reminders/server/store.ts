@@ -1,25 +1,17 @@
-// The Supabase side of the reminder job. Server only, Supabase mode only.
-//
-// Reminders, blocks, earnings and subscriptions are read through the shared
-// data layer. The send log (reminder_sent, reminder_run) belongs to this
-// feature alone and is not in the shared table map, so it is read and written
-// here with the server client.
+// The data side of the reminder job. Server only, Supabase mode only.
+// Everything goes through the shared data layer. The send log (reminder_sent)
+// and the last run time (reminder_run) are server only tables.
 
 import { getBlocksForDate } from "@/lib/blocks";
-import { db } from "@/lib/db";
+import { db, isUniqueViolation } from "@/lib/db";
 import { getChallenge, getSettings, getWorkouts, workoutsFor } from "@/lib/db/helpers";
-import { serverSupabase } from "@/lib/db/supabase";
-import { weekdayOf } from "@/lib/logic/dates";
+import { addDays, weekdayOf } from "@/lib/logic/dates";
 import type { ReminderDay } from "@/lib/logic/reminders";
 import type { DateStr } from "@/lib/types";
 import type { CronData, CronDeps } from "./cron";
 import type { PushTarget } from "./push";
 
 const RUN_ID = "cron";
-
-function check(error: { message: string } | null, what: string): void {
-  if (error) throw new Error(`${what} failed: ${error.message}`);
-}
 
 export async function loadCronData(dates: DateStr[]): Promise<CronData> {
   const [reminders, settings, challenge, workouts] = await Promise.all([
@@ -50,10 +42,8 @@ export async function loadCronData(dates: DateStr[]): Promise<CronData> {
 }
 
 export async function getLastRun(): Promise<Date | null> {
-  const { data, error } = await serverSupabase().from("reminder_run").select("last_run_at").eq("id", RUN_ID).maybeSingle();
-  check(error, "read reminder_run");
-  const at = (data as { last_run_at?: string } | null)?.last_run_at;
-  return at ? new Date(at) : null;
+  const row = await db.get("reminder_run", RUN_ID);
+  return row?.last_run_at ? new Date(row.last_run_at) : null;
 }
 
 export async function listSubscriptions(): Promise<PushTarget[]> {
@@ -61,28 +51,32 @@ export async function listSubscriptions(): Promise<PushTarget[]> {
   return rows.map((r) => ({ endpoint: r.endpoint, p256dh: r.p256dh, auth: r.auth }));
 }
 
-export function supabaseCronStore(): Omit<CronDeps, "now" | "send"> {
-  const sb = serverSupabase();
+export function cronStore(): Omit<CronDeps, "now" | "send"> {
   return {
     loadData: loadCronData,
     getLastRun,
     async setLastRun(at) {
-      const { error } = await sb.from("reminder_run").upsert({ id: RUN_ID, last_run_at: at.toISOString() }, { onConflict: "id" });
-      check(error, "write reminder_run");
+      await db.upsert("reminder_run", { id: RUN_ID, last_run_at: at.toISOString() }, ["id"]);
     },
     async sentKeys(dates) {
-      const { data, error } = await sb.from("reminder_sent").select("key").in("date", dates);
-      check(error, "read reminder_sent");
-      return ((data ?? []) as { key: string }[]).map((r) => r.key);
+      if (dates.length === 0) return [];
+      const sorted = [...dates].sort();
+      const rows = await db.list("reminder_sent", { from: sorted[0], to: sorted[sorted.length - 1] });
+      return rows.filter((r) => dates.includes(r.date)).map((r) => r.key);
     },
+    // The unique index on key is the lock: when two runs overlap, the second insert fails.
     async claim(date, key) {
-      const { data, error } = await sb.from("reminder_sent").upsert({ date, key }, { onConflict: "key", ignoreDuplicates: true }).select("key");
-      check(error, "write reminder_sent");
-      return (data ?? []).length > 0;
+      try {
+        await db.insert("reminder_sent", { date, key });
+        return true;
+      } catch (e) {
+        if (isUniqueViolation(e)) return false;
+        throw e;
+      }
     },
     async forget(before) {
-      const { error } = await sb.from("reminder_sent").delete().lt("date", before);
-      check(error, "trim reminder_sent");
+      const old = await db.list("reminder_sent", { to: addDays(before, -1) });
+      for (const r of old) await db.remove("reminder_sent", r.id);
     },
     listSubscriptions,
     async removeSubscription(endpoint) {

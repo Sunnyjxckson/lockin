@@ -3,10 +3,13 @@
 // A vice is a checklist item with category "vice". Quit mode is a yes/no
 // checked at the end of the day. Cap mode is a number logged through the day
 // against a "max" target. A slip logged on a day makes that day not clean for
-// that vice, whatever the day_log row says. Streaks come from the foundation's
-// itemStreak, fed logs that already have slip days taken out.
+// that vice, whatever the tick or the number says. The count of slips is kept
+// on the day_log row (day_log.slips, see syncSlipCount), so the foundation's
+// scoring and streaks see it too and every screen agrees.
 
-import type { ChecklistItem, DateStr, DayLog, Target, TargetVersion, TimeStr, ViceSlip, Weekday } from "../types";
+import type { ChecklistItem, DateStr, DayLog, SpendPeriod, Target, TargetVersion, TimeStr, ViceSlip, Weekday } from "../types";
+
+export type { SpendPeriod };
 import { addDays, challengeDates, dayNumber, minutesOf, weekdayOf } from "./dates";
 import { itemState } from "./day";
 import { itemStreak, type Streak } from "./streaks";
@@ -151,22 +154,29 @@ export function cleanDayCount(
 
 // ---------- dollars kept ----------
 
-export type SpendPeriod = "day" | "week";
-
 export interface TypicalSpend {
   amount: number;
   period: SpendPeriod;
 }
 
-/**
- * The typical spend is kept in the item's hint as a plain sentence, so it
- * needs no extra column and reads fine under the name on Today.
- */
-export function formatSpend(spend: TypicalSpend): string {
-  return `Usually $${trimNumber(spend.amount)} a ${spend.period}`;
+/** The typical spend stored on a vice, or null when none is set. */
+export function spendOf(item: Pick<ChecklistItem, "typical_spend" | "spend_period">): TypicalSpend | null {
+  const amount = Number(item.typical_spend);
+  if (item.typical_spend === null || item.typical_spend === undefined || !Number.isFinite(amount) || amount <= 0) return null;
+  return { amount, period: item.spend_period === "day" ? "day" : "week" };
 }
 
-export function parseSpend(hint: string | null | undefined): TypicalSpend | null {
+/** "$40 a week". */
+export function describeSpend(spend: TypicalSpend): string {
+  return `$${trimNumber(spend.amount)} a ${spend.period}`;
+}
+
+/**
+ * Before typical_spend and spend_period existed the spend was kept in the
+ * item's hint as "Usually $40 a week". This reads that sentence so old rows
+ * can be moved to the real fields. Nothing writes it any more.
+ */
+export function parseLegacySpendHint(hint: string | null | undefined): TypicalSpend | null {
   if (!hint) return null;
   const m = /^Usually \$([0-9]+(?:\.[0-9]+)?) a (day|week)$/.exec(hint.trim());
   if (!m) return null;

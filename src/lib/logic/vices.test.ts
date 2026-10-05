@@ -7,11 +7,12 @@ import {
   dollarsKept,
   formatAmount,
   formatDollars,
-  formatSpend,
+  describeSpend,
   isCleanDay,
   joinTriggers,
   logsWithSlips,
-  parseSpend,
+  parseLegacySpendHint,
+  spendOf,
   slipPattern,
   splitTriggers,
   timeBucket,
@@ -125,11 +126,19 @@ describe("viceCalendar", () => {
 });
 
 describe("dollars kept", () => {
-  it("round trips the typical spend through the hint", () => {
-    expect(parseSpend(formatSpend({ amount: 20, period: "day" }))).toEqual({ amount: 20, period: "day" });
-    expect(parseSpend(formatSpend({ amount: 87.5, period: "week" }))).toEqual({ amount: 87.5, period: "week" });
-    expect(parseSpend("Some other note")).toBeNull();
-    expect(parseSpend(null)).toBeNull();
+  it("reads the typical spend from its own fields", () => {
+    expect(spendOf({ typical_spend: 20, spend_period: "day" })).toEqual({ amount: 20, period: "day" });
+    expect(spendOf({ typical_spend: 87.5, spend_period: "week" })).toEqual({ amount: 87.5, period: "week" });
+    expect(spendOf({ typical_spend: 40, spend_period: null })).toEqual({ amount: 40, period: "week" });
+    expect(spendOf({ typical_spend: null, spend_period: "week" })).toBeNull();
+    expect(spendOf({ typical_spend: 0, spend_period: "week" })).toBeNull();
+    expect(describeSpend({ amount: 87.5, period: "week" })).toBe("$87.5 a week");
+  });
+  it("still reads the old hint sentence, for moving old rows over", () => {
+    expect(parseLegacySpendHint("Usually $20 a day")).toEqual({ amount: 20, period: "day" });
+    expect(parseLegacySpendHint("Usually $87.5 a week")).toEqual({ amount: 87.5, period: "week" });
+    expect(parseLegacySpendHint("Some other note")).toBeNull();
+    expect(parseLegacySpendHint(null)).toBeNull();
   });
   it("clean days times the daily spend, minus what slips cost", () => {
     expect(dollarsKept(5, { amount: 20, period: "day" }, [])).toMatchObject({ saved: 100, spent: 0, kept: 100 });

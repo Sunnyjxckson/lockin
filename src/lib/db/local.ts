@@ -2,7 +2,8 @@
 // browser the store is localStorage. Tests and the server pass a memory store.
 
 import type { NewRow, Row, TableName } from "../types";
-import { DbError, type Backend, type Query } from "./types";
+import { UNIQUE_KEYS } from "./schema";
+import { DbError, UNIQUE_VIOLATION, type Backend, type Query } from "./types";
 
 export interface KeyValueStore {
   getItem(key: string): string | null;
@@ -144,6 +145,18 @@ export class LocalBackend implements Backend {
     for (const m of made) {
       if (ids.has(m.id)) throw new DbError(`${table} already has a row with id ${m.id}`);
       ids.add(m.id);
+    }
+    // Same rule the unique indexes enforce in Postgres.
+    const all = [...current];
+    for (const m of made) {
+      for (const cols of (UNIQUE_KEYS[table] ?? []) as string[][]) {
+        const eq: Record<string, unknown> = {};
+        for (const c of cols) eq[c] = m[c] ?? null;
+        if (cols.every((c) => m[c] !== null && m[c] !== undefined) && all.some((r) => matchesEq(r, eq))) {
+          throw new DbError(`${table} already has a row with the same ${cols.join(", ")}`, { code: UNIQUE_VIOLATION });
+        }
+      }
+      all.push(m);
     }
     this.write(table, [...current, ...made]);
     return clone(made) as unknown as Row<K>[];

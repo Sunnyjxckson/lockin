@@ -1,7 +1,7 @@
 // Column list for every table, checked by the compiler against types.ts:
 // add or rename a field there and this file stops compiling until it matches.
 // schema.test.ts then checks the SQL migration against this list, so types,
-// this map and supabase/migrations/0001_init.sql cannot drift apart.
+// this map and the files in supabase/migrations cannot drift apart.
 
 import type { Row, TableName } from "../types";
 
@@ -19,6 +19,7 @@ export const COLUMNS: Columns = {
     money_target: "numeric",
     money_deadline: "date",
     daily_floor: "numeric",
+    money_target_start: "date",
   },
   checklist_item: {
     ...base,
@@ -37,9 +38,11 @@ export const COLUMNS: Columns = {
     weekly_day: "smallint",
     with_photo: "boolean",
     tracks_money: "boolean",
+    typical_spend: "numeric",
+    spend_period: "text",
   },
   target_version: { ...base, item_id: "text", effective_from: "date", target: "jsonb", active: "boolean" },
-  day_log: { ...base, date: "date", item_id: "text", value: "numeric", checked: "boolean", text: "text", completed_at: "timestamptz" },
+  day_log: { ...base, date: "date", item_id: "text", value: "numeric", checked: "boolean", text: "text", completed_at: "timestamptz", slips: "integer" },
   vice_slip: { ...base, item_id: "text", date: "date", time: "text", trigger: "text", amount: "numeric" },
   schedule_template: {
     ...base,
@@ -113,6 +116,9 @@ export const COLUMNS: Columns = {
     calendar_id: "text",
     sync_token: "text",
   },
+  reminder_sent: { ...base, date: "date", key: "text" },
+  reminder_run: { ...base, last_run_at: "timestamptz" },
+  login_attempt: { ...base, failures: "integer", locked_until: "timestamptz" },
   app_settings: {
     ...base,
     seeded: "boolean",
@@ -139,4 +145,5 @@ export const UNIQUE_KEYS: { [K in TableName]?: (keyof Row<K> & string)[][] } = {
   set_log: [["date", "exercise", "set_number"]],
   push_subscription: [["endpoint"]],
   calendar_token: [["provider"]],
+  reminder_sent: [["key"]],
 };

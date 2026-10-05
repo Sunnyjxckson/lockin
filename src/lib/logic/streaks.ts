@@ -2,7 +2,7 @@
 
 import type { ChecklistItem, DateStr, DayLog, TargetVersion } from "../types";
 import { addDays, weekStart } from "./dates";
-import { itemState, summarizeWeek } from "./day";
+import { hasSlip, itemState, summarizeWeek } from "./day";
 import { isActiveOn, targetOn } from "./targets";
 
 export interface Streak {
@@ -55,7 +55,10 @@ function dailyStreak(
   const doneNow = today >= from && isActiveOn(item, versions, today) && doneOn(today);
   let current = 0;
   let d = doneNow ? today : addDays(today, -1);
-  while (d >= from && isActiveOn(item, versions, d) && doneOn(d)) {
+  // Today not being done yet does not break a run. A slip today does: it is
+  // not unfinished, it is over.
+  const slippedToday = hasSlip(byDate.get(today));
+  while (!slippedToday && d >= from && isActiveOn(item, versions, d) && doneOn(d)) {
     current++;
     d = addDays(d, -1);
   }
@@ -66,7 +69,7 @@ function dailyStreak(
     if (isActiveOn(item, versions, x) && doneOn(x)) {
       run++;
       if (run > best) best = run;
-    } else if (x !== today) {
+    } else if (x !== today || slippedToday) {
       run = 0;
     }
   }

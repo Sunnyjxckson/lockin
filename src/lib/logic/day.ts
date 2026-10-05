@@ -48,9 +48,16 @@ export function checkedInTime(log: Pick<DayLog, "date" | "checked" | "completed_
   return at.minutes <= minutesOf(by);
 }
 
+/** True when a slip was logged for this item on this day. */
+export function hasSlip(log: Pick<DayLog, "slips"> | null | undefined): boolean {
+  return !!log && (log.slips ?? 0) > 0;
+}
+
 /** The state of one item on one day given its target and its log row. */
 export function itemState(item: Pick<ChecklistItem, "type">, target: Target, log: DayLog | null | undefined): ItemState {
   if (!log) return "open";
+  // A logged slip settles the day for that item until the slip is removed.
+  if (hasSlip(log)) return "off";
   switch (target.kind) {
     case "check":
       return log.checked ? "done" : "open";

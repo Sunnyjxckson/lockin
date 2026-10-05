@@ -1,5 +1,5 @@
 // Every table in the app. Field names are snake_case and match
-// supabase/migrations/0001_init.sql column for column.
+// the files in supabase/migrations column for column (schema.test.ts checks).
 //
 // Conventions
 // - id: text, generated on the client with crypto.randomUUID().
@@ -26,6 +26,10 @@ export interface Challenge extends Base {
   money_target: number;
   money_deadline: DateStr;
   daily_floor: number;
+  /** First date that counts toward the current money target. Null means the
+   * challenge start. Set when the target is reset, so the new target starts
+   * a fresh running total. */
+  money_target_start: DateStr | null;
 }
 
 // ---------- checklist ----------
@@ -34,6 +38,7 @@ export type ItemType = "yesno" | "number" | "text";
 export type Cadence = "daily" | "weekly";
 export type ItemCategory = "habit" | "vice";
 export type ViceMode = "quit" | "cap";
+export type SpendPeriod = "day" | "week";
 
 /**
  * What "done" means for an item.
@@ -83,6 +88,9 @@ export interface ChecklistItem extends Base {
   with_photo: boolean;
   /** Money vices show dollars kept (gambling, impulse spending). */
   tracks_money: boolean;
+  /** Money vices: what the habit usually costs, per `spend_period`. Drives dollars kept. */
+  typical_spend: number | null;
+  spend_period: SpendPeriod | null;
 }
 
 /**
@@ -108,6 +116,10 @@ export interface DayLog extends Base {
   text: string | null;
   /** When it was ticked or the value was entered. Null when unticked. */
   completed_at: IsoStr | null;
+  /** How many vice_slip rows exist for this item on this date. Kept in step
+   * by syncSlipCount(). Above zero the item is not done that day, whatever
+   * the tick or the number says. */
+  slips: number;
 }
 
 /** A slip on a vice. */
@@ -280,6 +292,24 @@ export interface CalendarToken extends Base {
   sync_token: string | null;
 }
 
+/** One row per reminder the scheduled job has sent. Server only. */
+export interface ReminderSent extends Base {
+  date: DateStr;
+  /** "<date>:<reminder id>" or "<date>:<reminder id>:<block>". */
+  key: string;
+}
+
+/** When the scheduled job last ran. One row, id "cron". Server only. */
+export interface ReminderRun extends Base {
+  last_run_at: IsoStr;
+}
+
+/** Wrong passcode counter. One row, id "passcode". Server only. */
+export interface LoginAttempt extends Base {
+  failures: number;
+  locked_until: IsoStr | null;
+}
+
 /** Single row with id "app". */
 export interface AppSettings extends Base {
   /** Set once seed data has been written. */
@@ -315,6 +345,9 @@ export interface Tables {
   coach_note: CoachNote;
   push_subscription: PushSubscriptionRow;
   calendar_token: CalendarToken;
+  reminder_sent: ReminderSent;
+  reminder_run: ReminderRun;
+  login_attempt: LoginAttempt;
   app_settings: AppSettings;
 }
 
@@ -344,11 +377,14 @@ export const TABLE_NAMES = [
   "coach_note",
   "push_subscription",
   "calendar_token",
+  "reminder_sent",
+  "reminder_run",
+  "login_attempt",
   "app_settings",
 ] as const satisfies readonly TableName[];
 
 /** Tables only the server may read or write (they hold secrets). */
-export const SERVER_ONLY_TABLES: readonly TableName[] = ["calendar_token", "push_subscription"];
+export const SERVER_ONLY_TABLES: readonly TableName[] = ["calendar_token", "push_subscription", "reminder_sent", "reminder_run", "login_attempt"];
 
 export const WEEKDAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
 export const WEEKDAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;

@@ -64,6 +64,8 @@ export interface NewItemInput {
   hint?: string | null;
   key?: string | null;
   tracks_money?: boolean;
+  typical_spend?: number | null;
+  spend_period?: ChecklistItem["spend_period"];
   weekly_day?: Weekday | null;
 }
 
@@ -88,6 +90,8 @@ export async function addItem(input: NewItemInput, today: DateStr = todayNY()): 
     weekly_day: input.weekly_day ?? null,
     with_photo: false,
     tracks_money: input.tracks_money ?? false,
+    typical_spend: input.typical_spend ?? null,
+    spend_period: input.spend_period ?? null,
   });
   await db.upsert("target_version", versionForChange(item.id, today, target, true), ["item_id", "effective_from"]);
   return item;
@@ -144,7 +148,7 @@ export async function getLogs(from: DateStr, to: DateStr = from): Promise<DayLog
 }
 
 function logRow(date: DateStr, itemId: string, fields: Partial<DayLog>): NewRow<"day_log"> {
-  return { date, item_id: itemId, value: null, checked: false, text: null, completed_at: null, ...fields };
+  return { date, item_id: itemId, value: null, checked: false, text: null, completed_at: null, slips: 0, ...fields };
 }
 
 // Day log writes read the row first, then write it back. Running them one at
@@ -166,7 +170,7 @@ export function setChecked(itemId: string, date: DateStr, checked: boolean, at: 
     const prev = await existingLog(date, itemId);
     return db.upsert(
       "day_log",
-      logRow(date, itemId, { value: prev?.value ?? null, text: prev?.text ?? null, checked, completed_at: checked ? nowIso(at) : null }),
+      logRow(date, itemId, { value: prev?.value ?? null, text: prev?.text ?? null, slips: prev?.slips ?? 0, checked, completed_at: checked ? nowIso(at) : null }),
       ["date", "item_id"],
     );
   });
@@ -179,7 +183,7 @@ export function setValue(itemId: string, date: DateStr, value: number | null, at
     const has = value !== null && !Number.isNaN(value);
     return db.upsert(
       "day_log",
-      logRow(date, itemId, { text: prev?.text ?? null, value: has ? value : null, checked: has, completed_at: has ? nowIso(at) : null }),
+      logRow(date, itemId, { text: prev?.text ?? null, slips: prev?.slips ?? 0, value: has ? value : null, checked: has, completed_at: has ? nowIso(at) : null }),
       ["date", "item_id"],
     );
   });
@@ -195,9 +199,35 @@ export function setText(itemId: string, date: DateStr, text: string): Promise<Da
       "day_log",
       logRow(date, itemId, {
         value: prev?.value ?? null,
+        slips: prev?.slips ?? 0,
         text: clean.length > 0 ? clean : null,
         checked,
         completed_at: checked ? (prev?.completed_at ?? null) : null,
+      }),
+      ["date", "item_id"],
+    );
+  });
+}
+
+/**
+ * Recount the slips logged for one item on one date and store the count on
+ * its day_log row. Call it after any vice_slip row is added, changed or
+ * removed. This is what makes a slip count everywhere day_log is scored.
+ */
+export function syncSlipCount(itemId: string, date: DateStr): Promise<DayLog | null> {
+  return serial(async () => {
+    const [prev, slips] = await Promise.all([existingLog(date, itemId), db.list("vice_slip", { eq: { item_id: itemId, date } })]);
+    const n = slips.length;
+    if (!prev && n === 0) return null;
+    if (prev && (prev.slips ?? 0) === n) return prev;
+    return db.upsert(
+      "day_log",
+      logRow(date, itemId, {
+        value: prev?.value ?? null,
+        text: prev?.text ?? null,
+        checked: prev?.checked ?? false,
+        completed_at: prev?.completed_at ?? null,
+        slips: n,
       }),
       ["date", "item_id"],
     );
