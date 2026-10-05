@@ -1,15 +1,26 @@
 "use client";
 
-// Placeholder. The body work replaces this file.
+import { useState } from "react";
+import { PageHeader, Screen, SegmentedControl } from "@/components/ui";
+import { FoodTab } from "@/features/body/FoodTab";
+import TodaySlot from "@/features/body/TodaySlot";
+import { WeightTab } from "@/features/body/WeightTab";
 
-import { Activity } from "lucide-react";
-import { EmptyState, PageHeader, Screen } from "@/components/ui";
+type Tab = "food" | "weight";
+
+const TABS = [
+  { value: "food", label: "Food" },
+  { value: "weight", label: "Weight" },
+] as const;
 
 export default function BodyPage() {
+  const [tab, setTab] = useState<Tab>("food");
   return (
     <Screen>
       <PageHeader title="Body" />
-      <EmptyState icon={<Activity size={24} aria-hidden />} title="Nothing logged yet" body="Weight, meals, macros and progress photos land here." />
+      <SegmentedControl className="mt-2" label="Section" options={TABS} value={tab} onChange={setTab} />
+      {tab === "food" ? <FoodTab /> : <WeightTab />}
+      <TodaySlot className="mt-8" />
     </Screen>
   );
 }
