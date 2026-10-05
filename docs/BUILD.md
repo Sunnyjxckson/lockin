@@ -19,7 +19,9 @@ Nobody has provisioned Supabase, Google, VAPID, or Anthropic keys yet. The app m
 
 - Data: every read and write goes through `src/lib/db` (owned by the foundation agent). It exposes one small generic interface (list, get, insert, update, upsert, remove, with equality and date-range filters) and typed helpers on top. Two backends: Supabase when `NEXT_PUBLIC_SUPABASE_URL` is set, browser localStorage otherwise. Feature code never imports Supabase directly and never touches localStorage directly.
 - Photos: `src/lib/storage` with the same split (Supabase Storage, or data URLs in IndexedDB locally).
-- AI: each feature owns its route: `src/app/api/coach` (brief and review wording), `src/app/api/body/meal-estimate` (meal photo), `src/app/api/money/read` (earnings screenshot). All three take the model id, the client and the fallback response from `src/lib/ai/server.ts`. With no `ANTHROPIC_API_KEY` they answer 200 `{ source: "fallback", reason: "no_key" }` (the coach route adds the rule-based `body`), never an error screen.
+- AI: each feature owns its route: `src/app/api/coach` (brief and review wording), `src/app/api/body/meal-estimate` (meal photo), `src/app/api/money/read` (earnings screenshot), `src/app/api/meals/request` (a plain words request to the meal planner, which falls back to its own rules). All of them take the model id, the client and the fallback response from `src/lib/ai/server.ts`. With no `ANTHROPIC_API_KEY` they answer 200 `{ source: "fallback", reason: "no_key" }` (the coach route adds the rule-based `body`), never an error screen.
+- Instacart: `src/app/api/meals/instacart` needs `INSTACART_API_KEY` (and `INSTACART_API_URL` for a development key). Without it `GET` answers `{ connected: false }`, the grocery list offers copy and share, and store prices stay estimates either way.
+- Boards: `src/app/api/boards/image` fetches a web image for a board on the server (the browser cannot read another site's image). It needs no key and refuses private addresses.
 - Calendar and push: with no keys the UI shows a "not connected" state with what to set, and everything else keeps working.
 - `.env.example` lists every variable. README.md has the setup steps for each service.
 
@@ -41,10 +43,10 @@ Put these in `src/lib/logic/*` with Vitest tests. No React, no db calls inside t
 
 - Foundation owns: package.json, config, `src/lib/db`, `src/lib/storage`, `src/lib/logic/{dates,day,streaks,targets}`, `src/lib/types.ts`, `src/lib/seed`, `src/components/ui/*`, `src/app/layout.tsx`, nav, passcode, `src/app/(app)/today`, `src/app/(app)/settings`, `supabase/migrations/0001_init.sql`
 - Each feature agent owns `src/app/(app)/<feature>/**`, `src/features/<feature>/**`, `src/lib/logic/<feature>*.ts`, `src/app/api/<feature>/**`
-- The three areas being built now, each with a placeholder page already in place:
-  - boards: `src/app/(app)/boards/**`, `src/features/boards/**`, `src/lib/logic/boards*.ts`, `src/app/api/boards/**`. Mood boards (PRD 14) and the UI that turns a board's palette into the theme (PRD 15). Tables `board`, `board_item`, `mood_log`, `motivation`. It calls the theme API, it does not edit `src/lib/theme` or `src/lib/logic/theme.ts`
-  - meals: `src/app/(app)/meals/**`, `src/features/meals/**`, `src/lib/logic/meals*.ts`, `src/app/api/meals/**`. Meal planning on a budget (PRD 16). Tables `recipe`, `meal_plan`, `grocery_item`, `expense`, and the food fields on `app_settings`
-  - focus: `src/app/(app)/focus/**`, `src/features/focus/**`, `src/lib/logic/focus*.ts`, `src/app/api/focus/**`. Study and focus timer (PRD 18). Table `focus_session` and `app_settings.focus_goal_minutes`
+- The three areas built last (boards, meals, focus), now merged:
+  - boards: `src/app/(app)/boards/**`, `src/features/boards/**`, `src/lib/logic/boards*.ts`, `src/app/api/boards/**`. Mood boards (PRD 14) and the UI that turns a board's palette into the theme (PRD 15). Tables `board`, `board_item`. `mood_log` and `motivation` are in the schema and nothing reads or writes them yet. It calls the theme API, it does not edit `src/lib/theme` or `src/lib/logic/theme.ts`
+  - meals: `src/app/(app)/meals/**`, `src/features/meals/**`, `src/lib/logic/meals*.ts`, `src/app/api/meals/**`. Meal planning on a budget (PRD 16). Tables `recipe`, `meal_plan`, `grocery_item`, `pantry_item`, `receipt_price`, `expense`, and the food fields on `app_settings`
+  - focus: `src/app/(app)/focus/**`, `src/features/focus/**`, `src/lib/logic/focus*.ts`, `src/app/api/focus/**`. Study and focus timer (PRD 18). Table `focus_session`, `app_settings.focus_goal_minutes` and `app_settings.business_goal`
 - Shared files these three do not touch: everything the foundation owns, plus `src/lib/nav.ts`, `src/lib/theme/*`, `src/lib/logic/{challenge,ongoing,theme}.ts`, `supabase/migrations/*`, `scripts/e2e.mjs`, the docs, and the other features' folders
 - Need a new dependency, table column, or shared UI component? Feature agents may add a NEW file (a new migration `supabase/migrations/00NN_<what>.sql`, numbered one above the highest file there with no gaps, which `schema.test.ts` checks, a new component under `src/features/<feature>/`). They do not edit shared files. If a shared file truly must change, make the smallest additive edit and list it in your final report.
 - Do not run `npm install` for new packages while other agents are working unless you need to. If you do, use `npm install <pkg>` once and report it.
@@ -102,29 +104,31 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 | `workout` | `Workout` | `weekday, slot ("main" / "core"), name, kind ("lift" / "cardio" / "sport" / "rest"), detail, exercises: { name, sets, reps }[]`. One row per weekday per slot |
 | `set_log` | `SetLog` | `date, exercise, set_number, weight, reps` |
 | `reminder` | `Reminder` | `kind, label, body, time, block_name, item_id, offset_minutes, enabled, sort_order`. Fires at `time`, or when `time` is null at `offset_minutes` from the start of every block whose name starts with `block_name` |
-| `coach_note` | `CoachNote` | `date, kind ("morning" / "weekly" / "flag"), body, source ("ai" / "fallback")` |
+| `coach_note` | `CoachNote` | `date, kind ("morning" / "weekly" / "flag"), body, source ("ai" / "fallback"), basis`. `basis` is set on morning briefs only: the challenge, money target and floor it was written from (`briefBasis` in `logic/coach`). When that differs later the same day, the brief is written again |
 | `push_subscription` | `PushSubscriptionRow` | `endpoint, p256dh, auth, user_agent`. Server only in Supabase mode |
 | `calendar_token` | `CalendarToken` | `provider, access_token, refresh_token, expires_at, calendar_id, sync_token`. Server only in Supabase mode |
 | `reminder_sent` | `ReminderSent` | `date, key`. One row per reminder the scheduled job sent, unique on `key`. Server only |
 | `reminder_run` | `ReminderRun` | `last_run_at`. One row, id `"cron"`. Server only |
 | `login_attempt` | `LoginAttempt` | `failures, locked_until`. One row, id `"passcode"`. Server only |
-| `app_settings` | `AppSettings` | One row, id `"app"`. `seeded, timezone, quiet_start, quiet_end, carbs_target, fat_target, weight_unit, haptics, history_start, daily_floor, weekly_food_budget, food_likes: string[], food_dislikes: string[], focus_goal_minutes`. `history_start` is the first date of the ongoing history. `daily_floor` is the live earnings floor, challenge or not (change it with `setDailyFloor`) |
+| `app_settings` | `AppSettings` | One row, id `"app"`. `seeded, timezone, quiet_start, quiet_end, carbs_target, fat_target, weight_unit, haptics, history_start, daily_floor, weekly_food_budget, food_likes: string[], food_dislikes: string[], focus_goal_minutes, business_goal, preferred_store`. `history_start` is the first date of the ongoing history. `daily_floor` is the saved earnings floor (change it with `setDailyFloor`). The floor in force is `useMode().floor`: a running challenge that holds "Earned today" to its own minimum sets it while it runs (`floorOn` in `logic/challenge`) |
 | `mood_log` | `MoodLog` | `date, time, mood (1 to 5), note` |
 | `motivation` | `Motivation` | `kind ("quote" / "clip" / "why"), body, url, sort_order` |
 | `board` | `Board` | `name, kind ("body" / "brand" / "life"), cover_item_id, sort_order` |
-| `board_item` | `BoardItem` | `board_id, kind ("image" / "color" / "note"), image_url, note, color, palette: string[] or null, source ("camera" / "web" / "screenshot" / "upload"), source_url, sort_order`. `image_url` is a storage reference. `palette` is the colors pulled from the image |
+| `board_item` | `BoardItem` | `board_id, kind ("image" / "color" / "note"), image_url, note, color, palette: string[] or null, source ("camera" / "web" / "screenshot" / "upload"), source_url, aspect, sort_order`. `image_url` is a storage reference. `palette` is the colors pulled from the image. `aspect` is its width over height, saved when it is added so the collage does not jump |
 | `theme` | `ThemeRow` | `name, base ("dark" / "contrast"), palette: { background?, surface?, text?, muted?, accent? } or null, accent, board_id, active`. One active row. Do not write it by hand, use `@/lib/theme` |
-| `recipe` | `Recipe` | `name, slot ("breakfast" / "lunch" / "dinner" / "snack"), ingredients: { name, quantity, unit, est_cost, category }[], steps: string[], servings, calories, protein, carbs, fat, est_cost, tags: string[], photo_url, source ("seed" / "user" / "ai")`. Macros and cost are for one serving. Nothing is seeded: the meals agent brings the library |
-| `meal_plan` | `MealPlan` | `week_start (a Monday, unique), budget, recipe_ids: string[], meals: { date, slot, recipe_id, servings }[], total_cost, store` |
+| `recipe` | `Recipe` | `name, slot ("breakfast" / "lunch" / "dinner" / "snack"), ingredients: { name, quantity, unit, est_cost, category }[], steps: string[], servings, calories, protein, carbs, fat, est_cost, tags: string[], photo_url, source ("seed" / "user" / "ai")`. Macros and cost are for one serving. The built in library (`logic/mealsLibrary`) is written to the table on the first visit to Meals |
+| `meal_plan` | `MealPlan` | `week_start (a Monday, unique), budget, recipe_ids: string[], meals: { date, slot, recipe_id, servings, logged? }[], total_cost, store`. `logged` is the id of the `meal` row written when that meal was cooked |
 | `grocery_item` | `GroceryItem` | `plan_id, name, quantity, unit, category, store, price, prices: { [store]: number } or null, bought`. `GROCERY_STORES` in `@/lib/types` lists the five stores |
+| `pantry_item` | `PantryItem` | `name` (a food key, unique). What is already at home: left off the grocery list and out of its total. Seeded with the staples (salt, oil, spices) |
+| `receipt_price` | `ReceiptPrice` | `name, store, price`, unique on `(name, store)`. What a pack really cost, typed in from a receipt. It replaces the estimate at that store |
 | `expense` | `Expense` | `date, amount, category ("groceries"), note, store, plan_id`. The link between groceries and Money: write one row when a week's list is bought and Money shows "Groceries this week" |
-| `focus_session` | `FocusSession` | `date, start, end (null while the timer runs), minutes, label, source ("timer" / "manual"), block_id`. The coach already reads the last two weeks of these |
+| `focus_session` | `FocusSession` | `date, start, end (null while the timer runs), minutes, label, source ("timer" / "manual"), block_id, away_count, away_minutes, clock_minutes, planned_minutes, completed, live`. `minutes` is focused time: clock time minus pauses and time away. `live` is the running timer's state (`{ started_at, planned_seconds, pauses, aways, rev }`), null once finished, so the same clock shows on another device. The coach reads the last two weeks of these |
 
 `Target` is one of `{ kind: "check" }`, `{ kind: "check_by", by }`, `{ kind: "min", min }`, `{ kind: "max", max }`, `{ kind: "range", min, max }`, `{ kind: "text" }`.
 
 Seeded item keys, for `getItemByKey`: `wake, workout, core, calories, protein, earned, study, business, bed, talk, weighin`, and the vices `vice_smoking, vice_drinking, vice_masturbation` (on) plus `vice_vaping, vice_weed, vice_gambling, vice_porn, vice_junk_food, vice_fast_food, vice_energy_drinks, vice_doomscrolling, vice_impulse_spending` (off, `active: false`). Vices are checklist items with `category: "vice"`. Carbs and fat targets are `app_settings.carbs_target` and `fat_target`. Calories and protein targets are the `calories` and `protein` items.
 
-Need a new column or table? Add the next numbered file in `supabase/migrations/` (they run in order: `0001_init`, `0002_reminders`, `0003_vice_spend`, `0004_slip_count`, `0005_money_target_start`, `0006_login_attempt`, `0007_challenges`, `0008_boards_meals_focus`). Use plain `create table name (` and `alter table name add column col type` so `schema.test.ts` can read it. A new table or column also needs its entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), and a server only table goes in `SERVER_ONLY_TABLES`. Rows already on a device have no migration: add a step to `src/lib/db/upgrade.ts`, which runs on every load in local mode and is tested in `upgrade.test.ts` against a version 1 store.
+Need a new column or table? Add the next numbered file in `supabase/migrations/` (they run in order: `0001_init`, `0002_reminders`, `0003_vice_spend`, `0004_slip_count`, `0005_money_target_start`, `0006_login_attempt`, `0007_challenges`, `0008_boards_meals_focus`, `0009_focus_fields`, `0010_board_item_aspect`, `0011_meal_pantry_prices`, `0012_coach_note_basis`). Use plain `create table name (` and `alter table name add column col type` so `schema.test.ts` can read it. A new table or column also needs its entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), and a server only table goes in `SERVER_ONLY_TABLES`. Rows already on a device have no migration: add a step to `src/lib/db/upgrade.ts`, which runs on every load in local mode and is tested in `upgrade.test.ts` against a version 1 store. `adoptDevicePrefs` in the same file runs in every mode and moves what an earlier build kept per device (focus session numbers, the business goal, board image shapes) into the tables.
 
 ### Data: `@/lib/db`
 
@@ -155,7 +159,7 @@ interface Query<K> {
 
 - Everything is typed by table name: `db.list("earning", { from, to })` returns `Earning[]`.
 - Always pass `orderBy` when order matters. Without it local returns insert order and Supabase returns `created_at` order.
-- `upsert` conflict columns need a unique index in Supabase. These exist: `day_log (date, item_id)`, `target_version (item_id, effective_from)`, `body_log (date)`, `workout (weekday, slot)`, `set_log (date, exercise, set_number)`, `push_subscription (endpoint)`, `calendar_token (provider)`, `reminder_sent (key)`, `meal_plan (week_start)`, and `id` on every table. For any other pair, add a unique index in your migration.
+- `upsert` conflict columns need a unique index in Supabase. These exist: `day_log (date, item_id)`, `target_version (item_id, effective_from)`, `body_log (date)`, `workout (weekday, slot)`, `set_log (date, exercise, set_number)`, `push_subscription (endpoint)`, `calendar_token (provider)`, `reminder_sent (key)`, `meal_plan (week_start)`, `pantry_item (name)`, `receipt_price (name, store)`, and `id` on every table. For any other pair, add a unique index in your migration.
 - Every write notifies subscribers of that table. `subscribe(table, fn)` returns an unsubscribe function. The hooks do this for you.
 - Errors are `DbError` with a readable message. `insert` fails when a row with the same unique key exists, on both backends, and `isUniqueViolation(e)` tells that apart from other failures (the reminder job uses it as a lock).
 
@@ -191,7 +195,8 @@ const mode = useMode();
 // mode.finished      the active challenge once its last day has passed and it still needs closing
 // mode.upcoming      the active challenge before its start date
 // mode.historyStart  first date of the ongoing history, in both modes
-// mode.challenges    every challenge      mode.floor   the daily earnings floor      mode.today, mode.loading
+// mode.challenges    every challenge      mode.today, mode.loading
+// mode.floor         the earnings floor in force today      mode.baseFloor   the one saved in settings
 const title = mode.challenge ? `Day ${mode.day} of ${mode.length}` : formatDateShort(mode.today);
 const { data: logs } = useLogs(mode.historyStart, mode.today);   // never challenge.start_date
 ```
@@ -245,7 +250,9 @@ Keeping the checklist in step with your feature. Everything is scored from `day_
 - Money: after any earning is added, changed or removed, call `setValueByKey("earned", date, totalForThatDate)`. Today's Earned row has no number field: it opens quick add, so the earning table is the only way in.
 - Body: after any meal change, call `setValueByKey("calories", date, total)` and `setValueByKey("protein", date, total)`. On Today those two rows take a typed number until a meal is logged that day, then show the meal totals and link to Body. Save weight with `logWeight(date, weight)`.
 - Vices: after a slip is added, moved or removed, call `syncSlipCount(itemId, date)`. That is the one source of truth for a slip: `itemState` returns `"off"` while `day_log.slips` is above zero, and a slip today ends the streak that day. The tick and number are left alone, so removing the slip puts the day back. Turn library vices on with `setItemActive`. A capped vice is `type: "number"`, `mode: "cap"`, target `{ kind: "max", max }`.
-- `app_settings.daily_floor` and the `earned` item's target are the same number, and `challenge.daily_floor` follows while one is active. Change it with `setDailyFloor` only. Read the floor from `useMode().floor` or `getSettings()`.
+- `app_settings.daily_floor` and the `earned` item's target are the same number, and `challenge.daily_floor` follows while one is active. Change it with `setDailyFloor` only. Read the floor from `useMode().floor`, which is that number unless the running challenge has its own target for "Earned today". Outside React: `floorOn(settings.daily_floor, runningChallenge, earnedItem.id)`. Money, the coach, the 8:00 pm nudge and the reminder job all use it.
+- Focus: reaching `focus_goal_minutes` in a day, or finishing a countdown started from a study block, ticks the `study` item (`syncStudy` in `features/focus/store`). It only unticks a tick it made itself.
+- Meals: "Cooked, log it" writes the meal through Body's `addMeal`, so calories and protein reach the checklist the same way. Recording a shop writes one `expense` row.
 - None of the challenge helpers touch a log, a target version or a checklist item. Keep it that way: nothing a challenge does may change the ongoing history.
 
 ### Photos: `@/lib/storage`
@@ -433,7 +440,7 @@ installMode(): "prompt" | "ios" | "ios-other" | "none"        promptInstall(): P
 isIOS()   isStandalone()   subscribeInstall(fn)
 ```
 
-`prefs` is for things like a dismissed prompt. App data still goes through `db`.
+`prefs` is for things like a dismissed prompt. App data still goes through `db`. What is in prefs today: dismissed setup rows, the closed morning brief, the focus timer's strict mode, grace period, full screen switch, blocker walk through done, strict mode notice, the days Focus ticked Study by itself, a copy of the running timer's state (the row is the shared copy), and per week the meal planner's shuffle seed, last message and last request.
 
 ### Auth: `@/lib/auth/server`
 
@@ -538,19 +545,21 @@ export default function MoneyPage() {
 }
 ```
 
-Routes that exist: `/today`, `/schedule`, `/money`, `/body`, `/progress` (tabs), `/body/workout`, `/progress/card`, `/coach`, `/vices`, `/vices/[id]`, `/reminders`, `/settings`, `/settings/{checklist,schedule,workouts,challenge,reminders}`, `/settings/challenge/new`, and the three placeholders `/boards` (back to `/today`), `/meals` (back to `/body`) and `/focus` (back to `/schedule`). Every sub-screen passes `back`. `/today?date=YYYY-MM-DD` opens Today on that day. `/progress?challenge=<id>` opens a past challenge.
+Routes that exist: `/today`, `/schedule`, `/money`, `/body`, `/progress` (tabs), `/body/workout`, `/progress/card`, `/coach`, `/vices`, `/vices/[id]`, `/reminders`, `/settings`, `/settings/{checklist,schedule,workouts,challenge,reminders}`, `/settings/challenge/new`, `/boards` and `/boards/[id]` (back to `/today` and `/boards`), `/meals`, `/meals/grocery` and `/meals/recipes` (back to `/body` and `/meals`), `/focus` and `/focus/business` (back to `/schedule` and `/focus`). API routes: `/api/auth/{login,logout,status}`, `/api/db`, `/api/storage`, `/api/coach`, `/api/body/meal-estimate`, `/api/money/read`, `/api/calendar/*`, `/api/reminders/*`, `/api/boards/image`, `/api/meals/request`, `/api/meals/instacart`. Every sub-screen passes `back`. `/today?date=YYYY-MM-DD` opens Today on that day. `/progress?challenge=<id>` opens a past challenge.
 
-Navigation is already built for the three placeholders: the More sheet on Today, a row each in Settings, the Meals icon in Body's header and the Focus icon in Schedule's. Fill the page in, keep its `PageHeader` and `back`, and add sub-routes under it as needed.
+Ways in to Boards, Meals and Focus: the More sheet on Today, a row each in Settings, the Meals icon in Body's header, the Focus icon in Schedule's and the timer button on Today's study row.
 
 Dev only, 404 in a production build: `/dev/ui`, `/dev/coach`.
 
 ### Today
 
-Today is the home screen and has to answer three questions at a glance: what now, what is left today, am I on track. The header reads `Day X of N` while a challenge runs and a plain date with the consistency line ("26 of the last 30 days locked in") otherwise. When a challenge's last day has passed, a card offers to close it, and closing it plays the finish moment. Its order, top to bottom: day and percent ring, the day strip (the challenge's days, or the last two weeks), one setup row at most (`SetupRow`: add to Home Screen, then turn on reminders, each dismissible and remembered), the morning brief (open on the first visit of the day, then closed for the day once closed), Now and Next with the conflict banner under it, the checklist, this week, the workout.
+Today is the home screen and has to answer three questions at a glance: what now, what is left today, am I on track. The header reads `Day X of N` while a challenge runs and a plain date with the consistency line ("26 of the last 30 days locked in") otherwise. When a challenge's last day has passed, a card offers to close it, and closing it plays the finish moment. Its order, top to bottom: day and percent ring, the day strip (the challenge's days, or the last two weeks), one setup row at most (`SetupRow`: add to Home Screen, then turn on reminders, each dismissible and remembered), the morning brief (open on the first visit of the day, then closed for the day once closed), Now and Next with the conflict banner under it, the checklist, this week, the workout, and last the board row (`BoardEntry`, the first board with anything on it, nothing when there is none). The board sits under everything that gets checked off so it never slows the check-off.
 
-Features plug into the checklist rows instead of adding cards: the Earned row is `EarnedAction` from `features/money/TodaySlot`, a vice with a slip renders `SlipRow`, `Log a slip` sits under the checklist, and `Log sets` sits in the workout section header. Before adding anything to Today, look for a row it belongs in.
+Features plug into the checklist rows instead of adding cards. A number row takes an `action` in place of its field and a yes/no row takes one at its right, beside the tick area. The Earned row is `EarnedAction` from `features/money/TodaySlot`, the study row is `FocusAction` from `features/focus/TodaySlot` (a timer button, or the running clock), a vice with a slip renders `SlipRow`, `Log a slip` sits under the checklist, and `Log sets` sits in the workout section header. Before adding anything to Today, look for a row it belongs in.
 
-`LocalScheduler` (reminders while the app is open) is mounted once in `AppShell`, so it runs on every screen.
+`LocalScheduler` (reminders while the app is open) and `FocusWatcher` (notices the app being left while a focus timer runs, and keeps the device's copy of the timer in step with its row) are each mounted once in `AppShell`, so they run on every screen.
+
+The tab bar is solid `bg-bg`, and the selected day chip uses full strength `text-bg`. Both were measured under pastel palettes: a see-through bar let dark content under it pull the inactive labels to about 4.1 to 1, and the faded weekday label on the chip fell under 7 to 1 on the high contrast base. Do not fade text with an opacity or a `/70` color: the theme only guarantees the token pairs as they are.
 
 The reminder rows (on/off, time, minutes before) and quiet hours are editable at `/settings/reminders`. `/reminders` (Settings, Notifications) is for the push permission and connection state. `public/sw.js` shows a notification for a push with a JSON payload `{ title, body, url, tag }` and opens `url` on tap.
 
@@ -559,4 +568,4 @@ The reminder rows (on/off, time, minutes before) and quiet hours are editable at
 - `npx vitest run src/lib/logic/<yours>.test.ts`
 - `npx tsc --noEmit`
 - `npx eslint .`
-- `npm run build`, then `scripts/serve.sh start 3210` and `npm run e2e -- http://localhost:3210`. The walkthrough runs against the production build with an empty `.env`, at 390 x 844, covers every screen and the cross-feature flows, and fails on any console error. Keep it passing and extend it when you add a flow. `scripts/serve.sh stop` ends the server. It also upgrades a version 1 device store, ends, starts, restarts and finishes a challenge while comparing the history tables byte for byte, walks ongoing mode, and measures the contrast of every piece of text on Today, Progress and Settings in both base themes and under a light palette.
+- `npm run build`, then `scripts/serve.sh start 3210` and `npm run e2e -- http://localhost:3210`. The walkthrough runs against the production build with an empty `.env`, at 390 x 844, covers every screen and the cross-feature flows, and fails on any console error. Keep it passing and extend it when you add a flow. `scripts/serve.sh stop` ends the server. It also upgrades a version 1 device store, ends, starts, restarts and finishes a challenge while comparing the history tables byte for byte, walks ongoing mode, and measures the contrast of every piece of text on Today, Progress and Settings in both base themes and under a light palette. `scripts/e2e-features.mjs` is the second half, run by the same command (or alone with `--features`): a week of meals built, swapped, re-portioned, shopped and cooked through to Money and Today, the focus timer started, paused, reloaded, finished, logged by hand, left and left overnight, a board made and worn as the theme with contrast measured on the new screens in all three looks, and the challenge floor and the morning brief following a challenge change. Screenshots are `.shots/final2-*.png`.

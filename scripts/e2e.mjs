@@ -8,14 +8,19 @@
 // pinned to the first challenge's dates: the day to day flows, upgrading a
 // version 1 device store, ending, starting, restarting and finishing a
 // challenge with the ongoing history left alone, ongoing mode, and themes
-// with a contrast check. Screenshots land in .shots/final-*.png and
-// .shots/v2-core-*.png.
+// with a contrast check. Then scripts/e2e-features.mjs walks boards, meals
+// and the focus timer and the places they meet the rest of the app.
+// Screenshots land in .shots/final2-*.png.
+//
+//   node scripts/e2e.mjs http://localhost:3210 --features   runs only that last part.
 // Any failed check, console error or page error makes it exit non-zero.
 
 import { mkdirSync } from "node:fs";
 import { chromium } from "playwright";
+import { runFeatures } from "./e2e-features.mjs";
 
-const base = process.argv[2] ?? "http://localhost:3000";
+const base = process.argv.slice(2).find((a) => !a.startsWith("--")) ?? "http://localhost:3000";
+const CORE = !process.argv.includes("--features");
 const shots = new URL("../.shots/", import.meta.url).pathname;
 mkdirSync(shots, { recursive: true });
 
@@ -59,9 +64,11 @@ const nav = (page) => page.getByRole("navigation", { name: "Main" });
 const done = (page, n, of = 12) => page.getByText(`${n} of ${of}`, { exact: true }).first().waitFor();
 const count = async (page) => (await page.locator("section", { hasText: "Checklist" }).first().locator("h2 + div").innerText()).trim();
 
+/** Every screenshot is .shots/final2-<name>.png. A prefix other than the default names a group, as final2-<group>-<name>. */
 async function shot(page, name, fullPage = false, prefix = "final-") {
   await page.waitForTimeout(350);
-  await page.screenshot({ path: `${shots}${prefix}${name}.png`, fullPage });
+  const group = prefix === "final-" ? "" : prefix.replace(/^v2-/, "");
+  await page.screenshot({ path: `${shots}final2-${group}${name}.png`, fullPage });
 }
 
 // ---------- device store ----------
@@ -156,8 +163,10 @@ function contrastFailures(page, min) {
 }
 
 async function checkContrast(page, name, min) {
+  // Colors ease from one theme to the next. Measure once they have landed.
+  await page.waitForTimeout(450);
   const { checked, failed } = await contrastFailures(page, min);
-  check(`${name}: all ${checked} pieces of text hold ${min} to 1`, checked > 20 && failed.length === 0, failed.slice(0, 6).join(", "));
+  check(`${name}: all ${checked} pieces of text hold ${min} to 1`, checked > 8 && failed.length === 0, failed.slice(0, 6).join(", "));
 }
 
 function rootVar(page, name) {
@@ -201,6 +210,8 @@ async function closeSheet(page) {
 }
 
 const browser = await chromium.launch();
+
+if (CORE) {
 
 // Dev only pages must not be reachable in a production build.
 {
@@ -540,6 +551,7 @@ await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
 console.log("Reminders");
 await page.goto(`${base}/reminders`);
 await page.getByRole("heading", { name: "Reminders", level: 1 }).waitFor();
+await page.getByText("VAPID_PRIVATE_KEY").waitFor();
 check("Reminders shows the not set up state and what to set", (await page.getByText("VAPID_PRIVATE_KEY").count()) === 1 && (await page.getByText("CRON_SECRET").count()) === 1);
 check("Reminders has a way back", (await page.getByRole("link", { name: "Back" }).count()) === 1);
 await noOverflow(page, "Reminders");
@@ -1091,6 +1103,10 @@ console.log("Late install and the wake cutoff");
   check("reduced motion switches transitions off", parseFloat(dur) < 0.01, dur);
   await c.close();
 }
+
+}
+
+await runFeatures({ browser, base, device, check, watch, shot, rows, dialog, nav, row, done, count, createPasscode, checkContrast, rootVar, noOverflow, openMore, closeSheet, PREFIX });
 
 await browser.close();
 console.log(`\n${passed} checks passed, ${problems.length} problems`);

@@ -15,14 +15,18 @@ Open http://localhost:3000 in a phone-sized window. With an empty `.env` the who
 
 - It asks you to create a 4 digit passcode, then seeds the first 30 day challenge (Oct 5, 2026), the checklist, schedule, workouts, reminders and the vice library. Opened after that challenge's last day, it starts in ongoing mode with no challenge.
 - Settings, Challenge is where a challenge is started, ended early, finished or restarted, and where its rules are set. Settings, Look switches between the dark minimal and high contrast themes.
-- Boards, Meals and Focus are placeholders for now, reached from the More button on Today.
 - Today, Schedule, Money, Body, Progress, Vices, Coach and Settings all work. Data is in the browser's localStorage, photos in IndexedDB.
+- Boards (More, Boards): make a board, add images from the camera, your photos, the clipboard or a web link, add colors and notes, and turn a board's palette into the look of the whole app. Text contrast is checked and fixed before a palette is applied, and one tap goes back to the base theme. The first board with anything on it shows as a row at the bottom of Today.
+- Meals (the icon in Body's header): set a weekly budget and it plans seven days from the built in recipe library that hit your calories and protein, with one grocery list priced at five stores. Swap a meal, change a portion, tick off the list, record the shop (it shows on Money as groceries), and log a cooked meal to Body and Today. Every price is an estimate until you type one in from a receipt.
+- Focus (the icon in Schedule's header, or the timer button on Today's study row): a count up or countdown timer that survives a reload, records when you leave the app, and ticks the study item when the day's minutes reach the goal. Time can also be logged by hand. The business log is under it.
 - The coach writes its morning brief, Sunday review and flags from rules instead of Claude, and says so on the note.
 - Snapping a meal or an earnings screenshot attaches the photo and opens the form empty for you to type the numbers.
 - Reminders show as notifications while the app is open or recently in the background, if you allow notifications. Nothing arrives when the app is closed.
 - Google Calendar shows as not connected.
+- A plain words request on the meal planner ("more chicken, cheaper breakfasts") is read by simple rules instead of Claude.
+- The grocery list has Copy and Share instead of an Order on Instacart button.
 
-What you do not get without keys: data that survives clearing the browser or follows you to another device, reminders when the app is closed, Claude's writing and photo reading, and calendar sync.
+What you do not get without keys: data that survives clearing the browser or follows you to another device, reminders when the app is closed, Claude's writing and photo reading, calendar sync, and ordering the grocery list on Instacart. Store prices are estimates with or without keys: no store offers live prices to an app like this one.
 
 ## Deploy: zero to Vercel with Supabase
 
@@ -40,6 +44,10 @@ Do the steps in order. Every environment variable below goes in Vercel under Pro
    6. `0006_login_attempt.sql` (wrong passcode counter)
    7. `0007_challenges.sql` (ongoing mode: one row per challenge, the existing row becomes the first active one, plus the history start and daily floor in settings)
    8. `0008_boards_meals_focus.sql` (tables for boards, themes, meal plans, groceries, expenses and focus sessions)
+   9. `0009_focus_fields.sql` (a focus session's away numbers and running state, and the business goal)
+   10. `0010_board_item_aspect.sql` (the shape of each board image)
+   11. `0011_meal_pantry_prices.sql` (the pantry, receipt prices and the preferred store in their own tables)
+   12. `0012_coach_note_basis.sql` (what a morning brief was written from, so it is rewritten when the challenge changes)
 
    With the Supabase CLI linked to the project, `supabase db push` runs them all in order.
 3. From Project settings, API, copy the project URL and the `service_role` key.
@@ -71,6 +79,19 @@ Create a key at console.anthropic.com and set it.
 | `ANTHROPIC_MODEL` | Optional. Defaults to `claude-sonnet-5-5`. Whatever you set must accept images |
 
 Without the key every AI route answers `{ source: "fallback", reason: "no_key" }` and the app carries on with rule-based text and empty forms.
+
+The same key reads a plain words request on the meal planner (`/api/meals/request`).
+
+### 3b. Instacart (order the grocery list), optional
+
+Apply for a key on the Instacart Developer Platform (instacart.com/company/business/developers).
+
+| Variable | Value |
+| --- | --- |
+| `INSTACART_API_KEY` | The key |
+| `INSTACART_API_URL` | Optional. Leave unset for production. A development key needs `https://connect.dev.instacart.tools` |
+
+With the key set, the grocery list shows Order on Instacart, which sends the list and opens Instacart's page for it. You pick the store and pay there. Without it the list can be copied or shared. This has not been run against a real key.
 
 ### 4. Google Calendar (two-way sync)
 
@@ -151,7 +172,7 @@ Device data does not sync between devices and is lost if the browser's site data
 | `npm test` | Unit tests (Vitest) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` | ESLint |
-| `npm run e2e` | Full walkthrough in headless Chromium at 390 x 844: every screen and the flows that cross features. Build and start the app with an empty `.env` first, then pass the base URL: `npm run e2e -- http://localhost:3210`. Screenshots go to `.shots/final-*.png` |
+| `npm run e2e` | Full walkthrough in headless Chromium at 390 x 844: every screen and the flows that cross features, then boards, meals and the focus timer. Build and start the app with an empty `.env` first, then pass the base URL: `npm run e2e -- http://localhost:3210`. Add `--features` to run only the boards, meals and focus part. Screenshots go to `.shots/final2-*.png` |
 | `npm run icons` | Redraw the PWA icons in `public/icons` |
 
 `scripts/serve.sh start 3210` serves the last production build in the background and `scripts/serve.sh stop` ends it.
