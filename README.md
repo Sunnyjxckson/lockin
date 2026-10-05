@@ -1,6 +1,6 @@
 # Lock In
 
-A single-user, mobile-first PWA that runs a 30 day challenge: one checklist, a fixed schedule, money, body, vices, streaks and a coach in one place. The spec is `docs/PRD.md`. The rules for working in this repo are in `docs/BUILD.md`.
+A single-user, mobile-first PWA for staying consistent: one checklist, a fixed schedule, money, body, vices, streaks and a coach in one place. It runs in ongoing mode by default, where history never resets and a slip costs one day. A challenge (a set number of days with its own rules) is an optional layer on top that can be started, ended, finished or restarted without touching that history. The spec is `docs/PRD.md`. The rules for working in this repo are in `docs/BUILD.md`.
 
 ## Run it with no keys
 
@@ -13,7 +13,9 @@ npm run dev
 
 Open http://localhost:3000 in a phone-sized window. With an empty `.env` the whole app works on one device:
 
-- It asks you to create a 4 digit passcode, then seeds the challenge, checklist, schedule, workouts, reminders and the vice library.
+- It asks you to create a 4 digit passcode, then seeds the first 30 day challenge (Oct 5, 2026), the checklist, schedule, workouts, reminders and the vice library. Opened after that challenge's last day, it starts in ongoing mode with no challenge.
+- Settings, Challenge is where a challenge is started, ended early, finished or restarted, and where its rules are set. Settings, Look switches between the dark minimal and high contrast themes.
+- Boards, Meals and Focus are placeholders for now, reached from the More button on Today.
 - Today, Schedule, Money, Body, Progress, Vices, Coach and Settings all work. Data is in the browser's localStorage, photos in IndexedDB.
 - The coach writes its morning brief, Sunday review and flags from rules instead of Claude, and says so on the note.
 - Snapping a meal or an earnings screenshot attaches the photo and opens the form empty for you to type the numbers.
@@ -36,6 +38,8 @@ Do the steps in order. Every environment variable below goes in Vercel under Pro
    4. `0004_slip_count.sql` (slip count on each day's log row)
    5. `0005_money_target_start.sql` (start date of the current money target)
    6. `0006_login_attempt.sql` (wrong passcode counter)
+   7. `0007_challenges.sql` (ongoing mode: one row per challenge, the existing row becomes the first active one, plus the history start and daily floor in settings)
+   8. `0008_boards_meals_focus.sql` (tables for boards, themes, meal plans, groceries, expenses and focus sessions)
 
    With the Supabase CLI linked to the project, `supabase db push` runs them all in order.
 3. From Project settings, API, copy the project URL and the `service_role` key.

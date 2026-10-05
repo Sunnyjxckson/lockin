@@ -57,7 +57,7 @@ export function ThemePicker({ className }: { className?: string }) {
                   <span className="h-1.5 flex-1 rounded-full" style={{ background: t["surface-3"] }}>
                     <span className="block h-full w-2/3 rounded-full" style={{ background: t.accent }} />
                   </span>
-                  <span className="tnum text-[12px] font-semibold" style={{ color: t["ink-3"] }}>
+                  <span className="tnum text-[12px] font-semibold" style={{ color: t["ink-2"] }}>
                     26/30
                   </span>
                 </span>

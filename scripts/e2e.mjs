@@ -5,7 +5,11 @@
 //   node scripts/e2e.mjs http://localhost:3210
 //
 // It covers every screen and the flows that cross features, with the clock
-// pinned to the challenge dates. Screenshots land in .shots/final-*.png.
+// pinned to the first challenge's dates: the day to day flows, upgrading a
+// version 1 device store, ending, starting, restarting and finishing a
+// challenge with the ongoing history left alone, ongoing mode, and themes
+// with a contrast check. Screenshots land in .shots/final-*.png and
+// .shots/v2-core-*.png.
 // Any failed check, console error or page error makes it exit non-zero.
 
 import { mkdirSync } from "node:fs";
@@ -55,9 +59,126 @@ const nav = (page) => page.getByRole("navigation", { name: "Main" });
 const done = (page, n, of = 12) => page.getByText(`${n} of ${of}`, { exact: true }).first().waitFor();
 const count = async (page) => (await page.locator("section", { hasText: "Checklist" }).first().locator("h2 + div").innerText()).trim();
 
-async function shot(page, name, fullPage = false) {
+async function shot(page, name, fullPage = false, prefix = "final-") {
   await page.waitForTimeout(350);
-  await page.screenshot({ path: `${shots}final-${name}.png`, fullPage });
+  await page.screenshot({ path: `${shots}${prefix}${name}.png`, fullPage });
+}
+
+// ---------- device store ----------
+
+const PREFIX = "lockin:v1:";
+/** Tables that hold what the user logged or set up. A challenge starting, ending or restarting must not change them. */
+const HISTORY = ["day_log", "earning", "meal", "saved_meal", "set_log", "vice_slip", "body_log", "schedule_block", "checklist_item", "target_version", "workout", "schedule_template"];
+
+/** The raw stored JSON of each table, by table name. */
+function readTables(page, tables) {
+  return page.evaluate(([prefix, names]) => Object.fromEntries(names.map((t) => [t, localStorage.getItem(prefix + t) ?? "[]"])), [PREFIX, tables]);
+}
+
+function rows(page, table) {
+  return page.evaluate(([prefix, t]) => JSON.parse(localStorage.getItem(prefix + t) ?? "[]"), [PREFIX, table]);
+}
+
+function sameTables(a, b) {
+  return Object.keys(a).filter((t) => a[t] !== b[t]);
+}
+
+// ---------- contrast ----------
+
+/**
+ * Every piece of text on screen against the background actually behind it,
+ * by the WCAG formula. See-through fills are blended down to the page color.
+ * Text inside something dimmed on purpose (a disabled control, a future day)
+ * is left out. Returns the pairs that fall short.
+ */
+function contrastFailures(page, min) {
+  return page.evaluate((minRatio) => {
+    const parse = (c) => {
+      const m = /rgba?\(([^)]+)\)/.exec(c);
+      if (m) {
+        const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number);
+        return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1];
+      }
+      const s = /color\(srgb ([\d.e-]+) ([\d.e-]+) ([\d.e-]+)(?: \/ ([\d.e-]+))?\)/.exec(c);
+      if (s) return [Number(s[1]) * 255, Number(s[2]) * 255, Number(s[3]) * 255, s[4] === undefined ? 1 : Number(s[4])];
+      return null;
+    };
+    const lum = ([r, g, b]) => {
+      const f = (v) => {
+        const x = v / 255;
+        return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+      };
+      return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+    };
+    const over = (top, under) => [0, 1, 2].map((i) => top[i] * top[3] + under[i] * (1 - top[3]));
+    const page = parse(getComputedStyle(document.body).backgroundColor) ?? [0, 0, 0, 1];
+    const backgroundOf = (el) => {
+      const stack = [];
+      for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+        const c = parse(getComputedStyle(n).backgroundColor);
+        if (c && c[3] > 0) stack.push(c);
+        if (c && c[3] >= 1) break;
+      }
+      let color = [page[0], page[1], page[2]];
+      for (const c of stack.reverse()) color = over(c, [...color, 1]);
+      return color;
+    };
+    const dimmed = (el) => {
+      for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+        if (Number(getComputedStyle(n).opacity) < 1 || n.disabled || n.getAttribute("aria-disabled") === "true") return true;
+      }
+      return false;
+    };
+    const out = [];
+    let checked = 0;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      const text = node.textContent.trim();
+      const el = node.parentElement;
+      if (!text || !el || el.closest("script,style,noscript")) continue;
+      const box = el.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      if (box.width === 0 || box.height === 0 || style.visibility === "hidden" || style.display === "none" || dimmed(el)) continue;
+      const fg = parse(style.color);
+      if (!fg) continue;
+      const bg = backgroundOf(el);
+      const solid = over(fg, [...bg, 1]);
+      const a = lum(solid);
+      const b = lum(bg);
+      const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      const size = parseFloat(style.fontSize);
+      const large = size >= 24 || (size >= 18.66 && Number(style.fontWeight) >= 700);
+      checked += 1;
+      if (ratio < (large ? 3 : minRatio)) out.push(`"${text.slice(0, 28)}" ${ratio.toFixed(2)}`);
+    }
+    return { checked, failed: out };
+  }, min);
+}
+
+async function checkContrast(page, name, min) {
+  const { checked, failed } = await contrastFailures(page, min);
+  check(`${name}: all ${checked} pieces of text hold ${min} to 1`, checked > 20 && failed.length === 0, failed.slice(0, 6).join(", "));
+}
+
+function rootVar(page, name) {
+  return page.evaluate((n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim(), name);
+}
+
+/** Today's header has three ways out. Everything else is behind More. */
+async function openMore(page, name) {
+  await page.getByRole("button", { name: "More", exact: true }).click();
+  await dialog(page).waitFor();
+  if (name) await dialog(page).getByRole("link", { name }).click();
+}
+
+async function setBaseTheme(page, name) {
+  await page.goto(`${base}/settings`);
+  await page.getByRole("heading", { name: "Settings", level: 1 }).waitFor();
+  const radio = page.getByRole("radio", { name, exact: true });
+  if ((await radio.getAttribute("aria-checked")) !== "true") {
+    await radio.click();
+    await page.getByText(`${name} is on`).waitFor();
+  }
 }
 
 async function noOverflow(page, name) {
@@ -138,6 +259,7 @@ check("Now is Wake and Next is the workout at 5:50 AM", /Wake/.test(await nowCar
 check("the morning brief is on Today, above Now and Next", (await page.getByText("Morning brief").boundingBox()).y < (await nowCard.boundingBox()).y);
 check("Now and Next is above the fold with the brief open", (await nowCard.boundingBox()).y < 844);
 check("the tab bar has five tabs and Today is lit", (await nav(page).getByRole("link").count()) === 5 && (await activeTab(page)) === "Today");
+check("the day strip shows the 30 challenge days", (await page.getByRole("tablist", { name: "Challenge days" }).getByRole("tab").count()) === 30);
 check("the workout is shown in full", (await page.getByRole("listitem").count()) >= 4);
 await page.waitForTimeout(600);
 const cls = await page.evaluate(() => window.__cls);
@@ -423,10 +545,40 @@ check("Reminders has a way back", (await page.getByRole("link", { name: "Back" }
 await noOverflow(page, "Reminders");
 await shot(page, "26-reminders", true);
 
+// ---------- More: the screens that are not tabs ----------
+console.log("More, Boards, Meals, Focus");
+await page.goto(`${base}/today`);
+await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
+await openMore(page);
+check("More lists Focus, Meals, Boards and Settings", (await dialog(page).getByRole("link").allInnerTexts()).map((t) => t.split("\n")[0]).join(",") === "Focus,Meals,Boards,Settings");
+await shot(page, "26b-more-sheet");
+await closeSheet(page);
+for (const [name, lit, backTo] of [
+  ["Boards", "Today", /Day \d+/],
+  ["Meals", "Body", "Body"],
+  ["Focus", "Schedule", "Schedule"],
+]) {
+  await page.goto(`${base}/today`);
+  await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
+  await openMore(page, name);
+  await page.getByRole("heading", { name, level: 1 }).waitFor();
+  check(`${name} opens from More, lights ${lit} and has an empty state`, (await activeTab(page)) === lit && (await page.getByRole("heading", { level: 3 }).count()) === 1);
+  await noOverflow(page, name);
+  await page.getByRole("link", { name: "Back" }).click();
+  await page.getByRole("heading", { name: backTo, level: 1 }).waitFor();
+}
+await page.goto(`${base}/body`);
+await page.getByRole("link", { name: "Meal plan" }).click();
+await page.getByRole("heading", { name: "Meals", level: 1 }).waitFor();
+await page.goto(`${base}/schedule`);
+await page.getByRole("link", { name: "Focus timer" }).click();
+await page.getByRole("heading", { name: "Focus", level: 1 }).waitFor();
+check("Meals opens from Body and Focus opens from Schedule", true);
+
 // ---------- Settings ----------
 console.log("Settings");
 await page.goto(`${base}/today`);
-await page.getByRole("link", { name: "Settings" }).click();
+await openMore(page, "Settings");
 await page.getByRole("heading", { name: "Settings", level: 1 }).waitFor();
 await shot(page, "27-settings", true);
 for (const [link, title, file] of [
@@ -468,6 +620,56 @@ await typeCode(page, "1379");
 await page.getByRole("heading", { name: "Settings", level: 1 }).waitFor();
 check("the right passcode opens the app", true);
 
+// =====================================================================
+// Upgrading a version 1 device store. Version 1 had one fixed challenge row
+// and no ongoing history fields. Put the store back in that shape, with
+// everything logged above still in it, and load the app again.
+// =====================================================================
+console.log("Upgrade from a version 1 store");
+{
+  const NEW_TABLES = ["mood_log", "motivation", "board", "board_item", "theme", "recipe", "meal_plan", "grocery_item", "expense", "focus_session"];
+  await page.evaluate(
+    ([prefix, newTables]) => {
+      const strip = (table, fields) => {
+        const list = JSON.parse(localStorage.getItem(prefix + table) ?? "[]");
+        for (const r of list) for (const f of fields) delete r[f];
+        localStorage.setItem(prefix + table, JSON.stringify(list));
+      };
+      strip("challenge", ["name", "status", "ended_on", "rules", "restart_of"]);
+      strip("app_settings", ["history_start", "daily_floor", "weekly_food_budget", "food_likes", "food_dislikes", "focus_goal_minutes"]);
+      for (const t of newTables) localStorage.removeItem(prefix + t);
+    },
+    [PREFIX, NEW_TABLES],
+  );
+  const v1 = await readTables(page, HISTORY);
+  const oldChallenge = (await rows(page, "challenge"))[0];
+  check("the store is in the version 1 shape", !("status" in oldChallenge) && !("history_start" in (await rows(page, "app_settings"))[0]) && (await rows(page, "day_log")).length >= 13);
+
+  await page.goto(`${base}/today`);
+  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await done(page, 12);
+  const c = (await rows(page, "challenge"))[0];
+  check(
+    "the one challenge became the first, active challenge with its dates and money target",
+    (await rows(page, "challenge")).length === 1 && c.id === oldChallenge.id && c.status === "active" && c.start_date === "2026-10-05" && c.length_days === 30 && c.money_target === 1000 && c.ended_on === null && c.rules === null,
+    JSON.stringify(c),
+  );
+  const settings = (await rows(page, "app_settings"))[0];
+  check("the ongoing history opens on the challenge start, with the floor carried over", settings.history_start === "2026-10-05" && settings.daily_floor === 100, JSON.stringify(settings));
+  const changed = sameTables(v1, await readTables(page, HISTORY));
+  check("nothing that was logged or set up changed in the upgrade", changed.length === 0, changed.join(", "));
+  check("Today still shows day 1 fully done after the upgrade", (await count(page)) === "12 of 12" && (await row(page, "Workout").getAttribute("aria-checked")) === "true");
+  await openTab(page, "Money");
+  await page.getByText("$860 to go by Oct 14").waitFor();
+  check("Money still shows the running total after the upgrade", true);
+  await openTab(page, "Progress");
+  await page.getByText("Streaks").first().waitFor();
+  check("Progress still shows day 1 as full after the upgrade", /full|locked/i.test((await page.getByRole("button", { name: /^Day 1\b/ }).first().getAttribute("aria-label")) ?? ""));
+  await page.reload();
+  await page.getByText("Streaks").first().waitFor();
+  check("a second load changes nothing more", sameTables(v1, await readTables(page, HISTORY)).length === 0 && JSON.stringify((await rows(page, "challenge"))[0]) === JSON.stringify(c));
+}
+
 const state = await ctx.storageState();
 await ctx.close();
 
@@ -475,13 +677,13 @@ await ctx.close();
 // Day 2. Tuesday Oct 6, 9:00 AM New York.
 // =====================================================================
 console.log("Day 2: yesterday keeps its score");
-async function at(iso, path = "/today") {
-  const c = await browser.newContext({ ...device, storageState: state });
+async function at(iso, path = "/today", from = state, heading = /Day \d+/) {
+  const c = await browser.newContext({ ...device, storageState: from });
   const p = await c.newPage();
   watch(p);
   await p.clock.install({ time: new Date(iso) });
   await p.goto(`${base}${path}`);
-  await p.getByRole("heading", { name: /Day \d+/ }).waitFor();
+  await p.getByRole("heading", { name: heading, level: 1 }).waitFor();
   return { c, p };
 }
 
@@ -550,6 +752,305 @@ await s.p.getByText("$2,000 to go by").waitFor();
 check("a reset starts a fresh running total", true);
 check("the all time total stays visible", /All time \$140/.test((await s.p.locator("main").innerText()).replace(/\s+/g, " ")));
 await shot(s.p, "37-money-after-reset", true);
+await s.c.close();
+
+// =====================================================================
+// Ongoing mode and challenges. Thursday Oct 8, 9:00 AM: day 4 of the first
+// challenge. Day 1 is fully logged, days 2 and 3 are empty.
+// =====================================================================
+console.log("Ending a challenge: ongoing history unchanged");
+const main1 = (p) => p.locator("main").innerText().then((t) => t.replace(/\s+/g, " "));
+async function openChallengeSettings(p) {
+  await p.goto(`${base}/settings/challenge`);
+  await p.getByRole("heading", { name: "Challenge", level: 1 }).waitFor();
+  await p.getByText("Past challenges").waitFor();
+}
+
+s = await at("2026-10-08T13:00:00Z");
+check("day 4 of the first challenge", await s.p.getByRole("heading", { name: "Day 4 of 30", exact: true }).isVisible());
+await setBaseTheme(s.p, "Dark minimal");
+// Both modes in both base themes, for the eye: .shots/v2-core-*.png
+async function looks(p, mode, heading) {
+  for (const [theme, label, min] of [
+    ["dark", "Dark minimal", 4.5],
+    ["contrast", "High contrast", 7],
+  ]) {
+    await setBaseTheme(p, label);
+    await p.evaluate(() => window.scrollTo(0, 0));
+    await checkContrast(p, `Settings, ${mode}, ${label}`, min);
+    await shot(p, `${mode}-${theme}-settings`, false, "v2-core-");
+    await p.goto(`${base}/today`);
+    await p.getByRole("heading", { name: heading, level: 1 }).waitFor();
+    await p.getByText("Checklist").first().waitFor();
+    await p.waitForTimeout(400);
+    await checkContrast(p, `Today, ${mode}, ${label}`, min);
+    await noOverflow(p, `Today, ${mode}, ${label}`);
+    await shot(p, `${mode}-${theme}-today`, false, "v2-core-");
+    await shot(p, `${mode}-${theme}-today-full`, true, "v2-core-");
+    await p.goto(`${base}/progress`);
+    await p.getByText("Streaks").first().waitFor();
+    await p.waitForTimeout(300);
+    await checkContrast(p, `Progress, ${mode}, ${label}`, min);
+    await noOverflow(p, `Progress, ${mode}, ${label}`);
+    await shot(p, `${mode}-${theme}-progress`, false, "v2-core-");
+    await shot(p, `${mode}-${theme}-progress-full`, true, "v2-core-");
+  }
+  await setBaseTheme(p, "Dark minimal");
+}
+await looks(s.p, "challenge", /Day \d+/);
+
+await openChallengeSettings(s.p);
+check("Settings shows the running challenge and its day", /Running 30 day lock in Day 4 of 30/i.test(await main1(s.p)), (await main1(s.p)).slice(0, 200));
+await shot(s.p, "challenge-settings", true, "v2-core-");
+const beforeEnd = await readTables(s.p, HISTORY);
+const logsBefore = (await rows(s.p, "day_log")).length;
+await s.p.getByRole("button", { name: "End early" }).click();
+await dialog(s.p).waitFor();
+await shot(s.p, "challenge-end-sheet", false, "v2-core-");
+await dialog(s.p).getByRole("button", { name: "End challenge" }).click();
+await s.p.getByText("Challenge ended. Ongoing from here.").waitFor();
+await dialog(s.p).waitFor({ state: "detached" });
+await s.p.getByText("No challenge is running.").waitFor();
+let all = await rows(s.p, "challenge");
+check("the challenge is kept as ended on the day it stopped", all.length === 1 && all[0].status === "ended" && all[0].ended_on === "2026-10-08", JSON.stringify(all));
+let diff = sameTables(beforeEnd, await readTables(s.p, HISTORY));
+check("ending the challenge changed nothing in the ongoing history", diff.length === 0 && (await rows(s.p, "day_log")).length === logsBefore, diff.join(", "));
+check("Settings is in ongoing mode and lists the past challenge", /Mode Ongoing/i.test(await main1(s.p)) && /30 day lock in Ended early · Oct 5 to Oct 8/.test(await main1(s.p)), (await main1(s.p)).slice(0, 300));
+await shot(s.p, "ongoing-challenge-settings", true, "v2-core-");
+
+// ---------- ongoing mode on Today ----------
+console.log("Ongoing mode: Today, Money, Progress, Coach");
+await s.p.goto(`${base}/today`);
+await s.p.getByRole("heading", { name: "Oct 8 Thu", exact: true }).waitFor();
+check("Today shows a plain date in ongoing mode, with no day count", (await s.p.getByText(/Day \d+ of \d+/).count()) === 0);
+check("Today shows consistency over time beside the date", (await s.p.locator("[data-consistency]").innerText()) === "1 of 3 days locked in", await s.p.locator("[data-consistency]").innerText());
+check("the strip shows recent days by date", (await s.p.getByRole("tablist", { name: "Recent days" }).getByRole("tab").count()) === 4);
+await row(s.p, "Workout").click();
+await done(s.p, 1);
+check("the checklist works the same with no challenge", (await row(s.p, "Workout").getAttribute("aria-checked")) === "true");
+await row(s.p, "Workout").click();
+await done(s.p, 0);
+await s.p.getByRole("tab", { name: "Monday, Oct 5", exact: true }).click();
+await s.p.getByRole("heading", { name: "Oct 5 Mon", exact: true }).waitFor();
+await done(s.p, 12);
+check("a day logged during the challenge is still there, fully done, under its date", (await row(s.p, "Workout").getAttribute("aria-checked")) === "true");
+await s.p.getByRole("button", { name: "Back to today" }).or(s.p.getByRole("tab", { name: "Thursday, Oct 8, today", exact: true })).first().click();
+await s.p.getByRole("heading", { name: "Oct 8 Thu", exact: true }).waitFor();
+
+await openTab(s.p, "Money");
+await s.p.getByText("Earned so far").waitFor();
+check("Money keeps the earnings and the floor, with no target outside a challenge", /Earned so far \$140/i.test(await main1(s.p)) && /Floor \$100/i.test(await main1(s.p)) && (await s.p.getByRole("link", { name: "Start a challenge" }).count()) === 1, (await main1(s.p)).slice(0, 200));
+await shot(s.p, "ongoing-money", true, "v2-core-");
+
+await openTab(s.p, "Progress");
+await s.p.getByText("Over time").waitFor();
+let text = await main1(s.p);
+check("Progress leads with full days over the days so far, not a day count", /Days locked in 1 of 3/i.test(text) && !/Day \d+ of 30/i.test(text), text.slice(0, 200));
+check("Progress has no challenge grid in ongoing mode", (await s.p.getByRole("button", { name: /^Day \d+,/ }).count()) === 0);
+const oct5 = s.p.getByRole("button", { name: /^Monday, Oct 5, locked in, 12 of 12 done/ });
+check("the week view shows Oct 5 as full", (await oct5.count()) === 1);
+await s.p.getByRole("radio", { name: "Months" }).click();
+await s.p.getByText("October 2026").waitFor();
+check("the month view shows the month as a calendar", (await s.p.getByRole("button", { name: /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), Oct \d+/ }).count()) === 31);
+await s.p.getByRole("button", { name: /^Monday, Oct 5, locked in/ }).click();
+await dialog(s.p).waitFor();
+check("a day opens by its date", (await dialog(s.p).getByRole("heading", { name: "Oct 5" }).count()) === 1);
+await closeSheet(s.p);
+await s.p.getByRole("button", { name: /30 day lock in/ }).click();
+await s.p.getByRole("heading", { name: "30 day lock in", level: 1 }).waitFor();
+text = await main1(s.p);
+check("a past challenge can be opened with its grid and record", /Past challenge · Ended early/i.test(text) && /Oct 5 to Oct 8, 4 of 30 days/.test(text) && /full|locked/i.test((await s.p.getByRole("button", { name: /^Day 1\b/ }).first().getAttribute("aria-label")) ?? ""), text.slice(0, 200));
+await shot(s.p, "past-challenge", true, "v2-core-");
+await s.p.getByRole("button", { name: "Back to progress" }).click();
+await s.p.getByRole("heading", { name: "Progress", level: 1 }).waitFor();
+await s.p.getByRole("link", { name: /Share/ }).click();
+await s.p.getByRole("button", { name: /Save image/ }).waitFor();
+await s.p.waitForTimeout(600);
+check("the share card speaks of days locked in, not a day count", /1 of 3 days locked in/.test((await s.p.getByRole("img", { name: /Progress card/ }).getAttribute("aria-label")) ?? ""), (await s.p.getByRole("img", { name: /Progress card/ }).getAttribute("aria-label")) ?? "");
+await shot(s.p, "ongoing-share-card", true, "v2-core-");
+await s.p.goto(`${base}/coach`);
+await s.p.getByRole("heading", { name: "Coach", level: 1 }).waitFor();
+await s.p.getByText("Written by rules from your data").first().waitFor();
+text = await main1(s.p);
+check("the coach writes a brief in ongoing mode and has no day count", /Thursday, Oct 8/.test(text) && !/Day \d+ of \d+/i.test(text), text.slice(0, 200));
+await s.p.goto(`${base}/vices`);
+await s.p.getByRole("heading", { name: "Vices", level: 1 }).waitFor();
+await s.p.goto(`${base}/body`);
+await s.p.getByRole("radio", { name: "Weight" }).click();
+await s.p.getByText("182.4").first().waitFor();
+await s.p.goto(`${base}/schedule`);
+await s.p.getByRole("heading", { name: "Schedule", level: 1 }).waitFor();
+check("Vices, Body and Schedule open in ongoing mode", !/Day \d+ of \d+/i.test(await main1(s.p)));
+
+await looks(s.p, "ongoing", "Oct 8 Thu");
+
+// ---------- start a new challenge with its own rules ----------
+console.log("Starting a new challenge");
+await openChallengeSettings(s.p);
+await s.p.getByRole("link", { name: "Start a challenge" }).click();
+await s.p.getByRole("heading", { name: "New challenge", level: 1 }).waitFor();
+check("a challenge cannot start without a name", await s.p.getByRole("button", { name: "Start challenge" }).isDisabled());
+await s.p.getByRole("textbox", { name: "Name" }).fill("Strict diet");
+await s.p.getByRole("radio", { name: "14", exact: true }).click();
+await s.p.getByText("Ends Wednesday, Oct 21.").waitFor();
+await s.p.getByRole("radio", { name: "Pick items" }).click();
+check("picking items with none picked is refused", await s.p.getByRole("button", { name: "Start challenge" }).isDisabled());
+await s.p.getByRole("checkbox", { name: "Calories", exact: true }).click();
+await s.p.getByRole("textbox", { name: "Calories: from" }).fill("1500");
+await s.p.getByRole("textbox", { name: "Calories: to" }).fill("1700");
+await s.p.getByRole("checkbox", { name: "Workout", exact: true }).click();
+await noOverflow(s.p, "New challenge");
+await shot(s.p, "new-challenge", true, "v2-core-");
+const beforeStart = await readTables(s.p, HISTORY);
+await s.p.getByRole("button", { name: "Start challenge" }).click();
+await s.p.getByRole("heading", { name: "Day 1 of 14", exact: true }).waitFor();
+all = await rows(s.p, "challenge");
+check("there are two challenges now, one ended and one active", all.length === 2 && all.filter((c) => c.status === "active").length === 1 && all.find((c) => c.status === "active").name === "Strict diet", JSON.stringify(all.map((c) => [c.name, c.status])));
+diff = sameTables(beforeStart, await readTables(s.p, HISTORY));
+check("starting a challenge changed nothing in the ongoing history", diff.length === 0, diff.join(", "));
+check("Today counts the challenge's own items beside the whole checklist", /Strict diet: 0 of 2/.test(await main1(s.p)) && (await count(s.p)) === "0 of 12");
+check("the challenge's calorie target is the one in force today", (await s.p.getByText("1,500 to 1,700 kcal").count()) === 1 && (await s.p.getByText("1,900 to 2,100 kcal").count()) === 0);
+await row(s.p, "Workout").click();
+await done(s.p, 1);
+check("ticking a challenge item moves both counts", /Strict diet: 1 of 2/.test(await main1(s.p)));
+await shot(s.p, "new-challenge-today", false, "v2-core-");
+await s.p.goto(`${base}/today?date=2026-10-07`);
+await s.p.getByRole("heading", { name: "Oct 7 Wed", exact: true }).waitFor();
+check("a day before the new challenge keeps a plain date and its own target", (await s.p.getByText("1,900 to 2,100 kcal").count()) === 1 && (await s.p.getByText("1,500 to 1,700 kcal").count()) === 0);
+await s.p.goto(`${base}/progress`);
+await s.p.getByText("Streaks").first().waitFor();
+const newDay1 = s.p.getByRole("button", { name: /^Day 1,/ }).first();
+check("Progress shows the new challenge's 14 day grid, scored by its two items", (await s.p.getByRole("button", { name: /^Day \d+,/ }).count()) === 14 && /partial, 1 of 2 done/.test((await newDay1.getAttribute("aria-label")) ?? ""), (await newDay1.getAttribute("aria-label")) ?? "");
+text = await main1(s.p);
+check("Progress keeps the ongoing view under the challenge, and the past challenge", /Ongoing Never resets/i.test(text) && /Over time/i.test(text) && /Past challenges/i.test(text));
+await s.p.goto(`${base}/money`);
+await s.p.getByText("This challenge has no money target.").waitFor();
+check("a challenge without a money target shows the floor only", (await s.p.getByRole("button", { name: "Set a target" }).count()) === 1);
+const afterStart = await s.c.storageState();
+await s.c.close();
+
+// ---------- restart ----------
+console.log("Restarting a challenge");
+s = await at("2026-10-09T13:00:00Z", "/today", afterStart);
+check("the next morning is day 2 of the new challenge", await s.p.getByRole("heading", { name: "Day 2 of 14", exact: true }).isVisible());
+const beforeRestart = await readTables(s.p, HISTORY);
+await openChallengeSettings(s.p);
+await s.p.getByRole("button", { name: "Restart" }).click();
+await dialog(s.p).waitFor();
+await dialog(s.p).getByRole("button", { name: "Restart today" }).click();
+await s.p.getByText("Restarted. Today is day 1.").waitFor();
+await dialog(s.p).waitFor({ state: "detached" });
+all = await rows(s.p, "challenge");
+const active = all.find((c) => c.status === "active");
+check(
+  "the old run is kept as abandoned and the same challenge starts again today",
+  all.length === 3 && all.filter((c) => c.status === "active").length === 1 && active.start_date === "2026-10-09" && active.name === "Strict diet" && active.length_days === 14 && Array.isArray(active.rules) && active.rules.length === 2 && all.some((c) => c.status === "abandoned" && c.ended_on === "2026-10-08" && c.id === active.restart_of),
+  JSON.stringify(all.map((c) => [c.name, c.status, c.start_date, c.ended_on])),
+);
+diff = sameTables(beforeRestart, await readTables(s.p, HISTORY));
+check("restarting changed nothing in the ongoing history", diff.length === 0, diff.join(", "));
+check("Settings shows day 1 again and two past challenges", /Running Strict diet Day 1 of 14/i.test(await main1(s.p)) && /Restarted · Oct 8 to Oct 8/.test(await main1(s.p)) && /Ended early · Oct 5 to Oct 8/.test(await main1(s.p)), (await main1(s.p)).slice(0, 300));
+await s.p.goto(`${base}/today`);
+await s.p.getByRole("heading", { name: "Day 1 of 14", exact: true }).waitFor();
+check("Today is day 1 again, and yesterday is still on the strip to finish off", (await s.p.getByRole("tab", { name: "Thursday, Oct 8", exact: true }).count()) === 1);
+await s.p.getByRole("tab", { name: "Thursday, Oct 8", exact: true }).click();
+await s.p.getByRole("heading", { name: "Oct 8 Thu", exact: true }).waitFor();
+check("yesterday's tick survived the restart", (await row(s.p, "Workout").getAttribute("aria-checked")) === "true");
+await s.p.goto(`${base}/progress`);
+await s.p.getByText("Streaks").first().waitFor();
+const workoutStreak = s.p.locator("li").filter({ hasText: /^Workout/ }).filter({ hasText: /days?/ }).first();
+check("a streak runs across the restart: Workout is at 1 day from yesterday", /\b1\s*day\b/.test((await workoutStreak.innerText()).replace(/\s+/g, " ")), (await workoutStreak.innerText()).replace(/\s+/g, " "));
+const afterRestart = await s.c.storageState();
+await s.c.close();
+
+// ---------- finishing: the challenge runs out ----------
+console.log("Finishing a challenge");
+s = await at("2026-10-23T13:00:00Z", "/today", afterRestart, "Oct 23 Fri");
+await s.p.getByText("Challenge done").waitFor();
+check("once the last day has passed Today is back to a plain date and offers to close the challenge", /Strict diet: all 14 days are behind you/.test(await main1(s.p)));
+await shot(s.p, "challenge-done-card", false, "v2-core-");
+const beforeFinish = await readTables(s.p, HISTORY);
+await s.p.getByRole("button", { name: "Finish challenge" }).click();
+await s.p.getByRole("dialog", { name: "Challenge complete" }).waitFor();
+check("finishing shows the finish moment with the challenge's name and record", /Strict diet/.test(await dialog(s.p).innerText()) && /of 14 days locked in/.test(await dialog(s.p).innerText()), await dialog(s.p).innerText());
+await s.p.waitForTimeout(1200);
+await shot(s.p, "challenge-complete-moment", false, "v2-core-");
+await s.p.getByRole("button", { name: "Keep going" }).click();
+await s.p.getByRole("dialog", { name: "Challenge complete" }).waitFor({ state: "detached" });
+all = await rows(s.p, "challenge");
+check("the challenge is marked succeeded on its last day", all.filter((c) => c.status === "active").length === 0 && all.some((c) => c.status === "succeeded" && c.ended_on === "2026-10-22"), JSON.stringify(all.map((c) => [c.status, c.ended_on])));
+diff = sameTables(beforeFinish, await readTables(s.p, HISTORY));
+check("finishing changed nothing in the ongoing history", diff.length === 0, diff.join(", "));
+check("the done card is gone and Today carries on in ongoing mode", (await s.p.getByText("Challenge done").count()) === 0 && (await s.p.locator("[data-consistency]").count()) === 1);
+await openChallengeSettings(s.p);
+check("Settings lists three past challenges, one finished", /Finished · Oct 9 to Oct 22/.test(await main1(s.p)) && (await s.p.getByRole("button", { name: /^Run .* again$/ }).count()) === 3);
+await s.p.getByRole("button", { name: "Run 30 day lock in again" }).click();
+await dialog(s.p).getByRole("button", { name: "Start today" }).click();
+await s.p.getByText("Started. Today is day 1.").waitFor();
+await dialog(s.p).waitFor({ state: "detached" });
+check("a past challenge can be run again from the list", /Running 30 day lock in Day 1 of 30/i.test(await main1(s.p)), (await main1(s.p)).slice(0, 200));
+await s.c.close();
+
+// =====================================================================
+// Themes: switching the base, the saved theme before first paint, and a
+// palette on top.
+// =====================================================================
+console.log("Themes");
+s = await at("2026-10-06T13:00:00Z");
+await s.p.goto(`${base}/settings`);
+await s.p.getByRole("heading", { name: "Settings", level: 1 }).waitFor();
+check("the default theme is dark minimal", (await rootVar(s.p, "--bg")) === "#09090a" && (await s.p.getByRole("radio", { name: "Dark minimal" }).getAttribute("aria-checked")) === "true");
+await s.p.getByRole("radio", { name: "High contrast" }).click();
+await s.p.getByText("High contrast is on").waitFor();
+check("switching the base theme repaints the page from data", (await rootVar(s.p, "--bg")) === "#000000" && (await rootVar(s.p, "--ink")) === "#ffffff" && (await s.p.evaluate(() => getComputedStyle(document.body).backgroundColor)) === "rgb(0, 0, 0)");
+check("the choice is stored in the theme table", (await rows(s.p, "theme")).filter((r) => r.active && r.base === "contrast").length === 1, JSON.stringify(await rows(s.p, "theme")));
+await s.p.reload();
+await s.p.getByRole("heading", { name: "Settings", level: 1 }).waitFor();
+check("the theme survives a reload", (await rootVar(s.p, "--bg")) === "#000000" && (await s.p.getByRole("radio", { name: "High contrast" }).getAttribute("aria-checked")) === "true");
+{
+  // No scripts from the app at all: only the inline script in <head> can have set the theme.
+  const bare = await s.c.newPage();
+  await bare.route("**/_next/static/**/*.js", (r) => r.abort());
+  await bare.goto(`${base}/today`, { waitUntil: "load" });
+  const seen = await bare.evaluate(() => ({
+    bg: getComputedStyle(document.documentElement).getPropertyValue("--bg").trim(),
+    body: getComputedStyle(document.body).backgroundColor,
+    theme: document.documentElement.dataset.theme,
+  }));
+  check("the saved theme is on the page before the app's scripts run, so there is no flash", seen.bg === "#000000" && seen.body === "rgb(0, 0, 0)" && seen.theme === "contrast", JSON.stringify(seen));
+  await bare.close();
+}
+
+// A palette on top of the base, as a board will set it. Written as the theme
+// row the boards screen will write, then read back by the app on load. The
+// palette is deliberately bad: mid gray text on a light page, a pale accent.
+await s.p.evaluate(
+  ([prefix]) => {
+    const rows = JSON.parse(localStorage.getItem(prefix + "theme") ?? "[]").map((r) => ({ ...r, active: false }));
+    rows.push({ id: "from-board", created_at: new Date().toJSON(), name: "Sand", base: "dark", palette: { background: "#f3ead8", text: "#b9ad98", muted: "#d8cdb8", accent: "#f0d27a" }, accent: "#f0d27a", board_id: null, active: true });
+    localStorage.setItem(prefix + "theme", JSON.stringify(rows));
+  },
+  [PREFIX],
+);
+await s.p.goto(`${base}/today`);
+await s.p.getByRole("heading", { name: /Day \d+/, level: 1 }).waitFor();
+await s.p.getByText("Checklist").first().waitFor();
+await s.p.waitForTimeout(400);
+check("a palette becomes the theme: the page takes its background", (await rootVar(s.p, "--bg")) === "#f3ead8" && (await s.p.evaluate(() => document.documentElement.style.colorScheme)) === "light", await rootVar(s.p, "--bg"));
+check("unreadable palette colors are adjusted, not used as given", (await rootVar(s.p, "--ink")) !== "#b9ad98" && (await rootVar(s.p, "--accent")) !== "#f0d27a");
+await checkContrast(s.p, "Today with a light palette", 4.5);
+await shot(s.p, "palette-light-today", false, "v2-core-");
+await s.p.goto(`${base}/progress`);
+await s.p.getByText("Streaks").first().waitFor();
+await checkContrast(s.p, "Progress with a light palette", 4.5);
+await shot(s.p, "palette-light-progress", true, "v2-core-");
+await s.p.goto(`${base}/settings`);
+await s.p.getByText("Your palette is on top").waitFor();
+await checkContrast(s.p, "Settings with a light palette", 4.5);
+await shot(s.p, "palette-light-settings", true, "v2-core-");
+await s.p.getByRole("button", { name: "Reset", exact: true }).click();
+await s.p.getByText("Back to the base theme").waitFor();
+check("reset drops the palette and goes back to the base", (await rootVar(s.p, "--bg")) === "#09090a" && (await s.p.getByText("Your palette is on top").count()) === 0);
 await s.c.close();
 
 // =====================================================================
