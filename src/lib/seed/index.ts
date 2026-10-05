@@ -2,8 +2,10 @@
 // only writes when app_settings has no seeded row.
 
 import { db } from "../db";
+import { plannedEnd } from "../logic/challenge";
+import { todayNY } from "../logic/dates";
 import { BASELINE_DATE } from "../logic/targets";
-import type { NewRow } from "../types";
+import type { DateStr, NewRow } from "../types";
 import {
   SEED_CHALLENGE,
   SEED_ITEMS,
@@ -23,16 +25,16 @@ function uid(): string {
 let running: Promise<boolean> | null = null;
 
 /** Returns true when it seeded, false when the data was already there. */
-export function ensureSeeded(): Promise<boolean> {
+export function ensureSeeded(today: DateStr = todayNY()): Promise<boolean> {
   if (!running) {
-    running = seedIfEmpty().finally(() => {
+    running = seedIfEmpty(today).finally(() => {
       running = null;
     });
   }
   return running;
 }
 
-async function seedIfEmpty(): Promise<boolean> {
+async function seedIfEmpty(today: DateStr): Promise<boolean> {
   const settings = await db.get("app_settings", "app");
   if (settings?.seeded) return false;
 
@@ -51,7 +53,10 @@ async function seedIfEmpty(): Promise<boolean> {
     active: item.active,
   }));
 
-  if (!(await db.get("challenge", SEED_CHALLENGE.id as string))) await db.insert("challenge", SEED_CHALLENGE);
+  // The first challenge from the PRD, unless its 30 days are already over on
+  // a first install. Then the app simply starts in ongoing mode.
+  const withChallenge = today <= plannedEnd(SEED_CHALLENGE);
+  if (withChallenge && (await db.list("challenge", { limit: 1 })).length === 0) await db.insert("challenge", SEED_CHALLENGE);
   if ((await db.list("checklist_item", { limit: 1 })).length === 0) {
     await db.insertMany("checklist_item", items);
     await db.insertMany("target_version", versions);
@@ -65,6 +70,9 @@ async function seedIfEmpty(): Promise<boolean> {
     );
   }
   // Written last: its presence is what marks the seed as complete.
-  await db.upsert("app_settings", SEED_SETTINGS, ["id"]);
+  // The history opens on the challenge start, so the days before a late
+  // install can be backfilled, and never later than the install day.
+  const historyStart = withChallenge && SEED_CHALLENGE.start_date < today ? SEED_CHALLENGE.start_date : today;
+  await db.upsert("app_settings", { ...SEED_SETTINGS, history_start: historyStart }, ["id"]);
   return true;
 }

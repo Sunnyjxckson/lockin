@@ -14,6 +14,7 @@ import type {
   DateStr,
   DayLog,
   Earning,
+  FocusSession,
   Meal,
   NewRow,
   SetLog,
@@ -24,9 +25,9 @@ import type {
   Workout,
 } from "../types";
 import { WEEKDAY_NAMES } from "../types";
+import { consistency, consistencyLabel, plannedEnd, ranOn } from "./challenge";
 import {
   addDays,
-  challengeEndDate,
   dateRange,
   dayNumber,
   diffDays,
@@ -54,8 +55,13 @@ export interface CoachBlock {
 /** Every row the coach reads. The client loads these and hands them over. */
 export interface CoachData {
   today: DateStr;
-  challenge: Challenge;
-  settings: Pick<AppSettings, "carbs_target" | "fat_target" | "weight_unit"> | null;
+  /** First date of the ongoing history. Nothing before it is scored. */
+  historyStart: DateStr;
+  /** The challenge running today. Null in ongoing mode. */
+  challenge: Challenge | null;
+  /** The daily earnings floor, challenge or not. */
+  floor: number;
+  settings: (Pick<AppSettings, "carbs_target" | "fat_target" | "weight_unit"> & Partial<Pick<AppSettings, "focus_goal_minutes">>) | null;
   items: ChecklistItem[];
   versions: TargetVersion[];
   logs: DayLog[];
@@ -67,6 +73,8 @@ export interface CoachData {
   workouts: Workout[];
   /** Today's schedule blocks. */
   blocks: CoachBlock[];
+  /** Focus sessions from the last two weeks. Optional so older callers still work. */
+  focus?: FocusSession[];
 }
 
 // ---------- flags ----------
@@ -139,12 +147,10 @@ export function touchedDates(logs: readonly DayLog[]): Set<DateStr> {
   return out;
 }
 
-/** First and last challenge days that are over (yesterday at the latest). Null before day 2. */
-export function completedRange(challenge: Pick<Challenge, "start_date" | "length_days">, today: DateStr): { from: DateStr; to: DateStr } | null {
-  const end = challengeEndDate(challenge.start_date, challenge.length_days);
-  const yesterday = addDays(today, -1);
-  const to = yesterday > end ? end : yesterday;
-  return to >= challenge.start_date ? { from: challenge.start_date, to } : null;
+/** First and last days of the history that are over (yesterday at the latest). Null on the first day. */
+export function completedRange(historyStart: DateStr, today: DateStr): { from: DateStr; to: DateStr } | null {
+  const to = addDays(today, -1);
+  return to >= historyStart ? { from: historyStart, to } : null;
 }
 
 // ---------- snapshot ----------
@@ -165,7 +171,8 @@ export interface MissLine {
 export interface DayLine {
   date: DateStr;
   label: string;
-  dayNumber: number;
+  /** Day of the running challenge. Null for a day outside it, and in ongoing mode. */
+  dayNumber: number | null;
   status: DayStatus;
   done: number;
   total: number;
@@ -185,6 +192,7 @@ export interface ItemLine {
 
 export interface MoneyLine {
   total: number;
+  /** 0 when there is no money target (ongoing mode, or a challenge without one). */
   target: number;
   deadline: DateStr;
   deadlineLabel: string;
@@ -243,10 +251,19 @@ export interface CoachSnapshot {
     date: DateStr;
     label: string;
     weekday: string;
-    dayNumber: number;
-    lengthDays: number;
-    daysLeft: number;
-    phase: "before" | "active" | "after";
+    /** "ongoing" is the default, used for the long run. "challenge" while one is running. */
+    mode: "ongoing" | "challenge";
+    /** The running challenge's name. Null in ongoing mode. */
+    challenge: string | null;
+    /** Day of the running challenge. Null in ongoing mode. */
+    dayNumber: number | null;
+    lengthDays: number | null;
+    /** Days left after today in the running challenge. Null in ongoing mode. */
+    daysLeft: number | null;
+    /** before: the history has not started. active: every other day. */
+    phase: "before" | "active";
+    /** Full days out of the last 30 (fewer early on), today counted once it is full. */
+    consistency: { full: number; days: number; window: number; label: string };
   };
   plan: {
     blocks: { name: string; kind: string; start: string; end: string }[];
@@ -273,6 +290,8 @@ export interface CoachSnapshot {
   lifts: LiftLine[];
   weight: { unit: string; entries: { date: DateStr; label: string; weight: number }[]; change: string | null };
   vices: { name: string; cleanStreak: number; slips: { date: DateStr; label: string; time: string; trigger: string | null }[] }[];
+  /** Minutes of focus per day over the last 7 days, and the daily goal. */
+  focus: { goalMinutes: number; days: { date: DateStr; label: string; minutes: number }[] };
   week: WeekLine;
   flags: Pick<Flag, "kind" | "title" | "detail" | "change" | "evidence">[];
   /** The rule-based pick for next week's one change. */
@@ -342,15 +361,18 @@ function sum(ns: number[]): number {
 }
 
 function buildMoney(data: CoachData): MoneyLine {
-  const { challenge: c, today, earnings } = data;
-  const counted = earnings.filter((e) => e.date >= c.start_date && e.date <= today);
-  // Toward the current target: from the day it was last reset, if it was.
-  const since = c.money_target_start && c.money_target_start > c.start_date ? c.money_target_start : c.start_date;
+  const { challenge: c, today, earnings, historyStart } = data;
+  const counted = earnings.filter((e) => e.date >= historyStart && e.date <= today);
+  // A money target belongs to a challenge. Without one there is only the floor.
+  const target = c && c.money_target !== null && c.money_deadline ? c.money_target : 0;
+  const deadline = c && c.money_deadline && target > 0 ? c.money_deadline : today;
+  // Toward the current target: from the challenge start, or the day it was last reset.
+  const since = c ? (c.money_target_start && c.money_target_start > c.start_date ? c.money_target_start : c.start_date) : historyStart;
   const total = sum(counted.filter((e) => e.date >= since).map((e) => e.amount));
   const onDate = (d: DateStr) => sum(counted.filter((e) => e.date === d).map((e) => e.amount));
-  const remaining = Math.max(0, Math.round((c.money_target - total) * 100) / 100);
-  const daysLeft = today > c.money_deadline ? 0 : diffDays(today, c.money_deadline) + 1;
-  const state = c.money_target > 0 && total >= c.money_target ? "hit" : today > c.money_deadline ? "past" : "active";
+  const remaining = Math.max(0, Math.round((target - total) * 100) / 100);
+  const daysLeft = target <= 0 || today > deadline ? 0 : diffDays(today, deadline) + 1;
+  const state = target > 0 && total >= target ? "hit" : target > 0 && today > deadline ? "past" : "active";
   const neededPerDay = daysLeft > 0 ? Math.ceil(remaining / daysLeft) : null;
   const yesterday = addDays(today, -1);
   const from14 = addDays(today, -14);
@@ -365,19 +387,19 @@ function buildMoney(data: CoachData): MoneyLine {
     }
     apps.set(e.app, a);
   }
-  const last7From = addDays(today, -7) < c.start_date ? c.start_date : addDays(today, -7);
+  const last7From = addDays(today, -7) < historyStart ? historyStart : addDays(today, -7);
   return {
     total,
-    target: c.money_target,
-    deadline: c.money_deadline,
-    deadlineLabel: formatDateShort(c.money_deadline),
+    target,
+    deadline,
+    deadlineLabel: formatDateShort(deadline),
     state,
     remaining,
     daysLeft,
     neededPerDay,
-    floor: c.daily_floor,
-    floorCovers: neededPerDay !== null && neededPerDay <= c.daily_floor,
-    earnedYesterday: yesterday >= c.start_date ? onDate(yesterday) : null,
+    floor: data.floor,
+    floorCovers: neededPerDay !== null && neededPerDay <= data.floor,
+    earnedYesterday: yesterday >= historyStart ? onDate(yesterday) : null,
     earnedToday: onDate(today),
     last7: yesterday >= last7From ? dateRange(last7From, yesterday).map((d) => ({ date: d, label: formatDateShort(d), amount: onDate(d) })) : [],
     apps: [...apps.entries()]
@@ -393,12 +415,11 @@ function buildMoney(data: CoachData): MoneyLine {
 
 /** One Monday to Sunday week, scored up to `today`. */
 export function buildWeek(data: CoachData, anyDateInWeek: DateStr): WeekLine {
-  const { challenge: c, today, items, versions, logs } = data;
+  const { today, items, versions, logs, historyStart } = data;
   const start = weekStart(anyDateInWeek);
   const end = weekEnd(anyDateInWeek);
-  const challengeEnd = challengeEndDate(c.start_date, c.length_days);
-  const from = start < c.start_date ? c.start_date : start;
-  const to = [end, today, challengeEnd].sort()[0];
+  const from = start < historyStart ? historyStart : start;
+  const to = end < today ? end : today;
   const days = from <= to ? dateRange(from, to) : [];
 
   const lastNight = addDays(today, -1);
@@ -473,7 +494,7 @@ export function buildWeek(data: CoachData, anyDateInWeek: DateStr): WeekLine {
     slipped,
     weekly: wk ? wk.items.map((w) => ({ name: w.item.name, done: w.done })) : [],
     earned: sum(earnedByDay),
-    floorDays: earnedByDay.filter((n) => n >= c.daily_floor).length,
+    floorDays: earnedByDay.filter((n) => n >= data.floor).length,
     slips: [...slipCounts.entries()].map(([vice, count]) => ({ vice, count })),
     weightChange,
   };
@@ -503,20 +524,29 @@ export interface SnapshotOptions {
 
 /** The whole picture, compact, with every number the coach may use. */
 export function buildSnapshot(data: CoachData, flags: readonly Flag[], options: SnapshotOptions = {}): CoachSnapshot {
-  const { challenge: c, today, items, versions, logs } = data;
-  const end = challengeEndDate(c.start_date, c.length_days);
-  const phase = today < c.start_date ? "before" : today > end ? "after" : "active";
+  const { challenge: c, today, items, versions, logs, historyStart } = data;
+  const phase = today < historyStart ? "before" : "active";
+  const running = c && c.status === "active" && ranOn(c, today) ? c : null;
   const weekday = weekdayOf(today);
   const unit = data.settings?.weight_unit ?? "lb";
 
   // Finished days, newest last, two weeks at most.
-  const range = completedRange(c, today);
+  const range = completedRange(historyStart, today);
   const dayDates = range ? dateRange(range.from, range.to).slice(-14) : [];
   const summaries = dayDates.map((d) => summarizeDay(d, items, versions, logs));
+
+  // Consistency over the last 30 days is the measure in both modes: one
+  // missed day costs one day, it does not start anything over.
+  const statusByDate: Record<DateStr, DayStatus> = {};
+  if (phase === "active") {
+    const first = addDays(today, -30) < historyStart ? historyStart : addDays(today, -30);
+    for (const d of dateRange(first, today)) statusByDate[d] = summarizeDay(d, items, versions, logs).status;
+  }
+  const steady = consistency(statusByDate, today, historyStart, 30);
   const days: DayLine[] = summaries.map((s) => ({
     date: s.date,
     label: formatDateShort(s.date),
-    dayNumber: dayNumber(c.start_date, s.date),
+    dayNumber: running && ranOn(running, s.date) ? dayNumber(running.start_date, s.date) : null,
     status: s.status,
     done: s.done,
     total: s.total,
@@ -544,12 +574,12 @@ export function buildSnapshot(data: CoachData, flags: readonly Flag[], options: 
     : null;
 
   const last7 = summaries.slice(-7);
-  const streakDay = today > end ? end : today;
+  const streakDay = today;
   const itemLines: ItemLine[] = items
     .filter((i) => i.cadence === "daily" && phase !== "before" && isActiveOn(i, versions, streakDay))
     .sort((a, b) => a.sort_order - b.sort_order)
     .map((i) => {
-      const st = itemStreak(i, versions, logs, streakDay, c.start_date);
+      const st = itemStreak(i, versions, logs, streakDay, historyStart);
       const rows = last7.map((s) => s.items.find((r) => r.item.id === i.id)).filter((r): r is ItemResult => !!r);
       return {
         key: i.key,
@@ -565,8 +595,8 @@ export function buildSnapshot(data: CoachData, flags: readonly Flag[], options: 
   // Macros: calories and protein are what the checklist scored, carbs and fat come from meals.
   const cal = items.find((i) => i.key === "calories");
   const pro = items.find((i) => i.key === "protein");
-  const macroFrom = addDays(today, -6) < c.start_date ? c.start_date : addDays(today, -6);
-  const macroDays: MacroDay[] = (phase === "before" ? [] : dateRange(macroFrom, today > end ? end : today)).map((d) => {
+  const macroFrom = addDays(today, -6) < historyStart ? historyStart : addDays(today, -6);
+  const macroDays: MacroDay[] = (phase === "before" ? [] : dateRange(macroFrom, today)).map((d) => {
     const meals = data.meals.filter((m) => m.date === d);
     const logValue = (item: ChecklistItem | undefined) => (item ? (logs.find((l) => l.date === d && l.item_id === item.id)?.value ?? null) : null);
     const mealSum = (f: "calories" | "protein" | "carbs" | "fat") => (meals.length > 0 ? Math.round(sum(meals.map((m) => m[f]))) : null);
@@ -606,7 +636,7 @@ export function buildSnapshot(data: CoachData, flags: readonly Flag[], options: 
     .sort((a, b) => a.sort_order - b.sort_order)
     .map((i) => ({
       name: viceName(i.name),
-      cleanStreak: itemStreak(i, versions, logs, streakDay, c.start_date).current,
+      cleanStreak: itemStreak(i, versions, logs, streakDay, historyStart).current,
       slips: data.slips
         .filter((s) => s.item_id === i.id && s.date >= slipFrom && s.date <= today)
         .sort((a, b) => (a.date + a.time < b.date + b.time ? -1 : 1))
@@ -615,6 +645,12 @@ export function buildSnapshot(data: CoachData, flags: readonly Flag[], options: 
 
   const main = data.workouts.find((w) => w.weekday === weekday && w.slot === "main") ?? null;
   const core = data.workouts.find((w) => w.weekday === weekday && w.slot === "core") ?? null;
+  const focusFrom = addDays(today, -6) < historyStart ? historyStart : addDays(today, -6);
+  const focusDays = (phase === "before" ? [] : dateRange(focusFrom, today)).map((d) => ({
+    date: d,
+    label: formatDateShort(d),
+    minutes: Math.round(sum((data.focus ?? []).filter((f) => f.date === d).map((f) => f.minutes))),
+  }));
   const week = buildWeek(data, options.weekOf ?? today);
   const flagLines = flags.map((f) => ({ kind: f.kind, title: f.title, detail: f.detail, change: f.change, evidence: f.evidence }));
 
@@ -624,10 +660,13 @@ export function buildSnapshot(data: CoachData, flags: readonly Flag[], options: 
       date: today,
       label: formatDateLong(today),
       weekday: WEEKDAY_NAMES[weekday],
-      dayNumber: dayNumber(c.start_date, today),
-      lengthDays: c.length_days,
-      daysLeft: Math.max(0, diffDays(today, end)),
+      mode: running ? "challenge" : "ongoing",
+      challenge: running ? running.name : null,
+      dayNumber: running ? dayNumber(running.start_date, today) : null,
+      lengthDays: running ? running.length_days : null,
+      daysLeft: running ? Math.max(0, diffDays(today, plannedEnd(running))) : null,
       phase,
+      consistency: { full: steady.full, days: steady.days, window: steady.window, label: consistencyLabel(steady) },
     },
     plan: {
       blocks: data.blocks
@@ -653,6 +692,7 @@ export function buildSnapshot(data: CoachData, flags: readonly Flag[], options: 
     lifts,
     weight: { unit, entries: weights.slice(-6), change: weightChange },
     vices,
+    focus: { goalMinutes: data.settings?.focus_goal_minutes ?? 0, days: focusDays },
     week,
     flags: flagLines,
     suggestedChange: pickChange(flags, week),
@@ -812,14 +852,14 @@ export interface ReviewDue {
 /**
  * Which week's review is current. On Sunday it is this week (written on
  * request during the day, on its own from 8:00 PM). Monday to Saturday it is
- * the week that just ended. Null when that week has no challenge days.
+ * the week that just ended. Null when that week is before the history starts.
+ * Reviews do not stop when a challenge does: the history is ongoing.
  */
-export function reviewDue(today: DateStr, time: TimeStr, challenge: Pick<Challenge, "start_date" | "length_days">): ReviewDue | null {
+export function reviewDue(today: DateStr, time: TimeStr, historyStart: DateStr): ReviewDue | null {
   const isSunday = weekdayOf(today) === 0;
   const sunday = isSunday ? today : addDays(weekStart(today), -1);
   const monday = weekStart(sunday);
-  const end = challengeEndDate(challenge.start_date, challenge.length_days);
-  if (sunday < challenge.start_date || monday > end) return null;
+  if (sunday < historyStart) return null;
   return { weekEnd: sunday, weekStart: monday, auto: !isSunday || time >= "20:00" };
 }
 

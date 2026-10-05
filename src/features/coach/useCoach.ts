@@ -5,9 +5,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useToast } from "@/components/ui";
-import { useChallenge, useList, useNow, useToday } from "@/lib/db/hooks";
+import { useList, useMode, useNow } from "@/lib/db/hooks";
 import { activeFlagNotes, parseFlagNote, reviewDue, type FlagNote, type ReviewDue } from "@/lib/logic/coach";
-import { challengeEndDate, dayNumber, timeNY } from "@/lib/logic/dates";
+import { timeNY } from "@/lib/logic/dates";
 import type { Challenge, CoachNote, DateStr } from "@/lib/types";
 import { dismissFlag, restoreFlag, syncCoach } from "./data";
 
@@ -20,9 +20,14 @@ export interface ActiveFlag {
 export interface CoachState {
   loading: boolean;
   today: DateStr;
+  /** "challenge" while one is running today, otherwise "ongoing". */
+  mode: "challenge" | "ongoing";
+  /** The challenge running today. Null in ongoing mode. */
   challenge: Challenge | null;
-  phase: "none" | "before" | "active" | "after";
-  dayNumber: number;
+  /** before: the history starts after today. active: every other day. */
+  phase: "before" | "active";
+  /** Day of the running challenge. Null in ongoing mode. */
+  dayNumber: number | null;
   /** Today's morning brief, once written. */
   brief: CoachNote | null;
   /** True while the first brief of the day is being written. */
@@ -50,23 +55,22 @@ export interface CoachState {
  */
 export function useCoach(auto: "always" | "missing" = "always"): CoachState {
   const toast = useToast();
-  const today = useToday();
+  const mode = useMode();
+  const today = mode.today;
   const now = useNow(60_000);
-  const challenge = useChallenge();
   const notes = useList("coach_note", { orderBy: "date", ascending: false });
   const [busy, setBusy] = useState<"morning" | "weekly" | null>(null);
   const [failed, setFailed] = useState(false);
 
-  const c = challenge.data;
-  const loading = challenge.loading || notes.loading;
-  const end = c ? challengeEndDate(c.start_date, c.length_days) : today;
-  const phase = !c ? "none" : today < c.start_date ? "before" : today > end ? "after" : "active";
+  const c = mode.challenge;
+  const loading = mode.loading || notes.loading;
+  const phase = today < mode.historyStart ? "before" : "active";
 
   const brief = useMemo(() => notes.data.find((n) => n.kind === "morning" && n.date === today) ?? null, [notes.data, today]);
   const flags = useMemo(() => activeFlagNotes(notes.data), [notes.data]);
   const weekly = useMemo(() => notes.data.find((n) => n.kind === "weekly") ?? null, [notes.data]);
   const time = timeNY(now);
-  const due = useMemo(() => (c && phase !== "before" ? reviewDue(today, time, c) : null), [c, phase, today, time]);
+  const due = useMemo(() => (phase !== "before" ? reviewDue(today, time, mode.historyStart) : null), [phase, today, time, mode.historyStart]);
   const reviewMissing = !!due && !notes.data.some((n) => n.kind === "weekly" && n.date === due.weekEnd);
 
   const history = useMemo(() => {
@@ -81,7 +85,7 @@ export function useCoach(auto: "always" | "missing" = "always"): CoachState {
   const ran = useRef<string | null>(null);
   const hasBrief = !!brief;
   useEffect(() => {
-    if (loading || phase === "none" || phase === "before") return;
+    if (loading || phase === "before") return;
     if (ran.current === today) return;
     if (auto === "missing" && (hasBrief || phase !== "active")) return;
     ran.current = today;
@@ -124,9 +128,10 @@ export function useCoach(auto: "always" | "missing" = "always"): CoachState {
   return {
     loading,
     today,
+    mode: mode.mode,
     challenge: c,
     phase,
-    dayNumber: c ? dayNumber(c.start_date, today) : 0,
+    dayNumber: mode.day,
     brief,
     writingBrief: !loading && phase === "active" && !brief && !failed,
     flags,

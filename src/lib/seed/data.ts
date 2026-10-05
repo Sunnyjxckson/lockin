@@ -16,6 +16,11 @@ import type {
 
 export const SEED_CHALLENGE: NewRow<"challenge"> = {
   id: "challenge",
+  name: "30 day lock in",
+  status: "active",
+  ended_on: null,
+  rules: null,
+  restart_of: null,
   start_date: "2026-10-05",
   length_days: 30,
   money_target: 1000,
@@ -24,7 +29,8 @@ export const SEED_CHALLENGE: NewRow<"challenge"> = {
   money_target_start: null,
 } satisfies Omit<Challenge, "created_at">;
 
-export const SEED_SETTINGS: Omit<AppSettings, "created_at"> = {
+/** history_start is set when the seed runs: the challenge start, or the install day if that is earlier. */
+export const SEED_SETTINGS: Omit<AppSettings, "created_at" | "history_start"> = {
   id: "app",
   seeded: true,
   timezone: "America/New_York",
@@ -34,6 +40,11 @@ export const SEED_SETTINGS: Omit<AppSettings, "created_at"> = {
   fat_target: 60,
   weight_unit: "lb",
   haptics: true,
+  daily_floor: 100,
+  weekly_food_budget: null,
+  food_likes: [],
+  food_dislikes: [],
+  focus_goal_minutes: 60,
 };
 
 type ItemSeed = Omit<ChecklistItem, "id" | "created_at" | "sort_order" | "archived">;

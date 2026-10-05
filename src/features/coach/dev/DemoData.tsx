@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Card, useToast } from "@/components/ui";
 import { db } from "@/lib/db";
-import { getItems, getWorkouts, updateChallenge } from "@/lib/db/helpers";
+import { getItems, getWorkouts, updateChallenge, updateSettings } from "@/lib/db/helpers";
 import { clearQueryCache, useToday } from "@/lib/db/hooks";
 import { syncCoach } from "@/features/coach/data";
 import { TodaySlot } from "@/features/coach/TodaySlot";
@@ -36,6 +36,7 @@ export default function DemoData() {
       const fx = buildCoachFixture(today, items, workouts);
       for (const t of TABLES) await clear(t);
       await updateChallenge(fx.challenge);
+      await updateSettings({ history_start: fx.challenge.start_date });
       await db.insertMany("day_log", fx.day_log);
       await db.insertMany("earning", fx.earning);
       await db.insertMany("meal", fx.meal);

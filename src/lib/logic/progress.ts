@@ -20,6 +20,11 @@ import { isActiveOn } from "./targets";
 export interface ProgressInput {
   startDate: DateStr;
   lengthDays: number;
+  /**
+   * Where streaks start counting. Default: startDate. Pass the ongoing
+   * history start so a streak runs across challenge boundaries.
+   */
+  streakFrom?: DateStr;
   today: DateStr;
   items: readonly ChecklistItem[];
   versions: readonly TargetVersion[];
@@ -31,9 +36,10 @@ export interface ProgressInput {
 /**
  * full, partial and missed are the foundation's day status. Today with
  * nothing done yet is "open" rather than missed, because the day is not over.
- * Days after today are "future".
+ * Days after today are "future". Days before the ongoing history starts are
+ * "before": they were never tracked, so they are neither missed nor counted.
  */
-export type CellKind = DayStatus | "open" | "future";
+export type CellKind = DayStatus | "open" | "future" | "before";
 
 export interface GridCell {
   date: DateStr;
@@ -102,13 +108,13 @@ export function buildGrid(input: ProgressInput): GridModel {
  * counts in full.
  */
 function countsYet(cell: GridCell, done: boolean, onlyToday: boolean): boolean {
-  if (cell.kind === "future") return false;
+  if (cell.kind === "future" || cell.kind === "before") return false;
   if (!cell.isToday) return true;
   return done || onlyToday;
 }
 
 function isOnlyToday(grid: GridModel): boolean {
-  return !grid.cells.some((c) => c.kind !== "future" && !c.isToday);
+  return !grid.cells.some((c) => c.kind !== "future" && c.kind !== "before" && !c.isToday);
 }
 
 function pct(done: number, total: number): number {
@@ -343,7 +349,7 @@ const HEALTH_ORDER: Record<StreakHealth, number> = { broken: 0, cold: 1, behind:
 export function streakRows(input: ProgressInput): StreakRow[] {
   const { startDate, today, items, versions, logs } = input;
   const live = items.filter((i) => !i.archived && isActiveOn(i, versions, today));
-  const streaks = allStreaks(live, versions, logs, today, startDate);
+  const streaks = allStreaks(live, versions, logs, today, input.streakFrom ?? startDate);
   const rows: StreakRow[] = live.map((item) => {
     const s = streaks[item.id];
     return { ...s, item, unit: item.cadence === "weekly" ? "week" : "day", health: streakHealth(s) };

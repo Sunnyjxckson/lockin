@@ -19,12 +19,41 @@ interface Base {
 }
 
 // ---------- challenge ----------
+//
+// The app runs in ongoing mode by default: logs are keyed by date and never
+// reset. A challenge is an optional layer on top: a start, a length and its
+// own rules. Rows are kept when a challenge is over, so past ones can be
+// looked at. At most one row has status "active".
+
+/**
+ * active: the one in play (it may not have started yet, or its last day may
+ * have passed without being closed). succeeded: ran its full length.
+ * ended: stopped early by choice. abandoned: thrown away by a restart.
+ */
+export type ChallengeStatus = "active" | "ended" | "succeeded" | "abandoned";
+
+/** One item a challenge holds you to. */
+export interface ChallengeRule {
+  item_id: string;
+  /** The target for the length of the challenge. Null keeps the item's own target. */
+  target: Target | null;
+}
 
 export interface Challenge extends Base {
+  name: string;
+  status: ChallengeStatus;
   start_date: DateStr;
   length_days: number;
-  money_target: number;
-  money_deadline: DateStr;
+  /** The last day it ran. Null while active. Before start_date when it never ran a day. */
+  ended_on: DateStr | null;
+  /** The items that count toward the challenge. Null means the whole checklist as it stands each day. */
+  rules: ChallengeRule[] | null;
+  /** The challenge this one restarted. */
+  restart_of: string | null;
+  /** Null when the challenge has no money target. */
+  money_target: number | null;
+  money_deadline: DateStr | null;
+  /** The floor when the challenge was set up. The live floor is app_settings.daily_floor. */
   daily_floor: number;
   /** First date that counts toward the current money target. Null means the
    * challenge start. Set when the target is reset, so the new target starts
@@ -310,6 +339,194 @@ export interface LoginAttempt extends Base {
   locked_until: IsoStr | null;
 }
 
+// ---------- mood and motivation ----------
+
+/** How the day feels, logged any time. */
+export interface MoodLog extends Base {
+  date: DateStr;
+  time: TimeStr;
+  /** 1 (low) to 5 (high). */
+  mood: number;
+  note: string | null;
+}
+
+export type MotivationKind = "quote" | "clip" | "why";
+
+/** Something to come back to when motivation dips. */
+export interface Motivation extends Base {
+  kind: MotivationKind;
+  body: string;
+  /** A link for a clip, or the source of a quote. */
+  url: string | null;
+  sort_order: number;
+}
+
+// ---------- boards and themes ----------
+
+export type BoardKind = "body" | "brand" | "life";
+
+export interface Board extends Base {
+  name: string;
+  kind: BoardKind;
+  /** The board_item shown as the cover. Null uses the first image. */
+  cover_item_id: string | null;
+  sort_order: number;
+}
+
+export type BoardItemKind = "image" | "color" | "note";
+export type BoardItemSource = "camera" | "web" | "screenshot" | "upload";
+
+export interface BoardItem extends Base {
+  board_id: string;
+  kind: BoardItemKind;
+  /** A storage reference (resolve it with resolvePhoto). Null for colors and notes. */
+  image_url: string | null;
+  note: string | null;
+  /** A single swatch, "#rrggbb". */
+  color: string | null;
+  /** Colors pulled from the image, "#rrggbb" each, most dominant first. */
+  palette: string[] | null;
+  source: BoardItemSource | null;
+  /** Where a web image came from. */
+  source_url: string | null;
+  sort_order: number;
+}
+
+export type ThemeBase = "dark" | "contrast";
+
+/** Colors that sit on top of a base theme. Each is "#rrggbb". Leave one out and the base supplies it. */
+export interface ThemePalette {
+  background?: string;
+  surface?: string;
+  text?: string;
+  muted?: string;
+  accent?: string;
+}
+
+/**
+ * A saved look. One row is active. Read and write it through "@/lib/theme",
+ * which also checks contrast and paints the page.
+ */
+export interface ThemeRow extends Base {
+  name: string | null;
+  base: ThemeBase;
+  /** Null means the base theme as it ships. */
+  palette: ThemePalette | null;
+  /** The accent as it was picked, before any contrast fix. Same as palette.accent. */
+  accent: string | null;
+  /** The board the palette was pulled from. */
+  board_id: string | null;
+  active: boolean;
+}
+
+// ---------- meal planning ----------
+
+export type MealSlot = "breakfast" | "lunch" | "dinner" | "snack";
+
+export interface Ingredient {
+  name: string;
+  quantity: number;
+  /** "g", "oz", "cup", "each" and so on. */
+  unit: string;
+  /** Estimated dollars for this quantity. */
+  est_cost: number | null;
+  /** Grocery aisle, to group the list: "produce", "meat", "dairy", "pantry", "frozen", "other". */
+  category: string | null;
+}
+
+/** Numbers are for one serving. */
+export interface Recipe extends Base {
+  name: string;
+  slot: MealSlot;
+  ingredients: Ingredient[];
+  steps: string[];
+  servings: number;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  /** Estimated dollars for one serving. */
+  est_cost: number;
+  /** For likes and dislikes: "chicken", "vegetarian", "spicy". */
+  tags: string[];
+  photo_url: string | null;
+  source: "seed" | "user" | "ai";
+}
+
+/** One meal in a planned week. */
+export interface PlannedMeal {
+  date: DateStr;
+  slot: MealSlot;
+  recipe_id: string;
+  /** Portions to eat, so the day hits its numbers. */
+  servings: number;
+}
+
+/** One planned week, Monday to Sunday. One row per week_start. */
+export interface MealPlan extends Base {
+  week_start: DateStr;
+  budget: number;
+  /** Every recipe used in the week, once each. */
+  recipe_ids: string[];
+  meals: PlannedMeal[];
+  /** Estimated dollars for the week. */
+  total_cost: number;
+  /** The store the list is priced at. Null until one is picked. */
+  store: string | null;
+}
+
+export const GROCERY_STORES = ["Aldi", "Walmart", "Food Lion", "Harris Teeter", "Publix"] as const;
+
+export interface GroceryItem extends Base {
+  plan_id: string;
+  name: string;
+  /** Combined across the week's recipes. */
+  quantity: number;
+  unit: string | null;
+  category: string | null;
+  /** The store this row is priced at. */
+  store: string | null;
+  /** Estimated dollars at `store`. */
+  price: number | null;
+  /** Estimated dollars at every store, by store name. */
+  prices: Record<string, number> | null;
+  bought: boolean;
+}
+
+/**
+ * Money that went out. Groceries are the first use: buying a week's list
+ * writes one row linked to the plan, and Money shows it.
+ */
+export interface Expense extends Base {
+  date: DateStr;
+  amount: number;
+  /** "groceries" for now. */
+  category: string;
+  note: string | null;
+  store: string | null;
+  /** The meal plan a grocery run was for. */
+  plan_id: string | null;
+}
+
+// ---------- focus ----------
+
+/**
+ * One stretch of study or deep work. A running timer is a row with `end`
+ * null: `start` is when it began, so the clock survives a reload.
+ */
+export interface FocusSession extends Base {
+  date: DateStr;
+  start: TimeStr;
+  /** Null while the timer runs. */
+  end: TimeStr | null;
+  /** Whole minutes. 0 while the timer runs. */
+  minutes: number;
+  label: string | null;
+  source: "timer" | "manual";
+  /** The schedule block it ran in, if it was started from one. */
+  block_id: string | null;
+}
+
 /** Single row with id "app". */
 export interface AppSettings extends Base {
   /** Set once seed data has been written. */
@@ -323,6 +540,17 @@ export interface AppSettings extends Base {
   fat_target: number;
   weight_unit: "lb" | "kg";
   haptics: boolean;
+  /** First date of the ongoing history. Nothing before it is scored. */
+  history_start: DateStr;
+  /** The least to earn each day, challenge or not. Same number as the "earned" item's target. */
+  daily_floor: number;
+  /** Dollars a week for food. Null until meal planning is set up. */
+  weekly_food_budget: number | null;
+  /** Foods and tags to lean toward and to leave out when planning meals. */
+  food_likes: string[];
+  food_dislikes: string[];
+  /** Minutes of focus that count as the day's study block. */
+  focus_goal_minutes: number;
 }
 
 // ---------- table map ----------
@@ -349,6 +577,16 @@ export interface Tables {
   reminder_run: ReminderRun;
   login_attempt: LoginAttempt;
   app_settings: AppSettings;
+  mood_log: MoodLog;
+  motivation: Motivation;
+  board: Board;
+  board_item: BoardItem;
+  theme: ThemeRow;
+  recipe: Recipe;
+  meal_plan: MealPlan;
+  grocery_item: GroceryItem;
+  expense: Expense;
+  focus_session: FocusSession;
 }
 
 export type TableName = keyof Tables;
@@ -381,6 +619,16 @@ export const TABLE_NAMES = [
   "reminder_run",
   "login_attempt",
   "app_settings",
+  "mood_log",
+  "motivation",
+  "board",
+  "board_item",
+  "theme",
+  "recipe",
+  "meal_plan",
+  "grocery_item",
+  "expense",
+  "focus_session",
 ] as const satisfies readonly TableName[];
 
 /** Tables only the server may read or write (they hold secrets). */

@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import Link from "next/link";
 import { Camera, Check, DollarSign, Image as ImageIcon, Lock, Plus } from "lucide-react";
 import { Button, Card, EmptyState, IconButton, ListRow, PageHeader, ProgressBar, Screen, Section, cn } from "@/components/ui";
 import { useInstalledOn, useNow } from "@/lib/db/hooks";
@@ -68,41 +69,62 @@ export default function MoneyPage() {
 
             {m.loading ? null : (
               <div className="animate-fade-in">
-                <Card className="mt-2 p-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="t-label">Toward {formatMoney(m.target)}</span>
-                    <span className={cn("rounded-full border px-2.5 py-1 text-[12px] font-semibold", hit ? "border-accent-line bg-accent-soft text-accent" : "border-line text-ink-2")}>
-                      {hit ? "Target hit" : past ? "Deadline passed" : m.daysLeft === 0 ? "Due today" : `${m.daysLeft} ${m.daysLeft === 1 ? "day" : "days"} left`}
-                    </span>
-                  </div>
-                  <div className={cn("t-display tnum mt-3", hit && "text-accent")}>{formatMoney(m.total)}</div>
-                  <ProgressBar className="mt-4" value={m.progress} height={10} label="Toward the money target" />
-                  <div className="mt-3 flex items-baseline justify-between gap-3 text-[14px]">
-                    <span className="text-ink-2">
-                      {hit
-                        ? `${formatMoney(m.total - m.target)} over. Due ${formatDateShort(m.deadline)}.`
-                        : past
-                          ? `${formatMoney(m.needed.remaining)} short on ${formatDateShort(m.deadline)}`
-                          : `${formatMoney(m.needed.remaining)} to go by ${formatDateShort(m.deadline)}`}
-                    </span>
-                    {m.state === "active" && m.needed.perDay !== null ? (
-                      <span className="tnum shrink-0 font-semibold text-ink">{formatMoney(Math.ceil(m.needed.perDay))} a day</span>
-                    ) : null}
-                  </div>
-                  {m.wasReset && m.since ? (
-                    <p className="mt-3 flex items-baseline justify-between gap-3 border-t border-line pt-3 text-[14px] text-ink-2">
-                      <span>Counting from {formatDateShort(m.since)}</span>
-                      <span className="tnum">
-                        All time <span className="font-semibold text-ink">{formatMoney(m.allTime)}</span>
+                {m.hasTarget ? (
+                  <Card className="mt-2 p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="t-label">Toward {formatMoney(m.target)}</span>
+                      <span className={cn("rounded-full border px-2.5 py-1 text-[12px] font-semibold", hit ? "border-accent-line bg-accent-soft text-accent" : "border-line text-ink-2")}>
+                        {hit ? "Target hit" : past ? "Deadline passed" : m.daysLeft === 0 ? "Due today" : `${m.daysLeft} ${m.daysLeft === 1 ? "day" : "days"} left`}
                       </span>
+                    </div>
+                    <div className={cn("t-display tnum mt-3", hit && "text-accent")}>{formatMoney(m.total)}</div>
+                    <ProgressBar className="mt-4" value={m.progress} height={10} label="Toward the money target" />
+                    <div className="mt-3 flex items-baseline justify-between gap-3 text-[14px]">
+                      <span className="text-ink-2">
+                        {hit
+                          ? `${formatMoney(m.total - m.target)} over. Due ${formatDateShort(m.deadline)}.`
+                          : past
+                            ? `${formatMoney(m.needed.remaining)} short on ${formatDateShort(m.deadline)}`
+                            : `${formatMoney(m.needed.remaining)} to go by ${formatDateShort(m.deadline)}`}
+                      </span>
+                      {m.state === "active" && m.needed.perDay !== null ? (
+                        <span className="tnum shrink-0 font-semibold text-ink">{formatMoney(Math.ceil(m.needed.perDay))} a day</span>
+                      ) : null}
+                    </div>
+                    {m.wasReset && m.since ? (
+                      <p className="mt-3 flex items-baseline justify-between gap-3 border-t border-line pt-3 text-[14px] text-ink-2">
+                        <span>Counting from {formatDateShort(m.since)}</span>
+                        <span className="tnum">
+                          All time <span className="font-semibold text-ink">{formatMoney(m.allTime)}</span>
+                        </span>
+                      </p>
+                    ) : null}
+                    {hit || past ? (
+                      <Button className="mt-4" variant="secondary" full onClick={() => setResetOpen(true)}>
+                        Set a new target
+                      </Button>
+                    ) : null}
+                  </Card>
+                ) : (
+                  <Card className="mt-2 p-5">
+                    <span className="t-label">Earned so far</span>
+                    <div className="t-display tnum mt-3">{formatMoney(m.allTime)}</div>
+                    <p className="t-sub mt-3">
+                      {m.challenge
+                        ? "This challenge has no money target. The daily floor still counts."
+                        : `Since ${formatDateShort(m.historyStart)}. No target right now, a target comes with a challenge. The daily floor counts every day.`}
                     </p>
-                  ) : null}
-                  {hit || past ? (
-                    <Button className="mt-4" variant="secondary" full onClick={() => setResetOpen(true)}>
-                      Set a new target
-                    </Button>
-                  ) : null}
-                </Card>
+                    {m.challenge ? (
+                      <Button className="mt-4" variant="secondary" full onClick={() => setResetOpen(true)}>
+                        Set a target
+                      </Button>
+                    ) : (
+                      <Link href="/settings/challenge" className="pressable mt-4 flex h-12 w-full items-center justify-center rounded-[14px] border border-line-strong text-[16px] font-semibold text-ink">
+                        Start a challenge
+                      </Link>
+                    )}
+                  </Card>
+                )}
 
                 <Card className="mt-3 p-5">
                   <div className="flex items-center justify-between">
@@ -131,6 +153,16 @@ export default function MoneyPage() {
                     </Button>
                   </div>
                 </Card>
+
+                {m.groceriesThisWeek > 0 ? (
+                  <Link href="/meals" className="pressable mt-3 flex items-center justify-between gap-3 rounded-[20px] border border-line bg-surface px-5 py-4">
+                    <span>
+                      <span className="t-label block">Groceries this week</span>
+                      <span className="t-sub mt-1 block">Money out, from the meal plan</span>
+                    </span>
+                    <span className="t-num-sm tnum">{formatMoney(m.groceriesThisWeek)}</span>
+                  </Link>
+                ) : null}
 
                 <div className="mt-3 grid grid-cols-3 gap-2">
                   <Mini label="Banked" value={m.banked > 0 ? formatMoney(Math.round(m.banked)) : null} sub="Over the floor" />
@@ -188,7 +220,7 @@ export default function MoneyPage() {
       </ScreenshotPicker>
 
       {sheet !== null ? <QuickAddSheet open onClose={() => setSheet(null)} editing={sheet?.editing} file={sheet?.file} defaultApp={m.lastApp} /> : null}
-      {m.challenge && resetOpen ? <ResetTargetSheet open onClose={() => setResetOpen(false)} challenge={m.challenge} earnedToday={m.todayFloor.earned} allTime={m.allTime} today={m.today} /> : null}
+      {m.challenge && resetOpen ? <ResetTargetSheet open onClose={() => setResetOpen(false)} challenge={m.challenge} floor={m.floor} earnedToday={m.todayFloor.earned} allTime={m.allTime} today={m.today} /> : null}
     </Screen>
   );
 }

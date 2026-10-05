@@ -1,8 +1,8 @@
 "use client";
 
 // The morning brief as a compact card for the top of Today. Self-contained:
-// mount <TodaySlot /> with no props. It renders nothing outside the
-// challenge dates. The first open of the day writes the brief. It starts
+// mount <TodaySlot /> with no props. It shows in both modes, challenge or
+// ongoing. The first open of the day writes the brief. It starts
 // open, and once closed it stays closed for that day on this device, so the
 // rest of the day Today leads with Now and Next.
 

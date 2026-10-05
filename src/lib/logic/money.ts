@@ -1,9 +1,12 @@
 // Money rules. Pure: no React, no db.
 //
-// The running total counts every earning from the start of the current target
-// on: the challenge start, or the day the target was last reset. The all time
-// total counts everything since the challenge start.
-// The daily floor is a fixed number: being ahead never lowers it.
+// The daily floor applies every day, challenge or not, and is a fixed number:
+// being ahead never lowers it.
+// A money target belongs to a challenge. Its running total counts every
+// earning from the start of the current target on: the challenge start, or
+// the day the target was last reset. The all time total counts everything in
+// the ongoing history. With no challenge running there is no target, only the
+// floor and the all time total.
 
 import type { DateStr } from "../types";
 import { diffDays } from "./dates";
@@ -48,6 +51,22 @@ export function runningTotal(earnings: readonly EarningLike[], from?: DateStr | 
 export function targetStart(challenge: { start_date: DateStr; money_target_start?: DateStr | null }): DateStr {
   const s = challenge.money_target_start;
   return s && s > challenge.start_date ? s : challenge.start_date;
+}
+
+/** The part of an expense the rules need. */
+export interface ExpenseLike {
+  date: DateStr;
+  amount: number;
+  category: string;
+}
+
+/** Dollars spent between two dates, inclusive, in one category or in all of them. */
+export function spentBetween(expenses: readonly ExpenseLike[], from: DateStr, to: DateStr, category?: string): number {
+  return cents(
+    expenses
+      .filter((e) => e.date >= from && e.date <= to && (!category || e.category === category))
+      .reduce((s, e) => s + (Number.isFinite(e.amount) ? e.amount : 0), 0),
+  );
 }
 
 /** Whole days from today until the deadline. 0 on the deadline day and after it. */

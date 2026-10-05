@@ -62,7 +62,7 @@ function missText(m: MissLine): string {
 
 function yesterdayLine(s: CoachSnapshot): string {
   const y = s.yesterday;
-  if (!y) return s.today.dayNumber <= 1 ? "Yesterday: nothing behind you yet. This is day 1." : "";
+  if (!y) return s.days.length === 0 ? "Yesterday: nothing behind you yet. This is day 1." : "";
   const pending = y.pending.length > 0 ? ` Still to check: ${list(y.pending.map(lower))}.` : "";
   if (y.done === 0 && y.misses.every((m) => m.state === "open")) return `Yesterday: nothing logged.${pending}`;
   if (y.misses.length === 0) return `Yesterday: ${y.done} of ${y.total}, nothing missed.${pending}`;
@@ -89,11 +89,25 @@ function watchLine(s: CoachSnapshot): string {
   return `Watch: ${lower(first.title)}.${rest > 0 ? ` ${plural(rest, "more flag")} in Coach.` : ""}`;
 }
 
-/** The morning brief from templates. Four short lines at most. */
+/**
+ * Where things stand over time. In ongoing mode this is consistency, so one
+ * missed day reads as one day and never as starting over. In a challenge it
+ * is the day count. Left out until there are a few days to speak of.
+ */
+function standingLine(s: CoachSnapshot): string {
+  const t = s.today;
+  if (t.mode === "challenge" && t.dayNumber !== null && t.lengthDays !== null) {
+    return t.dayNumber >= t.lengthDays ? `Last day of ${t.lengthDays}.` : "";
+  }
+  const c = t.consistency;
+  if (c.days < 3) return "";
+  return `Consistency: ${c.label} locked in.`;
+}
+
+/** The morning brief from templates. A few short lines. */
 export function morningFallback(s: CoachSnapshot): string {
-  if (s.today.phase === "before") return "The challenge has not started yet. Set the schedule and targets, then come back on day 1.";
-  if (s.today.phase === "after") return `The ${s.today.lengthDays} days are done. ${moneyLine(s)}`;
-  return cleanCoachText([planLine(s), yesterdayLine(s), moneyLine(s), watchLine(s)].filter(Boolean).join("\n"));
+  if (s.today.phase === "before") return "Nothing is scored yet. Set the schedule and targets, then come back on day 1.";
+  return cleanCoachText([planLine(s), yesterdayLine(s), moneyLine(s), standingLine(s), watchLine(s)].filter(Boolean).join("\n"));
 }
 
 /** The Sunday review from templates: what held, what slipped, one change. */
@@ -140,7 +154,11 @@ export function fallbackFor(kind: CoachKind, s: CoachSnapshot): string {
 // ---------- the prompt ----------
 
 const VOICE = [
-  "You are the coach inside Lock In, an app one person uses to run a 30 day challenge of structured days. You have read their data. Write to them directly as \"you\".",
+  "You are the coach inside Lock In, an app one person uses to stay consistent in life over the long run: structured days, one daily checklist, and sometimes a set challenge on top. You have read their data. Write to them directly as \"you\".",
+  "",
+  "How to read time",
+  "\"today.mode\" is \"ongoing\" or \"challenge\". Ongoing is the default and has no end: there is no day count, so never invent one. In a challenge, \"today.dayNumber\" of \"today.lengthDays\" is the day count for \"today.challenge\".",
+  "A missed item or a slip never resets anything and never means starting over. It is one day. \"today.consistency.label\" says how many recent days were full: use that wording when you speak about how it is going over time, and keep streaks as a detail.",
   "",
   "Voice",
   "Direct, short, specific. You sound like a coach who has read the numbers and respects the person reading. Plain words a friend would use.",
@@ -163,7 +181,7 @@ const MORNING = [
   "In this order:",
   "1. Today's plan from \"plan\": the workout by name and the fixed blocks with their times. Skip filler blocks like wake, shower and bed.",
   "2. Yesterday from \"yesterday\": what was missed, with the logged number and the gap. If nothing was missed, say so in a few words. Items under \"pending\" are not misses, they just have not been checked yet. If \"yesterday\" is null, skip this.",
-  "3. Money from \"money\": the total against the target and the deadline, and what a day needs to bring in. The daily floor never drops, even when ahead.",
+  "3. Money from \"money\": the total against the target and the deadline, and what a day needs to bring in. The daily floor never drops, even when ahead. When \"money.target\" is 0 there is no target: give only today's floor and what was earned.",
   "4. If \"flags\" has entries, end with the first one in one short sentence. Otherwise end after the money.",
   "Reply with the brief only.",
 ].join("\n");

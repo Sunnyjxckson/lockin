@@ -2,6 +2,17 @@
 // in API routes too (in Supabase mode). Hooks live in ./hooks.
 
 import { db } from "./index";
+import {
+  activeChallenge,
+  canFinish,
+  challengeProblem,
+  endPatch,
+  finishPatch,
+  newChallengeRow,
+  restartRows,
+  scoringVersions,
+  type ChallengeInput,
+} from "../logic/challenge";
 import { nowIso, todayNY } from "../logic/dates";
 import { defaultTarget, targetsEqual, versionForChange } from "../logic/targets";
 import type {
@@ -19,15 +30,80 @@ import type {
 
 // ---------- singletons ----------
 
-/** The active challenge. There is one row. Null only before first run seeding. */
-export async function getChallenge(): Promise<Challenge | null> {
-  return db.first("challenge", { orderBy: "created_at" });
+/** Every challenge, past and present, oldest start first. */
+export async function getChallenges(): Promise<Challenge[]> {
+  return db.list("challenge", { orderBy: "start_date" });
 }
 
+/**
+ * The active challenge, or null in ongoing mode with none set up. Active is a
+ * status, not a date check: it may not have started, or its last day may have
+ * passed. Use modeOn() from logic/challenge to know what is running today.
+ */
+export async function getChallenge(): Promise<Challenge | null> {
+  return activeChallenge(await db.list("challenge", { eq: { status: "active" }, orderBy: "created_at" }));
+}
+
+/** Change the active challenge. Throws when there is none. */
 export async function updateChallenge(patch: Partial<Omit<Challenge, "id" | "created_at">>): Promise<Challenge> {
   const c = await getChallenge();
-  if (!c) throw new Error("No challenge yet");
+  if (!c) throw new Error("No active challenge");
   return db.update("challenge", c.id, patch);
+}
+
+/**
+ * Start a challenge. Only challenge rows are written: no log, target or
+ * checklist item changes, so the ongoing history is untouched. Throws when
+ * one is already active or the input is not valid.
+ */
+export async function startChallenge(input: ChallengeInput, today: DateStr = todayNY()): Promise<Challenge> {
+  const problem = challengeProblem(input, today);
+  if (problem) throw new Error(problem);
+  if (await getChallenge()) throw new Error("A challenge is already active. End it first.");
+  return db.insert("challenge", newChallengeRow(input));
+}
+
+/** Stop the active challenge early. It is kept as a record with the days it ran. */
+export async function endChallenge(today: DateStr = todayNY()): Promise<Challenge> {
+  const c = await getChallenge();
+  if (!c) throw new Error("No active challenge");
+  return db.update("challenge", c.id, endPatch(c, today));
+}
+
+/** Mark the active challenge finished. Only once its last day is today or behind. */
+export async function finishChallenge(today: DateStr = todayNY()): Promise<Challenge> {
+  const c = await getChallenge();
+  if (!c) throw new Error("No active challenge");
+  if (!canFinish(c, today)) throw new Error("It has days left. End it early instead.");
+  return db.update("challenge", c.id, finishPatch(c));
+}
+
+/**
+ * Run a challenge again from `today`: same name, length and rules. Pass an id
+ * to restart a past one, or leave it out to restart the active one (which is
+ * then kept as abandoned). Throws when another challenge is active.
+ */
+export async function restartChallenge(id?: string | null, today: DateStr = todayNY()): Promise<Challenge> {
+  const active = await getChallenge();
+  const source = id && id !== active?.id ? await db.get("challenge", id) : active;
+  if (!source) throw new Error("No challenge to restart");
+  if (active && active.id !== source.id) throw new Error("A challenge is already active. End it first.");
+  const { close, next } = restartRows(source, today);
+  if (close) await db.update("challenge", source.id, close);
+  return db.insert("challenge", next);
+}
+
+/**
+ * Set the daily earnings floor everywhere it lives: app settings (the live
+ * number), the "earned" checklist item's target, and the active challenge.
+ */
+export async function setDailyFloor(floor: number, today: DateStr = todayNY()): Promise<void> {
+  const value = Math.max(0, floor);
+  await updateSettings({ daily_floor: value });
+  const earned = await getItemByKey("earned");
+  if (earned && !(earned.target.kind === "min" && earned.target.min === value)) await setItemTarget(earned.id, { kind: "min", min: value }, today);
+  const c = await getChallenge();
+  if (c && c.daily_floor !== value) await db.update("challenge", c.id, { daily_floor: value });
 }
 
 export async function getSettings(): Promise<AppSettings | null> {
@@ -49,8 +125,19 @@ export async function getItemByKey(key: string): Promise<ChecklistItem | null> {
   return db.first("checklist_item", { eq: { key } });
 }
 
+/** The saved target history, as written by Settings. */
 export async function getVersions(): Promise<TargetVersion[]> {
   return db.list("target_version", { orderBy: "effective_from" });
+}
+
+/**
+ * The target history to score with: the saved versions with each challenge's
+ * rule targets laid over the days it ran. This is what useChecklist() returns
+ * as `versions`, and what anything that scores days outside React should use.
+ */
+export async function getScoringVersions(): Promise<TargetVersion[]> {
+  const [versions, challenges] = await Promise.all([getVersions(), getChallenges()]);
+  return scoringVersions(versions, challenges);
 }
 
 export interface NewItemInput {

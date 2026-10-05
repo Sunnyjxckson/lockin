@@ -32,23 +32,14 @@ export default function CoachPage() {
     );
   }
 
-  if (coach.phase === "none" || coach.phase === "before") {
+  if (coach.phase === "before") {
     return (
       <Screen>
         <PageHeader title="Coach" back="/today" />
         <EmptyState
           icon={<Sunrise size={24} aria-hidden />}
-          title={coach.challenge ? `Starts ${formatDateLong(coach.challenge.start_date)}` : "No challenge yet"}
-          body={
-            coach.challenge
-              ? "The first brief lands that morning. From then on the coach reads what you log and says what is slipping."
-              : "Set a start date in Settings and the coach picks up from day 1."
-          }
-          action={
-            <Link href="/settings/challenge" className="font-semibold text-ink underline underline-offset-4">
-              Challenge settings
-            </Link>
-          }
+          title="Nothing to read yet"
+          body="The first brief lands on your first morning. From then on the coach reads what you log and says what is slipping."
         />
       </Screen>
     );
@@ -62,7 +53,7 @@ export default function CoachPage() {
       <PageHeader
         title="Coach"
         back="/today"
-        subtitle={coach.phase === "after" ? "Challenge complete" : `Day ${coach.dayNumber} of ${c?.length_days ?? 30} · ${formatDateLong(coach.today)}`}
+        subtitle={c && coach.dayNumber !== null ? `Day ${coach.dayNumber} of ${c.length_days} · ${formatDateLong(coach.today)}` : formatDateLong(coach.today)}
       />
 
       {coach.phase === "active" ? (

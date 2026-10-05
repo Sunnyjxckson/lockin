@@ -3,7 +3,8 @@
 
 import { getBlocksForDate } from "@/lib/blocks";
 import { db } from "@/lib/db";
-import { getChallenge, getSettings } from "@/lib/db/helpers";
+import { getChallenges, getScoringVersions, getSettings } from "@/lib/db/helpers";
+import { modeOn } from "@/lib/logic/challenge";
 import {
   buildSnapshot,
   cleanCoachText,
@@ -17,20 +18,28 @@ import {
 } from "@/lib/logic/coach";
 import { detectFlags } from "@/lib/logic/coachFlags";
 import { fallbackFor, type CoachKind } from "@/lib/logic/coachWrite";
-import { addDays, challengeEndDate, timeNY } from "@/lib/logic/dates";
+import { addDays, timeNY } from "@/lib/logic/dates";
 import type { CoachNote, DateStr } from "@/lib/types";
 
-/** Everything the coach reads, in one go. Null when there is no challenge. */
+/** How far back the coach reads. The history itself has no end, the coach's attention does. */
+const LOOKBACK_DAYS = 120;
+
+/**
+ * Everything the coach reads, in one go. It works in both modes: the history
+ * is ongoing, and a running challenge is context on top. Null only before the
+ * app is seeded.
+ */
 export async function loadCoachData(today: DateStr): Promise<CoachData | null> {
-  const challenge = await getChallenge();
-  if (!challenge) return null;
-  const from = challenge.start_date;
-  // Lifts can predate the challenge and still show a trend.
+  const [settings, challenges] = await Promise.all([getSettings(), getChallenges()]);
+  if (!settings) return null;
+  const mode = modeOn(challenges, settings.history_start ?? today, today);
+  const back = addDays(today, -LOOKBACK_DAYS);
+  const from = mode.historyStart > back ? mode.historyStart : back;
+  // Lifts can predate the history and still show a trend.
   const liftsFrom = addDays(today, -42);
-  const [settings, items, versions, logs, earnings, meals, bodyLogs, setLogs, slips, workouts, blocks] = await Promise.all([
-    getSettings(),
+  const [items, versions, logs, earnings, meals, bodyLogs, setLogs, slips, workouts, blocks, focus] = await Promise.all([
     db.list("checklist_item", { orderBy: "sort_order" }),
-    db.list("target_version", { orderBy: "effective_from" }),
+    getScoringVersions(),
     db.list("day_log", { from, to: today, orderBy: "date" }),
     db.list("earning", { from, to: today, orderBy: "date" }),
     db.list("meal", { from: addDays(today, -14), to: today, orderBy: "date" }),
@@ -39,10 +48,14 @@ export async function loadCoachData(today: DateStr): Promise<CoachData | null> {
     db.list("vice_slip", { from, to: today, orderBy: "date" }),
     db.list("workout"),
     getBlocksForDate(today),
+    db.list("focus_session", { from: addDays(today, -14), to: today, orderBy: "date" }),
   ]);
   return {
     today,
-    challenge,
+    historyStart: from,
+    challenge: mode.challenge,
+    floor: settings.daily_floor ?? mode.challenge?.daily_floor ?? 0,
+    focus,
     settings,
     items,
     versions,
@@ -134,17 +147,15 @@ export function syncCoach(today: DateStr, options: SyncOptions = {}): Promise<vo
   const run = async () => {
     const data = await loadCoachData(today);
     if (!data) return;
-    const { challenge } = data;
-    const end = challengeEndDate(challenge.start_date, challenge.length_days);
     const flags = await syncFlags(data);
-    const active = today >= challenge.start_date && today <= end;
+    const active = today >= data.historyStart;
 
     if (active) {
       const brief = await db.first("coach_note", { eq: { date: today, kind: "morning" } });
       if (!brief || options.regenerate) await writeMorning(data, flags);
     }
 
-    const due = reviewDue(today, timeNY(), challenge);
+    const due = reviewDue(today, timeNY(), data.historyStart);
     if (due) {
       const review = await db.first("coach_note", { eq: { date: due.weekEnd, kind: "weekly" } });
       if (options.weekly || (!review && due.auto)) await writeWeekly(data, flags, due.weekEnd);

@@ -34,7 +34,7 @@ const DASHES = new RegExp(`[${String.fromCharCode(0x2013, 0x2014)}]`);
 
 beforeEach(async () => {
   setBackend(new LocalBackend(memoryStore(), "memory"));
-  await ensureSeeded();
+  await ensureSeeded("2026-10-05");
 });
 
 describe("seed", () => {

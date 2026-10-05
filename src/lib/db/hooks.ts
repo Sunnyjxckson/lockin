@@ -6,6 +6,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { db, subscribe, type Query } from "./index";
 import { getBlocksForDate, type DayBlock } from "../blocks";
+import { activeChallenge, modeOn, scoringVersions, type ModeInfo } from "../logic/challenge";
 import { nyParts, todayNY } from "../logic/dates";
 import { summarizeDay, summarizeWeek, type DaySummary, type WeekSummary } from "../logic/day";
 import type { AppSettings, Challenge, ChecklistItem, DateStr, DayLog, Row, TableName, TargetVersion, Workout } from "../types";
@@ -92,9 +93,44 @@ export function useRow<K extends TableName>(table: K, id: string | null | undefi
 
 // ---------- typed hooks ----------
 
-/** The active challenge. */
+/** Every challenge, past and present, oldest start first. */
+export function useChallenges(): Loadable<Challenge[]> {
+  return useList("challenge", { orderBy: "start_date" });
+}
+
+/**
+ * The challenge with status "active", or null. It may not have started yet,
+ * or its last day may have passed. For what is running today use useMode().
+ */
 export function useChallenge(): Loadable<Challenge | null> {
-  return useQuery<Challenge | null>("challenge", ["challenge"], () => db.first("challenge", { orderBy: "created_at" }), null);
+  const all = useChallenges();
+  const active = useMemo(() => activeChallenge(all.data), [all.data]);
+  return { data: active, loading: all.loading, error: all.error, reload: all.reload };
+}
+
+export interface ModeState extends ModeInfo {
+  loading: boolean;
+  today: DateStr;
+  /** Every challenge, oldest start first. */
+  challenges: Challenge[];
+  /** The least to earn each day, challenge or not. */
+  floor: number;
+}
+
+/**
+ * Which mode the app is in today. `mode` is "challenge" only while one is
+ * running: then `challenge`, `day` and `length` are set. Otherwise it is
+ * "ongoing" and screens show plain dates and consistency over time.
+ * `historyStart` is the first date of the ongoing history in both modes.
+ */
+export function useMode(): ModeState {
+  const today = useToday();
+  const all = useChallenges();
+  const settings = useSettings();
+  return useMemo(() => {
+    const info = modeOn(all.data, settings.data?.history_start ?? today, today);
+    return { ...info, loading: all.loading || settings.loading, today, challenges: all.data, floor: settings.data?.daily_floor ?? 0 };
+  }, [all.data, all.loading, settings.data, settings.loading, today]);
 }
 
 export function useSettings(): Loadable<AppSettings | null> {
@@ -104,22 +140,26 @@ export function useSettings(): Loadable<AppSettings | null> {
 export interface ChecklistData {
   /** Every item, including vices that are off and archived ones. */
   items: ChecklistItem[];
+  /** The target history to score with: saved versions with challenge rules laid over the days each challenge ran. */
   versions: TargetVersion[];
+  /** The saved versions alone, as Settings wrote them. */
+  savedVersions: TargetVersion[];
 }
 
-const NO_CHECKLIST: ChecklistData = { items: [], versions: [] };
+const NO_CHECKLIST: ChecklistData = { items: [], versions: [], savedVersions: [] };
 
 /** Items and their target history. Feed these to the logic functions. */
 export function useChecklist(): Loadable<ChecklistData> {
   return useQuery<ChecklistData>(
     "checklist",
-    ["checklist_item", "target_version"],
+    ["checklist_item", "target_version", "challenge"],
     async () => {
-      const [items, versions] = await Promise.all([
+      const [items, saved, challenges] = await Promise.all([
         db.list("checklist_item", { orderBy: "sort_order" }),
         db.list("target_version", { orderBy: "effective_from" }),
+        db.list("challenge"),
       ]);
-      return { items, versions };
+      return { items, versions: scoringVersions(saved, challenges), savedVersions: saved };
     },
     NO_CHECKLIST,
   );

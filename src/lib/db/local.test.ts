@@ -178,6 +178,12 @@ describe("upsert", () => {
       fat_target: 60,
       weight_unit: "lb" as const,
       haptics: true,
+      history_start: "2026-10-05",
+      daily_floor: 100,
+      weekly_food_budget: null,
+      food_likes: [],
+      food_dislikes: [],
+      focus_goal_minutes: 60,
     };
     await db.upsert("app_settings", settings, ["id"]);
     await db.upsert("app_settings", { ...settings, haptics: false }, ["id"]);

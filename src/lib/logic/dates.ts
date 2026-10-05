@@ -103,7 +103,9 @@ export function dateRange(a: DateStr, b: DateStr): DateStr[] {
   return out;
 }
 
-// ---------- challenge ----------
+// ---------- day counts ----------
+// Plain date arithmetic for a run of days with a start and a length. What a
+// challenge is, and whether one is running, lives in ./challenge.
 
 /** Day 1 is start_date. Before the start this is 0 or negative. Never stored. */
 export function dayNumber(startDate: DateStr, date: DateStr): number {
@@ -141,6 +143,27 @@ export function weekEnd(date: DateStr): DateStr {
 export function weekDates(date: DateStr): DateStr[] {
   const s = weekStart(date);
   return dateRange(s, addDays(s, 6));
+}
+
+// ---------- months ----------
+
+/** The first day of the month a date is in. */
+export function monthStart(date: DateStr): DateStr {
+  return `${date.slice(0, 7)}-01`;
+}
+
+/** The last day of the month a date is in. */
+export function monthEnd(date: DateStr): DateStr {
+  const [y, m] = date.split("-").map(Number);
+  const next = m === 12 ? `${y + 1}-01-01` : `${y}-${pad(m + 1)}-01`;
+  return addDays(next, -1);
+}
+
+/** The first day of the month before or after, by `n` months. */
+export function addMonths(date: DateStr, n: number): DateStr {
+  const [y, m] = date.split("-").map(Number);
+  const total = y * 12 + (m - 1) + n;
+  return `${Math.floor(total / 12)}-${pad((total % 12) + 1)}-01`;
 }
 
 // ---------- clock times ----------
@@ -200,6 +223,14 @@ export function formatDateLong(date: DateStr): string {
 export function formatDateShort(date: DateStr): string {
   const [, m, d] = date.split("-").map(Number);
   return `${MONTHS[m - 1]} ${d}`;
+}
+
+const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+/** "October 2026" */
+export function formatMonth(date: DateStr): string {
+  const [y, m] = date.split("-").map(Number);
+  return `${MONTHS_LONG[m - 1]} ${y}`;
 }
 
 // ---------- instants ----------

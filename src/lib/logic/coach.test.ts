@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { SEED_ITEMS, SEED_VICE_LIBRARY, SEED_WORKOUTS } from "../seed/data";
-import type { ChecklistItem, CoachNote, DayLog, Earning, SetLog, ViceSlip, Workout } from "../types";
+import type { Challenge, ChecklistItem, CoachNote, DayLog, Earning, SetLog, ViceSlip, Workout } from "../types";
 import {
   activeFlagNotes,
   buildSnapshot,
@@ -41,7 +41,23 @@ const row = <T extends object>(r: T): T & { id: string; created_at: string } => 
 function base(today = TODAY, start = "2026-09-13"): CoachData {
   return {
     today,
-    challenge: { id: "challenge", created_at: CREATED, start_date: start, length_days: 30, money_target: 1000, money_deadline: addDays(today, 4), daily_floor: 100, money_target_start: null },
+    historyStart: start,
+    floor: 100,
+    challenge: {
+      id: "challenge",
+      created_at: CREATED,
+      name: "30 day lock in",
+      status: "active",
+      ended_on: null,
+      rules: null,
+      restart_of: null,
+      start_date: start,
+      length_days: 30,
+      money_target: 1000,
+      money_deadline: addDays(today, 4),
+      daily_floor: 100,
+      money_target_start: null,
+    },
     settings: { carbs_target: 180, fat_target: 60, weight_unit: "lb" },
     items: ITEMS,
     versions: [],
@@ -67,7 +83,7 @@ function fixtureData(today = TODAY): CoachData {
   const d = base(today, fx.challenge.start_date);
   return {
     ...d,
-    challenge: { ...d.challenge, ...fx.challenge },
+    challenge: { ...(d.challenge as Challenge), ...fx.challenge },
     logs: fx.day_log.map(row) as DayLog[],
     earnings: fx.earning.map(row) as Earning[],
     meals: fx.meal.map(row),
@@ -94,7 +110,7 @@ function cleanDay(date: string, over: Partial<Record<string, number | false>> = 
 }
 
 function cleanDays(data: CoachData, per: (date: string, daysAgo: number) => Partial<Record<string, number | false>> = () => ({})): DayLog[] {
-  const days = dateRange(data.challenge.start_date, addDays(data.today, -1));
+  const days = dateRange(data.historyStart, addDays(data.today, -1));
   return days.flatMap((d, i) => cleanDay(d, per(d, days.length - i)));
 }
 
@@ -398,6 +414,71 @@ describe("buildSnapshot", () => {
   });
 });
 
+describe("ongoing mode and challenge mode", () => {
+  it("names the challenge and its day count while one is running", () => {
+    const s = buildSnapshot(fixtureData(), []);
+    expect(s.today).toMatchObject({ mode: "challenge", challenge: "30 day lock in", dayNumber: 23, lengthDays: 30, daysLeft: 7 });
+    expect(s.days[s.days.length - 1].dayNumber).toBe(22);
+  });
+
+  it("has no day count in ongoing mode, and keeps the whole history", () => {
+    const data = { ...fixtureData(), challenge: null };
+    const s = buildSnapshot(data, detectFlags(data));
+    expect(s.today).toMatchObject({ mode: "ongoing", challenge: null, dayNumber: null, lengthDays: null, daysLeft: null, phase: "active" });
+    expect(s.days).toHaveLength(14);
+    expect(s.days.every((d) => d.dayNumber === null)).toBe(true);
+    // Same days, same scores, same streaks as with the challenge on top.
+    const withChallenge = buildSnapshot(fixtureData(), []);
+    expect(s.days.map((d) => [d.date, d.status, d.done])).toEqual(withChallenge.days.map((d) => [d.date, d.status, d.done]));
+    expect(s.items).toEqual(withChallenge.items);
+    expect(s.vices).toEqual(withChallenge.vices);
+    expect(s.week).toEqual(withChallenge.week);
+  });
+
+  it("keeps scoring after a challenge has ended, with streaks running across the end", () => {
+    const data = fixtureData();
+    const ended: CoachData = { ...data, challenge: { ...(data.challenge as Challenge), status: "ended", ended_on: addDays(TODAY, -5) } };
+    const s = buildSnapshot(ended, []);
+    expect(s.today.mode).toBe("ongoing");
+    expect(s.yesterday?.date).toBe(addDays(TODAY, -1));
+    expect(s.items).toEqual(buildSnapshot(data, []).items);
+  });
+
+  it("speaks of money as a floor only when there is no target", () => {
+    const data: CoachData = { ...fixtureData(), challenge: null, floor: 120 };
+    const s = buildSnapshot(data, []);
+    expect(s.money).toMatchObject({ target: 0, state: "active", floor: 120, neededPerDay: null, daysLeft: 0 });
+    expect(morningFallback(s)).toMatch(/Money: \$[\d,.]+ so far\. Floor is \$120 today\./);
+    const noTarget: CoachData = { ...fixtureData(), challenge: { ...(fixtureData().challenge as Challenge), money_target: null, money_deadline: null } };
+    expect(buildSnapshot(noTarget, []).money.target).toBe(0);
+  });
+
+  it("counts full days over the last 30 so one slip is one day, not a restart", () => {
+    const d = base(TODAY, "2026-08-01");
+    d.challenge = null;
+    d.logs = cleanDays(d, (_date, ago) => (ago === 3 ? { workout: false } : {}));
+    const s = buildSnapshot(d, []);
+    expect(s.today.consistency).toEqual({ full: 29, days: 30, window: 30, label: "29 of the last 30 days" });
+    const text = morningFallback(s);
+    expect(text).toContain("Consistency: 29 of the last 30 days locked in.");
+    expect(text).not.toMatch(/Day \d/);
+    expect(unknownNumbers(text, s)).toEqual([]);
+  });
+
+  it("reads focus minutes per day when sessions are passed in", () => {
+    const d = base();
+    d.settings = { carbs_target: 180, fat_target: 60, weight_unit: "lb", focus_goal_minutes: 90 };
+    d.focus = [
+      row({ date: TODAY, start: "09:00", end: "09:50", minutes: 50, label: "Stats", source: "timer" as const, block_id: null }),
+      row({ date: TODAY, start: "14:00", end: "14:30", minutes: 30, label: null, source: "manual" as const, block_id: null }),
+    ];
+    const s = buildSnapshot(d, []);
+    expect(s.focus.goalMinutes).toBe(90);
+    expect(s.focus.days[s.focus.days.length - 1]).toEqual({ date: TODAY, label: "Oct 5", minutes: 80 });
+    expect(buildSnapshot(base(), []).focus.days.every((x) => x.minutes === 0)).toBe(true);
+  });
+});
+
 describe("buildWeek and the one change", () => {
   it("rolls the week up per item", () => {
     const data = fixtureData();
@@ -463,11 +544,11 @@ describe("fallback writing", () => {
     expect(text).not.toContain("Watch:");
 
     const behind = base();
-    behind.challenge.money_deadline = addDays(TODAY, 1);
+    behind.challenge!.money_deadline = addDays(TODAY, 1);
     expect(morningFallback(buildSnapshot(behind, []))).toContain("That takes $500 a day, so the $100 floor is not enough right now.");
 
     const past = base();
-    past.challenge.money_deadline = addDays(TODAY, -1);
+    past.challenge!.money_deadline = addDays(TODAY, -1);
     expect(morningFallback(buildSnapshot(past, []))).toContain("Oct 4 has passed. Set a new target in Money.");
 
     const idle = base();
@@ -493,7 +574,7 @@ describe("fallback writing", () => {
   it("says so when a week has no scored days", () => {
     const s = buildSnapshot(base(TODAY, addDays(TODAY, 2)), []);
     expect(weeklyFallback(s)).toBe("No scored days in this week yet.");
-    expect(morningFallback(s)).toContain("has not started yet");
+    expect(morningFallback(s)).toContain("Nothing is scored yet");
   });
 });
 
@@ -583,7 +664,7 @@ describe("flag notes", () => {
 });
 
 describe("reviewDue", () => {
-  const c = { start_date: "2026-10-05", length_days: 30 };
+  const c = "2026-10-05";
   it("is on request on Sunday and automatic from 8 PM", () => {
     expect(reviewDue("2026-10-11", "09:00", c)).toEqual({ weekEnd: "2026-10-11", weekStart: "2026-10-05", auto: false });
     expect(reviewDue("2026-10-11", "20:00", c)?.auto).toBe(true);
@@ -591,11 +672,13 @@ describe("reviewDue", () => {
   it("covers the week that just ended on any other day", () => {
     expect(reviewDue("2026-10-14", "07:00", c)).toEqual({ weekEnd: "2026-10-11", weekStart: "2026-10-05", auto: true });
   });
-  it("is null before the first week ends and after the last one is done", () => {
+  it("is null before the first week ends, and never stops after that", () => {
     expect(reviewDue("2026-10-05", "07:00", c)).toBeNull();
     expect(reviewDue("2026-10-10", "07:00", c)).toBeNull();
     expect(reviewDue("2026-11-08", "07:00", c)?.weekEnd).toBe("2026-11-08");
     expect(reviewDue("2026-11-10", "07:00", c)?.weekEnd).toBe("2026-11-08");
-    expect(reviewDue("2026-11-17", "07:00", c)).toBeNull();
+    // The first challenge ended on Nov 3. The history is ongoing, so reviews keep coming.
+    expect(reviewDue("2026-11-17", "07:00", c)?.weekEnd).toBe("2026-11-15");
+    expect(reviewDue("2027-03-03", "07:00", c)?.weekEnd).toBe("2027-02-28");
   });
 });

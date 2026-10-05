@@ -4,7 +4,7 @@
 
 import { getBlocksForDate } from "@/lib/blocks";
 import { db, isUniqueViolation } from "@/lib/db";
-import { getChallenge, getSettings, getWorkouts, workoutsFor } from "@/lib/db/helpers";
+import { getSettings, getWorkouts, workoutsFor } from "@/lib/db/helpers";
 import { addDays, weekdayOf } from "@/lib/logic/dates";
 import type { ReminderDay } from "@/lib/logic/reminders";
 import type { DateStr } from "@/lib/types";
@@ -14,10 +14,9 @@ import type { PushTarget } from "./push";
 const RUN_ID = "cron";
 
 export async function loadCronData(dates: DateStr[]): Promise<CronData> {
-  const [reminders, settings, challenge, workouts] = await Promise.all([
+  const [reminders, settings, workouts] = await Promise.all([
     db.list("reminder", { orderBy: "sort_order" }),
     getSettings(),
-    getChallenge(),
     getWorkouts(),
   ]);
   const days: ReminderDay[] = await Promise.all(
@@ -34,7 +33,7 @@ export async function loadCronData(dates: DateStr[]): Promise<CronData> {
   );
   return {
     reminders,
-    floor: challenge?.daily_floor ?? 0,
+    floor: settings?.daily_floor ?? 0,
     quiet_start: settings?.quiet_start ?? "23:00",
     quiet_end: settings?.quiet_end ?? "05:30",
     days,

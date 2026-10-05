@@ -2,7 +2,7 @@
 // nothing guessed. Each flag carries the dates and numbers that tripped it.
 //
 // Shared ground rules
-// - Only finished challenge days count (yesterday at the latest). Today is
+// - Only finished days count (yesterday at the latest). Today is
 //   still in play.
 // - A day with nothing logged at all proves nothing, so it ends a run instead
 //   of counting as a miss.
@@ -37,7 +37,7 @@ const ORDER: Flag["kind"][] = ["earned_under", "protein_under", "lift_drop", "wa
 
 interface Ctx {
   data: CoachData;
-  /** Finished challenge days inside the lookback, oldest first. */
+  /** Finished days inside the lookback, oldest first. */
   days: DateStr[];
   touched: Set<DateStr>;
   logAt: (itemId: string, date: DateStr) => DayLog | undefined;
@@ -47,7 +47,7 @@ interface Ctx {
 }
 
 function makeCtx(data: CoachData): Ctx {
-  const range = completedRange(data.challenge, data.today);
+  const range = completedRange(data.historyStart, data.today);
   const days = range ? dateRange(range.from, range.to).slice(-RULES.lookbackDays) : [];
   const touched = touchedDates(data.logs);
   const index = new Map<string, DayLog>();
@@ -119,7 +119,7 @@ function earnedUnder(ctx: Ctx): Flag[] {
   if (!item) return [];
   const run = missRun(ctx, item);
   if (run.length < RULES.runDays) return [];
-  const floor = numberTarget(ctx, item, run[run.length - 1]) ?? ctx.data.challenge.daily_floor;
+  const floor = numberTarget(ctx, item, run[run.length - 1]) ?? ctx.data.floor;
   const values = run.map((d) => ctx.logAt(item.id, d)?.value ?? 0);
   const short = values.reduce((s, v) => s + Math.max(0, floor - v), 0);
   return [
@@ -233,7 +233,7 @@ function vicePatterns(ctx: Ctx): Flag[] {
   for (const item of data.items) {
     if (item.category !== "vice") continue;
     const slips = data.slips
-      .filter((s) => s.item_id === item.id && s.date >= from && s.date <= data.today && s.date >= data.challenge.start_date)
+      .filter((s) => s.item_id === item.id && s.date >= from && s.date <= data.today && s.date >= data.historyStart)
       .sort((a, b) => (a.date + a.time < b.date + b.time ? -1 : 1));
     if (slips.length < Math.min(RULES.viceSameTime, RULES.viceSameTrigger)) continue;
 

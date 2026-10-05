@@ -4,7 +4,22 @@
 
 import { db } from "./index";
 import { syncSlipCount } from "./helpers";
+import { todayNY, nyParts } from "../logic/dates";
 import { parseLegacySpendHint } from "../logic/vices";
+import type { AppSettings, Challenge, DateStr } from "../types";
+
+/** Fill in fields a row was written without. Fields that are there are never changed. */
+function missing<T extends object>(row: T, defaults: Partial<T>): Partial<T> | null {
+  const patch: Partial<T> = {};
+  let any = false;
+  for (const key of Object.keys(defaults) as (keyof T)[]) {
+    if (row[key] === undefined) {
+      patch[key] = defaults[key];
+      any = true;
+    }
+  }
+  return any ? patch : null;
+}
 
 export async function upgradeLocalData(): Promise<void> {
   if ((await db.backendName()) !== "local") return;
@@ -31,6 +46,43 @@ export async function upgradeLocalData(): Promise<void> {
   }
 
   // 0005: the money target start. Null means the challenge start.
-  const challenge = await db.first("challenge", { orderBy: "created_at" });
-  if (challenge && challenge.money_target_start === undefined) await db.update("challenge", challenge.id, { money_target_start: null });
+  // 0007: one fixed challenge row becomes one row per challenge. The row that
+  // is there becomes the first, active challenge and keeps its id, dates and
+  // money target. Logs were always keyed by date, so none of them move.
+  const challenges = await db.list("challenge", { orderBy: "created_at" });
+  let hasActive = challenges.some((c) => c.status === "active");
+  for (const c of challenges) {
+    const first = !hasActive && c.status === undefined;
+    if (first) hasActive = true;
+    const patch = missing<Challenge>(c, {
+      money_target_start: null,
+      name: "30 day lock in",
+      status: first ? "active" : "ended",
+      ended_on: null,
+      rules: null,
+      restart_of: null,
+    });
+    if (patch) await db.update("challenge", c.id, patch);
+  }
+
+  // 0007 and 0008: the ongoing history start, the live daily floor, and the
+  // food and focus settings.
+  const settings = await db.get("app_settings", "app");
+  if (settings) {
+    let patch: Partial<AppSettings> | null = null;
+    if (settings.history_start === undefined || settings.daily_floor === undefined) {
+      const [firstLog, firstEarning, earned] = await Promise.all([
+        db.first("day_log", { orderBy: "date" }),
+        db.first("earning", { orderBy: "date" }),
+        db.first("checklist_item", { eq: { key: "earned" } }),
+      ]);
+      const installed = settings.created_at ? nyParts(settings.created_at).date : todayNY();
+      const dates: DateStr[] = [installed, ...challenges.map((c) => c.start_date), ...(firstLog ? [firstLog.date] : []), ...(firstEarning ? [firstEarning.date] : [])];
+      const oldest = dates.filter(Boolean).sort()[0];
+      const floor = challenges[0]?.daily_floor ?? (earned?.target.kind === "min" ? earned.target.min : 100);
+      patch = missing<AppSettings>(settings, { history_start: oldest, daily_floor: floor });
+    }
+    const rest = missing<AppSettings>(settings, { weekly_food_budget: null, food_likes: [], food_dislikes: [], focus_goal_minutes: 60 });
+    if (patch || rest) await db.update("app_settings", "app", { ...patch, ...rest });
+  }
 }
