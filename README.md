@@ -14,7 +14,7 @@ npm run dev
 Open http://localhost:3000 in a phone-sized window. With an empty `.env` the whole app works on one device:
 
 - It asks you to create a 4 digit passcode, then seeds the first 30 day challenge (Oct 5, 2026), the checklist, schedule, workouts, reminders and the vice library. Opened after that challenge's last day, it starts in ongoing mode with no challenge.
-- Settings, Challenge is where a challenge is started, ended early, finished or restarted, and where its rules are set. Settings, Look switches between the dark minimal and high contrast themes.
+- Settings, Challenge is where a challenge is started, ended early, finished or restarted, and where its rules are set. Settings, Look switches between the Aubergine (default) and high contrast themes.
 - Today, Schedule, Money, Body, Progress, Vices, Coach and Settings all work. Data is in the browser's localStorage, photos in IndexedDB.
 - Boards (More, Boards): make a board, add images from the camera, your photos, the clipboard or a web link, add colors and notes, and turn a board's palette into the look of the whole app. Text contrast is checked and fixed before a palette is applied, and one tap goes back to the base theme. The first board with anything on it shows as a row at the bottom of Today.
 - Meals (the icon in Body's header): set a weekly budget and it plans seven days from the built in recipe library that hit your calories and protein, with one grocery list priced at five stores. Swap a meal, change a portion, tick off the list, record the shop (it shows on Money as groceries), and log a cooked meal to Body and Today. Every price is an estimate until you type one in from a receipt.

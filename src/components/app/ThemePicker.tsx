@@ -49,7 +49,8 @@ export function ThemePicker({ className }: { className?: string }) {
                     </span>
                   ) : null}
                 </span>
-                <span className="t-caption mt-1 block leading-snug" style={{ color: t["ink-2"] }}>
+                {/* Main text color, not the muted one: a tile is drawn in another theme's colors, and has to read whichever theme is on. */}
+                <span className="t-caption mt-1 block leading-snug" style={{ color: t.ink }}>
                   {b.blurb}
                 </span>
               </span>
@@ -60,7 +61,7 @@ export function ThemePicker({ className }: { className?: string }) {
                   </span>
                   <span
                     className="tnum flex h-9 flex-1 items-end rounded-[10px] border px-2 pb-1.5 text-[11px]"
-                    style={{ background: `linear-gradient(160deg, ${v["--glass-hi"]}, ${v["--glass-lo"]})`, borderColor: v["--glass-line"], color: t["ink-2"] }}
+                    style={{ backgroundColor: v["--glass-smoke"], backgroundImage: `linear-gradient(160deg, ${v["--glass-hi"]}, ${v["--glass-lo"]})`, borderColor: v["--glass-line"], color: t.ink }}
                   >
                     26/30
                   </span>

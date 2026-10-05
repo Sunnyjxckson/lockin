@@ -50,6 +50,7 @@ const clockSeconds = (text) => {
 export async function runFeatures(h) {
   const { browser, base, device, check, watch, shot, rows, dialog, row, createPasscode, checkContrast, rootVar, noOverflow, openMore, closeSheet, PREFIX } = h;
   const toastSays = (page, text) => page.getByText(text).first().waitFor();
+  const onDay = (page, text) => page.locator("[data-day-line]").filter({ hasText: `${text}.` }).waitFor();
   const heading = (page, name) => page.getByRole("heading", { name, level: 1 }).waitFor();
   const timer = (page) => page.locator("[data-timer]").first();
   const clockText = (page) => page.locator("[data-clock]").first().innerText();
@@ -238,7 +239,7 @@ export async function runFeatures(h) {
   await page.getByText(", logged").first().waitFor();
   await shot(page, "f-meals-09-logged", false);
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(page, "Day 1 of 30");
   await page.getByRole("link", { name: new RegExp(`Calories: ${kcal.toLocaleString("en-US")}`) }).waitFor();
   check("Today shows the cooked meal's calories and protein on their rows", (await page.getByRole("link", { name: new RegExp(`Protein: (${String(protein).replace(".", "\\.")}|${Math.round(protein)})g from meals`) }).count()) === 1, String(protein));
   await shot(page, "f-meals-10-today", true);
@@ -272,14 +273,14 @@ export async function runFeatures(h) {
   // =====================================================================
   console.log("Focus: the timer");
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(page, "Day 1 of 30");
   const study = row(page, "Study or homework block");
   const studyId = (await rows(page, "checklist_item")).find((i) => i.key === "study").id;
-  check("the Study row on Today carries a Focus button and is not ticked", (await study.getAttribute("aria-checked")) === "false" && (await page.getByRole("link", { name: "Open the focus timer" }).count()) === 1);
+  check("the Study tile on Today carries a Focus button and is not ticked", (await study.getAttribute("aria-checked")) === "false" && (await page.getByRole("link", { name: "Open the focus timer" }).count()) === 1);
   {
     const a = await study.boundingBox();
     const b = await page.getByRole("link", { name: "Open the focus timer" }).boundingBox();
-    check("the button sits in the row, beside the tick area, 44px tall", b.height >= 44 && b.y >= a.y && b.y + b.height <= a.y + a.height + 1 && b.x >= a.x + a.width - 1, JSON.stringify([a, b]));
+    check("the button sits in the tile's top right corner, inside it, with a 44px tap target", b.height >= 44 && b.width >= 44 && b.y >= a.y - 1 && b.y + b.height <= a.y + a.height + 1 && b.x >= a.x && Math.abs(b.x + b.width - (a.x + a.width)) <= 1, JSON.stringify([a, b]));
   }
   await page.getByRole("link", { name: "Open the focus timer" }).click();
   await heading(page, "Focus");
@@ -362,7 +363,7 @@ export async function runFeatures(h) {
   check("time logged by hand is its own row, with no clock numbers", manual.minutes === 35 && manual.clock_minutes === null && manual.completed === false && manual.live === null, JSON.stringify(manual));
   await shot(page, "f-focus-06-goal-reached", true);
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(page, "Day 1 of 30");
   await page.waitForFunction(() => document.querySelector('[role="checkbox"][aria-checked="true"]') !== null);
   check("reaching the goal ticks Study on Today", (await row(page, "Study or homework block").getAttribute("aria-checked")) === "true");
   await shot(page, "f-focus-07-today-ticked", true);
@@ -412,7 +413,7 @@ export async function runFeatures(h) {
   // =====================================================================
   console.log("Boards");
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(page, "Day 1 of 30");
   check("with no board, Today has no board row", (await page.getByText("What this is for").count()) === 0);
   await openMore(page, "Boards");
   await heading(page, "Boards");
@@ -465,19 +466,19 @@ export async function runFeatures(h) {
   const theme = (await rows(page, "theme")).find((t) => t.active);
   const board = (await rows(page, "board"))[0];
   const worn = await rootVar(page, "--bg");
-  check("applying saves the theme against the board and repaints the app", theme.board_id === board.id && theme.palette && worn !== "#09090a" && worn === (await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--bg").trim())), JSON.stringify(theme));
+  check("applying saves the theme against the board and repaints the app", theme.board_id === board.id && theme.palette && worn !== "#0d0b10" && worn === (await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--bg").trim())), JSON.stringify(theme));
   await page.getByText("The app is wearing this board").waitFor();
   await shot(page, "f-boards-08-board-worn", true);
 
   // Today under the board's look.
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(page, "Day 1 of 30");
   await page.getByText("What this is for").waitFor();
   await page.waitForTimeout(400);
   await checkContrast(page, "Today under the board's palette", 4.5);
   {
     const entry = await page.getByRole("button", { name: "Open The body full screen" }).boundingBox();
-    const list = await page.getByText("In bed on time").boundingBox();
+    const list = await row(page, "In bed on time").boundingBox();
     const workout = await page.getByText("Today's workout").boundingBox();
     check("the board row sits under the checklist and the workout, out of the way of the check-off", entry.y > list.y && entry.y > workout.y, `${entry.y} ${list.y} ${workout.y}`);
   }
@@ -514,10 +515,10 @@ export async function runFeatures(h) {
   await page.goto(`${base}/boards`);
   await page.getByText("The look of the app").waitFor();
   await page.getByRole("button", { name: "Back to base" }).click();
-  await toastSays(page, "Back to Dark minimal");
-  check("Back to base drops the palette everywhere", (await rootVar(page, "--bg")) === "#09090a" && (await rows(page, "theme")).filter((t) => t.active && t.palette).length === 0);
-  console.log("The new screens in dark minimal");
-  await tour("dark minimal", 4.5);
+  await toastSays(page, "Back to Aubergine");
+  check("Back to base drops the palette everywhere", (await rootVar(page, "--bg")) === "#0d0b10" && (await rows(page, "theme")).filter((t) => t.active && t.palette).length === 0);
+  console.log("The new screens in Aubergine");
+  await tour("Aubergine", 4.5);
   await page.goto(`${base}/settings`);
   await heading(page, "Settings");
   await page.getByRole("radio", { name: "High contrast" }).click();
@@ -525,7 +526,7 @@ export async function runFeatures(h) {
   console.log("The new screens in high contrast");
   await tour("high contrast", 7);
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(page, "Day 1 of 30");
   await page.waitForTimeout(300);
   await checkContrast(page, "Today with everything on it, high contrast", 7);
   await shot(page, "f-look-high-contrast-today", true);
@@ -577,7 +578,9 @@ export async function runFeatures(h) {
     await p.goto(`${base}/today`);
     await createPasscode(p, "2468");
     await p.getByText("Morning brief").waitFor();
-    await p.getByText(/\$0 of \$1,000/).first().waitFor();
+    // Today shows the brief's first paragraph. The money line is in the note itself and on the coach screen.
+    await p.waitForFunction(([prefix]) => JSON.parse(localStorage.getItem(prefix + "coach_note") ?? "[]").some((n) => n.kind === "morning" && /\$0 of \$1,000/.test(n.body)), [PREFIX]);
+    check("Today shows the brief's opening paragraph and a way to the rest", (await p.locator("#coach-brief p").count()) === 1 && (await p.locator("#coach-brief").getByRole("link", { name: /Read the rest/ }).count()) === 1);
     const first = (await rows(p, "coach_note")).find((n) => n.kind === "morning");
     check("the morning brief quotes the challenge's money target and records what it was written from", /\$1,000/.test(first.body) && typeof first.basis === "string" && first.basis.includes("1000"), JSON.stringify(first));
 
@@ -593,14 +596,14 @@ export async function runFeatures(h) {
     );
     await p.goto(`${base}/money`);
     await p.getByRole("heading", { name: "Money", level: 1 }).waitFor();
-    await p.getByText("Floor $150").waitFor();
+    await p.getByText("of $150").first().waitFor();
     check("a challenge target on Earned today is the floor Money shows while it runs", (await p.getByText("of $150").count()) >= 1 && (await rows(p, "app_settings"))[0].daily_floor === 100);
     await shot(p, "f-core-01-money-challenge-floor", true);
     await p.goto(`${base}/reminders`);
     await p.getByText(/Only if still under \$150/).waitFor();
     check("the earnings nudge uses the same floor", true);
     await p.goto(`${base}/today`);
-    await p.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+    await onDay(p, "Day 1 of 30");
     await p.waitForFunction(([prefix]) => JSON.parse(localStorage.getItem(prefix + "coach_note") ?? "[]").some((n) => n.kind === "morning" && /\$150/.test(n.body)), [PREFIX]);
     check("the brief is written again with the new floor", true);
 

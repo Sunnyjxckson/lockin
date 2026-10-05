@@ -55,14 +55,24 @@ async function createPasscode(page, code = "1379") {
   await typeCode(page, code);
   await page.getByText("Enter it again").waitFor();
   await typeCode(page, code);
-  await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
+  await todayReady(page);
 }
 
+// Today opens on a greeting, with the date and the day count on the line under it.
+const todayReady = (page) => page.locator("[data-today]").waitFor();
+const onDay = (page, text) => page.locator("[data-day-line]").filter({ hasText: `${text}.` }).waitFor();
+const isDay = (page, text) => page.locator("[data-day-line]").filter({ hasText: `${text}.` }).isVisible();
+const onDate = (page, date) => page.locator(`[data-today="${date}"]`).waitFor();
+/** The strip of earlier days is folded under the date line until it is asked for. */
+async function openStrip(page) {
+  if ((await page.getByRole("tablist").count()) === 0) await page.locator("[data-day-line]").click();
+  await page.getByRole("tablist").waitFor();
+}
 const row = (page, name) => page.getByRole("checkbox", { name, exact: false });
 const dialog = (page) => page.getByRole("dialog");
 const nav = (page) => page.getByRole("navigation", { name: "Main" });
 const done = (page, n, of = 12) => page.getByText(`${n} of ${of}`, { exact: true }).first().waitFor();
-const count = async (page) => (await page.locator("section", { hasText: "Checklist" }).first().locator("h2 + div").innerText()).trim();
+const count = async (page) => ((await page.locator("[data-count]").textContent()) ?? "").trim();
 
 /** Every screenshot is .shots/final2-<name>.png. A prefix other than the default names a group, as final2-<group>-<name>. */
 async function shot(page, name, fullPage = false, prefix = "final-") {
@@ -94,7 +104,10 @@ function sameTables(a, b) {
 
 /**
  * Every piece of text on screen against the background actually behind it,
- * by the WCAG formula. See-through fills are blended down to the page color.
+ * by the WCAG formula. See-through fills are blended down to the page color,
+ * the page is taken at the brightest point of each light behind it as well as
+ * plain, and a gradient fill is measured at every one of its color stops.
+ * The worst of those is the ratio that counts.
  * Text inside something dimmed on purpose (a disabled control, a future day)
  * is left out. Returns the pairs that fall short.
  */
@@ -119,16 +132,45 @@ function contrastFailures(page, min) {
     };
     const over = (top, under) => [0, 1, 2].map((i) => top[i] * top[3] + under[i] * (1 - top[3]));
     const page = parse(getComputedStyle(document.body).backgroundColor) ?? [0, 0, 0, 1];
-    const backgroundOf = (el) => {
-      const stack = [];
-      for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
-        const c = parse(getComputedStyle(n).backgroundColor);
-        if (c && c[3] > 0) stack.push(c);
-        if (c && c[3] >= 1) break;
+    // The page is not one color: three fixed lights sit behind everything, so
+    // any text can end up over the brightest point of any of them. Each
+    // candidate ground is the page there.
+    const root = getComputedStyle(document.documentElement);
+    const lights = ["--glow-1", "--glow-2", "--glow-3"].map((v) => parse(root.getPropertyValue(v))).filter((c) => c && c[3] > 0);
+    const pages = [[page[0], page[1], page[2]], ...lights.map((l) => over(l, [page[0], page[1], page[2], 1]))];
+    // Every color stop of a gradient fill (glass, the done gradient), in order.
+    const stops = (image) => {
+      if (!image || !image.includes("gradient")) return [];
+      const out = [];
+      const re = /rgba?\([^)]+\)|color\(srgb [^)]+\)/g;
+      for (let m = re.exec(image); m; m = re.exec(image)) {
+        const c = parse(m[0]);
+        if (c) out.push(c);
       }
-      let color = [page[0], page[1], page[2]];
-      for (const c of stack.reverse()) color = over(c, [...color, 1]);
-      return color;
+      return out;
+    };
+    /** The grounds an element's text can sit on: one per page ground, per gradient stop above it. */
+    const backgroundsOf = (el) => {
+      const layers = [];
+      for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+        const st = getComputedStyle(n);
+        const c = parse(st.backgroundColor);
+        const g = stops(st.backgroundImage);
+        layers.push({ color: c && c[3] > 0 ? c : null, stops: g });
+        if ((c && c[3] >= 1) || g.some((x) => x[3] >= 1)) break;
+      }
+      layers.reverse();
+      let grounds = pages.map((p) => [...p]);
+      for (const layer of layers) {
+        if (layer.color) grounds = grounds.map((g) => over(layer.color, [...g, 1]));
+        if (layer.stops.length > 0) grounds = grounds.flatMap((g) => layer.stops.map((s) => over(s, [...g, 1])));
+        // Keep the two extremes: they are the hardest for dark and for light text.
+        if (grounds.length > 2) {
+          const sorted = grounds.map((g) => [lum(g), g]).sort((a, b) => a[0] - b[0]);
+          grounds = [sorted[0][1], sorted[sorted.length - 1][1]];
+        }
+      }
+      return grounds;
     };
     const dimmed = (el) => {
       for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
@@ -148,11 +190,12 @@ function contrastFailures(page, min) {
       if (box.width === 0 || box.height === 0 || style.visibility === "hidden" || style.display === "none" || dimmed(el)) continue;
       const fg = parse(style.color);
       if (!fg) continue;
-      const bg = backgroundOf(el);
-      const solid = over(fg, [...bg, 1]);
-      const a = lum(solid);
-      const b = lum(bg);
-      const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      let ratio = Infinity;
+      for (const bg of backgroundsOf(el)) {
+        const a = lum(over(fg, [...bg, 1]));
+        const b = lum(bg);
+        ratio = Math.min(ratio, (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05));
+      }
       const size = parseFloat(style.fontSize);
       const large = size >= 24 || (size >= 18.66 && Number(style.fontWeight) >= 700);
       checked += 1;
@@ -201,7 +244,8 @@ async function activeTab(page) {
 
 async function openTab(page, tab) {
   await nav(page).getByRole("link", { name: tab }).click();
-  await page.getByRole("heading", { name: tab === "Today" ? /Day \d+/ : tab, level: 1 }).waitFor();
+  if (tab === "Today") await todayReady(page);
+  else await page.getByRole("heading", { name: tab, level: 1 }).waitFor();
 }
 
 async function closeSheet(page) {
@@ -252,7 +296,7 @@ await page.clock.install({ time: new Date("2026-10-05T09:50:00Z") });
 await page.goto(`${base}/`);
 await page.getByText("Create a passcode").waitFor();
 check("root goes to /today behind the lock screen", page.url().endsWith("/today"));
-check("nothing of the app shows while locked", (await page.getByText("Checklist").count()) === 0);
+check("nothing of the app shows while locked", (await page.locator("[data-today], [data-count]").count()) === 0);
 await shot(page, "01-lock");
 await typeCode(page, "1379");
 await page.getByText("Enter it again").waitFor();
@@ -264,13 +308,21 @@ await createPasscode(page);
 // ---------- Today, empty ----------
 console.log("Today");
 await done(page, 0);
-check("header shows day 1 of 30", await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).isVisible());
+check("Today opens on a greeting by time of day, with the date and day 1 of 30 under it", (await page.getByRole("heading", { level: 1 }).innerText()).replace(/\s+/g, " ") === "Good morning, Sunny." && (await page.locator("[data-day-line]").innerText()).trim() === "Monday, October 5. Day 1 of 30.");
+{
+  const tracks = page.getByRole("group", { name: "The day in four tracks" }).getByRole("button");
+  check("the day is summed up in four tracks: Body, Money, Mind, Clean", (await tracks.allInnerTexts()).map((t) => t.replace(/\s+/g, " ").trim().toLowerCase()).join(" | ") === "0/6 body | $0 money | 0/2 mind | 0d clean", (await tracks.allInnerTexts()).join(" | "));
+  check("the checklist is twelve tiles, each at least 44px to tap", (await page.locator("section[aria-label='Checklist'] .grid > *").count()) === 12 && (await page.locator("section[aria-label='Checklist'] .grid > *").evaluateAll((els) => els.every((e) => e.getBoundingClientRect().height >= 44 && e.getBoundingClientRect().width >= 44))));
+}
 const nowCard = page.getByRole("link", { name: "Open schedule" });
 check("Now is Wake and Next is the workout at 5:50 AM", /Wake/.test(await nowCard.innerText()) && /Lift \+ core/.test(await nowCard.innerText()));
 check("the morning brief is on Today, above Now and Next", (await page.getByText("Morning brief").boundingBox()).y < (await nowCard.boundingBox()).y);
 check("Now and Next is above the fold with the brief open", (await nowCard.boundingBox()).y < 844);
 check("the tab bar has five tabs and Today is lit", (await nav(page).getByRole("link").count()) === 5 && (await activeTab(page)) === "Today");
+check("the day strip is folded away until the date line is tapped", (await page.getByRole("tablist").count()) === 0);
+await openStrip(page);
 check("the day strip shows the 30 challenge days", (await page.getByRole("tablist", { name: "Challenge days" }).getByRole("tab").count()) === 30);
+await page.locator("[data-day-line]").click();
 check("the workout is shown in full", (await page.getByRole("listitem").count()) >= 4);
 await page.waitForTimeout(600);
 const cls = await page.evaluate(() => window.__cls);
@@ -295,12 +347,14 @@ await row(page, "Up by 5:45").click();
 await done(page, 3);
 check("a wake check before 6:00 counts", true);
 
-await row(page, "Business move").click();
-await page.getByText("Write what you did first").waitFor();
-check("business move needs text before the tick", (await count(page)) === "3 of 12");
-await page.getByRole("textbox", { name: /Business move/ }).fill("Emailed the cohort lead");
-await row(page, "Business move").click();
+await page.getByRole("button", { name: /Business move: not done/ }).click();
+await dialog(page).getByText("Write what you did. Then it counts.").waitFor();
+check("business move needs text before the tick", (await dialog(page).getByRole("button", { name: "Done" }).isDisabled()) && (await count(page)) === "3 of 12");
+await dialog(page).getByRole("textbox", { name: /Business move/ }).fill("Emailed the cohort lead");
+await dialog(page).getByRole("button", { name: "Done" }).click();
+await dialog(page).waitFor({ state: "detached" });
 await done(page, 4);
+check("the business tile shows what was written", (await page.getByRole("button", { name: /Business move: done/ }).innerText()).includes("Emailed the cohort lead"));
 
 await row(page, "Talk to one girl").click();
 await page.getByText("1 of 2", { exact: true }).waitFor();
@@ -413,7 +467,7 @@ await dialog(page).getByRole("button", { name: "stressed" }).click();
 await shot(page, "11-slip-sheet");
 await dialog(page).getByRole("button", { name: "Save" }).click();
 await dialog(page).waitFor({ state: "detached" });
-await page.getByText("Slip logged. Not clean today.").waitFor();
+await page.getByRole("link", { name: "No smoking: slip logged, not clean today. Open" }).getByText("Not clean").waitFor();
 await done(page, 11);
 check("Today: the slip makes No smoking not done, though it was ticked", (await row(page, "No smoking").count()) === 0);
 await page.evaluate(() => window.scrollTo(0, 0));
@@ -448,7 +502,7 @@ await page.getByText("No slips logged").waitFor();
 await page.getByRole("link", { name: "Back" }).click();
 await page.getByRole("heading", { name: "Vices", level: 1 }).waitFor();
 await page.getByRole("link", { name: "Back" }).click();
-await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
+await todayReady(page);
 await done(page, 12);
 check("removing the slip makes the day clean again on Today", (await row(page, "No smoking").getAttribute("aria-checked")) === "true");
 
@@ -463,7 +517,7 @@ await cell1.click();
 await dialog(page).waitFor();
 await shot(page, "16-progress-day-sheet");
 await dialog(page).getByRole("link", { name: /Today|Open|Edit/ }).first().click();
-await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+await onDay(page, "Day 1 of 30");
 check("the day sheet links to Today on that date", page.url().endsWith("/today"));
 
 await page.goto(`${base}/progress`);
@@ -545,7 +599,7 @@ check("Coach lights the Today tab and has a way back", (await activeTab(page)) =
 await noOverflow(page, "Coach");
 await shot(page, "25-coach", true);
 await page.getByRole("link", { name: "Back" }).click();
-await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
+await todayReady(page);
 
 // ---------- Reminders ----------
 console.log("Reminders");
@@ -560,24 +614,25 @@ await shot(page, "26-reminders", true);
 // ---------- More: the screens that are not tabs ----------
 console.log("More, Boards, Meals, Focus");
 await page.goto(`${base}/today`);
-await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
+await todayReady(page);
 await openMore(page);
 check("More lists Focus, Meals, Boards and Settings", (await dialog(page).getByRole("link").allInnerTexts()).map((t) => t.split("\n")[0]).join(",") === "Focus,Meals,Boards,Settings");
 await shot(page, "26b-more-sheet");
 await closeSheet(page);
 for (const [name, lit, backTo] of [
-  ["Boards", "Today", /Day \d+/],
+  ["Boards", "Today", null],
   ["Meals", "Body", "Body"],
   ["Focus", "Schedule", "Schedule"],
 ]) {
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: /Day \d+/ }).waitFor();
+  await todayReady(page);
   await openMore(page, name);
   await page.getByRole("heading", { name, level: 1 }).waitFor();
   check(`${name} opens from More, lights ${lit} and has an empty state`, (await activeTab(page)) === lit && (await page.getByRole("heading", { level: 3 }).count()) === 1);
   await noOverflow(page, name);
   await page.getByRole("link", { name: "Back" }).click();
-  await page.getByRole("heading", { name: backTo, level: 1 }).waitFor();
+  if (backTo) await page.getByRole("heading", { name: backTo, level: 1 }).waitFor();
+  else await todayReady(page);
 }
 await page.goto(`${base}/body`);
 await page.getByRole("link", { name: "Meal plan" }).click();
@@ -658,7 +713,7 @@ console.log("Upgrade from a version 1 store");
   check("the store is in the version 1 shape", !("status" in oldChallenge) && !("history_start" in (await rows(page, "app_settings"))[0]) && (await rows(page, "day_log")).length >= 13);
 
   await page.goto(`${base}/today`);
-  await page.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(page, "Day 1 of 30");
   await done(page, 12);
   const c = (await rows(page, "challenge"))[0];
   check(
@@ -689,18 +744,18 @@ await ctx.close();
 // Day 2. Tuesday Oct 6, 9:00 AM New York.
 // =====================================================================
 console.log("Day 2: yesterday keeps its score");
-async function at(iso, path = "/today", from = state, heading = /Day \d+/) {
+async function at(iso, path = "/today", from = state, date = null) {
   const c = await browser.newContext({ ...device, storageState: from });
   const p = await c.newPage();
   watch(p);
   await p.clock.install({ time: new Date(iso) });
   await p.goto(`${base}${path}`);
-  await p.getByRole("heading", { name: heading, level: 1 }).waitFor();
+  await (date ? onDate(p, date) : todayReady(p));
   return { c, p };
 }
 
 let s = await at("2026-10-06T13:00:00Z");
-check("the next morning opens on day 2, empty", await s.p.getByRole("heading", { name: "Day 2 of 30", exact: true }).isVisible());
+check("the next morning opens on day 2, empty", await isDay(s.p, "Day 2 of 30"));
 await done(s.p, 0);
 check("the brief is open again on a new day", (await s.p.getByRole("button", { name: /Morning brief/ }).getAttribute("aria-expanded")) === "true");
 await shot(s.p, "32-today-day-2");
@@ -720,7 +775,7 @@ check("today uses the new target", true);
 
 // Yesterday through /today?date=...
 await s.p.goto(`${base}/today?date=2026-10-05`);
-await s.p.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+await onDay(s.p, "Day 1 of 30");
 await done(s.p, 12);
 check("/today?date=2026-10-05 opens on day 1", true);
 check("yesterday still shows the old target and stays 12 of 12", (await s.p.getByText("180g or more").count()) === 1 && (await s.p.getByText("200g or more").count()) === 0);
@@ -742,6 +797,7 @@ await s.c.close();
 
 // Oct 6, 12:30 PM: day 1 is locked.
 s = await at("2026-10-06T16:30:00Z");
+await openStrip(s.p);
 await s.p.getByRole("tab", { name: "Day 1", exact: true }).click();
 await s.p.getByText("Locked. Days close at noon the next day.").waitFor();
 check("day 1 locks at noon the next day", await row(s.p, "Workout").isDisabled());
@@ -779,12 +835,12 @@ async function openChallengeSettings(p) {
 }
 
 s = await at("2026-10-08T13:00:00Z");
-check("day 4 of the first challenge", await s.p.getByRole("heading", { name: "Day 4 of 30", exact: true }).isVisible());
-await setBaseTheme(s.p, "Dark minimal");
+check("day 4 of the first challenge", await isDay(s.p, "Day 4 of 30"));
+await setBaseTheme(s.p, "Aubergine");
 // Both modes in both base themes, for the eye: .shots/v2-core-*.png
-async function looks(p, mode, heading) {
+async function looks(p, mode) {
   for (const [theme, label, min] of [
-    ["dark", "Dark minimal", 4.5],
+    ["dark", "Aubergine", 4.5],
     ["contrast", "High contrast", 7],
   ]) {
     await setBaseTheme(p, label);
@@ -792,8 +848,8 @@ async function looks(p, mode, heading) {
     await checkContrast(p, `Settings, ${mode}, ${label}`, min);
     await shot(p, `${mode}-${theme}-settings`, false, "v2-core-");
     await p.goto(`${base}/today`);
-    await p.getByRole("heading", { name: heading, level: 1 }).waitFor();
-    await p.getByText("Checklist").first().waitFor();
+    await todayReady(p);
+    await p.locator("[data-count]").waitFor();
     await p.waitForTimeout(400);
     await checkContrast(p, `Today, ${mode}, ${label}`, min);
     await noOverflow(p, `Today, ${mode}, ${label}`);
@@ -807,9 +863,9 @@ async function looks(p, mode, heading) {
     await shot(p, `${mode}-${theme}-progress`, false, "v2-core-");
     await shot(p, `${mode}-${theme}-progress-full`, true, "v2-core-");
   }
-  await setBaseTheme(p, "Dark minimal");
+  await setBaseTheme(p, "Aubergine");
 }
-await looks(s.p, "challenge", /Day \d+/);
+await looks(s.p, "challenge");
 
 await openChallengeSettings(s.p);
 check("Settings shows the running challenge and its day", /Running 30 day lock in Day 4 of 30/i.test(await main1(s.p)), (await main1(s.p)).slice(0, 200));
@@ -833,9 +889,10 @@ await shot(s.p, "ongoing-challenge-settings", true, "v2-core-");
 // ---------- ongoing mode on Today ----------
 console.log("Ongoing mode: Today, Money, Progress, Coach");
 await s.p.goto(`${base}/today`);
-await s.p.getByRole("heading", { name: "Oct 8 Thu", exact: true }).waitFor();
-check("Today shows a plain date in ongoing mode, with no day count", (await s.p.getByText(/Day \d+ of \d+/).count()) === 0);
+await onDate(s.p, "2026-10-08");
+check("Today shows a plain date in ongoing mode, with no day count", (await s.p.getByText(/Day \d+ of \d+/).count()) === 0 && (await s.p.locator("[data-day-line]").innerText()).startsWith("Thursday, October 8."));
 check("Today shows consistency over time beside the date", (await s.p.locator("[data-consistency]").innerText()) === "1 of 3 days locked in", await s.p.locator("[data-consistency]").innerText());
+await openStrip(s.p);
 check("the strip shows recent days by date", (await s.p.getByRole("tablist", { name: "Recent days" }).getByRole("tab").count()) === 4);
 await row(s.p, "Workout").click();
 await done(s.p, 1);
@@ -843,15 +900,15 @@ check("the checklist works the same with no challenge", (await row(s.p, "Workout
 await row(s.p, "Workout").click();
 await done(s.p, 0);
 await s.p.getByRole("tab", { name: "Monday, Oct 5", exact: true }).click();
-await s.p.getByRole("heading", { name: "Oct 5 Mon", exact: true }).waitFor();
+await onDate(s.p, "2026-10-05");
 await done(s.p, 12);
 check("a day logged during the challenge is still there, fully done, under its date", (await row(s.p, "Workout").getAttribute("aria-checked")) === "true");
 await s.p.getByRole("button", { name: "Back to today" }).or(s.p.getByRole("tab", { name: "Thursday, Oct 8, today", exact: true })).first().click();
-await s.p.getByRole("heading", { name: "Oct 8 Thu", exact: true }).waitFor();
+await onDate(s.p, "2026-10-08");
 
 await openTab(s.p, "Money");
 await s.p.getByText("Earned so far").waitFor();
-check("Money keeps the earnings and the floor, with no target outside a challenge", /Earned so far \$140/i.test(await main1(s.p)) && /Floor \$100/i.test(await main1(s.p)) && (await s.p.getByRole("link", { name: "Start a challenge" }).count()) === 1, (await main1(s.p)).slice(0, 200));
+check("Money keeps the earnings and the floor, with no target outside a challenge", /Earned so far \$ ?140/i.test(await main1(s.p)) && /Floor \$100/i.test(await main1(s.p)) && (await s.p.getByRole("link", { name: "Start a challenge" }).count()) === 1, (await main1(s.p)).slice(0, 200));
 await shot(s.p, "ongoing-money", true, "v2-core-");
 
 await openTab(s.p, "Progress");
@@ -894,7 +951,7 @@ await s.p.goto(`${base}/schedule`);
 await s.p.getByRole("heading", { name: "Schedule", level: 1 }).waitFor();
 check("Vices, Body and Schedule open in ongoing mode", !/Day \d+ of \d+/i.test(await main1(s.p)));
 
-await looks(s.p, "ongoing", "Oct 8 Thu");
+await looks(s.p, "ongoing");
 
 // ---------- start a new challenge with its own rules ----------
 console.log("Starting a new challenge");
@@ -915,20 +972,20 @@ await noOverflow(s.p, "New challenge");
 await shot(s.p, "new-challenge", true, "v2-core-");
 const beforeStart = await readTables(s.p, HISTORY);
 await s.p.getByRole("button", { name: "Start challenge" }).click();
-await s.p.getByRole("heading", { name: "Day 1 of 14", exact: true }).waitFor();
+await onDay(s.p, "Day 1 of 14");
 all = await rows(s.p, "challenge");
 check("there are two challenges now, one ended and one active", all.length === 2 && all.filter((c) => c.status === "active").length === 1 && all.find((c) => c.status === "active").name === "Strict diet", JSON.stringify(all.map((c) => [c.name, c.status])));
 diff = sameTables(beforeStart, await readTables(s.p, HISTORY));
 check("starting a challenge changed nothing in the ongoing history", diff.length === 0, diff.join(", "));
 check("Today counts the challenge's own items beside the whole checklist", /Strict diet: 0 of 2/.test(await main1(s.p)) && (await count(s.p)) === "0 of 12");
-check("the challenge's calorie target is the one in force today", (await s.p.getByText("1,500 to 1,700 kcal").count()) === 1 && (await s.p.getByText("1,900 to 2,100 kcal").count()) === 0);
+check("the challenge's calorie target is the one in force today", (await s.p.getByText("1,500 to 1,700").count()) === 1 && (await s.p.getByText("1,900 to 2,100").count()) === 0);
 await row(s.p, "Workout").click();
 await done(s.p, 1);
 check("ticking a challenge item moves both counts", /Strict diet: 1 of 2/.test(await main1(s.p)));
 await shot(s.p, "new-challenge-today", false, "v2-core-");
 await s.p.goto(`${base}/today?date=2026-10-07`);
-await s.p.getByRole("heading", { name: "Oct 7 Wed", exact: true }).waitFor();
-check("a day before the new challenge keeps a plain date and its own target", (await s.p.getByText("1,900 to 2,100 kcal").count()) === 1 && (await s.p.getByText("1,500 to 1,700 kcal").count()) === 0);
+await onDate(s.p, "2026-10-07");
+check("a day before the new challenge keeps a plain date and its own target", (await s.p.getByText("1,900 to 2,100").count()) === 1 && (await s.p.getByText("1,500 to 1,700").count()) === 0);
 await s.p.goto(`${base}/progress`);
 await s.p.getByText("Streaks").first().waitFor();
 const newDay1 = s.p.getByRole("button", { name: /^Day 1,/ }).first();
@@ -944,7 +1001,7 @@ await s.c.close();
 // ---------- restart ----------
 console.log("Restarting a challenge");
 s = await at("2026-10-09T13:00:00Z", "/today", afterStart);
-check("the next morning is day 2 of the new challenge", await s.p.getByRole("heading", { name: "Day 2 of 14", exact: true }).isVisible());
+check("the next morning is day 2 of the new challenge", await isDay(s.p, "Day 2 of 14"));
 const beforeRestart = await readTables(s.p, HISTORY);
 await openChallengeSettings(s.p);
 await s.p.getByRole("button", { name: "Restart" }).click();
@@ -963,10 +1020,11 @@ diff = sameTables(beforeRestart, await readTables(s.p, HISTORY));
 check("restarting changed nothing in the ongoing history", diff.length === 0, diff.join(", "));
 check("Settings shows day 1 again and two past challenges", /Running Strict diet Day 1 of 14/i.test(await main1(s.p)) && /Restarted · Oct 8 to Oct 8/.test(await main1(s.p)) && /Ended early · Oct 5 to Oct 8/.test(await main1(s.p)), (await main1(s.p)).slice(0, 300));
 await s.p.goto(`${base}/today`);
-await s.p.getByRole("heading", { name: "Day 1 of 14", exact: true }).waitFor();
+await onDay(s.p, "Day 1 of 14");
+await openStrip(s.p);
 check("Today is day 1 again, and yesterday is still on the strip to finish off", (await s.p.getByRole("tab", { name: "Thursday, Oct 8", exact: true }).count()) === 1);
 await s.p.getByRole("tab", { name: "Thursday, Oct 8", exact: true }).click();
-await s.p.getByRole("heading", { name: "Oct 8 Thu", exact: true }).waitFor();
+await onDate(s.p, "2026-10-08");
 check("yesterday's tick survived the restart", (await row(s.p, "Workout").getAttribute("aria-checked")) === "true");
 await s.p.goto(`${base}/progress`);
 await s.p.getByText("Streaks").first().waitFor();
@@ -977,7 +1035,7 @@ await s.c.close();
 
 // ---------- finishing: the challenge runs out ----------
 console.log("Finishing a challenge");
-s = await at("2026-10-23T13:00:00Z", "/today", afterRestart, "Oct 23 Fri");
+s = await at("2026-10-23T13:00:00Z", "/today", afterRestart, "2026-10-23");
 await s.p.getByText("Challenge done").waitFor();
 check("once the last day has passed Today is back to a plain date and offers to close the challenge", /Strict diet: all 14 days are behind you/.test(await main1(s.p)));
 await shot(s.p, "challenge-done-card", false, "v2-core-");
@@ -1011,7 +1069,7 @@ console.log("Themes");
 s = await at("2026-10-06T13:00:00Z");
 await s.p.goto(`${base}/settings`);
 await s.p.getByRole("heading", { name: "Settings", level: 1 }).waitFor();
-check("the default theme is dark minimal", (await rootVar(s.p, "--bg")) === "#09090a" && (await s.p.getByRole("radio", { name: "Dark minimal" }).getAttribute("aria-checked")) === "true");
+check("the default theme is Aubergine", (await rootVar(s.p, "--bg")) === "#0d0b10" && (await s.p.getByRole("radio", { name: "Aubergine" }).getAttribute("aria-checked")) === "true");
 await s.p.getByRole("radio", { name: "High contrast" }).click();
 await s.p.getByText("High contrast is on").waitFor();
 check("switching the base theme repaints the page from data", (await rootVar(s.p, "--bg")) === "#000000" && (await rootVar(s.p, "--ink")) === "#ffffff" && (await s.p.evaluate(() => getComputedStyle(document.body).backgroundColor)) === "rgb(0, 0, 0)");
@@ -1045,8 +1103,8 @@ await s.p.evaluate(
   [PREFIX],
 );
 await s.p.goto(`${base}/today`);
-await s.p.getByRole("heading", { name: /Day \d+/, level: 1 }).waitFor();
-await s.p.getByText("Checklist").first().waitFor();
+await todayReady(s.p);
+await s.p.locator("[data-count]").waitFor();
 await s.p.waitForTimeout(400);
 check("a palette becomes the theme: the page takes its background", (await rootVar(s.p, "--bg")) === "#f3ead8" && (await s.p.evaluate(() => document.documentElement.style.colorScheme)) === "light", await rootVar(s.p, "--bg"));
 check("unreadable palette colors are adjusted, not used as given", (await rootVar(s.p, "--ink")) !== "#b9ad98" && (await rootVar(s.p, "--accent")) !== "#f0d27a");
@@ -1062,7 +1120,7 @@ await checkContrast(s.p, "Settings with a light palette", 4.5);
 await shot(s.p, "palette-light-settings", true, "v2-core-");
 await s.p.getByRole("button", { name: "Reset", exact: true }).click();
 await s.p.getByText("Back to the base theme").waitFor();
-check("reset drops the palette and goes back to the base", (await rootVar(s.p, "--bg")) === "#09090a" && (await s.p.getByText("Your palette is on top").count()) === 0);
+check("reset drops the palette and goes back to the base", (await rootVar(s.p, "--bg")) === "#0d0b10" && (await s.p.getByText("Your palette is on top").count()) === 0);
 await s.c.close();
 
 // =====================================================================
@@ -1076,14 +1134,15 @@ console.log("Late install and the wake cutoff");
   await p.clock.install({ time: new Date("2026-10-07T23:00:00Z") });
   await p.goto(`${base}/today`);
   await createPasscode(p, "2468");
-  await p.getByRole("heading", { name: "Day 3 of 30", exact: true }).waitFor();
+  await onDay(p, "Day 3 of 30");
+  await openStrip(p);
   await p.getByRole("tab", { name: "Day 1", exact: true }).click();
-  await p.getByRole("heading", { name: "Day 1 of 30", exact: true }).waitFor();
+  await onDay(p, "Day 1 of 30");
   await row(p, "Up by 5:45").click();
   await done(p, 1);
   check("days before the install can be backfilled, and a backfilled wake counts on trust", true);
   await p.getByRole("tab", { name: "Day 3, today", exact: true }).click();
-  await p.getByRole("heading", { name: "Day 3 of 30", exact: true }).waitFor();
+  await onDay(p, "Day 3 of 30");
   await row(p, "Up by 5:45").click();
   await p.getByText("Checked after the cutoff. Does not count.").waitFor();
   check("a same day wake check after 6:00 does not count", (await count(p)) === "0 of 12");

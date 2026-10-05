@@ -54,9 +54,10 @@ Put these in `src/lib/logic/*` with Vitest tests. No React, no db calls inside t
 
 ## Design
 
-- A theme is data: a base ("dark minimal" or "high contrast") plus an optional palette, written to CSS variables on the root element. Large numbers, one accent color used only for done states and primary progress. Use the tokens, never a hex color, `white` or `black`: a palette can make the page light.
-- Mobile first at 390px wide. Bottom tab bar: Today, Schedule, Money, Body, Progress. Coach and Vices have icons in Today's header. The More button beside them opens Focus, Meals, Boards and Settings. Meals also opens from Body's header and Focus from Schedule's.
-- Tap targets 44px minimum. Big type. Short labels.
+- The look and every rule for building a screen in it are in "Design system" at the end of this file. Read that before touching a screen.
+- A theme is data: a base ("Aubergine", the default, or "High contrast") plus an optional palette, written to CSS variables on the root element. Use the tokens, never a hex color, `white` or `black`: a palette can make the page light.
+- Mobile first at 390px wide. A floating tab bar: Today, Schedule, Money, Body, Progress. Coach and Vices have icons in Today's top bar. The round mark beside them (the More button) opens Focus, Meals, Boards and Settings. Meals also opens from Body's header and Focus from Schedule's.
+- Tap targets 44px minimum. Fewer words, more numbers. Short labels.
 - Motion: short and smooth, respects prefers-reduced-motion. Haptics through `navigator.vibrate` where available.
 - Every screen has a real empty state.
 
@@ -91,7 +92,7 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 | Table | Row type | Notes |
 | --- | --- | --- |
 | `challenge` | `Challenge` | One row per challenge, at most one with `status: "active"`. `name, status ("active" / "ended" / "succeeded" / "abandoned"), start_date, length_days, ended_on, rules: { item_id, target or null }[] or null, restart_of, money_target, money_deadline, daily_floor, money_target_start`. `rules` null means the whole checklist. `money_target` and `money_deadline` are null for a challenge without a money target. Write it only through the challenge helpers |
-| `checklist_item` | `ChecklistItem` | `key, name, type ("yesno" / "number" / "text"), cadence ("daily" / "weekly"), target, category ("habit" / "vice"), mode ("quit" / "cap" / null), unit, hint, sort_order, active, archived, weekly_day, with_photo, tracks_money, typical_spend, spend_period ("day" / "week" / null)`. The last two are the typical spend of a money vice, read with `spendOf(item)` from `logic/vices` |
+| `checklist_item` | `ChecklistItem` | `key, name, type ("yesno" / "number" / "text"), cadence ("daily" / "weekly"), target, category ("habit" / "vice"), mode ("quit" / "cap" / null), unit, hint, sort_order, active, archived, weekly_day, with_photo, tracks_money, typical_spend, spend_period ("day" / "week" / null), track ("body" / "money" / "mind" / "clean" / null)`. `track` null (or missing on an old row) means the default: read it with `trackOf(item)` from `logic/tracks`. The last two are the typical spend of a money vice, read with `spendOf(item)` from `logic/vices` |
 | `target_version` | `TargetVersion` | `item_id, effective_from, target, active`. Target history. Do not write it by hand, use the helpers |
 | `day_log` | `DayLog` | `date, item_id, value, checked, text, completed_at, slips`. One row per item per day. `slips` is the number of `vice_slip` rows for that item and date. Above zero the item is not done that day whatever the tick or number says |
 | `vice_slip` | `ViceSlip` | `item_id, date, time, trigger, amount`. After any insert, update or delete call `syncSlipCount(itemId, date)` |
@@ -110,7 +111,7 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 | `reminder_sent` | `ReminderSent` | `date, key`. One row per reminder the scheduled job sent, unique on `key`. Server only |
 | `reminder_run` | `ReminderRun` | `last_run_at`. One row, id `"cron"`. Server only |
 | `login_attempt` | `LoginAttempt` | `failures, locked_until`. One row, id `"passcode"`. Server only |
-| `app_settings` | `AppSettings` | One row, id `"app"`. `seeded, timezone, quiet_start, quiet_end, carbs_target, fat_target, weight_unit, haptics, history_start, daily_floor, weekly_food_budget, food_likes: string[], food_dislikes: string[], focus_goal_minutes, business_goal, preferred_store`. `history_start` is the first date of the ongoing history. `daily_floor` is the saved earnings floor (change it with `setDailyFloor`). The floor in force is `useMode().floor`: a running challenge that holds "Earned today" to its own minimum sets it while it runs (`floorOn` in `logic/challenge`) |
+| `app_settings` | `AppSettings` | One row, id `"app"`. `seeded, timezone, quiet_start, quiet_end, carbs_target, fat_target, weight_unit, haptics, history_start, daily_floor, weekly_food_budget, food_likes: string[], food_dislikes: string[], focus_goal_minutes, business_goal, preferred_store, display_name`. `display_name` is the name Today greets (Settings, You). `history_start` is the first date of the ongoing history. `daily_floor` is the saved earnings floor (change it with `setDailyFloor`). The floor in force is `useMode().floor`: a running challenge that holds "Earned today" to its own minimum sets it while it runs (`floorOn` in `logic/challenge`) |
 | `mood_log` | `MoodLog` | `date, time, mood (1 to 5), note` |
 | `motivation` | `Motivation` | `kind ("quote" / "clip" / "why"), body, url, sort_order` |
 | `board` | `Board` | `name, kind ("body" / "brand" / "life"), cover_item_id, sort_order` |
@@ -128,7 +129,7 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 
 Seeded item keys, for `getItemByKey`: `wake, workout, core, calories, protein, earned, study, business, bed, talk, weighin`, and the vices `vice_smoking, vice_drinking, vice_masturbation` (on) plus `vice_vaping, vice_weed, vice_gambling, vice_porn, vice_junk_food, vice_fast_food, vice_energy_drinks, vice_doomscrolling, vice_impulse_spending` (off, `active: false`). Vices are checklist items with `category: "vice"`. Carbs and fat targets are `app_settings.carbs_target` and `fat_target`. Calories and protein targets are the `calories` and `protein` items.
 
-Need a new column or table? Add the next numbered file in `supabase/migrations/` (they run in order: `0001_init`, `0002_reminders`, `0003_vice_spend`, `0004_slip_count`, `0005_money_target_start`, `0006_login_attempt`, `0007_challenges`, `0008_boards_meals_focus`, `0009_focus_fields`, `0010_board_item_aspect`, `0011_meal_pantry_prices`, `0012_coach_note_basis`). Use plain `create table name (` and `alter table name add column col type` so `schema.test.ts` can read it. A new table or column also needs its entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), and a server only table goes in `SERVER_ONLY_TABLES`. Rows already on a device have no migration: add a step to `src/lib/db/upgrade.ts`, which runs on every load in local mode and is tested in `upgrade.test.ts` against a version 1 store. `adoptDevicePrefs` in the same file runs in every mode and moves what an earlier build kept per device (focus session numbers, the business goal, board image shapes) into the tables.
+Need a new column or table? Add the next numbered file in `supabase/migrations/` (they run in order: `0001_init`, `0002_reminders`, `0003_vice_spend`, `0004_slip_count`, `0005_money_target_start`, `0006_login_attempt`, `0007_challenges`, `0008_boards_meals_focus`, `0009_focus_fields`, `0010_board_item_aspect`, `0011_meal_pantry_prices`, `0012_coach_note_basis`, `0013_tracks_and_name`). Use plain `create table name (` and `alter table name add column col type` so `schema.test.ts` can read it. A new table or column also needs its entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), and a server only table goes in `SERVER_ONLY_TABLES`. Rows already on a device have no migration: add a step to `src/lib/db/upgrade.ts`, which runs on every load in local mode and is tested in `upgrade.test.ts` against a version 1 store. `adoptDevicePrefs` in the same file runs in every mode and moves what an earlier build kept per device (focus session numbers, the business goal, board image shapes) into the tables.
 
 ### Data: `@/lib/db`
 
@@ -290,6 +291,7 @@ minutesOf(time)  timeFromMinutes(m)  addMinutes(time, delta)  durationMinutes(st
 formatTime("06:30")      // "6:30 AM"
 formatDuration(95)       // "1h 35m"
 formatDateLong(date)     // "Monday, Oct 5"
+formatDateFull(date)     // "Monday, October 5"
 formatDateShort(date)    // "Oct 5"
 nyInstant(date, time): Date
 lockInstant(date, installedOn?): Date
@@ -345,6 +347,15 @@ fullDayStreak(statusByDate, today, from): number
 
 Daily items count days, weekly items count weeks. Today (or this week) not being done yet does not break a streak. A slip logged today does: the current streak is 0 from that moment.
 
+`tracks` (Today's four tracks, the greeting, short wording for tiles):
+
+```ts
+TRACKS   TRACK_LABEL   trackOf(item)   defaultTrack(item)   orderByTrack(rows)
+summarizeTracks(daySummary.items, streaks): { track, label, done, total, value, progress, attention }[]
+greeting(hour)   greetingLines(hour, name)      // ["Good morning,", "Sunny."]
+shortName(item)   shortHint(item)   shortTarget(target, unit)   // "Study", "Block done", "180g or more"
+```
+
 `targets`:
 
 ```ts
@@ -368,7 +379,7 @@ Your own rules go in `src/lib/logic/<feature>*.ts` (the floor rule belongs to Mo
 
 ### Theme: `@/lib/theme` and `@/lib/logic/theme`
 
-A theme is a base plus an optional palette. `logic/theme` (pure, tested) turns any palette into a full set of tokens and holds every pair the app draws to WCAG AA (4.5 to 1, and 7 to 1 on the high contrast base), moving a color along its own lightness when it fails. `lib/theme` (client) puts the result on the root element as CSS variables, saves it in the `theme` table and keeps a copy on the device, which an inline script in the root layout applies before first paint.
+A theme is a base plus an optional palette. `logic/theme` (pure, tested) turns any palette into a full theme: solid tokens plus `fx`, the strengths of the three lights, the glass and the tab bar. It holds every pair the app draws to WCAG AA (4.5 to 1, and 7 to 1 on the high contrast base), measured on the page under each light, on glass over each, on the tab bar with a button under it and across the gradient. A color that fails moves along its own lightness, and a light that would wash text out is turned down. `lib/theme` (client) puts the result on the root element as CSS variables, saves it in the `theme` table and keeps a copy on the device, which an inline script in the root layout applies before first paint.
 
 ```ts
 import { setThemeFromPalette, resetTheme, setBaseTheme, previewTheme, useTheme, getTheme } from "@/lib/theme";
@@ -381,11 +392,12 @@ useTheme()   // { base, palette, boardId, name, theme, previewing, setBase, setF
 getTheme()   // the same state outside React
 
 // palette: { background?, surface?, text?, muted?, accent? }, each "#rrggbb". Leave any out and the base supplies it.
-// theme.tokens: bg, surface, surface-2, surface-3, line, line-strong, ink, ink-2, ink-3, accent, accent-ink, danger, warn
+// theme.tokens: bg, surface, surface-2, surface-3, line, line-strong, ink, ink-2, ink-3, accent, accent-2, accent-ink, accent-ink-2, danger, warn, glow-1, glow-2, glow-3
+// theme.fx: { glow: [a, b, c], glassHi, glassLo, glassSmoke, glassLine, tile, tileLine, hair, bar }, each 0 to 1
 // theme.scheme: "dark" | "light"      theme.adjusted: the tokens that were moved to stay readable
 ```
 
-From `@/lib/logic/theme`, for a palette picker that wants to show the result before applying it: `buildTheme(base, palette)`, `auditTheme(theme)`, `contrast(a, b)`, `ensureContrast(fg, backgrounds, min)`, `normalizeHex`, `cleanPalette`, `mix`, `luminance`, `BASE_THEMES`. `ThemePicker` in `@/components/app/ThemePicker` is the base picker Settings uses, and can be mounted elsewhere.
+From `@/lib/logic/theme`, for a palette picker that wants to show the result before applying it: `buildTheme(base, palette)`, `auditTheme(theme)`, `contrast(a, b)`, `ensureContrast(fg, backgrounds, min)`, `normalizeHex`, `cleanPalette`, `mix`, `luminance`, `BASE_THEMES`, and the grounds the audit measures on: `pageGrounds`, `glassGrounds`, `barGrounds`, `accentGrounds`. `glowsFor(accent)` and `accentPairFor(accent)` are how a palette's accent becomes the three lights and the far end of the gradient. `ThemePicker` in `@/components/app/ThemePicker` is the base picker Settings uses, and can be mounted elsewhere.
 
 ### Schedule blocks: `@/lib/blocks`
 
@@ -468,64 +480,9 @@ Server routes and data: in local mode the server has no data (it is in the brows
 import { Button, Card, Sheet, ... } from "@/components/ui";
 ```
 
-Icons come from `lucide-react` (installed), usually at size 18 to 24.
-
-| Component | Props |
-| --- | --- |
-| `Screen` | `children, className?`. Page container: centered column up to 480px, 20px side padding, room for the tab bar. Wrap every page in it |
-| `PageHeader` | `title, eyebrow?, subtitle?, back? (href), right? (node)`. With `back` (every sub-screen) there is a back arrow row above the title and `right` sits on that row. Without it (tab screens) `right` sits on the title line |
-| `Section` | `title, right?, children`. Uppercase eyebrow then content, with top margin |
-| `Card` | `padded? = true, raised? = false`, plus div props. Use `padded={false}` with `overflow-hidden` for lists |
-| `ListRow` | `title, sub?, left?, right?, href?, onClick?, plain?`. Stack inside `<Card padded={false}><div className="divide-y divide-line">` |
-| `Button` | `variant? ("primary" / "secondary" / "ghost" / "danger"), size? ("sm" / "md" / "lg"), full?, loading?, icon?`, plus button props |
-| `IconButton` | `label (required), filled?`, plus button props. 44px round |
-| `IconLink` | `href, label (required), children`. The same shape as a link, for a header's `right` slot |
-| `Sheet` | `open, onClose, title?, subtitle?, footer?, children`. Bottom sheet. Follows the visual viewport, so it stays above the on-screen keyboard. Import sheet components with `next/dynamic` and render them only while open, so their code loads on first use |
-| `NumberField` | `value: number | null, onChange(value), live?, label?, hint?, unit?, prefix?, placeholder?, min? = 0, max?, decimal? = true, disabled?, variant? ("field" / "inline" / "hero"), done?, autoFocus?`. `onChange` fires on blur or Enter. Pass `live` for every keystroke |
-| `TextField` | `value, onChange(value), onCommit?(value), label?, hint?, error?, placeholder?, rows?, maxLength?, disabled?, autoFocus?` |
-| `TimeField` | `value ("HH:MM"), onChange, label?, hint?, disabled?` |
-| `DateField` | `value ("YYYY-MM-DD"), onChange, label?, hint?, min?, max?, disabled?` |
-| `Select` | `value, onChange, options: { value, label }[], label?, hint?, disabled?` |
-| `Field` | `label, hint?, error?, htmlFor?, children`. Label wrapper for a custom control |
-| `Toggle` | `checked, onChange, label?, disabled?` |
-| `Checkbox` | `checked, onChange, label (required), off?, disabled?, size? = 30`. The done tick, with haptics |
-| `CheckMark` | `checked, off?, size?`. The tick drawing only, for rows that handle the tap themselves. Animates when `checked` turns true |
-| `SegmentedControl` | `options: { value, label }[], value, onChange, label?, size? ("sm" / "md"), disabled?` |
-| `ProgressRing` | `value (0 to 1), size? = 88, stroke?, tone? ("accent" / "ink" / "warn"), label?, children? (center)` |
-| `ProgressBar` | `value (0 to 1), height? = 8, tone?, marker? (0 to 1), label?` |
-| `Stat` | `label, value, unit?, sub?, size? ("display" / "lg" / "sm"), done?, align?`. A big numeral with a label |
-| `EmptyState` | `title, body?, icon?, action?, compact?` |
-| `useToast()` | `toast(message, { kind?: "info" / "done" / "error", duration? })`. The provider is already mounted |
-| `TabBar` | No props. Already rendered by the app layout, do not render it again. A tab is lit on its own sub-routes. Today is also lit on `/coach`, `/vices`, `/reminders`, `/settings` and `/boards`, Body on `/meals`, Schedule on `/focus`. The lists are in `src/lib/nav.ts` |
-| `cn(...)` | Joins class names |
+Every component, its props, the tokens and the layout rules are in "Design system" at the end of this file. `/dev/ui` shows them all.
 
 Haptics: `import { haptics } from "@/lib/haptics"`, then `haptics.tap()`, `haptics.done()`, `haptics.celebrate()`, `haptics.error()`. `Checkbox`, `Toggle` and `SegmentedControl` already call it.
-
-### Tokens
-
-The defaults are in `src/app/globals.css` and the live values come from the theme. Use the Tailwind names. Do not write hex colors, `white`, `black` or `rgba()`: a palette can make the page light, and `theme.test.ts` fails on a color outside the token block.
-
-| Tailwind | CSS variable | Use |
-| --- | --- | --- |
-| `bg-bg` | `--bg` | Page background |
-| `bg-surface`, `bg-surface-2`, `bg-surface-3` | `--surface`, `--surface-2`, `--surface-3` | Cards, controls inside cards, tracks |
-| `border-line`, `border-line-strong` | `--line`, `--line-strong` | Borders and dividers |
-| `text-ink`, `text-ink-2`, `text-ink-3` | `--ink`, `--ink-2`, `--ink-3` | Primary, secondary, faint text |
-| `bg-accent`, `text-accent`, `text-accent-ink`, `bg-accent-soft`, `border-accent-line` | `--accent` and friends | Done states and primary progress only |
-| `text-danger`, `bg-danger-soft` | `--danger` | Destructive actions and errors |
-| `text-warn`, `bg-warn-soft` | `--warn` | Logged but does not count, over a limit |
-| `bg-scrim`, `text-on-scrim` | `--scrim`, `--on-scrim` | What dims the page behind a sheet or over a photo, and text on it |
-| `shadow-[0_8px_30px_var(--shadow)]` | `--shadow` | Drop shadows |
-
-Text on `bg-ink` is `text-bg`. Text on `bg-accent` is `text-accent-ink`. Anything drawn in inline SVG or on a canvas reads `var(--token)`.
-
-Buttons, selected segments and switches use ink, not the accent, so the accent always means done.
-
-Type classes: `t-display` (64px hero numeral), `t-num` (40px), `t-num-sm` (28px), `t-title` (28px page title), `t-h2` (20px), `t-sub` (14px secondary), `t-label` (12px uppercase eyebrow), `tnum` (tabular figures). Body text is 16px with no class.
-
-Other utilities: `pressable` (press feedback), `no-scrollbar`, and the animations `animate-fade-in`, `animate-rise-in`, `animate-sheet-up`, `animate-toast-in`, `animate-check-pop`, `animate-shake`, `animate-ring-glow`, `animate-pulse-dot`, and `animate-day-ring`, `animate-day-check`, `animate-day-text` for the full day moment. All motion is switched off under `prefers-reduced-motion`.
-
-Layout variables: `--tabbar-h` (60px), `--safe-b`, `--safe-t`. Anything fixed to the bottom of the screen sits at `bottom-[calc(var(--tabbar-h)+var(--safe-b))]`. Radii: cards 20px, controls 14px, small controls 12px.
 
 ### Pages
 
@@ -553,13 +510,23 @@ Dev only, 404 in a production build: `/dev/ui`, `/dev/coach`.
 
 ### Today
 
-Today is the home screen and has to answer three questions at a glance: what now, what is left today, am I on track. The header reads `Day X of N` while a challenge runs and a plain date with the consistency line ("26 of the last 30 days locked in") otherwise. When a challenge's last day has passed, a card offers to close it, and closing it plays the finish moment. Its order, top to bottom: day and percent ring, the day strip (the challenge's days, or the last two weeks), one setup row at most (`SetupRow`: add to Home Screen, then turn on reminders, each dismissible and remembered), the morning brief (open on the first visit of the day, then closed for the day once closed), Now and Next with the conflict banner under it, the checklist, this week, the workout, and last the board row (`BoardEntry`, the first board with anything on it, nothing when there is none). The board sits under everything that gets checked off so it never slows the check-off.
+Today is the home screen and has to answer three questions at a glance: what now, what is left today, am I on track. Top to bottom:
 
-Features plug into the checklist rows instead of adding cards. A number row takes an `action` in place of its field and a yes/no row takes one at its right, beside the tick area. The Earned row is `EarnedAction` from `features/money/TodaySlot`, the study row is `FocusAction` from `features/focus/TodaySlot` (a timer button, or the running clock), a vice with a slip renders `SlipRow`, `Log a slip` sits under the checklist, and `Log sets` sits in the workout section header. Before adding anything to Today, look for a row it belongs in.
+1. The top bar: "Lock In", then Coach, Vices and the round gradient mark, which is the More button.
+2. The greeting by time of day with the name from settings ("Good morning, Sunny."). Under it the date line: the date and `Day X of N` while a challenge runs, or the date and the consistency line ("26 of the last 30 days locked in") otherwise. The date line is a button: it unfolds the day strip (the challenge's days, or the last two weeks). On any day other than today the heading is that date and the strip stays open.
+3. At most one notice: a challenge waiting to be closed, one about to start, "Locked", or "Open until" with the way back to today.
+4. The morning brief (open on the first visit of the day, then closed for the day once closed). Open, it shows the first paragraph and "Read the rest", which goes to the coach.
+5. Now and Next on the glass card, with the schedule conflict banner under it.
+6. The four tracks (Body, Money, Mind, Clean), from `summarizeTracks`. Each is a button that filters the tiles to its own.
+7. The checklist as tiles, three across, ordered by track (`orderByTrack`), with the count and a hairline for the whole day. `Log a slip` sits under the grid.
+8. This week: the weekly items, as tiles.
+9. One setup row at most (`SetupRow`), the workout with `Log sets`, and last the board row (`BoardEntry`).
+
+One tile per item, picked in `today/ChecklistTiles.tsx`: a tick (`CheckTile`), a number typed into the tile (`NumberEntryTile`), a number that comes from meals and links to Body (`LinkedNumberTile`), text then a tick in a sheet (`TextTile`), a vice with a slip (`SlipTile`, opens the vice). The Earned tile is `EarnedAction` from `features/money/TodaySlot` and opens quick add. The Study tile carries `FocusAction` from `features/focus/TodaySlot` in its corner: a timer icon, or the running clock. Before adding anything to Today, look for a tile or a slot it belongs in.
+
+Which track an item counts toward is `trackOf(item)`: its own `track` when set (Settings, Checklist, "Track on Today"), otherwise the default in `logic/tracks`.
 
 `LocalScheduler` (reminders while the app is open) and `FocusWatcher` (notices the app being left while a focus timer runs, and keeps the device's copy of the timer in step with its row) are each mounted once in `AppShell`, so they run on every screen.
-
-The tab bar is solid `bg-bg`, and the selected day chip uses full strength `text-bg`. Both were measured under pastel palettes: a see-through bar let dark content under it pull the inactive labels to about 4.1 to 1, and the faded weekday label on the chip fell under 7 to 1 on the high contrast base. Do not fade text with an opacity or a `/70` color: the theme only guarantees the token pairs as they are.
 
 The reminder rows (on/off, time, minutes before) and quiet hours are editable at `/settings/reminders`. `/reminders` (Settings, Notifications) is for the push permission and connection state. `public/sw.js` shows a notification for a push with a JSON payload `{ title, body, url, tag }` and opens `url` on tap.
 
@@ -568,4 +535,174 @@ The reminder rows (on/off, time, minutes before) and quiet hours are editable at
 - `npx vitest run src/lib/logic/<yours>.test.ts`
 - `npx tsc --noEmit`
 - `npx eslint .`
-- `npm run build`, then `scripts/serve.sh start 3210` and `npm run e2e -- http://localhost:3210`. The walkthrough runs against the production build with an empty `.env`, at 390 x 844, covers every screen and the cross-feature flows, and fails on any console error. Keep it passing and extend it when you add a flow. `scripts/serve.sh stop` ends the server. It also upgrades a version 1 device store, ends, starts, restarts and finishes a challenge while comparing the history tables byte for byte, walks ongoing mode, and measures the contrast of every piece of text on Today, Progress and Settings in both base themes and under a light palette. `scripts/e2e-features.mjs` is the second half, run by the same command (or alone with `--features`): a week of meals built, swapped, re-portioned, shopped and cooked through to Money and Today, the focus timer started, paused, reloaded, finished, logged by hand, left and left overnight, a board made and worn as the theme with contrast measured on the new screens in all three looks, and the challenge floor and the morning brief following a challenge change. Screenshots are `.shots/final2-*.png`.
+- `npm run build`, then `scripts/serve.sh start 3210` and `npm run e2e -- http://localhost:3210`. The walkthrough runs against the production build with an empty `.env`, at 390 x 844, covers every screen and the cross-feature flows, and fails on any console error. Keep it passing and extend it when you add a flow. `scripts/serve.sh stop` ends the server. It also upgrades a version 1 device store, ends, starts, restarts and finishes a challenge while comparing the history tables byte for byte, walks ongoing mode, and measures the contrast of every piece of text on Today, Progress and Settings in both base themes and under a light palette. `scripts/e2e-features.mjs` is the second half, run by the same command (or alone with `--features`): a week of meals built, swapped, re-portioned, shopped and cooked through to Money and Today, the focus timer started, paused, reloaded, finished, logged by hand, left and left overnight, a board made and worn as the theme with contrast measured on the new screens in all three looks, and the challenge floor and the morning brief following a challenge change. Screenshots are `.shots/final2-*.png`. The contrast measure knows the look: it takes the page plain and at the brightest point of each light, blends see-through fills down to it, and measures a gradient at every color stop.
+- `node scripts/look.mjs http://localhost:3000 /body /progress` screenshots the paths you name in the default look, high contrast and under a dark and a light board palette, to `.shots/redesign-*.png`. With no paths it walks Today and Money through every state. Look at the pictures.
+
+## Design system
+
+The look the owner approved: something for every day that still feels luxurious, not a fitness app. A near black aubergine page with three soft lights behind it (plum, amber, indigo), frosted glass cards with hairline borders, cream text, and one gradient, champagne to rose, that means done or primary and nothing else. Fewer words, more numbers, generous space. One typeface, Schibsted Grotesk. No serif anywhere.
+
+See it: `/dev/ui` in the dev server shows every component. `docs/design/mockup.html` is the approved layout for Today and Money (its typeface is not approved). `src/app/(app)/today` and `src/app/(app)/money` are the two finished screens to copy from. `node scripts/look.mjs <url> /your/path` screenshots your screen in all four looks.
+
+### Tokens
+
+Colors come from the theme at runtime (`logic/theme`), so a board palette re-themes everything and contrast is guaranteed. Use the Tailwind names. Never write a hex color, `white`, `black` or `rgba()` in a component: a palette can make the page light, and `theme.test.ts` fails on a color outside the token block of `globals.css`.
+
+| Tailwind | Use |
+| --- | --- |
+| `bg-bg` | The page. Rarely needed: the body paints it, with the lights over it |
+| `glass` (utility) | A card. A little white, more at the top left, hairline border |
+| `tile` (utility) | A resting tile, a text control, a quiet row or notice |
+| `grad` (utility) | The gradient fill: done, or the one primary action. Sets its own text color |
+| `grad-line` (utility) | The gradient as a progress line or a dot |
+| `frost` (utility) | Real backdrop blur. Only the tab bar uses it. Ask before adding another |
+| `bg-surface`, `bg-surface-2`, `bg-surface-3` | Solid surfaces: a sheet, a card inside a sheet, a native control. Not for cards on the page |
+| `text-ink` | Main text, numbers, headings |
+| `text-ink-2` | Secondary text, labels, icons |
+| `text-ink-3` | The faintest text that still passes: chevrons, placeholders. Prefer `ink-2` |
+| `text-accent` | The accent as text or a thin line: the "NOW" label, a dollar sign, a met target. Sparingly |
+| `text-accent-ink`, `text-accent-ink-2` | Text on `grad`: the main line and the second line |
+| `bg-ink` with `text-bg` | A selected control: the current tab, a chosen segment, a switch that is on |
+| `border-glass-line`, `border-tile-line` | Hairline borders (the utilities set them) |
+| `bg-hair`, `divide-hair`, `border-hair` | Hairlines: dividers between rows, the unfilled part of a progress line |
+| `border-line`, `border-line-strong` | Solid lines, for solid surfaces |
+| `text-warn`, `bg-warn-soft`, `border-warn-line` | Logged but it does not count: a slip, a late check, over a limit |
+| `text-danger`, `bg-danger-soft` | Destructive actions and errors |
+| `bg-scrim`, `text-on-scrim` | What dims the page behind a sheet or over a photo, and text on it |
+| `shadow-glow` | The soft rose glow under anything `grad` |
+| `shadow-float` | Things that float: the tab bar, a sheet, a toast |
+
+Text on `bg-ink` is `text-bg`. Text on `grad` is `text-accent-ink`. Anything drawn in inline SVG or on a canvas reads `var(--token)`: `--accent`, `--accent-2`, `--hair`, `--ink`. The lights are `--glow-1` to `--glow-3` and are drawn once, behind everything, by the body. Do not draw more.
+
+The pairs that are guaranteed readable, in every theme and under every palette: `ink`, `ink-2`, `ink-3`, `accent`, `warn` and `danger` as text on the page, on `glass`, on `tile` and on the solid surfaces. `warn` on `warn-soft`, `danger` on `danger-soft`, `accent` on `accent-soft`. `accent-ink` and `accent-ink-2` on `grad`. `bg` on `ink`. Nothing else is. So never fade text with an opacity or a `/70` color, never put `ink-2` on `grad` or on `ink`, and never put text on `bg-accent` or `bg-warn` other than `accent-ink`.
+
+Shape, space and motion, as CSS variables and the classes to reach for:
+
+| What | Value | Class |
+| --- | --- | --- |
+| Page side padding | 20px (`--page-x`), column up to 480px | `Screen` does it |
+| Text set straight on the page | 4px further in than cards | `px-1` |
+| Between sections | 28px (`--gap-section`) | `mt-7`, or `Section` |
+| Between cards in a stack | 12px (`--gap-card`) | `gap-3`, `mt-3` |
+| Between tiles | 10px (`--gap-tile`) | `gap-2.5` |
+| Between stats in a row | 14px | `gap-3.5` |
+| Label to its content | 12px | `mt-3` |
+| Radius: feature card | 26px (`--radius-xl`) | `GlassCard` |
+| Radius: card, sheet top | 24px, 30px | `Card`, `Sheet` |
+| Radius: tile, notice, quiet row | 20px (`--radius-lg`) | `rounded-[20px]` |
+| Radius: text control | 16px (`--radius`) | the fields do it |
+| Radius: buttons, segments, the tab bar, chips | full | `rounded-full` |
+| Elevation | hairline only, `shadow-glow` under `grad`, `shadow-float` for what floats | |
+| Tab bar | `--tabbar-h` is all the room it takes, `--safe-b`, `--safe-t` | `Screen` leaves the room |
+| Motion | `--dur-fast` 120ms, `--dur` 220ms, `--dur-slow` 420ms, `--ease-out` | `pressable`, `animate-fade-in`, `animate-rise-in` |
+
+Anything fixed to the bottom of the screen sits at `bottom-[calc(var(--tabbar-h)+var(--safe-b))]`. Other animations: `animate-sheet-up`, `animate-toast-in`, `animate-check-pop`, `animate-shake`, `animate-pulse-dot`, and `animate-day-ring`, `animate-day-check`, `animate-day-text` for the full day moment. All motion is switched off under `prefers-reduced-motion`.
+
+### Type
+
+One family. Medium (500) with tight tracking for headlines, numbers and tile values. Regular (400) for body. Small uppercase tracked labels. Never bold: no `font-semibold`, no `font-bold`. Buttons and the selected tab are `font-medium`.
+
+| Class | Size | For |
+| --- | --- | --- |
+| `t-hero` | 84 | The one big number a screen leads with. Use `BigNumber` |
+| `t-display` | 64 | A big number in a moment or a sheet |
+| `t-greeting` | 38 | The greeting, or a tab screen's opening line |
+| `t-num` | 40 | A large stat |
+| `t-title` | 28 | Page titles. `PageHeader` does it |
+| `t-num-sm` | 28 | An inline stat |
+| `t-h1` | 26 | The title inside a glass card |
+| `t-stat` | 22 | A number in a row of stats. `TrackStat` does it |
+| `t-h2` | 20 | Card and sheet headings |
+| `t-value` | 20 | Tile values, the amount at the end of a row |
+| none | 16 or 15 | Body. Regular |
+| `t-sub` | 13 | Secondary lines. Sets `ink-2` |
+| `t-caption` | 12 | Tile labels, the line under a row title. Add `text-ink-2` |
+| `t-label` | 11 | Uppercase tracked labels. Sets `ink-2`. `SectionLabel` does it |
+
+Numbers use the face's own figures everywhere. `tnum` is still in the code and now does nothing. `tabular` gives fixed width figures and is only for a clock that is counting, where the digits would otherwise jump.
+
+### Components
+
+All from `@/components/ui`. Icons from `lucide-react` at size 18 to 22 with `strokeWidth={1.75}`.
+
+| Component | Props | Use |
+| --- | --- | --- |
+| `Screen` | `children, className?` | Wrap every page in it. Column, side padding, safe area, room for the tab bar |
+| `TopBar` | `title, right?, as? ("h1" / "p")` | Top row of a tab screen that leads with a hero: name small on the left, a status or icons on the right |
+| `PageHeader` | `title, eyebrow?, subtitle?, back? (href), right?` | Top of a screen that leads with its name. Every sub-screen passes `back` |
+| `GlassCard` | `pad? ("lg" / "md" / false), frost?`, plus div props | The one or two feature cards a screen leads with |
+| `Card` | `padded? = true, raised?`, plus div props | Every other card. `raised` is solid, for inside a card or sheet. `padded={false}` with `overflow-hidden` for rows |
+| `Section` | `title, right?, children` | A labeled group with the standard gap above |
+| `SectionLabel` | `children, right?, as?` | The small uppercase line that opens a group: "TODAY   7 OF 12" |
+| `Tile` | `value, label?, state? ("off" / "done" / "attention"), onClick? / href? / htmlFor?, checked?, disabled?, corner?, aria-label?` | A tap tile. Pass `checked` to make it a checkbox. `corner` holds a second small action with its own tap target |
+| `NumberTile` | `value, onChange, name, label?, unit?, prefix?, state?, disabled?, decimal?` | A tile a number is typed straight into |
+| `TrackStat` | `value, label, progress?, attention?, onClick?, pressed?` | One of a row of two to four stats, with a hairline that fills. Leave `progress` out for no line |
+| `BigNumber` | `value, prefix?, unit?, label?, sub?, size? ("hero" / "display")` | The hero number. `prefix="$"` is drawn small in the accent |
+| `Stat` | `label, value, unit?, sub?, size? ("display" / "lg" / "sm"), done?, align?` | A number with its label above, inside a card |
+| `List` | `children, label?` | Rows divided by hairlines, straight on the page, no card |
+| `ListRow` | `title, sub?, left?, right?, value?, href?, onClick?, plain?` | A row. `value` is a large number at the right end. Tappable rows get a chevron unless they have a `value` |
+| `Button` | `variant? ("primary" / "solid" / "secondary" / "ghost" / "danger"), size? ("sm" / "md" / "lg"), full?, loading?, icon?` | `primary` is the gradient: one per screen or sheet. `secondary` is glass and is the everyday button. `solid` is cream |
+| `ActionButton` | `label, size? = 52` | The round gradient button holding one icon: the main action of a card. One per view |
+| `IconButton` | `label, filled?` | 44px round icon button. `filled` puts glass behind it |
+| `IconLink` | `href, label, filled?` | The same as a link, for a header |
+| `Sheet` | `open, onClose, title?, subtitle?, footer?, children` | Bottom sheet, solid. Stays above the keyboard. Load sheet components with `next/dynamic` and render them only while open |
+| `NumberField` | `value, onChange, live?, label?, hint?, unit?, prefix?, min?, max?, decimal?, variant? ("field" / "inline" / "hero" / "bare"), done?, disabled?` | `onChange` fires on blur or Enter. `hero` for the amount in a quick add sheet |
+| `TextField` | `value, onChange, onCommit?, label?, hint?, error?, placeholder?, rows?, maxLength?` | |
+| `TimeField`, `DateField` | `value, onChange, label?, hint?` (`min?, max?` on date) | Native pickers |
+| `Select` | `value, onChange, options, label?, hint?` | Native picker with a chevron |
+| `Field` | `label, hint?, error?, htmlFor?` | Label wrapper for a custom control |
+| `SegmentedControl` | `options, value, onChange, label?, size? ("sm" / "md")` | Two to five choices. The chosen one is a cream pill |
+| `Toggle` | `checked, onChange, label?` | On is cream, not the gradient |
+| `Checkbox`, `CheckMark` | `checked, onChange, label, off?, size?` | The round tick, gradient when done. For rows. On a grid use `Tile` |
+| `ProgressBar` | `value, height? = 3, tone? ("accent" / "ink" / "warn"), marker?, label?` | A hairline by default. `accent` is the gradient |
+| `ProgressRing` | `value, size? = 88, stroke?, tone?, label?, children?` | Thin ring, gradient stroke. For a moment or a summary, not as a screen's header |
+| `EmptyState` | `title, body?, icon?, action?, compact?` | Every list and screen has one |
+| `useToast()` | `toast(message, { kind?: "info" / "done" / "error" })` | The provider is mounted |
+| `TabBar` | none | Rendered by the app layout. Do not render it. Lit routes are in `src/lib/nav.ts` |
+
+### Layout
+
+- **A tab screen with a hero** (Today, Money): `TopBar`, then the hero with `pt-4` or `pt-5` (a `BigNumber`, a greeting), then a `GlassCard` for what you act on, then a row of `TrackStat`s, then labeled groups. This is the default for Body and Progress too: lead with the one number that matters.
+- **A tab screen without one**: `PageHeader title` with its actions in `right`.
+- **A sub-screen**: `PageHeader title back="/parent"`, actions in `right` on the back row. Then content.
+- **One feature card, maybe two.** Everything else sits straight on the page under a `SectionLabel`, or in a plain `Card`. A screen that is a stack of five cards is the old look.
+- **Lists.** Things you log (earnings, meals, sessions, slips): `SectionLabel` then `List` of `ListRow` with the number as `value`, no card. Settings and menus: `Card padded={false} className="overflow-hidden"` around `<div className="divide-y divide-hair">`.
+- **Things you tick or enter every day**: a `grid grid-cols-3 gap-2.5` of `Tile`s, not rows with checkboxes.
+- **Forms** live in a `Sheet`: fields stacked with `gap-4`, labels from the field's `label`, one `Button` (primary, `full`, `size="lg"`) in `footer`. A destructive second button sits to its left as `variant="danger"`. A hero number at the top of a sheet is `NumberField variant="hero"`.
+- **Notices** (locked, a conflict, a setup prompt): one quiet row, `tile rounded-[20px] px-4 py-3 t-sub`, or `border-warn-line bg-warn-soft` when it needs a look. At most one at a time near the top.
+- **Charts**: thin. Lines 1.5 to 2px, bars with fully round ends, no grid lines, at most one hairline baseline in `var(--hair)`. The series is `var(--accent)` or the accent to accent-2 gradient, anything secondary is `var(--ink-3)`. Axis labels are `t-caption text-ink-2`. Put the number the chart is about above it in `t-num` or `t-stat`, so the chart supports a number and is not the only way to read it. No chart inside a chart card inside a section: label, number, chart.
+- **Calendars and grids of days**: cells are `tile`, a full day is `grad`, a partial day is `tile` with a `bg-ink-3` dot, today is ringed with `border-ink`.
+- **Empty states**: `EmptyState` with one short title, one sentence, one action. Inside a group use `compact` in a `Card padded={false}`.
+- **Photos**: `rounded-[20px]`, no border. Text over a photo sits on `bg-scrim` with `text-on-scrim`.
+
+### Performance and accessibility
+
+- `glass` does not blur. Behind a card there is only the soft light layer, and blurring a soft gradient changes nothing you can see. Only `frost` blurs, and only the tab bar uses it. Do not add `backdrop-blur` to a card, a list row, or anything that animates or scrolls. Where the browser has no backdrop-filter, `frost` falls back to a solid surface by itself.
+- The lights are one fixed layer of plain gradients. Do not add blurred shapes, `filter: blur()`, or animated gradients.
+- Every tap target is at least 44px in both directions. A small icon gets a 44px box around it (`IconButton`, `size-11`, `min-h-11`).
+- Respect `prefers-reduced-motion`: use the animation utilities and `pressable`, which are switched off under it. Nothing may depend on an animation finishing.
+- Contrast is AA (4.5 to 1, 3 to 1 for text of 24px and up) and 7 to 1 on the high contrast base. The walkthrough measures every piece of text on screen, over the lights and on gradients. Add your screen to a `checkContrast` call in `scripts/e2e.mjs` or `scripts/e2e-features.mjs`.
+
+### Do and do not
+
+- Do lead with a number or one line. Do cut a sentence to a label and a number.
+- Do use `grad` once per view for the primary action, and for done states. Do not use it for decoration, selection, headers or charts' backgrounds.
+- Do use `ink` (cream) for selected: tabs, segments, switches.
+- Do not use `bg-surface` cards on the page. That is the flat gray look that was rejected. `glass` or nothing.
+- Do not use `font-semibold` or `font-bold`, `tracking-wide` on body text, or all caps outside `t-label`.
+- Do not use `border-line` between rows on glass or on the page. Use `divide-hair`.
+- Do not stack explanations. One `t-sub` line under a thing at most. If it needs a paragraph, it belongs on another screen or in a sheet.
+- Do not use an em dash or en dash, or emoji, anywhere.
+- Do not hardcode a color, and do not fade text with opacity.
+- Do not render a second tab bar, a second light layer, or a blur.
+
+### This screen is done when
+
+1. It leads with a `TopBar` and a hero, or a `PageHeader`, and sub-screens have `back`.
+2. No `bg-surface` card on the page, no `font-semibold`, no `divide-line`, no hex color, no `tnum` added for looks.
+3. There is one `grad` primary action at most, and done states are `grad`.
+4. Daily tick and entry things are tiles, logged things are a `List`, forms are in sheets.
+5. Every tap target is 44px or more, and nothing sits behind the tab bar at the end of the page.
+6. It reads with half the words it had.
+7. You looked at it at 390 x 844 with `node scripts/look.mjs <url> /path` in the default look, high contrast, the dark palette and the light palette, with real data and empty.
+8. `npx tsc --noEmit`, `npx eslint .`, `npx vitest run` and the walkthrough pass, with your screen in a contrast check and no console errors.

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { BASE_THEMES } from "@/lib/logic/theme";
 
-// The manifest is static, so it carries the dark minimal base. A custom theme
+// The manifest is static, so it carries the default base. A custom theme
 // colors the page itself, not the splash screen.
 const BG = BASE_THEMES.dark.tokens.bg;
 
