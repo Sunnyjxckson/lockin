@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useRef, useState } from "react";
 import { Camera, ChevronLeft, ChevronRight, Lock, Plus, Star, Utensils, X } from "lucide-react";
 import { Button, Card, EmptyState, IconButton, Section, cn, useToast } from "@/components/ui";
@@ -13,7 +14,9 @@ import type { DateStr, Meal, SavedMeal } from "@/lib/types";
 import { logFavorite, removeFavorite } from "./data";
 import { fmt } from "./format";
 import { MacroRings } from "./MacroRings";
-import { MealSheet, type MealSheetState } from "./MealSheet";
+import type { MealSheetState } from "./MealSheet";
+
+const MealSheet = dynamic(() => import("./MealSheet").then((m) => m.MealSheet), { ssr: false });
 
 function Thumb({ photo, fallback }: { photo: string | null; fallback: React.ReactNode }) {
   const url = usePhoto(photo);

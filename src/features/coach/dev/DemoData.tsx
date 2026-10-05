@@ -1,6 +1,6 @@
 "use client";
 
-// Dev only, loaded by /coach/dev outside production. Replaces the logged
+// Dev only, loaded by /dev/coach outside production. Replaces the logged
 // data on this device with the coach fixture.
 
 import { useState } from "react";

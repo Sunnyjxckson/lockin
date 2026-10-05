@@ -8,6 +8,7 @@ import { getSettings } from "@/lib/db/helpers";
 import { setHapticsEnabled } from "@/lib/haptics";
 import { upgradeLocalData } from "@/lib/db/upgrade";
 import { ensureSeeded } from "@/lib/seed";
+import { LocalScheduler } from "@/features/reminders/LocalScheduler";
 import { LockScreen } from "./LockScreen";
 
 type Gate =
@@ -117,6 +118,8 @@ export function AppShell({ children }: { children: ReactNode }) {
     <>
       {children}
       <TabBar />
+      {/* Keeps the service worker holding today's reminders on every screen. */}
+      <LocalScheduler />
     </>
   );
 }

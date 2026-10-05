@@ -1,6 +1,6 @@
 // Demo data for the coach: about three weeks of realistic logs that contain
 // every pattern the rules look for. Used by the tests and by the dev-only
-// page at /coach/dev. Nothing in the shipped app imports this file.
+// page at /dev/coach. Nothing in the shipped app imports this file.
 //
 // Patterns planted, all relative to `today`:
 // - protein under target the last 4 days

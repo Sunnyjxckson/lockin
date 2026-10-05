@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { CalendarClock, Share } from "lucide-react";
@@ -17,7 +18,6 @@ import {
   type StreakRow,
   type WeekRollup,
 } from "@/lib/logic/progress";
-import { DaySheet } from "./DaySheet";
 import { WeeklyReview } from "@/features/coach/WeeklyReview";
 
 const WEEKDAYS = ["M", "T", "W", "T", "F", "S", "S"];
@@ -31,6 +31,8 @@ const KIND_LABEL: Record<GridCell["kind"], string> = {
 };
 
 // ---------- headline ----------
+
+const DaySheet = dynamic(() => import("./DaySheet").then((m) => m.DaySheet), { ssr: false });
 
 function Numbers({ h }: { h: Headline }) {
   const cells: { label: string; value: number; tone?: string }[] = [
@@ -392,7 +394,7 @@ export function ProgressScreen() {
         <WeeklyReview />
       </Section>
 
-      <DaySheet cell={openCell} onClose={() => setOpenDate(null)} />
+      {openCell ? <DaySheet cell={openCell} onClose={() => setOpenDate(null)} /> : null}
     </Screen>
   );
 }

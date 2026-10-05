@@ -1,28 +1,32 @@
 "use client";
 
-// A one tap way to log a slip from Today. The checklist already covers
-// ticking a vice as clean, so this only adds the slip entry.
+// A one tap way to log a slip from Today. The checklist rows already cover
+// ticking a vice as clean and show a logged slip, so this is only the entry
+// point. The sheet code loads when it is first opened.
 
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { useVices } from "./data";
-import { useViceSheets } from "./ViceToday";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useChecklist, useToday } from "@/lib/db/hooks";
+
+const SlipSheet = dynamic(() => import("./SlipSheet").then((m) => m.SlipSheet), { ssr: false });
 
 export default function VicesTodaySlot() {
-  const data = useVices();
-  const sheets = useViceSheets(data.library, data.today);
-  if (data.loading || data.active.length === 0) return null;
+  const today = useToday();
+  const { data, loading } = useChecklist();
+  const [open, setOpen] = useState(false);
+  const active = data.items.filter((i) => i.category === "vice" && i.active && !i.archived);
+  if (loading || active.length === 0) return null;
   return (
-    <div className="flex items-center justify-between gap-3 px-1">
-      <button type="button" onClick={() => sheets.logSlip()} className="pressable min-h-11 text-[15px] font-medium text-ink-2 underline decoration-line-strong underline-offset-4">
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="pressable -mb-2 flex min-h-11 items-center px-1 text-[14px] font-medium text-ink-2 underline decoration-line-strong underline-offset-4"
+      >
         Log a slip
       </button>
-      <Link href="/vices" className="pressable flex min-h-11 items-center gap-0.5 text-[14px] text-ink-3">
-        Vices
-        <ChevronRight size={16} aria-hidden />
-      </Link>
-      {sheets.node}
-    </div>
+      {open ? <SlipSheet vices={active} today={today} onClose={() => setOpen(false)} /> : null}
+    </>
   );
 }
 

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Flame } from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
+import { ChevronRight, CircleAlert, Flame } from "lucide-react";
 import { CheckMark, NumberField, cn } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
-import type { ItemState } from "@/lib/logic/day";
+import { hasSlip, meetsNumber, type ItemState } from "@/lib/logic/day";
 import { describeTarget } from "@/lib/logic/targets";
 import type { ChecklistItem, DayLog, Target } from "@/lib/types";
 
@@ -21,6 +22,8 @@ export interface RowProps {
   onCheck: (checked: boolean) => void;
   onValue: (value: number | null) => void;
   onText: (text: string) => void;
+  /** Number rows: shown in place of the number field (quick add for earnings, a link for meal totals). */
+  action?: ReactNode;
   /** Called when a tick is refused because the text is empty. */
   onNeedText?: () => void;
 }
@@ -71,7 +74,7 @@ export function CheckRow({ item, target, state, streak, sub, disabled, onCheck }
 }
 
 /** A number item with its field inline. */
-export function NumberRow({ item, target, log, state, streak, sub, disabled, onValue }: RowProps) {
+export function NumberRow({ item, target, log, state, streak, sub, disabled, onValue, action }: RowProps) {
   const done = state === "done";
   const prefix = item.unit === "$" ? "$" : undefined;
   const unit = item.unit && item.unit !== "$" ? item.unit : undefined;
@@ -85,12 +88,15 @@ export function NumberRow({ item, target, log, state, streak, sub, disabled, onV
         <Sub>{sub ?? describeTarget(target, item.unit)}</Sub>
       </label>
       <StreakChip n={streak} />
+      {action ?? (
       <NumberField
         id={`num-${item.id}`}
         variant="inline"
         value={log?.value ?? null}
         onChange={(v) => {
-          if (v !== null) haptics.tap();
+          // The stronger buzz is for a number that meets the target.
+          if (v !== null && meetsNumber(target, v) && !done) haptics.done();
+          else if (v !== null) haptics.tap();
           onValue(v);
         }}
         prefix={prefix}
@@ -100,6 +106,7 @@ export function NumberRow({ item, target, log, state, streak, sub, disabled, onV
         aria-label={item.name}
         placeholder="0"
       />
+      )}
     </div>
   );
 }
@@ -181,8 +188,29 @@ export function TextRow({ item, log, state, streak, disabled, onCheck, onText, o
   );
 }
 
+/**
+ * A vice with a slip logged that day. It is not clean until the slip is
+ * removed, so there is nothing to tick: the row opens the vice instead.
+ */
+export function SlipRow({ item, log }: RowProps) {
+  const n = log?.slips ?? 1;
+  return (
+    <Link href={`/vices/${item.id}`} className="flex min-h-[64px] w-full items-center gap-3.5 px-4 py-2.5 transition-colors active:bg-surface-2" aria-label={`${item.name}: slip logged, not clean today. Open`}>
+      <span className="flex size-[30px] shrink-0 items-center justify-center text-warn" aria-hidden>
+        <CircleAlert size={28} strokeWidth={1.8} />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="line-clamp-2 text-[17px] leading-snug font-medium tracking-[-0.01em] text-ink">{item.name}</span>
+        <Sub warn>{n > 1 ? `${n} slips logged. Not clean today.` : "Slip logged. Not clean today."}</Sub>
+      </span>
+      <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
+    </Link>
+  );
+}
+
 /** Picks the right row for an item type. */
 export function ChecklistRow(props: RowProps) {
+  if (hasSlip(props.log)) return <SlipRow {...props} />;
   if (props.item.type === "number") return <NumberRow {...props} />;
   if (props.item.type === "text") return <TextRow {...props} />;
   return <CheckRow {...props} />;

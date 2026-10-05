@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Camera, Check, DollarSign, Image as ImageIcon, Lock, Plus } from "lucide-react";
 import { Button, Card, EmptyState, IconButton, ListRow, PageHeader, ProgressBar, Screen, Section, cn } from "@/components/ui";
@@ -7,10 +8,12 @@ import { useInstalledOn, useNow } from "@/lib/db/hooks";
 import { addDays, formatDateLong, formatDateShort, isDayLocked } from "@/lib/logic/dates";
 import { floorStatus, formatHours, formatMoney, normalizeApp } from "@/lib/logic/money";
 import type { Earning } from "@/lib/types";
-import { QuickAddSheet } from "@/features/money/QuickAddSheet";
-import { ResetTargetSheet } from "@/features/money/ResetTargetSheet";
 import { ScreenshotPicker } from "@/features/money/ScreenshotPicker";
 import { useMoney } from "@/features/money/useMoney";
+
+// Sheets load when first opened, not with the screen.
+const QuickAddSheet = dynamic(() => import("@/features/money/QuickAddSheet").then((m) => m.QuickAddSheet), { ssr: false });
+const ResetTargetSheet = dynamic(() => import("@/features/money/ResetTargetSheet").then((m) => m.ResetTargetSheet), { ssr: false });
 
 const MONO: Record<string, string> = { DoorDash: "DD", "Uber Eats": "UE", Instacart: "IC" };
 
@@ -184,8 +187,8 @@ export default function MoneyPage() {
         )}
       </ScreenshotPicker>
 
-      <QuickAddSheet open={sheet !== null} onClose={() => setSheet(null)} editing={sheet?.editing} file={sheet?.file} defaultApp={m.lastApp} />
-      {m.challenge ? <ResetTargetSheet open={resetOpen} onClose={() => setResetOpen(false)} challenge={m.challenge} earnedToday={m.todayFloor.earned} allTime={m.allTime} today={m.today} /> : null}
+      {sheet !== null ? <QuickAddSheet open onClose={() => setSheet(null)} editing={sheet?.editing} file={sheet?.file} defaultApp={m.lastApp} /> : null}
+      {m.challenge && resetOpen ? <ResetTargetSheet open onClose={() => setResetOpen(false)} challenge={m.challenge} earnedToday={m.todayFloor.earned} allTime={m.allTime} today={m.today} /> : null}
     </Screen>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Lock, MessageSquareText, Settings, ShieldBan } from "lucide-react";
+import { ChevronRight, Lock, MessageSquareText, Settings, ShieldBan } from "lucide-react";
 import { Card, EmptyState, ProgressRing, Screen, Section, cn, useToast } from "@/components/ui";
 import { logWeight, setChecked, setText, setValue, workoutsFor } from "@/lib/db/helpers";
 import {
@@ -11,6 +11,7 @@ import {
   useDay,
   useDayBlocks,
   useInstalledOn,
+  useList,
   useLogs,
   useNow,
   useToday,
@@ -25,15 +26,23 @@ import {
   formatDateLong,
   formatDateShort,
   formatTime,
+  isDateStr,
   isDayEditable,
   lockInstant,
   nyParts,
   weekdayOf,
 } from "@/lib/logic/dates";
 import { summarizeDay, type DayStatus, type ItemResult, type WeeklyResult } from "@/lib/logic/day";
-import { allStreaks } from "@/lib/logic/streaks";
+import { allStreaks, fullDayStreak } from "@/lib/logic/streaks";
 import type { ChecklistItem, DateStr } from "@/lib/types";
+import { SetupRow } from "@/components/app/SetupRow";
+import BodyTodaySlot from "@/features/body/TodaySlot";
+import CoachTodaySlot from "@/features/coach/TodaySlot";
+import { EarnedAction } from "@/features/money/TodaySlot";
+import ScheduleTodaySlot from "@/features/schedule/TodaySlot";
+import VicesTodaySlot from "@/features/vices/TodaySlot";
 import { ChecklistRow } from "./ChecklistRows";
+import { DayComplete } from "./DayComplete";
 import { DayStrip } from "./DayStrip";
 import { NowNext } from "./NowNext";
 import { WorkoutCard } from "./WorkoutCard";
@@ -58,8 +67,17 @@ export default function TodayPage() {
   const challenge = useChallenge();
   const installedOn = useInstalledOn();
 
-  // The day on screen. Null means "follow today".
-  const [picked, setPicked] = useState<DateStr | null>(null);
+  // The day on screen. Null means "follow today". /today?date=YYYY-MM-DD
+  // (Progress links here) opens on that day. The page only renders in the
+  // browser, after the passcode gate, so the address can be read up front.
+  const [picked, setPicked] = useState<DateStr | null>(() => {
+    const d = typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("date");
+    return d && isDateStr(d) ? d : null;
+  });
+  useEffect(() => {
+    // Drop the param once read, so a reload or a later visit follows today again.
+    if (window.location.search.includes("date=")) window.history.replaceState(null, "", window.location.pathname);
+  }, []);
 
   const c = challenge.data;
   const start = c?.start_date ?? today;
@@ -73,6 +91,7 @@ export default function TodayPage() {
   const history = useLogs(start, lastOpen);
   const blocks = useDayBlocks(today);
   const workouts = useWorkouts();
+  const meals = useList("meal", { eq: { date } });
 
   const dates = useMemo(() => (c ? challengeDates(c.start_date, c.length_days) : []), [c]);
 
@@ -93,6 +112,8 @@ export default function TodayPage() {
 
   // The bigger moment when the last item of a day lands.
   const [glow, setGlow] = useState(0);
+  const [moment, setMoment] = useState<DateStr | null>(null);
+  const endMoment = useCallback(() => setMoment(null), []);
   const seen = useRef<{ date: DateStr; status: DayStatus } | null>(null);
   const status = day.summary?.status ?? null;
   useEffect(() => {
@@ -102,11 +123,17 @@ export default function TodayPage() {
     if (prev && prev.date === date && prev.status !== "full" && status === "full") {
       haptics.celebrate();
       setGlow((n) => n + 1);
-      toast(isToday ? "Day locked in" : "Day complete", { kind: "done", duration: 3200 });
+      setMoment(date);
     }
-  }, [date, status, isToday, toast]);
+  }, [date, status]);
 
-  if (challenge.loading) return <Screen aria-busy="true">{null}</Screen>;
+  // First paint: wait until everything above the fold has been read, then
+  // show the whole screen at once, so nothing jumps as parts arrive. After
+  // that (changing day, edits) parts update in place.
+  const loaded = !challenge.loading && (!c || (!day.loading && !blocks.loading && !workouts.loading && !history.loading));
+  const [shown, setShown] = useState(false);
+  if (loaded && !shown) setShown(true);
+  if (!shown) return <Screen aria-busy="true">{null}</Screen>;
 
   if (!c) {
     return (
@@ -170,8 +197,33 @@ export default function TodayPage() {
     return undefined;
   };
 
+  // Earnings go in through quick add, so the earning table stays the source
+  // of the day's total. Calories and protein take a typed number until a meal
+  // is logged that day. After that the totals come from the meals.
+  const actionFor = (r: ItemResult) => {
+    if (r.item.key === "earned") return <EarnedAction date={date} value={r.log?.value ?? null} done={r.done} disabled={!editable} />;
+    if ((r.item.key === "calories" || r.item.key === "protein") && meals.data.length > 0) {
+      return (
+        <Link
+          href="/body"
+          aria-label={`${r.item.name}: ${(r.log?.value ?? 0).toLocaleString("en-US")}${r.item.unit ?? ""} from meals. Open Body`}
+          className={cn(
+            "pressable tnum flex h-11 shrink-0 items-center gap-1 rounded-[12px] border pr-1.5 pl-3 text-[19px] font-semibold tracking-[-0.02em]",
+            r.done ? "border-accent-line bg-accent-soft text-accent" : "border-line bg-surface-2 text-ink",
+          )}
+        >
+          {(r.log?.value ?? 0).toLocaleString("en-US")}
+          {r.item.unit ? <span className="text-[13px] font-medium text-ink-3">{r.item.unit}</span> : null}
+          <ChevronRight size={16} className="text-ink-3" aria-hidden />
+        </Link>
+      );
+    }
+    return undefined;
+  };
+
   const dailyRow = (r: ItemResult) => (
     <ChecklistRow
+      action={actionFor(r)}
       key={r.item.id}
       item={r.item}
       target={r.target}
@@ -264,8 +316,11 @@ export default function TodayPage() {
       ) : null}
 
       {isToday && !over ? (
-        <div className="mt-5">
+        <div className="mt-4 flex flex-col gap-3">
+          <SetupRow />
+          <CoachTodaySlot />
           <NowNext blocks={blocks.data} now={now} loading={blocks.loading} />
+          <ScheduleTodaySlot date={date} />
         </div>
       ) : null}
 
@@ -289,6 +344,7 @@ export default function TodayPage() {
             <div className="divide-y divide-line">{summary.items.map(dailyRow)}</div>
           </Card>
         )}
+        {isToday && editable ? <VicesTodaySlot /> : null}
       </Section>
 
       {week && week.items.length > 0 ? (
@@ -299,7 +355,7 @@ export default function TodayPage() {
         </Section>
       ) : null}
 
-      <Section title={isToday ? "Today's workout" : "Workout"}>
+      <Section title={isToday ? "Today's workout" : "Workout"} right={isToday ? <BodyTodaySlot /> : null}>
         {workouts.loading ? (
           <Card className="h-[240px]" aria-busy="true" />
         ) : !w.main && !w.core ? (
@@ -313,6 +369,10 @@ export default function TodayPage() {
           </div>
         )}
       </Section>
+
+      {moment === date && summary ? (
+        <DayComplete day={n} total={summary.total} streak={fullDayStreak(statusByDate, lastOpen, start)} isToday={isToday} onDone={endMoment} />
+      ) : null}
     </Screen>
   );
 }

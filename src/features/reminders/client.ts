@@ -3,7 +3,10 @@
 // Browser side of reminders: what this device can do, turning push on and
 // off, and talking to the service worker.
 
+import { isIOS, isStandalone } from "@/lib/install";
 import type { PlannedNotification } from "@/lib/logic/reminders";
+
+export { isIOS, isStandalone };
 
 export const VAPID_PUBLIC_KEY = (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "").trim();
 
@@ -20,19 +23,6 @@ export interface DeviceState {
   standalone: boolean;
   /** iPhone or iPad in a browser tab: push cannot work until the app is installed. */
   needsInstall: boolean;
-}
-
-export function isIOS(): boolean {
-  if (typeof navigator === "undefined") return false;
-  const ua = navigator.userAgent;
-  // iPadOS reports itself as a Mac, but a Mac has no touch points.
-  return /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-}
-
-export function isStandalone(): boolean {
-  if (typeof window === "undefined") return false;
-  const nav = navigator as Navigator & { standalone?: boolean };
-  return nav.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
 }
 
 export function readDevice(): DeviceState {

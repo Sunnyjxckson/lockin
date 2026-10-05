@@ -1,15 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Button, CheckMark, ProgressBar, cn } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { formatTime } from "@/lib/logic/dates";
 import { formatAmount } from "@/lib/logic/vices";
 import type { ChecklistItem, DateStr, ViceSlip } from "@/lib/types";
-import { AmountSheet } from "./AmountSheet";
 import { setAmount, setClean, type ViceView } from "./data";
-import { SlipSheet } from "./SlipSheet";
-import { ViceSheet } from "./ViceSheet";
+
+const AmountSheet = dynamic(() => import("./AmountSheet").then((m) => m.AmountSheet), { ssr: false });
+const SlipSheet = dynamic(() => import("./SlipSheet").then((m) => m.SlipSheet), { ssr: false });
+const ViceSheet = dynamic(() => import("./ViceSheet").then((m) => m.ViceSheet), { ssr: false });
 
 // ---------- sheets shared by the list and the detail screen ----------
 

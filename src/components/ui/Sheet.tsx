@@ -18,11 +18,16 @@ export interface SheetProps {
 
 let openSheets = 0;
 
-/** Bottom sheet. Closes on backdrop tap, Escape, or a swipe down on the handle. */
+/**
+ * Bottom sheet. Closes on backdrop tap, Escape, or a swipe down on the handle.
+ * It follows the visual viewport, so when the on-screen keyboard opens the
+ * sheet and its footer sit above it and the focused field is scrolled into view.
+ */
 export function Sheet({ open, onClose, title, subtitle, footer, children, className }: SheetProps) {
   const panel = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const drag = useRef<{ y: number; dy: number } | null>(null);
+  const frame = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -34,7 +39,33 @@ export function Sheet({ open, onClose, title, subtitle, footer, children, classN
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
+
+    // Keep the sheet inside what is actually visible. On iOS the keyboard
+    // covers the bottom of the layout viewport without resizing it.
+    const vv = window.visualViewport;
+    const fit = () => {
+      const el = frame.current;
+      if (!el || !vv) return;
+      el.style.height = `${vv.height}px`;
+      el.style.top = `${vv.offsetTop}px`;
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && panel.current?.contains(active) && /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName)) {
+        active.scrollIntoView({ block: "nearest" });
+      }
+    };
+    fit();
+    vv?.addEventListener("resize", fit);
+    vv?.addEventListener("scroll", fit);
+    const onFocus = (e: FocusEvent) => {
+      const t = e.target;
+      if (t instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) window.setTimeout(() => t.scrollIntoView({ block: "nearest" }), 250);
+    };
+    const panelEl = panel.current;
+    panelEl?.addEventListener("focusin", onFocus);
     return () => {
+      vv?.removeEventListener("resize", fit);
+      vv?.removeEventListener("scroll", fit);
+      panelEl?.removeEventListener("focusin", onFocus);
       openSheets -= 1;
       if (openSheets === 0) document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
@@ -64,7 +95,7 @@ export function Sheet({ open, onClose, title, subtitle, footer, children, classN
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
+    <div ref={frame} className="fixed inset-x-0 top-0 z-50 flex h-dvh items-end justify-center">
       <button
         type="button"
         aria-label="Close"
@@ -79,7 +110,7 @@ export function Sheet({ open, onClose, title, subtitle, footer, children, classN
         aria-labelledby={title ? titleId : undefined}
         tabIndex={-1}
         className={cn(
-          "animate-sheet-up relative flex max-h-[90dvh] w-full max-w-[480px] flex-col rounded-t-[28px] border border-b-0 border-line bg-surface outline-none",
+          "animate-sheet-up relative flex max-h-[92%] w-full max-w-[480px] flex-col rounded-t-[28px] border border-b-0 border-line bg-surface outline-none",
           className,
         )}
       >

@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CalendarClock, MapPin, Plus, RotateCcw } from "lucide-react";
 import { Button, Card, EmptyState, PageHeader, Screen, Section, Sheet, Toggle, useToast } from "@/components/ui";
@@ -22,8 +23,6 @@ import {
 import type { DateStr } from "@/lib/types";
 import { CalendarSection } from "@/features/calendar/CalendarSection";
 import { useCalendarSync } from "@/features/calendar/client";
-import { AddSheet } from "@/features/schedule/AddSheet";
-import { BlockSheet } from "@/features/schedule/BlockSheet";
 import { ConflictList, dayIssues } from "@/features/schedule/ConflictList";
 import { NowCard } from "@/features/schedule/NowCard";
 import { Timeline } from "@/features/schedule/Timeline";
@@ -33,6 +32,10 @@ import { resetDay, saveDay } from "@/features/schedule/actions";
 const EMPTY_SET: ReadonlySet<string> = new Set();
 
 /** The day asked for in the address, if any. Pages here only render in the browser. */
+// Sheets load when first opened, not with the screen.
+const AddSheet = dynamic(() => import("@/features/schedule/AddSheet").then((m) => m.AddSheet), { ssr: false });
+const BlockSheet = dynamic(() => import("@/features/schedule/BlockSheet").then((m) => m.BlockSheet), { ssr: false });
+
 function readDateParam(): DateStr | null {
   if (typeof window === "undefined") return null;
   const d = new URLSearchParams(window.location.search).get("date");
@@ -303,8 +306,9 @@ export default function SchedulePage() {
         </button>
       </div>
 
+      {adding !== null ? (
       <AddSheet
-        open={adding !== null}
+        open
         onClose={() => setAdding(null)}
         date={date}
         blocks={blocks}
@@ -315,7 +319,9 @@ export default function SchedulePage() {
           void commit(addBlock(blocks, block), null, `${block.block_name}, ${formatTime(block.start)} to ${formatTime(block.end)}`);
         }}
       />
+      ) : null}
 
+      {open ? (
       <BlockSheet
         block={open}
         blocks={blocks}
@@ -332,6 +338,7 @@ export default function SchedulePage() {
         }}
         onStillGoing={onStillGoing}
       />
+      ) : null}
 
       <Sheet
         open={confirmReset}

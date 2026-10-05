@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { PageHeader, Screen, SegmentedControl } from "@/components/ui";
 import { FoodTab } from "@/features/body/FoodTab";
-import TodaySlot from "@/features/body/TodaySlot";
+import { WorkoutRow } from "@/features/body/TodaySlot";
 import { WeightTab } from "@/features/body/WeightTab";
 
 type Tab = "food" | "weight";
@@ -20,7 +20,7 @@ export default function BodyPage() {
       <PageHeader title="Body" />
       <SegmentedControl className="mt-2" label="Section" options={TABS} value={tab} onChange={setTab} />
       {tab === "food" ? <FoodTab /> : <WeightTab />}
-      <TodaySlot className="mt-8" />
+      <WorkoutRow />
     </Screen>
   );
 }

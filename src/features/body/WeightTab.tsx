@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useRef, useState } from "react";
 import { Plus, Scale } from "lucide-react";
 import { Button, Card, EmptyState, ListRow, Section, Stat, cn } from "@/components/ui";
@@ -9,8 +10,9 @@ import { dayNumber, formatDateLong, formatDateShort, weekStart } from "@/lib/log
 import { WEEKDAY_NAMES, type DateStr } from "@/lib/types";
 import { fmt, signed } from "./format";
 import { PhotoCompare } from "./PhotoCompare";
-import { WeighInSheet } from "./WeighInSheet";
 import { WeightChart } from "./WeightChart";
+
+const WeighInSheet = dynamic(() => import("./WeighInSheet").then((m) => m.WeighInSheet), { ssr: false });
 
 export function WeightTab() {
   const today = useToday();

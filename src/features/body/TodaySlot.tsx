@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Dumbbell } from "lucide-react";
-import { ProgressBar, cn } from "@/components/ui";
+import { ChevronRight } from "lucide-react";
+import { Dumbbell } from "lucide-react";
+import { Card, ListRow, Section, cn } from "@/components/ui";
 import { useList, useToday, useWorkouts } from "@/lib/db/hooks";
 import { workoutsFor } from "@/lib/db/helpers";
 import { weekdayOf } from "@/lib/logic/dates";
 import { isLoggable, workoutProgress } from "@/lib/logic/workout";
 
 /**
- * Compact "Log workout" entry point: sets logged out of the plan for today's
- * lift, linking to /body/workout. Renders nothing on days with no lift.
+ * The way into set logging from Today's workout section: "Log sets, 3 of 14".
+ * Sits in the section header. Renders nothing on days with no lift.
  * It never ticks the Workout checklist item.
  */
 export default function TodaySlot({ className }: { className?: string }) {
@@ -21,25 +22,33 @@ export default function TodaySlot({ className }: { className?: string }) {
   if (!isLoggable(main) || !main) return null;
   const p = workoutProgress(main, sets, today);
   return (
-    <Link
-      href="/body/workout"
-      className={cn("pressable flex min-h-[68px] items-center gap-3.5 rounded-[20px] border border-line bg-surface px-4 py-3 active:bg-surface-2", className)}
-    >
-      <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-full", p.complete ? "bg-accent-soft text-accent" : "bg-surface-2 text-ink-2")}>
-        <Dumbbell size={20} aria-hidden />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="flex items-baseline justify-between gap-3">
-          <span className="truncate text-[16px] font-semibold">Log workout</span>
-          <span className={cn("tnum shrink-0 text-[15px] font-semibold", p.complete ? "text-accent" : "text-ink-2")}>
-            {p.logged} of {p.total} sets
-          </span>
-        </span>
-        <span className="mt-0.5 block truncate text-[13px] text-ink-3">{main.name}</span>
-        <ProgressBar className="mt-2" height={4} value={p.total > 0 ? p.logged / p.total : 0} label="Sets logged" />
-      </span>
-      <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
+    <Link href="/body/workout" className={cn("pressable -my-3 flex min-h-11 items-center gap-0.5 text-[13px] font-semibold tracking-normal normal-case", p.complete ? "text-accent" : "text-ink", className)}>
+      <span className="tnum">{p.logged > 0 ? `Log sets, ${p.logged} of ${p.total}` : "Log sets"}</span>
+      <ChevronRight size={16} aria-hidden />
     </Link>
+  );
+}
+
+/** The same entry point as a full row, for the Body screen. Always shown, so set logging has one fixed home. */
+export function WorkoutRow() {
+  const today = useToday();
+  const { data: workouts } = useWorkouts();
+  const { data: sets } = useList("set_log", { eq: { date: today } });
+  const { main } = workoutsFor(workouts, weekdayOf(today));
+  const loggable = isLoggable(main) && !!main;
+  const p = loggable && main ? workoutProgress(main, sets, today) : null;
+  return (
+    <Section title="Workout">
+      <Card padded={false} className="overflow-hidden">
+        <ListRow
+          href="/body/workout"
+          left={<Dumbbell size={20} aria-hidden />}
+          title="Log workout"
+          sub={main ? (loggable ? main.name : `${main.name} today, nothing to log`) : "No workout set for today"}
+          right={p ? <span className={cn("tnum", p.complete && "text-accent")}>{p.logged} of {p.total} sets</span> : undefined}
+        />
+      </Card>
+    </Section>
   );
 }
 

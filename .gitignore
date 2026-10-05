@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local
 /.shots/
+
+# local production server (scripts/serve.sh)
+.next-serve.*

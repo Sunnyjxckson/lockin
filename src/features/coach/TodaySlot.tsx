@@ -2,7 +2,9 @@
 
 // The morning brief as a compact card for the top of Today. Self-contained:
 // mount <TodaySlot /> with no props. It renders nothing outside the
-// challenge dates. The first open of the day writes the brief.
+// challenge dates. The first open of the day writes the brief. It starts
+// open, and once closed it stays closed for that day on this device, so the
+// rest of the day Today leads with Now and Next.
 
 import { useState } from "react";
 import Link from "next/link";
@@ -10,25 +12,27 @@ import { ChevronDown } from "lucide-react";
 import { Card, cn } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { plural } from "@/lib/logic/coach";
+import { getPref, setPref } from "@/lib/prefs";
 import { NoteBody } from "./parts";
 import { useCoach } from "./useCoach";
 
-// Remembered for the session, per day: open until you close it.
-const closedOn = new Set<string>();
+const CLOSED_KEY = "brief-closed";
 
 export function TodaySlot({ className }: { className?: string }) {
   const coach = useCoach("missing");
-  const [, bump] = useState(0);
+  const [closedDay, setClosedDay] = useState(() => getPref(CLOSED_KEY));
 
-  if (coach.loading || coach.phase !== "active") return null;
+  // Hold the collapsed height while the notes load, so nothing below jumps.
+  if (coach.loading) return <Card className={cn("h-[58px]", className)} aria-busy="true" />;
+  if (coach.phase !== "active") return null;
   if (!coach.brief && !coach.writingBrief) return null;
 
-  const open = !closedOn.has(coach.today);
+  const open = closedDay !== coach.today;
   const toggle = () => {
-    if (open) closedOn.add(coach.today);
-    else closedOn.delete(coach.today);
+    const next = open ? coach.today : null;
+    setPref(CLOSED_KEY, next);
+    setClosedDay(next);
     haptics.tap();
-    bump((n) => n + 1);
   };
   const firstLine = coach.brief?.body.split(/\n+/)[0] ?? "";
 
@@ -39,7 +43,7 @@ export function TodaySlot({ className }: { className?: string }) {
         onClick={toggle}
         aria-expanded={open}
         aria-controls="coach-brief"
-        className="pressable flex min-h-12 w-full items-center justify-between gap-3 px-4 py-2.5 text-left"
+        className="pressable flex min-h-[56px] w-full items-center justify-between gap-3 px-4 py-2.5 text-left"
       >
         <span className="min-w-0 flex-1">
           <span className="t-label block">Morning brief</span>

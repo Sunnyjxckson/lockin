@@ -7,12 +7,14 @@ import { cn } from "./cn";
 
 interface Tab {
   href: string;
+  /** Other routes that light this tab: screens reached from it that are not under its path. */
+  also?: readonly string[];
   label: string;
   icon: LucideIcon;
 }
 
 export const TABS: readonly Tab[] = [
-  { href: "/today", label: "Today", icon: CircleCheck },
+  { href: "/today", label: "Today", icon: CircleCheck, also: ["/coach", "/vices", "/reminders", "/settings"] },
   { href: "/schedule", label: "Schedule", icon: CalendarClock },
   { href: "/money", label: "Money", icon: DollarSign },
   { href: "/body", label: "Body", icon: Activity },
@@ -29,7 +31,8 @@ export function TabBar() {
     >
       <ul className="mx-auto flex h-[var(--tabbar-h)] max-w-[480px] items-stretch px-2">
         {TABS.map((tab) => {
-          const on = pathname === tab.href || pathname.startsWith(`${tab.href}/`);
+          const under = (base: string) => pathname === base || pathname.startsWith(`${base}/`);
+          const on = under(tab.href) || (tab.also ?? []).some(under);
           const Icon = tab.icon;
           return (
             <li key={tab.href} className="flex-1">

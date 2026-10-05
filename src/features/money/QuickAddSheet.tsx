@@ -23,6 +23,8 @@ export interface QuickAddProps {
   defaultApp?: DeliveryApp;
   /** Edit this entry instead of adding one. */
   editing?: Earning | null;
+  /** The day to add to. Defaults to today. */
+  date?: DateStr;
   /** A screenshot picked before the sheet opened. It is read on open. */
   file?: File | null;
 }
@@ -33,15 +35,15 @@ export function QuickAddSheet(props: QuickAddProps) {
   return <Form key={props.editing?.id ?? "new"} {...props} />;
 }
 
-function Form({ onClose, defaultApp = "DoorDash", editing, file: firstFile }: QuickAddProps) {
+function Form({ onClose, defaultApp = "DoorDash", editing, date: firstDate, file: firstFile }: QuickAddProps) {
   const toast = useToast();
   const today = useToday();
   const installedOn = useInstalledOn();
   const [amount, setAmount] = useState<number | null>(editing?.amount ?? null);
   const [app, setApp] = useState<DeliveryApp>(normalizeApp(editing?.app) ?? defaultApp);
   const [hours, setHours] = useState<number | null>(editing?.hours ?? null);
-  const [date, setDate] = useState<DateStr>(editing?.date ?? today);
-  const [showDate, setShowDate] = useState(!!editing);
+  const [date, setDate] = useState<DateStr>(editing?.date ?? firstDate ?? today);
+  const [showDate, setShowDate] = useState(!!editing || (!!firstDate && firstDate !== today));
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [keptRef, setKeptRef] = useState<string | null>(editing?.screenshot_url ?? null);
