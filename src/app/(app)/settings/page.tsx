@@ -62,6 +62,7 @@ export default function SettingsPage() {
       <Section title="This device">
         <Card padded={false} className="overflow-hidden">
           <div className="divide-y divide-line">
+            <ListRow href="/reminders" title="Notifications" sub="Turn push on for this device, and see what is set up" />
             <ListRow
               title="Haptics"
               sub="A tap when you check something off"
