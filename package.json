@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "e2e": "node scripts/e2e.mjs",
+    "icons": "node scripts/gen-icons.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",
@@ -27,5 +31,8 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

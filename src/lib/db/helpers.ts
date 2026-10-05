@@ -147,46 +147,61 @@ function logRow(date: DateStr, itemId: string, fields: Partial<DayLog>): NewRow<
   return { date, item_id: itemId, value: null, checked: false, text: null, completed_at: null, ...fields };
 }
 
+// Day log writes read the row first, then write it back. Running them one at
+// a time keeps two quick taps from overwriting each other.
+let chain: Promise<unknown> = Promise.resolve();
+function serial<T>(run: () => Promise<T>): Promise<T> {
+  const next = chain.then(run, run);
+  chain = next.catch(() => undefined);
+  return next;
+}
+
 async function existingLog(date: DateStr, itemId: string): Promise<DayLog | null> {
   return db.first("day_log", { eq: { date, item_id: itemId } });
 }
 
 /** Tick or untick a yes/no or text item for a date. */
-export async function setChecked(itemId: string, date: DateStr, checked: boolean, at: Date = new Date()): Promise<DayLog> {
-  const prev = await existingLog(date, itemId);
-  return db.upsert(
-    "day_log",
-    logRow(date, itemId, { value: prev?.value ?? null, text: prev?.text ?? null, checked, completed_at: checked ? nowIso(at) : null }),
-    ["date", "item_id"],
-  );
+export function setChecked(itemId: string, date: DateStr, checked: boolean, at: Date = new Date()): Promise<DayLog> {
+  return serial(async () => {
+    const prev = await existingLog(date, itemId);
+    return db.upsert(
+      "day_log",
+      logRow(date, itemId, { value: prev?.value ?? null, text: prev?.text ?? null, checked, completed_at: checked ? nowIso(at) : null }),
+      ["date", "item_id"],
+    );
+  });
 }
 
 /** Set a number item for a date. Null clears it. */
-export async function setValue(itemId: string, date: DateStr, value: number | null, at: Date = new Date()): Promise<DayLog> {
-  const prev = await existingLog(date, itemId);
-  const has = value !== null && !Number.isNaN(value);
-  return db.upsert(
-    "day_log",
-    logRow(date, itemId, { text: prev?.text ?? null, value: has ? value : null, checked: has, completed_at: has ? nowIso(at) : null }),
-    ["date", "item_id"],
-  );
+export function setValue(itemId: string, date: DateStr, value: number | null, at: Date = new Date()): Promise<DayLog> {
+  return serial(async () => {
+    const prev = await existingLog(date, itemId);
+    const has = value !== null && !Number.isNaN(value);
+    return db.upsert(
+      "day_log",
+      logRow(date, itemId, { text: prev?.text ?? null, value: has ? value : null, checked: has, completed_at: has ? nowIso(at) : null }),
+      ["date", "item_id"],
+    );
+  });
 }
 
 /** Set the text of a text item for a date. Keeps the tick as it was. */
-export async function setText(itemId: string, date: DateStr, text: string): Promise<DayLog> {
-  const prev = await existingLog(date, itemId);
-  const clean = text.trim();
-  const checked = clean.length > 0 ? (prev?.checked ?? false) : false;
-  return db.upsert(
-    "day_log",
-    logRow(date, itemId, {
-      value: prev?.value ?? null,
-      text: clean.length > 0 ? clean : null,
-      checked,
-      completed_at: checked ? (prev?.completed_at ?? null) : null,
-    }),
-    ["date", "item_id"],
-  );
+export function setText(itemId: string, date: DateStr, text: string): Promise<DayLog> {
+  return serial(async () => {
+    const prev = await existingLog(date, itemId);
+    const clean = text.trim();
+    const checked = clean.length > 0 ? (prev?.checked ?? false) : false;
+    return db.upsert(
+      "day_log",
+      logRow(date, itemId, {
+        value: prev?.value ?? null,
+        text: clean.length > 0 ? clean : null,
+        checked,
+        completed_at: checked ? (prev?.completed_at ?? null) : null,
+      }),
+      ["date", "item_id"],
+    );
+  });
 }
 
 /**

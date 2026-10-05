@@ -1,26 +1,379 @@
 @import "tailwindcss";
 
+/*
+  Lock In design tokens. Dark only.
+  Use these through the Tailwind names in the @theme block below
+  (bg-bg, bg-surface, text-ink, text-ink-2, border-line, bg-accent ...).
+  Do not add colors anywhere else.
+
+  The accent is for done states and primary progress only. Buttons, links and
+  selected controls use ink (near white) so the accent keeps its meaning.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* surfaces, darkest to lightest */
+  --bg: #09090a;
+  --surface: #131314;
+  --surface-2: #1b1b1d;
+  --surface-3: #262629;
+
+  /* lines */
+  --line: #232326;
+  --line-strong: #38383d;
+
+  /* text */
+  --ink: #f5f5f2;
+  --ink-2: #a5a5ad;
+  --ink-3: #7c7c85;
+
+  /* the one accent */
+  --accent: #c8f73a;
+  --accent-ink: #0c1000;
+  --accent-soft: rgba(200, 247, 58, 0.12);
+  --accent-line: rgba(200, 247, 58, 0.35);
+
+  /* states that are not "done" */
+  --danger: #ff6257;
+  --danger-soft: rgba(255, 98, 87, 0.12);
+  --warn: #f5b544;
+  --warn-soft: rgba(245, 181, 68, 0.12);
+
+  /* shape */
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* layout */
+  --tabbar-h: 60px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --page-x: 20px;
+  --page-max: 480px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur: 220ms;
+  --dur-slow: 420ms;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease-out: var(--ease-out);
+  --ease-spring: var(--ease-spring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base rules sit in the base layer so utility classes always win over them. */
+@layer base {
+  html {
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.4;
+    font-feature-settings: "ss01", "cv11";
+    overscroll-behavior-y: none;
+  }
+
+  button,
+  a,
+  [role="button"],
+  label {
+    touch-action: manipulation;
+  }
+
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: default;
+  }
+
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Hide number spinners, the fields are typed into. */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  input[type="time"]::-webkit-calendar-picker-indicator,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.5;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  /* Text controls show focus on their border, not with the outline ring. */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: none;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*
+  Type scale. Big numerals, short labels.
+  t-display  64  the hero number on a screen (Day 12, $640)
+  t-num      40  large stat numbers
+  t-num-sm   28  inline stat numbers
+  t-title    28  page titles
+  t-h2       20  card and section headings
+  t-body     16  default (the body size, no class needed)
+  t-sub      14  secondary lines
+  t-label    12  uppercase eyebrow labels
+*/
+@utility t-display {
+  font-size: 64px;
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+@utility t-num {
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+@utility t-num-sm {
+  font-size: 28px;
+  line-height: 1.05;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+@utility t-title {
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+@utility t-h2 {
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+@utility t-sub {
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+@utility t-label {
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* Press feedback for anything tappable. */
+@utility pressable {
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}
+
+/* ---------- motion ---------- */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+}
+@keyframes check-pop {
+  0% {
+    transform: scale(0.6);
+  }
+  55% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes check-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes check-burst {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-8px);
+  }
+  40%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+@keyframes ring-glow {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(200, 247, 58, 0));
+    transform: scale(1);
+  }
+  40% {
+    filter: drop-shadow(0 0 18px rgba(200, 247, 58, 0.75));
+    transform: scale(1.08);
+  }
+  100% {
+    filter: drop-shadow(0 0 0 rgba(200, 247, 58, 0));
+    transform: scale(1);
+  }
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@utility animate-fade-in {
+  animation: fade-in var(--dur) var(--ease-out) both;
+}
+@utility animate-rise-in {
+  animation: rise-in var(--dur-slow) var(--ease-out) both;
+}
+@utility animate-sheet-up {
+  animation: sheet-up 320ms var(--ease-out) both;
+}
+@utility animate-toast-in {
+  animation: toast-in var(--dur) var(--ease-spring) both;
+}
+@utility animate-check-pop {
+  animation: check-pop 320ms var(--ease-spring) both;
+}
+@utility animate-check-draw {
+  stroke-dasharray: 24;
+  animation: check-draw 260ms 60ms var(--ease-out) both;
+}
+@utility animate-check-burst {
+  animation: check-burst 520ms var(--ease-out) both;
+}
+@utility animate-shake {
+  animation: shake 360ms var(--ease-out) both;
+}
+@utility animate-ring-glow {
+  animation: ring-glow 900ms var(--ease-out) both;
+}
+@utility animate-pulse-dot {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
