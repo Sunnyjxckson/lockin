@@ -54,14 +54,14 @@ function Form({ board, taken, onSave, onDelete, onMove, onClose, pieces }: Omit<
     <div className="space-y-5">
       <TextField label="Name" value={name} onChange={setName} placeholder={`${BOARD_KIND_LABEL[kind]} board`} maxLength={40} autoFocus={!board} />
       <div>
-        <p className="t-label mb-3">What it is for</p>
+        <p className="mb-1.5 text-[13px] text-ink-2">What it is for</p>
         <SegmentedControl label="What it is for" options={KIND_OPTIONS} value={kind} onChange={setKind} />
         <p className="t-sub mt-2">{BOARD_KIND_HINT[kind]}</p>
       </div>
 
       {board && onMove && (onMove.up || onMove.down) ? (
         <div>
-          <p className="t-label mb-3">Order</p>
+          <p className="mb-1.5 text-[13px] text-ink-2">Order</p>
           <div className="flex gap-2.5">
             <Button variant="secondary" size="sm" full icon={<ArrowUp size={16} aria-hidden />} disabled={!onMove.up} onClick={() => onMove.up?.()}>
               Move up

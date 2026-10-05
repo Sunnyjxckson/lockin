@@ -27,7 +27,7 @@ import { usePhoto } from "@/lib/storage/hooks";
 import { previewTheme, resetTheme, setThemeFromPalette, useTheme } from "@/lib/theme";
 import type { Board, BoardItem, ThemeBase } from "@/lib/types";
 import { MiniToday } from "./MiniToday";
-import { Overlay } from "./Overlay";
+import { Overlay } from "@/components/ui";
 
 export interface LookStudioProps {
   board: Board;
@@ -103,19 +103,8 @@ export function LookStudio({ board, items, imageId = null, onClose }: LookStudio
     <Overlay
       onClose={onClose}
       label="Set the app's look"
-      footer={
-        <div className="mx-auto flex w-full max-w-[440px] gap-2.5">
-          <Button variant="secondary" size="lg" icon={<RotateCcw size={16} strokeWidth={1.75} aria-hidden />} onClick={() => void backToBase()} disabled={!custom && !live} aria-label="Back to base">
-            Base
-          </Button>
-          <Button full size="lg" onClick={() => void apply()}>
-            Apply to the app
-          </Button>
-        </div>
-      }
-    >
-      <div className="mx-auto w-full max-w-[480px] px-5 pt-[var(--safe-t)] pb-8">
-        <div className="sticky top-0 z-10 -mx-5 border-b border-hair bg-bg px-5 pb-5">
+      header={
+        <div className="mx-auto w-full max-w-[440px] pb-5">
           <div className="flex h-14 items-center justify-between">
             <div>
               <p className="t-label">{board.name}</p>
@@ -133,8 +122,8 @@ export function LookStudio({ board, items, imageId = null, onClose }: LookStudio
                 const moved = shifts.find((s) => s.role === role)?.noticeable;
                 return (
                   <div key={role} className="flex min-h-0 flex-1 flex-col justify-end rounded-[14px] border border-hair px-3 py-2" style={{ backgroundColor: used, color: inkOnColor(used) }}>
-                    <span className="text-[13px] leading-tight font-medium tracking-[-0.01em]">{ROLE_LABEL[role]}</span>
-                    <span className="mt-0.5 text-[9px] leading-tight tracking-[0.14em] uppercase">
+                    <span className="on-swatch text-[13px] leading-tight font-medium tracking-[-0.01em]">{ROLE_LABEL[role]}</span>
+                    <span className="on-swatch mt-0.5 text-[9px] leading-tight tracking-[0.14em] uppercase">
                       {used.replace("#", "")}
                       {roles[role] ? (moved ? " adjusted" : "") : " base"}
                     </span>
@@ -144,7 +133,19 @@ export function LookStudio({ board, items, imageId = null, onClose }: LookStudio
             </div>
           </div>
         </div>
-
+      }
+      footer={
+        <div className="mx-auto flex w-full max-w-[440px] gap-2.5">
+          <Button variant="secondary" size="lg" icon={<RotateCcw size={16} strokeWidth={1.75} aria-hidden />} onClick={() => void backToBase()} disabled={!custom && !live} aria-label="Back to base">
+            Base
+          </Button>
+          <Button full size="lg" onClick={() => void apply()}>
+            Apply to the app
+          </Button>
+        </div>
+      }
+    >
+      <div className="mx-auto w-full max-w-[480px] px-5 pb-8">
         {colors.length === 0 ? (
           <p className="tile t-sub mt-6 rounded-[20px] px-4 py-3">No colors on this board yet. Add an image or a swatch.</p>
         ) : null}

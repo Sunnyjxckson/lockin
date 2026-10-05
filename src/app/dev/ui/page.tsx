@@ -5,13 +5,16 @@
 // docs/BUILD.md, "Design system", is the written half. Development only.
 
 import { useState } from "react";
-import { Camera, Inbox, Plus, Settings, Timer } from "lucide-react";
+import { ArrowRight, Camera, Inbox, Lock, Plus, Settings, Star, Timer, TriangleAlert } from "lucide-react";
 import {
   ActionButton,
   BigNumber,
   Button,
+  ButtonLink,
   Card,
   Checkbox,
+  Chip,
+  ClockText,
   DateField,
   EmptyState,
   GlassCard,
@@ -21,7 +24,10 @@ import {
   ListRow,
   NumberField,
   NumberTile,
+  Notice,
+  Overlay,
   PageHeader,
+  PillCheck,
   ProgressBar,
   ProgressRing,
   Screen,
@@ -58,6 +64,10 @@ export default function Gallery() {
   const [b, setB] = useState(false);
   const [on, setOn] = useState(true);
   const [seg, setSeg] = useState<"day" | "week" | "all">("day");
+  const [day, setDay] = useState(1);
+  const [chips, setChips] = useState<string[]>(["stressed"]);
+  const [clean, setClean] = useState(false);
+  const [layer, setLayer] = useState(false);
   const [num, setNum] = useState<number | null>(185);
   const [hero, setHero] = useState<number | null>(42.5);
   const [protein, setProtein] = useState<number | null>(112);
@@ -159,6 +169,14 @@ export default function Gallery() {
           <TrackStat value="$0" label="Banked" />
           <TrackStat value="7.6h" label="Worked" />
         </div>
+        <div className="mt-6 grid grid-cols-3 gap-3.5 px-1">
+          <TrackStat value="190" unit="g" label="Protein" progress={1} caption="Done" captionTone="done" />
+          <TrackStat value="240" unit="g" label="Carbs" progress={1} attention caption="60g over" captionTone="warn" />
+          <TrackStat value="50" unit="g" label="Fat" progress={0.8} caption="10g left" />
+        </div>
+        <p className="t-sub mt-4 px-1">
+          ClockText, for a clock that counts: <ClockText text="19:38" className="text-ink" /> and <ClockText text="1:04:07" className="text-ink" />
+        </p>
       </Section>
 
       <Section title="Tile">
@@ -225,6 +243,9 @@ export default function Gallery() {
             </IconButton>
             <span className="t-sub">ActionButton, IconButton filled, IconButton</span>
           </div>
+          <ButtonLink href="/dev/ui" full iconAfter={<ArrowRight size={18} strokeWidth={1.75} aria-hidden />}>
+            ButtonLink, a Button that is a link
+          </ButtonLink>
         </div>
       </Section>
 
@@ -275,6 +296,28 @@ export default function Gallery() {
               { value: "all", label: "All" },
             ]}
           />
+          <SegmentedControl
+            label="Weekday"
+            size="sm"
+            value={day}
+            onChange={setDay}
+            options={["M", "T", "W", "T", "F", "S", "S"].map((label, i) => ({ value: i + 1, label }))}
+          />
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Chips">
+            {["bored", "stressed", "tired", "with friends", "late night"].map((c) => (
+              <Chip key={c} on={chips.includes(c)} onClick={() => setChips((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]))}>
+                {c}
+              </Chip>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <PillCheck checked={clean} onChange={setClean}>
+              {clean ? "Clean today" : "Mark clean today"}
+            </PillCheck>
+            <Button variant="secondary" size="sm">
+              Log a slip
+            </Button>
+          </div>
           <TextField label="TextField" hint="A hint sits under the control." value={text} onChange={setText} placeholder="Read 20 pages" />
           <div className="grid grid-cols-2 gap-3">
             <NumberField label="NumberField" value={num} onChange={setNum} unit="g" />
@@ -312,10 +355,73 @@ export default function Gallery() {
         </div>
       </Section>
 
+      <Section title="Notice">
+        <div className="flex flex-col gap-3">
+          <Notice icon={<Lock size={15} aria-hidden />}>Locked. Days close at noon the next day.</Notice>
+          <Notice
+            action={
+              <Button variant="ghost" size="sm" className="px-3 text-ink">
+                Back to today
+              </Button>
+            }
+          >
+            Open until Oct 6, 12:00 PM
+          </Notice>
+          <Notice tone="warn" icon={<TriangleAlert size={18} aria-hidden />} title="Lift overlaps Class">
+            9:30 AM to 10:15 AM, 45m
+          </Notice>
+          <Notice
+            tone="warn"
+            title="Gone for 4m"
+            actions={
+              <>
+                <Button full variant="solid" size="sm">
+                  Leave it off
+                </Button>
+                <Button full variant="secondary" size="sm">
+                  I was working
+                </Button>
+              </>
+            }
+          >
+            Off the clock until you say otherwise.
+          </Notice>
+        </div>
+      </Section>
+
       <Section title="EmptyState">
         <Card padded={false}>
           <EmptyState compact icon={<Inbox size={22} strokeWidth={1.75} aria-hidden />} title="Nothing here yet" body="One sentence on what goes here, and one way forward." action={<Button variant="secondary">Add the first</Button>} />
         </Card>
+        <EmptyState row className="mt-3" icon={<Star size={18} strokeWidth={1.75} aria-hidden />} title="No favorites yet" body="The row form, for a small group." />
+      </Section>
+
+      <Section title="Overlay">
+        <Button variant="secondary" full onClick={() => setLayer(true)}>
+          Open a full screen layer
+        </Button>
+        {layer ? (
+          <Overlay
+            label="Example layer"
+            onClose={() => setLayer(false)}
+            header={
+              <div className="flex h-14 items-center justify-between">
+                <p className="t-label">Overlay</p>
+                <Button variant="ghost" size="sm" className="-mr-3" onClick={() => setLayer(false)}>
+                  Close
+                </Button>
+              </div>
+            }
+            footer={
+              <Button full size="lg" onClick={() => setLayer(false)}>
+                Done
+              </Button>
+            }
+            className="px-5 py-6"
+          >
+            <BigNumber label="Lit" value="12" unit="of 12" sub="The page color and its three lights, not a flat panel." />
+          </Overlay>
+        ) : null}
       </Section>
 
       <Section title="Look">

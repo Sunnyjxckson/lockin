@@ -181,7 +181,7 @@ function ColorForm({ onColor, suggestions, done, back }: { onColor: (hex: string
           className={cn("relative flex h-[104px] w-[104px] shrink-0 cursor-pointer items-end overflow-hidden rounded-[20px] p-3", hex ? "" : "tile text-ink-2")}
           style={hex ? { backgroundColor: hex, color: inkOnColor(hex) } : undefined}
         >
-          <span className="tnum text-[11px] font-medium tracking-[0.12em] uppercase">{hex ? hex.replace("#", "") : "Pick"}</span>
+          <span className="on-swatch text-[11px] font-medium tracking-[0.12em] uppercase">{hex ? hex.replace("#", "") : "Pick"}</span>
           {/* The system color picker. It sits over the swatch, invisible, so a tap on the swatch opens it. */}
           <input type="color" aria-label="Pick a color" value={hex ?? "#808080"} onChange={(e) => setText(e.target.value)} className="absolute inset-0 size-full cursor-pointer opacity-0" />
         </label>
@@ -192,7 +192,7 @@ function ColorForm({ onColor, suggestions, done, back }: { onColor: (hex: string
       </div>
       {suggestions.length > 0 ? (
         <div className="mt-4">
-          <p className="t-label mb-2">From this board</p>
+          <p className="mb-1.5 text-[13px] text-ink-2">From this board</p>
           <div className="no-scrollbar -mx-5 flex gap-2.5 overflow-x-auto px-5 py-1">
             {suggestions.map((c) => (
               <button

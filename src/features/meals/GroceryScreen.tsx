@@ -2,8 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, Home, Receipt, Share2, ShoppingBasket, ShoppingCart, Trash2 } from "lucide-react";
-import Link from "next/link";
-import { ActionButton, Button, Checkbox, DateField, EmptyState, GlassCard, List, NumberField, PageHeader, ProgressBar, Screen, SectionLabel, Select, Sheet, TextField, Toggle, TrackStat, cn, useToast } from "@/components/ui";
+import { ActionButton, BigNumber, Button, ButtonLink, Checkbox, DateField, EmptyState, GlassCard, List, NumberField, PageHeader, ProgressBar, Screen, SectionLabel, Select, Sheet, TextField, Toggle, TrackStat, cn, useToast } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { formatDateShort } from "@/lib/logic/dates";
 import { dollars, foodKey, round, SECTION_LABEL, SECTIONS } from "@/lib/logic/meals";
@@ -11,7 +10,7 @@ import { budgetActual, buyLabel, compareStores, displayName, instacartItems, lis
 import { STORES, type Store } from "@/lib/logic/mealsPricing";
 import type { Expense } from "@/lib/types";
 import { recordShop, removeShop, setAtHome, setBought, setPlanStore, setReceiptPrice, syncGrocery } from "./data";
-import { Est, EstimateNote, MoneyHero } from "./parts";
+import { Est, EstimateNote } from "./parts";
 import { currentWeek, useKeepInStep, useMeals, type MealsState } from "./useMeals";
 
 type Instacart = "unknown" | "ready" | "off";
@@ -58,9 +57,7 @@ export default function GroceryScreen() {
           title="Nothing to buy yet"
           body="Build a week of meals. Its ingredients become one list, priced at five stores."
           action={
-            <Link href="/meals" className="pressable grad shadow-glow inline-flex h-12 items-center rounded-full px-6 text-[15px] font-medium">
-              Plan the week
-            </Link>
+<ButtonLink href="/meals">Plan the week</ButtonLink>
           }
         />
       </Screen>
@@ -155,7 +152,7 @@ export default function GroceryScreen() {
       {header}
 
       <section className="px-1 pt-1" data-budget-actual aria-label="Budget">
-        <MoneyHero label={`Est. at ${m.store}`} amount={dollars(ba.estimated)} />
+        <BigNumber size="display" label={`Est. at ${m.store}`} prefix="$" value={dollars(ba.estimated).slice(1)} />
         <p className="t-sub mt-2.5">
           {ba.spent > 0 ? (
             <>

@@ -3,7 +3,7 @@
 // Log a session by hand, or edit or delete one that is already logged.
 
 import { useState } from "react";
-import { Button, DateField, NumberField, SegmentedControl, Sheet, TextField, TimeField, cn, useToast } from "@/components/ui";
+import { Button, DateField, NumberField, SegmentedControl, Sheet, TextField, TimeField, useToast, Chip } from "@/components/ui";
 import { addMinutes, timeNY } from "@/lib/logic/dates";
 import { LABELS, manualProblem } from "@/lib/logic/focus";
 import type { DateStr, FocusSession } from "@/lib/types";
@@ -72,15 +72,9 @@ export function SessionSheet({ open, onClose, today, session }: SessionSheetProp
         <SegmentedControl label="Quick lengths" size="sm" options={QUICK} value={minutes ?? 0} onChange={setMinutes} />
         <div className="flex flex-wrap gap-2" role="group" aria-label="Label">
           {LABELS.map((l) => (
-            <button
-              key={l}
-              type="button"
-              aria-pressed={label === l}
-              onClick={() => setLabel(l)}
-              className={cn("pressable h-11 rounded-full px-4 text-[14px] font-medium", label === l ? "border border-ink bg-ink text-bg" : "tile text-ink-2")}
-            >
+            <Chip key={l} on={label === l} onClick={() => setLabel(l)}>
               {l}
-            </button>
+            </Chip>
           ))}
         </div>
         <TextField label="Label" value={label} onChange={setLabel} maxLength={40} placeholder="Study" />

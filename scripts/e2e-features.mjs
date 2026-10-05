@@ -285,7 +285,7 @@ export async function runFeatures(h) {
   await page.getByRole("link", { name: "Open the focus timer" }).click();
   await heading(page, "Focus");
   await timer(page).waitFor();
-  check("Focus opens idle with the Schedule tab lit", (await timer(page).getAttribute("data-timer")) === "idle" && (await page.getByRole("navigation", { name: "Main" }).locator('[aria-current="page"]').innerText()) === "Schedule");
+  check("Focus opens idle with the Plan tab lit", (await timer(page).getAttribute("data-timer")) === "idle" && (await page.getByRole("navigation", { name: "Main" }).locator('[aria-current="page"]').innerText()) === "Plan");
   await noOverflow(page, "Focus");
   await shot(page, "f-focus-01-idle", true);
 
@@ -491,24 +491,104 @@ export async function runFeatures(h) {
   await page.keyboard.press("Escape");
   await page.getByRole("dialog").waitFor({ state: "detached" });
 
-  // The same screens in the three looks: the board's, then each base.
-  const tour = async (label, min) => {
-    for (const [path, wait, name] of [
-      ["/boards", "The body", "boards"],
-      ["/meals", "Spent so far", "meals"],
-      ["/meals/grocery", "Same list, five stores", "grocery"],
-      ["/focus", "Sessions", "focus"],
-      ["/focus/business", "The goal", "business"],
-      ["/money", "Groceries this week", "money"],
-    ]) {
+  // ---------- every screen, in every look ----------
+  // A day with something on every screen: half the checklist, earnings over
+  // three days, a weigh-in, a logged set and one slip, on top of the meal
+  // plan, the focus sessions and the board made above.
+  await page.evaluate(
+    ([prefix, day]) => {
+      const read = (t) => JSON.parse(localStorage.getItem(prefix + t) ?? "[]");
+      const write = (t, list) => localStorage.setItem(prefix + t, JSON.stringify(list));
+      const at = `${day}T15:41:00.000Z`;
+      const items = read("checklist_item").filter((i) => i.active && !i.archived);
+      const logs = read("day_log");
+      const ticked = new Set(["wake", "workout", "core", "vice_drinking", "vice_masturbation"]);
+      for (const i of items) {
+        if (i.cadence !== "daily" || !ticked.has(i.key) || logs.some((l) => l.date === day && l.item_id === i.id)) continue;
+        logs.push({ id: `tour-${i.id}`, created_at: at, date: day, item_id: i.id, value: null, checked: true, text: null, completed_at: `${day}T09:41:00.000Z`, slips: 0 });
+      }
+      const earned = items.find((i) => i.key === "earned");
+      logs.push({ id: "tour-earned", created_at: at, date: day, item_id: earned.id, value: 40, checked: true, text: null, completed_at: at, slips: 0 });
+      const smoke = items.find((i) => i.key === "vice_smoking");
+      logs.push({ id: "tour-smoke", created_at: at, date: day, item_id: smoke.id, value: null, checked: false, text: null, completed_at: null, slips: 1 });
+      write("day_log", logs);
+      write("vice_slip", [...read("vice_slip"), { id: "tour-slip", created_at: at, item_id: smoke.id, date: day, time: "10:20", trigger: "stressed", amount: null }]);
+      write("earning", [...read("earning"), { id: "tour-e1", created_at: at, date: day, amount: 40, app: "DoorDash", hours: 2, screenshot_url: null }]);
+      write("body_log", [...read("body_log"), { id: "tour-w1", created_at: at, date: day, weight: 182.4, photo_url: null }]);
+    },
+    [PREFIX, today],
+  );
+  const viceId = (await rows(page, "checklist_item")).find((i) => i.key === "vice_smoking").id;
+  const boardId = (await rows(page, "board"))[0].id;
+  // [path, text to wait for, name, on the contact sheet as]
+  const SCREENS = [
+    ["/today", "Today's workout", "today", "Today"],
+    ["/schedule", "9:00 clock-in errand", "plan", "Plan"],
+    ["/money", "Groceries this week", "money", "Money"],
+    ["/body", "Meals", "body", "Body"],
+    ["/body", "Weigh-ins", "body-weight", null, () => page.getByRole("radio", { name: "Weight" }).click()],
+    ["/body/workout", "Bench press", "workout-log", null],
+    ["/progress", "Streaks", "record", "Record"],
+    ["/progress/card", "Save image", "share-card", null],
+    ["/coach", "Flags", "coach", "Coach"],
+    ["/vices", "Library", "vices", "Vices"],
+    [`/vices/${viceId}`, "Pattern", "vice-detail", null],
+    ["/meals", "Spent so far", "meals", "Meals"],
+    ["/meals/grocery", "Same list, five stores", "grocery", null],
+    ["/meals/recipes", "Numbers are per serving", "recipes", null],
+    ["/focus", "Sessions", "focus", "Focus"],
+    ["/focus/business", "The goal", "business", null],
+    ["/boards", "The body", "boards", "Boards"],
+    [`/boards/${boardId}`, "2 pieces", "board", null],
+    ["/reminders", "Still to come today", "reminders", null],
+    ["/settings", "Your days", "settings", "Settings"],
+    ["/settings/checklist", "Items", "settings-checklist", null],
+    ["/settings/schedule", "What each weekday starts from", "settings-weekly-plan", null],
+    ["/settings/workouts", "Kind of day", "settings-workouts", null],
+    ["/settings/challenge", "Past challenges", "settings-challenge", null],
+    ["/settings/challenge/new", "New challenge", "settings-new-challenge", null],
+    ["/settings/reminders", "Quiet hours", "settings-reminders", null],
+  ];
+  /** Put a theme row in force, as the boards screen and the theme picker do, and load it. */
+  const wear = async (theme) => {
+    await page.evaluate(
+      ([prefix, t]) => {
+        const list = JSON.parse(localStorage.getItem(prefix + "theme") ?? "[]").map((r) => ({ ...r, active: false }));
+        if (t) list.push({ id: `tour-${Date.now()}`, created_at: new Date().toJSON(), name: null, base: t.base, palette: t.palette ?? null, accent: t.palette?.accent ?? null, board_id: null, active: true });
+        localStorage.setItem(prefix + "theme", JSON.stringify(list));
+        localStorage.removeItem("lockin:pref:theme");
+      },
+      [PREFIX, theme],
+    );
+  };
+  const tour = async (label, min, { main = false } = {}) => {
+    const slug = label.replace(/\s+/g, "-");
+    for (const [path, wait, name, title, then] of SCREENS) {
       await page.goto(`${base}${path}`);
+      await page.locator("main").first().waitFor();
+      if (then) await then();
       await page.getByText(wait).first().waitFor();
       await page.waitForTimeout(300);
       await checkContrast(page, `${name}, ${label}`, min);
-      await shot(page, `f-look-${label.replace(/\s+/g, "-")}-${name}`, true);
+      await noOverflow(page, `${name}, ${label}`);
+      if (main) {
+        // The default look is the one the owner reviews: the first screen at phone size, and the whole page.
+        await page.evaluate(() => window.scrollTo(0, 0));
+        if (title) await shot(page, `main-${name}`);
+        await shot(page, `screen-${name}`, true);
+      } else if (title) await shot(page, `f-look-${slug}-${name}`, true);
     }
+    // The lock screen, in the same look.
+    await page.goto(`${base}/settings`);
+    await page.getByRole("button", { name: /Lock now/ }).click();
+    await page.getByText("Enter passcode").waitFor();
+    await page.waitForTimeout(300);
+    await checkContrast(page, `lock, ${label}`, min);
+    await shot(page, main ? "main-lock" : `f-look-${slug}-lock`);
+    for (const d of "1379") await page.getByRole("button", { name: d, exact: true }).click();
+    await heading(page, "Settings");
   };
-  console.log("The new screens under the board's look");
+  console.log("Every screen under the board's look");
   await tour("board palette", 4.5);
 
   // Back to the base, from Boards.
@@ -517,19 +597,67 @@ export async function runFeatures(h) {
   await page.getByRole("button", { name: "Back to base" }).click();
   await toastSays(page, "Back to Aubergine");
   check("Back to base drops the palette everywhere", (await rootVar(page, "--bg")) === "#0d0b10" && (await rows(page, "theme")).filter((t) => t.active && t.palette).length === 0);
-  console.log("The new screens in Aubergine");
-  await tour("Aubergine", 4.5);
+  console.log("Every screen in Aubergine, the default look");
+  await tour("Aubergine", 4.5, { main: true });
+
+  // The major sheets in the default look, measured the same way.
+  console.log("Sheets in the default look");
+  {
+    const sheet = async (name, open) => {
+      await open();
+      await dialog(page).waitFor();
+      await page.waitForTimeout(400);
+      await checkContrast(page, `${name} sheet, Aubergine`, 4.5);
+      await shot(page, `sheet-${name}`);
+      await closeSheet(page);
+    };
+    await page.goto(`${base}/today`);
+    await onDay(page, "Day 1 of 30");
+    await sheet("more", () => page.getByRole("button", { name: "More", exact: true }).click());
+    await sheet("slip", () => page.getByRole("button", { name: "Log a slip" }).click());
+    await page.goto(`${base}/money`);
+    await heading(page, "Money");
+    await sheet("add-earnings", () => page.getByRole("button", { name: "Add earnings" }).last().click());
+    await page.goto(`${base}/body`);
+    await heading(page, "Body");
+    await sheet("meal", () => page.getByRole("button", { name: "Add by hand" }).click());
+    await page.goto(`${base}/schedule`);
+    await heading(page, "Plan");
+    await sheet("block", () => page.getByRole("button", { name: /Lift \+ core/ }).first().click());
+    await sheet("add-block", () => page.getByRole("button", { name: "Add a block" }).click());
+    await page.goto(`${base}/progress`);
+    await page.getByText("Streaks").first().waitFor();
+    await sheet("day", () => page.getByRole("button", { name: /^Day 1\b/ }).first().click());
+    await page.goto(`${base}/meals`);
+    await page.locator("[data-plan-cost]").waitFor();
+    await sheet("planned-meal", () => page.locator("[data-meal-cell]").first().click());
+    await page.goto(`${base}/focus`);
+    await timer(page).waitFor();
+    await sheet("focus-by-hand", () => page.getByRole("button", { name: "Log focus time by hand" }).click());
+  }
+
   await page.goto(`${base}/settings`);
   await heading(page, "Settings");
   await page.getByRole("radio", { name: "High contrast" }).click();
   await page.getByText("High contrast is on").waitFor();
-  console.log("The new screens in high contrast");
+  console.log("Every screen in high contrast");
   await tour("high contrast", 7);
   await page.goto(`${base}/today`);
   await onDay(page, "Day 1 of 30");
   await page.waitForTimeout(300);
   await checkContrast(page, "Today with everything on it, high contrast", 7);
   await shot(page, "f-look-high-contrast-today", true);
+
+  // Two palettes a board could set, on the Aubergine base: one light, one dark.
+  for (const [label, palette] of [
+    ["light palette", { background: "#f3ead8", text: "#3b3226", accent: "#b4532a" }],
+    ["dark palette", { background: "#0b1410", accent: "#7ad6a8" }],
+  ]) {
+    console.log(`Every screen under a ${label}`);
+    await wear({ base: "dark", palette });
+    await tour(label, 4.5);
+  }
+  await wear(null);
   await ctx.close();
 
   // =====================================================================
@@ -577,10 +705,14 @@ export async function runFeatures(h) {
     await p.clock.install({ time: new Date(NOON_DAY_1) });
     await p.goto(`${base}/today`);
     await createPasscode(p, "2468");
-    await p.getByText("Morning brief").waitFor();
-    // Today shows the brief's first paragraph. The money line is in the note itself and on the coach screen.
+    const brief = p.getByRole("button", { name: /^Morning brief/ });
+    await brief.waitFor();
+    // Today shows the brief's first sentence, and its first paragraph once opened. The money line is in the note itself and on the coach screen.
     await p.waitForFunction(([prefix]) => JSON.parse(localStorage.getItem(prefix + "coach_note") ?? "[]").some((n) => n.kind === "morning" && /\$0 of \$1,000/.test(n.body)), [PREFIX]);
-    check("Today shows the brief's opening paragraph and a way to the rest", (await p.locator("#coach-brief p").count()) === 1 && (await p.locator("#coach-brief").getByRole("link", { name: /Read the rest/ }).count()) === 1);
+    check("Today shows the brief as one line that says what today holds", (await brief.getAttribute("aria-expanded")) === "false" && /Upper A at 6:30 AM/.test(await p.locator("[data-brief-line]").innerText()), await p.locator("[data-brief-line]").innerText());
+    await brief.click();
+    check("opened, it shows the brief's opening paragraph and a way to the rest", (await p.locator("#coach-brief p").count()) === 1 && (await p.locator("#coach-brief").getByRole("link", { name: /Read the rest/ }).count()) === 1);
+    await brief.click();
     const first = (await rows(p, "coach_note")).find((n) => n.kind === "morning");
     check("the morning brief quotes the challenge's money target and records what it was written from", /\$1,000/.test(first.body) && typeof first.basis === "string" && first.basis.includes("1000"), JSON.stringify(first));
 
@@ -613,11 +745,12 @@ export async function runFeatures(h) {
     await p.getByRole("dialog").getByRole("button", { name: /^End/ }).click();
     await p.getByText(/No challenge running|Ongoing/i).first().waitFor();
     await p.goto(`${base}/today`);
-    await p.getByText("Morning brief").waitFor();
+    await brief.waitFor();
     await p.waitForFunction(([prefix]) => JSON.parse(localStorage.getItem(prefix + "coach_note") ?? "[]").some((n) => n.kind === "morning" && !/\$1,000/.test(n.body) && /Floor is \$100/.test(n.body)), [PREFIX]);
     const briefs = (await rows(p, "coach_note")).filter((n) => n.kind === "morning");
     check("ending the challenge that day rewrites the brief: no money target, the settings floor is back", briefs.length === 1 && !/\$1,000/.test(briefs[0].body) && briefs[0].basis.startsWith("none|100"), JSON.stringify(briefs));
-    if ((await p.getByRole("button", { name: /Morning brief/ }).getAttribute("aria-expanded")) === "false") await p.getByRole("button", { name: /Morning brief/ }).click();
+    await p.waitForFunction(() => !/\$1,000/.test(document.querySelector("[data-brief-line]")?.textContent ?? "$1,000"));
+    await brief.click();
     check("Today shows the rewritten brief", !/\$1,000/.test(await p.locator("#coach-brief").innerText()), await p.locator("#coach-brief").innerText());
     await shot(p, "f-core-02-brief-after-ending");
     await p.goto(`${base}/money`);

@@ -5,12 +5,12 @@
 
 import { useState } from "react";
 import { Maximize2, Pause, Play, Square } from "lucide-react";
-import { Button, GlassCard, IconButton, ProgressBar, ProgressRing, SegmentedControl, TextField, cn, useToast } from "@/components/ui";
+import { Button, GlassCard, IconButton, ProgressBar, ProgressRing, SegmentedControl, TextField, cn, useToast, Chip } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { formatDuration } from "@/lib/logic/dates";
 import { LABELS, PRESET_MINUTES, formatAway, pause, resume, type Clock, type LiveTimer } from "@/lib/logic/focus";
 import { formatCountdown } from "@/lib/logic/schedule";
-import { ClockText } from "./ClockText";
+import { ClockText } from "@/components/ui";
 import { changeLive, finishTimer, startTimer } from "./store";
 
 const LENGTHS = [{ value: 0, label: "Open" }, ...PRESET_MINUTES.map((m) => ({ value: m as number, label: String(m) }))];
@@ -169,19 +169,9 @@ export function StartPanel({ onStarted, fullScreen }: { onStarted: (live: LiveTi
       <div className="mt-5 space-y-2.5">
         <div role="radiogroup" aria-label="What you are working on" className="flex flex-wrap gap-2">
           {LABEL_OPTIONS.map((o) => (
-            <button
-              key={o.value}
-              type="button"
-              role="radio"
-              aria-checked={label === o.value}
-              onClick={() => {
-                haptics.tap();
-                setLabel(o.value);
-              }}
-              className={cn("pressable h-11 rounded-full px-4 text-[14px] font-medium", label === o.value ? "border border-ink bg-ink text-bg" : "tile text-ink-2")}
-            >
+            <Chip key={o.value} radio on={label === o.value} onClick={() => setLabel(o.value)}>
               {o.label}
-            </button>
+            </Chip>
           ))}
         </div>
         {label === "Other" ? <TextField value={custom} onChange={setCustom} placeholder="What is it" maxLength={40} autoFocus /> : null}

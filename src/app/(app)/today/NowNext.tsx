@@ -37,7 +37,7 @@ export function NowNext({ blocks, now, loading }: NowNextProps) {
   const soon = minutesUntilNext !== null && minutesUntilNext <= 180;
 
   return (
-    <Link href="/schedule" className="pressable block rounded-[26px]" aria-label="Open schedule">
+    <Link href="/schedule" className="pressable block rounded-[26px]" aria-label="Open plan">
       <GlassCard>
         <div className="flex items-baseline justify-between gap-3">
           <p className="t-label flex items-center gap-2 text-accent">

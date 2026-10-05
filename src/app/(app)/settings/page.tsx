@@ -56,7 +56,7 @@ export default function SettingsPage() {
         <Card padded={false} className="overflow-hidden">
           <div className="divide-y divide-hair">
             <ListRow href="/settings/checklist" left={<ListChecks size={20} strokeWidth={1.75} aria-hidden />} title="Checklist" sub="Items and targets" />
-            <ListRow href="/settings/schedule" left={<CalendarClock size={20} strokeWidth={1.75} aria-hidden />} title="Schedule" sub="Each weekday" />
+            <ListRow href="/settings/schedule" left={<CalendarClock size={20} strokeWidth={1.75} aria-hidden />} title="Weekly plan" sub="What each weekday starts from" />
             <ListRow href="/settings/workouts" left={<Dumbbell size={20} strokeWidth={1.75} aria-hidden />} title="Workouts" sub="Exercises and lift days" />
             <ListRow
               href="/settings/challenge"

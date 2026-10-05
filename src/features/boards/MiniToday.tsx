@@ -92,7 +92,7 @@ export function MiniToday({ theme, className }: { theme: Theme; className?: stri
         </div>
 
         <div className="mt-2.5 flex h-[22px] items-center rounded-full border border-glass-line bg-bar px-[3px]">
-          {["Today", "Schedule", "Money", "Body", "Progress"].map((t, i) => (
+          {["Today", "Plan", "Money", "Body", "Record"].map((t, i) => (
             <span key={t} className={cn("flex h-4 flex-1 items-center justify-center rounded-full text-[5px]", i === 0 ? "bg-ink font-medium text-bg" : "text-ink-2")}>
               {t}
             </span>

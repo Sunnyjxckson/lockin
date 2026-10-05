@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
-import { ChevronLeft, Share } from "lucide-react";
-import { BigNumber, Button, Card, CheckMark, EmptyState, IconButton, IconLink, List, ListRow, ProgressBar, Screen, Section, SegmentedControl, TopBar, TrackStat, cn } from "@/components/ui";
+import { Share } from "lucide-react";
+import { BigNumber, Button, Card, CheckMark, EmptyState, IconLink, List, ListRow, PageHeader, ProgressBar, Screen, Section, SegmentedControl, TopBar, TrackStat, cn } from "@/components/ui";
 import { useChecklist, useLogs, useMode } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { STATUS_LABEL, challengeItems, consistencyLabel, daysRun, lastDay, pastChallenges, plannedEnd } from "@/lib/logic/challenge";
@@ -400,7 +400,7 @@ export function ProgressScreen() {
   }, [loading, start, today, items, versions, logs.data, weeksShown, monthsShown]);
 
   const share = (
-    <IconLink href="/progress/card" label="Share progress card">
+    <IconLink href="/progress/card" label="Share card">
       <Share size={20} strokeWidth={1.75} aria-hidden />
     </IconLink>
   );
@@ -408,7 +408,7 @@ export function ProgressScreen() {
   if (!ongoing) {
     return (
       <Screen aria-busy="true">
-        <TopBar title="Progress" right={share} />
+        <TopBar title="Record" right={share} />
       </Screen>
     );
   }
@@ -425,26 +425,20 @@ export function ProgressScreen() {
     const ran = daysRun(viewing, today);
     return (
       <Screen>
-        <header className="pt-3 pb-3">
-          <div className="-mx-2.5 mb-2 flex h-11 items-center">
-            <IconButton
-              label="Back to progress"
-              onClick={() => {
-                setPastId(null);
-                window.history.replaceState(null, "", window.location.pathname);
-              }}
-            >
-              <ChevronLeft size={24} strokeWidth={1.75} aria-hidden />
-            </IconButton>
-          </div>
-          <p className="t-label mb-2">Past challenge · {STATUS_LABEL[viewing.status]}</p>
-          <h1 className="t-title">{viewing.name}</h1>
-          <p className="t-sub mt-1.5">
-            {ran > 0
+        <PageHeader
+          title={viewing.name}
+          eyebrow={`Past challenge · ${STATUS_LABEL[viewing.status]}`}
+          subtitle={
+            ran > 0
               ? `${formatDateShort(viewing.start_date)} to ${formatDateShort(lastDay(viewing))}, ${ran} of ${viewing.length_days} days`
-              : `Set for ${formatDateShort(viewing.start_date)}. It never ran a day.`}
-          </p>
-        </header>
+              : `Set for ${formatDateShort(viewing.start_date)}. It never ran a day.`
+          }
+          backLabel="Back to record"
+          onBack={() => {
+            setPastId(null);
+            window.history.replaceState(null, "", window.location.pathname);
+          }}
+        />
         {ran > 0 ? (
           <div className="animate-fade-in">
             <div className="mt-3 grid grid-cols-3 gap-3.5 px-1">
@@ -501,7 +495,7 @@ export function ProgressScreen() {
 
   return (
     <Screen>
-      <TopBar title="Progress" right={<><span>{status}</span>{share}</>} />
+      <TopBar title="Record" right={<><span>{status}</span>{share}</>} />
 
       <div className="animate-fade-in">
         {inChallenge && challengeModel && h && inPlay ? (

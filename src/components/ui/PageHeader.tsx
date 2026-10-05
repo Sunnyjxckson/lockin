@@ -13,6 +13,10 @@ export interface PageHeaderProps {
   subtitle?: string;
   /** Show a back arrow linking here, for example "/today". */
   back?: string;
+  /** Show a back arrow that calls this instead, for a view that is a state of its screen and has no address. */
+  onBack?: () => void;
+  /** What the back arrow says to a screen reader. Default "Back". */
+  backLabel?: string;
   /** Buttons on the right, usually IconButtons. */
   right?: ReactNode;
   className?: string;
@@ -24,14 +28,22 @@ export interface PageHeaderProps {
  * screens have no back arrow and their actions sit on the title line. A tab
  * screen that opens with a big number or a greeting uses TopBar instead.
  */
-export function PageHeader({ title, eyebrow, subtitle, back, right, className }: PageHeaderProps) {
+export function PageHeader({ title, eyebrow, subtitle, back, onBack, backLabel = "Back", right, className }: PageHeaderProps) {
+  const arrow = "pressable inline-flex size-11 items-center justify-center rounded-full text-ink-2";
+  const sub = !!back || !!onBack;
   return (
     <header className={cn("pt-3 pb-3", className)}>
-      {back ? (
+      {sub ? (
         <div className="-mx-2.5 mb-2 flex h-11 items-center justify-between">
-          <Link href={back} aria-label="Back" className="pressable inline-flex size-11 items-center justify-center rounded-full text-ink-2">
-            <ChevronLeft size={24} strokeWidth={1.75} aria-hidden />
-          </Link>
+          {back ? (
+            <Link href={back} aria-label={backLabel} className={arrow}>
+              <ChevronLeft size={24} strokeWidth={1.75} aria-hidden />
+            </Link>
+          ) : (
+            <button type="button" onClick={onBack} aria-label={backLabel} className={arrow}>
+              <ChevronLeft size={24} strokeWidth={1.75} aria-hidden />
+            </button>
+          )}
           <div className="flex items-center">{right}</div>
         </div>
       ) : null}
@@ -39,7 +51,7 @@ export function PageHeader({ title, eyebrow, subtitle, back, right, className }:
       {/* A tab screen has no back row, so its actions sit on the title line and every title starts at the same height. */}
       <div className="flex min-h-11 items-center justify-between gap-3">
         <h1 className="t-title min-w-0">{title}</h1>
-        {!back && right ? <div className="-mr-2.5 flex shrink-0 items-center">{right}</div> : null}
+        {!sub && right ? <div className="-mr-2.5 flex shrink-0 items-center">{right}</div> : null}
       </div>
       {subtitle ? <p className="t-sub mt-1.5">{subtitle}</p> : null}
     </header>

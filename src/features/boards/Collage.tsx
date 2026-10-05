@@ -346,8 +346,8 @@ function ColorBody({ item, wide }: { item: BoardItem; wide: boolean }) {
   const ink = inkOnColor(color);
   return (
     <span className="flex size-full flex-col justify-end p-3" style={{ backgroundColor: color, color: ink }}>
-      {item.note ? <span className={cn("line-clamp-2 font-medium tracking-[-0.02em]", wide ? "text-[17px] leading-[1.15]" : "text-[14px] leading-[1.15]")}>{item.note}</span> : null}
-      <span className="tnum mt-1 text-[11px] font-medium tracking-[0.12em] uppercase">{color.replace("#", "")}</span>
+      {item.note ? <span className={cn("on-swatch line-clamp-2 font-medium tracking-[-0.02em]", wide ? "text-[17px] leading-[1.15]" : "text-[14px] leading-[1.15]")}>{item.note}</span> : null}
+      <span className="on-swatch mt-1 text-[11px] font-medium tracking-[0.12em] uppercase">{color.replace("#", "")}</span>
     </span>
   );
 }

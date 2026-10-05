@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronRight, Flag, Infinity as InfinityIcon, Plus } from "lucide-react";
-import { Button, Card, DateField, GlassCard, NumberField, PageHeader, ProgressBar, Screen, Section, Sheet, TextField, Toggle, TrackStat, useToast } from "@/components/ui";
+import { Button, ButtonLink, Card, DateField, GlassCard, NumberField, PageHeader, ProgressBar, Screen, Section, Sheet, TextField, Toggle, TrackStat, useToast } from "@/components/ui";
 import { endChallenge, finishChallenge, restartChallenge, setDailyFloor, updateChallenge, updateSettings } from "@/lib/db/helpers";
 import { useChecklist, useLogs, useMode } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
@@ -203,10 +203,9 @@ export default function ChallengeSettingsPage() {
               </div>
               <p className="t-h1 mt-2.5">Ongoing</p>
               <p className="t-sub mt-2">{ongoing.days > 0 ? `${consistencyLabel(ongoing)} locked in.` : "Today is the first day of your history."} A slip costs that one day.</p>
-              <Link href="/settings/challenge/new" className="pressable grad shadow-glow mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-full text-[15px] font-medium tracking-[-0.01em]">
-                <Plus size={18} strokeWidth={1.75} aria-hidden />
+              <ButtonLink href="/settings/challenge/new" full className="mt-5" icon={<Plus size={18} strokeWidth={1.75} aria-hidden />}>
                 Start a challenge
-              </Link>
+              </ButtonLink>
             </GlassCard>
           ) : (
             <GlassCard className="mt-2" data-challenge-card>

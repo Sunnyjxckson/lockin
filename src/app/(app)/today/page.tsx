@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ChevronDown, ChevronRight, Flag, Lock, MessageSquareText, ShieldBan } from "lucide-react";
-import { Button, Card, EmptyState, GlassCard, IconLink, ProgressBar, Screen, Section, SectionLabel, TopBar, TrackStat, cn, useToast } from "@/components/ui";
+import { Button, ButtonLink, Card, EmptyState, GlassCard, IconLink, Notice, ProgressBar, Screen, Section, SectionLabel, TopBar, TrackStat, cn, useToast } from "@/components/ui";
 import { finishChallenge, logWeight, setChecked, setText, setValue, workoutsFor } from "@/lib/db/helpers";
 import { useChecklist, useDay, useDayBlocks, useInstalledOn, useList, useLogs, useMode, useNow, useSettings, useWorkouts } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
@@ -365,41 +365,41 @@ export default function TodayPage() {
             <Button full loading={finishing} icon={<Flag size={17} aria-hidden />} onClick={() => void finish()}>
               Finish challenge
             </Button>
-            <Link href="/progress" className="pressable glass flex h-12 shrink-0 items-center rounded-full px-5 text-[15px] font-medium text-ink">
+            <ButtonLink href="/progress" variant="secondary">
               Review
-            </Link>
+            </ButtonLink>
           </div>
         </GlassCard>
       ) : null}
 
       {mode.upcoming && isToday ? (
-        <Link href="/settings/challenge" className="pressable tile t-sub mt-4 flex min-h-11 items-center justify-between gap-3 rounded-[20px] px-4 py-3">
-          <span>
+        <Link href="/settings/challenge" className="pressable mt-4 block rounded-[20px]">
+          <Notice action={<ChevronRight size={16} className="mr-2 text-ink-3" aria-hidden />}>
             {mode.upcoming.name} starts {formatDateLong(mode.upcoming.start_date)}
-          </span>
-          <ChevronRight size={16} className="shrink-0" aria-hidden />
+          </Notice>
         </Link>
       ) : null}
 
       {!editable ? (
-        <div className="tile t-sub mt-4 flex min-h-11 items-center gap-2.5 rounded-[20px] px-4 py-3">
-          <Lock size={15} className="shrink-0" aria-hidden />
+        <Notice className="mt-4" icon={<Lock size={15} aria-hidden />}>
           Locked. Days close at noon the next day.
-        </div>
+        </Notice>
       ) : !isToday ? (
-        <div className="tile t-sub mt-4 flex min-h-11 items-center justify-between gap-3 rounded-[20px] py-1 pr-1.5 pl-4">
-          <span>
-            Open until {formatDateShort(lockAt.date)}, {formatTime(lockAt.time)}
-          </span>
-          <button type="button" onClick={() => setPicked(null)} className="pressable min-h-11 shrink-0 rounded-full px-3 font-medium text-ink">
-            Back to today
-          </button>
-        </div>
+        <Notice
+          className="mt-4"
+          action={
+            <Button variant="ghost" size="sm" className="px-3 text-ink" onClick={() => setPicked(null)}>
+              Back to today
+            </Button>
+          }
+        >
+          Open until {formatDateShort(lockAt.date)}, {formatTime(lockAt.time)}
+        </Notice>
       ) : null}
 
       {isToday ? (
         <div className="mt-4 flex flex-col gap-3">
-          <CoachTodaySlot />
+          <CoachTodaySlot className="-my-2" />
           <NowNext blocks={blocks.data} now={now} loading={blocks.loading} />
           <ScheduleTodaySlot date={date} />
         </div>

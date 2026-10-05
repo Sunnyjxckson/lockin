@@ -77,7 +77,7 @@ export function FocusView({ live, clock, now, onClose }: { live: LiveTimer; cloc
       aria-modal="true"
       aria-label="Focus mode"
       data-focus-view
-      className="animate-fade-in fixed inset-0 z-50 flex flex-col bg-bg px-5 pt-[calc(var(--safe-t)+12px)] pb-[calc(var(--safe-b)+20px)]"
+      className="lit animate-fade-in fixed inset-0 z-50 flex flex-col px-5 pt-[calc(var(--safe-t)+12px)] pb-[calc(var(--safe-b)+20px)]"
     >
       <div className="flex h-11 items-center justify-between">
         <p className="t-label">Focus mode</p>

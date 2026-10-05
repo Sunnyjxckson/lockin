@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowRight, Minus, X } from "lucide-react";
-import { CheckMark, ProgressBar, Sheet, cn } from "@/components/ui";
+import { ButtonLink, CheckMark, ProgressBar, Sheet, cn } from "@/components/ui";
 import { formatDateLong } from "@/lib/logic/dates";
 import type { ItemResult } from "@/lib/logic/day";
 import type { GridCell } from "@/lib/logic/progress";
@@ -74,10 +73,9 @@ export function DaySheet({ cell, title, onClose }: { cell: GridCell | null; /** 
       subtitle={cell ? formatDateLong(cell.date) : undefined}
       footer={
         cell && s ? (
-          <Link href={`/today?date=${cell.date}`} className="pressable grad shadow-glow flex h-14 w-full items-center justify-center gap-2 rounded-full text-[16px] font-medium tracking-[-0.01em]">
+          <ButtonLink href={`/today?date=${cell.date}`} size="lg" full iconAfter={<ArrowRight size={18} strokeWidth={1.75} aria-hidden />}>
             {pending ? "Open Today" : "Open this day on Today"}
-            <ArrowRight size={18} strokeWidth={1.75} aria-hidden />
-          </Link>
+          </ButtonLink>
         ) : undefined
       }
     >

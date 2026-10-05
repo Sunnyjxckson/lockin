@@ -26,32 +26,6 @@ export function Est({ children, real = false, className }: { children: ReactNode
   );
 }
 
-/**
- * The dollar figure a meals screen leads with. `amount` is "$52.30": the sign
- * is drawn small in the accent, in the same line of text as the number.
- */
-export function MoneyHero({ label, amount, size = "display" }: { label: ReactNode; amount: string; size?: "hero" | "display" }) {
-  const hero = size === "hero";
-  return (
-    <div>
-      <p className="t-label">{label}</p>
-      <p className={cn(hero ? "t-hero" : "t-display", "mt-2.5 truncate text-ink")}>
-        <span className={cn("mr-0.5 inline-block align-top font-medium tracking-normal text-accent", hero ? "mt-2.5 text-[30px] leading-none" : "mt-2 text-[24px] leading-none")}>{amount.slice(0, 1)}</span>
-        {amount.slice(1)}
-      </p>
-    </div>
-  );
-}
-
-/** One quiet line that needs reading: what the planner said, or a setup prompt. */
-export function Note({ children, warn = false, className, ...rest }: { children: ReactNode; warn?: boolean; className?: string; role?: string; [data: `data-${string}`]: string | boolean | undefined }) {
-  return (
-    <p className={cn("rounded-[20px] px-4 py-3 text-[13px] leading-[1.4]", warn ? "border border-warn-line bg-warn-soft text-ink" : "tile text-ink-2", className)} {...rest}>
-      {children}
-    </p>
-  );
-}
-
 /** Calories and the three macros as one row of numbers, for a sheet. */
 export function MacroRow({ calories, protein, carbs, fat }: { calories: number; protein: number; carbs: number; fat: number }) {
   const cells: [string, string][] = [

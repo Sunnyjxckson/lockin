@@ -120,7 +120,7 @@ export default function ScheduleSettingsPage() {
 
   return (
     <Screen>
-      <PageHeader title="Schedule" back="/settings" subtitle="What each weekday starts from." />
+      <PageHeader title="Weekly plan" back="/settings" subtitle="What each weekday starts from." />
 
       <div className="mt-2">
         <SegmentedControl label="Weekday" size="sm" options={DAYS} value={weekday} onChange={setPicked} />

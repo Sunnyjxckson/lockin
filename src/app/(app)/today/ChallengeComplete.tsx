@@ -32,7 +32,7 @@ export function ChallengeComplete({ challenge, full, onDone }: ChallengeComplete
       role="dialog"
       aria-modal="true"
       aria-label="Challenge complete"
-      className="animate-fade-in fixed inset-0 z-[60] flex flex-col items-center justify-center bg-bg px-8 text-center"
+      className="animate-fade-in lit fixed inset-0 z-[60] flex flex-col items-center justify-center px-8 text-center"
     >
       <span className="animate-day-ring">
         <ProgressRing value={closed ? Math.min(1, full / length) : 0} size={176} stroke={7} label="Full days in the challenge">

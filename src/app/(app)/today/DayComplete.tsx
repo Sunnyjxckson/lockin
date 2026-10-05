@@ -37,7 +37,7 @@ export function DayComplete({ title, total, streak, isToday, onDone }: DayComple
       type="button"
       onClick={onDone}
       aria-label="Dismiss"
-      className="animate-fade-in fixed inset-0 z-[60] flex flex-col items-center justify-center bg-bg px-8 text-center"
+      className="animate-fade-in lit fixed inset-0 z-[60] flex flex-col items-center justify-center px-8 text-center"
     >
       <span role="status" className="flex flex-col items-center">
         <span className="animate-day-ring">

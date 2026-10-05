@@ -39,6 +39,12 @@ export interface TrackStatProps {
   value: ReactNode;
   /** One word under it: "Body". */
   label: string;
+  /** Small, right after the number: "g". */
+  unit?: string;
+  /** A short line under the hairline: "60g left", "Done". */
+  caption?: ReactNode;
+  /** The caption's color. "done" is the accent, "warn" for over a limit. */
+  captionTone?: "quiet" | "done" | "warn";
   /** 0 to 1: how much of the hairline is filled. Leave out for a stat with no line. */
   progress?: number;
   /** Something here needs a look. The line is drawn in the warn color. */
@@ -57,17 +63,21 @@ export interface TrackStatProps {
  * (Today's four tracks, the three figures on Money). Put two to four in a
  * `grid grid-cols-N gap-3.5`.
  */
-export function TrackStat({ value, label, progress, attention = false, onClick, pressed, className, ...aria }: TrackStatProps) {
+export function TrackStat({ value, label, unit, caption, captionTone = "quiet", progress, attention = false, onClick, pressed, className, ...aria }: TrackStatProps) {
   const p = progress === undefined || !Number.isFinite(progress) ? null : Math.min(1, Math.max(0, progress));
   const body = (
     <>
-      <span className="t-stat block truncate text-ink">{value}</span>
+      <span className="t-stat block truncate text-ink">
+        {value}
+        {unit ? <span className="text-[14px] font-normal tracking-normal text-ink-2">{unit}</span> : null}
+      </span>
       <span className={cn("t-label mt-1.5 block truncate text-[10px]", pressed && "text-accent")}>{label}</span>
       {p !== null ? (
         <span className="mt-2 block h-0.5 overflow-hidden rounded-full bg-hair" aria-hidden>
           <span className={cn("block h-full rounded-full", attention ? "bg-warn" : "bg-accent")} style={{ width: `${p * 100}%`, transition: "width 600ms var(--ease-out)" }} />
         </span>
       ) : null}
+      {caption ? <span className={cn("t-caption mt-2 block truncate", captionTone === "warn" ? "text-warn" : captionTone === "done" ? "text-accent" : "text-ink-2")}>{caption}</span> : null}
     </>
   );
   if (onClick) {
@@ -84,7 +94,7 @@ export function TrackStat({ value, label, progress, attention = false, onClick, 
     );
   }
   return (
-    <div className={cn("min-w-0", className)} aria-label={aria["aria-label"]}>
+    <div className={cn("min-w-0", className)} role={aria["aria-label"] ? "group" : undefined} aria-label={aria["aria-label"]}>
       {body}
     </div>
   );
@@ -112,10 +122,11 @@ export function BigNumber({ value, prefix, unit, label, sub, size = "hero", clas
   return (
     <div className={className}>
       {label ? <p className="t-label">{label}</p> : null}
-      <p className={cn(hero ? "t-hero" : "t-display", "flex items-start text-ink", label ? "mt-2.5" : null)}>
-        {prefix ? <span className={cn("mr-0.5 font-medium tracking-normal text-accent", hero ? "mt-2.5 text-[30px] leading-none" : "mt-2 text-[24px] leading-none")}>{prefix}</span> : null}
-        <span className="min-w-0 truncate">{value}</span>
-        {unit ? <span className={cn("ml-1.5 self-end font-normal tracking-normal text-ink-2", hero ? "mb-2.5 text-[20px] leading-none" : "mb-2 text-[16px] leading-none")}>{unit}</span> : null}
+      {/* One line of text: the sign sits raised at the start of it and the unit on its baseline, so the whole figure truncates and selects as one. */}
+      <p className={cn(hero ? "t-hero" : "t-display", "truncate text-ink", label ? "mt-2.5" : null)}>
+        {prefix ? <span className={cn("mr-0.5 inline-block align-top font-medium tracking-normal text-accent", hero ? "mt-2.5 text-[30px] leading-none" : "mt-2 text-[24px] leading-none")}>{prefix}</span> : null}
+        {value}
+        {unit ? <span className={cn("ml-0.5 font-normal tracking-normal text-ink-2", hero ? "text-[20px]" : "text-[16px]")}> {unit}</span> : null}
       </p>
       {sub ? <p className="t-sub mt-2.5">{sub}</p> : null}
     </div>

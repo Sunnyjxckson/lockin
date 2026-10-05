@@ -77,3 +77,38 @@ export function Section({ title, right, className, children }: SectionProps) {
     </section>
   );
 }
+
+export interface NoticeProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  /** quiet (default) is a tile. warn is for something that needs a look: a conflict, over a limit, a timer left running. */
+  tone?: "quiet" | "warn";
+  /** Before the text, usually a lucide icon at size 16 to 18. In a warn notice it takes the warn color. */
+  icon?: ReactNode;
+  /** A first line in ink, for a notice with a headline and a sentence. */
+  title?: ReactNode;
+  /** At the right end: a small Button, a chevron. */
+  action?: ReactNode;
+  /** Under the text, full width: one or two Buttons side by side. */
+  actions?: ReactNode;
+}
+
+/**
+ * One quiet row that needs reading: locked, a conflict, a setup prompt, what
+ * the planner said. At most one near the top of a screen. Pass `role="status"`
+ * or `role="alert"` when it appears on its own.
+ */
+export function Notice({ tone = "quiet", icon, title, action, actions, className, children, ...rest }: NoticeProps) {
+  const warn = tone === "warn";
+  return (
+    <div className={cn("rounded-[20px] px-4 py-3", warn ? "border border-warn-line bg-warn-soft" : "tile", className)} {...rest}>
+      <div className="flex min-h-5 items-center gap-3">
+        {icon ? <span className={cn("flex shrink-0 items-center", warn ? "text-warn" : "text-ink-2")}>{icon}</span> : null}
+        <div className="min-w-0 flex-1">
+          {title ? <p className="text-[15px] text-ink">{title}</p> : null}
+          {children ? <div className={cn("text-[13px] leading-[1.4]", warn && !title ? "text-ink" : "text-ink-2", title ? "mt-0.5" : null)}>{children}</div> : null}
+        </div>
+        {action ? <div className="-my-1.5 -mr-2 flex shrink-0 items-center">{action}</div> : null}
+      </div>
+      {actions ? <div className="mt-3 flex gap-2.5">{actions}</div> : null}
+    </div>
+  );
+}

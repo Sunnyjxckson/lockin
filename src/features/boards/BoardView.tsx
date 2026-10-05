@@ -9,7 +9,7 @@ import { cn } from "@/components/ui";
 import { BOARD_KIND_LABEL, boardPalette, sortByLightness } from "@/lib/logic/boards";
 import type { Board, BoardItem } from "@/lib/types";
 import { Collage } from "./Collage";
-import { Overlay } from "./Overlay";
+import { Overlay } from "@/components/ui";
 import { PaletteStrip } from "./PaletteStrip";
 
 export interface BoardViewProps {

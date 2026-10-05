@@ -9,7 +9,7 @@ import { Button, GlassCard, ProgressBar, cn } from "@/components/ui";
 import { nowAndNext, type DayBlock } from "@/lib/blocks";
 import { haptics } from "@/lib/haptics";
 import { formatDuration, formatTime, timeFromMinutes } from "@/lib/logic/dates";
-import { ClockText } from "@/features/focus/ClockText";
+import { ClockText } from "@/components/ui";
 import { formatCountdown, freeTimeFocus, timerState } from "@/lib/logic/schedule";
 
 export interface NowCardProps {

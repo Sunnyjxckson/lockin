@@ -7,7 +7,7 @@
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { Briefcase, Pencil, Plus, Timer } from "lucide-react";
-import { Button, Card, EmptyState, GlassCard, IconButton, List, ListRow, NumberField, PageHeader, ProgressBar, Screen, Section, Sheet, cn, useToast } from "@/components/ui";
+import { Button, Card, EmptyState, GlassCard, IconButton, List, ListRow, Notice, NumberField, PageHeader, ProgressBar, Screen, Section, Sheet, cn, useToast } from "@/components/ui";
 import { FocusModeCard } from "@/features/focus/FocusModeCard";
 import { RunningTimer, StartPanel } from "@/features/focus/TimerPanel";
 import { WeekChart } from "@/features/focus/WeekChart";
@@ -104,12 +104,18 @@ export default function FocusPage() {
 
       <div className="space-y-3">
         {notice ? (
-          <div className="flex items-center gap-3 rounded-[20px] border border-warn-line bg-warn-soft py-2 pr-2 pl-4" role="status" data-notice>
-            <p className="min-w-0 flex-1 py-1 text-[14px]">{notice}</p>
-            <Button size="sm" variant="ghost" className="px-3 text-ink" onClick={() => setNotice(null)}>
-              Got it
-            </Button>
-          </div>
+          <Notice
+            tone="warn"
+            role="status"
+            data-notice
+            action={
+              <Button size="sm" variant="ghost" className="px-3 text-ink" onClick={() => setNotice(null)}>
+                Got it
+              </Button>
+            }
+          >
+            {notice}
+          </Notice>
         ) : null}
 
         {live && stale ? (
@@ -136,20 +142,24 @@ export default function FocusPage() {
         ) : null}
 
         {away ? (
-          <div className="rounded-[20px] border border-warn-line bg-warn-soft p-4" role="alert" data-away>
-            <div className="flex items-baseline justify-between gap-3">
-              <p className="t-h2 min-w-0">Gone for {formatAway(((away.to ?? now) - away.from) / 1000)}</p>
-              <p className="t-label shrink-0 text-warn">Off the clock</p>
-            </div>
-            <div className="mt-3.5 flex gap-2">
-              <Button full variant="solid" size="sm" onClick={() => changeLive((l) => reviewAways(l, false))}>
-                Leave it off
-              </Button>
-              <Button full variant="secondary" size="sm" onClick={() => changeLive((l) => reviewAways(l, true))}>
-                I was working
-              </Button>
-            </div>
-          </div>
+          <Notice
+            tone="warn"
+            role="alert"
+            data-away
+            title={`Gone for ${formatAway(((away.to ?? now) - away.from) / 1000)}`}
+            actions={
+              <>
+                <Button full variant="solid" size="sm" onClick={() => changeLive((l) => reviewAways(l, false))}>
+                  Leave it off
+                </Button>
+                <Button full variant="secondary" size="sm" onClick={() => changeLive((l) => reviewAways(l, true))}>
+                  I was working
+                </Button>
+              </>
+            }
+          >
+            Off the clock until you say otherwise.
+          </Notice>
         ) : null}
 
         {live && clock && !stale ? (

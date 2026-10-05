@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, NumberField, SegmentedControl, Sheet, TextField, TimeField, cn, useToast } from "@/components/ui";
+import { Button, Chip, NumberField, SegmentedControl, Sheet, TextField, TimeField, useToast } from "@/components/ui";
 import { useInstalledOn, useNow } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { addDays, formatDateLong, isDayEditable, timeNY } from "@/lib/logic/dates";
@@ -20,25 +20,6 @@ export interface SlipSheetProps {
   /** Shown under the title in place of the default line. */
   note?: string;
   onClose: () => void;
-}
-
-export function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      aria-pressed={on}
-      onClick={() => {
-        haptics.tap();
-        onClick();
-      }}
-      className={cn(
-        "pressable h-11 rounded-full border px-4 text-[14px] transition-colors",
-        on ? "border-ink bg-ink font-medium text-bg" : "border-line bg-surface-2 text-ink",
-      )}
-    >
-      {children}
-    </button>
-  );
 }
 
 /** Mount it to open it. Captures when, what set it off, and dollars for a money vice. */
@@ -105,7 +86,7 @@ export function SlipSheet({ vices, itemId, slip, today, note, onClose }: SlipShe
       <div className="flex flex-col gap-5 pt-1">
         {vices.length > 1 && !slip ? (
           <div>
-            <p className="t-label mb-2.5">Which one</p>
+            <p className="mb-1.5 text-[13px] text-ink-2">Which one</p>
             <div className="flex flex-wrap gap-2">
               {vices.map((v) => (
                 <Chip key={v.id} on={pick === v.id} onClick={() => setPick(v.id)}>
@@ -117,7 +98,7 @@ export function SlipSheet({ vices, itemId, slip, today, note, onClose }: SlipShe
         ) : null}
 
         <div>
-          <p className="t-label mb-2.5">When</p>
+          <p className="mb-1.5 text-[13px] text-ink-2">When</p>
           <div className="flex flex-col gap-2.5">
             {canYesterday ? (
               <SegmentedControl
@@ -135,7 +116,7 @@ export function SlipSheet({ vices, itemId, slip, today, note, onClose }: SlipShe
         </div>
 
         <div>
-          <p className="t-label mb-2.5">What set it off</p>
+          <p className="mb-1.5 text-[13px] text-ink-2">What set it off</p>
           <div className="flex flex-wrap gap-2">
             {TRIGGER_CHIPS.map((c) => (
               <Chip key={c} on={chips.includes(c)} onClick={() => setChips((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]))}>

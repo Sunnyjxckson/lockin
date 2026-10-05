@@ -4,7 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { BookOpen, ChevronRight, Shuffle, SlidersHorizontal } from "lucide-react";
-import { GlassCard, IconButton, IconLink, PageHeader, ProgressBar, Screen, SegmentedControl, Sheet, TrackStat, cn, useToast } from "@/components/ui";
+import { BigNumber, GlassCard, IconButton, IconLink, PageHeader, ProgressBar, Screen, SegmentedControl, Sheet, TrackStat, cn, useToast, Notice as UiNotice } from "@/components/ui";
 import { useList } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { diffDays, formatDateShort, weekdayOf } from "@/lib/logic/dates";
@@ -15,7 +15,7 @@ import { cleanRequest, describeRequest, isEmptyRequest, parseRequest, toPrefs, t
 import { getPref, setPref } from "@/lib/prefs";
 import type { DateStr, MealSlot } from "@/lib/types";
 import { saveFoodSettings, savePlan, setPreferredStore, type Planned } from "./data";
-import { Est, EstimateNote, MoneyHero, Note, fmt, macroLine } from "./parts";
+import { Est, EstimateNote, fmt, macroLine } from "./parts";
 import { SetupForm, type SetupValues } from "./SetupForm";
 import { currentWeek, rememberWeek, useKeepInStep, useMeals, type MealsState, type WeekChoice } from "./useMeals";
 
@@ -179,7 +179,7 @@ export default function MealsScreen() {
   const toBuy = m.lines.filter((l) => !m.pantry.has(l.name)).length;
   const loggedIds = new Set(loggedMeals.data.map((x) => x.id));
   const slots = SLOTS.filter((slot) => m.meals.some((x) => x.slot === slot));
-  const columns = { gridTemplateColumns: `50px repeat(${slots.length}, minmax(0, 1fr))` };
+  const columns = { gridTemplateColumns: `46px repeat(${slots.length}, minmax(0, 1fr))` };
 
   return (
     <Screen>
@@ -187,7 +187,7 @@ export default function MealsScreen() {
       {weekPicker}
 
       <section className="px-1 pt-4" data-plan-cost aria-label="Week cost">
-        <MoneyHero label={`Est. at ${m.store}, week of ${formatDateShort(m.weekStart)}`} amount={dollars(s.cost)} />
+        <BigNumber size="display" label={`Est. at ${m.store}, week of ${formatDateShort(m.weekStart)}`} prefix="$" value={dollars(s.cost).slice(1)} />
         <ProgressBar className="mt-4" value={budget > 0 ? s.cost / budget : 1} tone={over ? "warn" : "accent"} label="Estimated cost against budget" />
         <p className="t-sub mt-3">
           <span className={over ? "text-warn" : "text-ink"}>{over ? `About ${dollars(s.overBy)} over budget` : `About ${dollars(budget - s.cost)} under budget`}</span> of {dollars(budget)}.
@@ -204,8 +204,8 @@ export default function MealsScreen() {
       {note ? <Notice text={note} /> : !s.allDaysOk ? <Notice text="Some days are off target. Swap a meal or shuffle the week." /> : null}
 
       <section className="mt-5" aria-label="The week">
-        <div className="grid items-end gap-1.5 pb-2" style={columns} aria-hidden>
-          <span />
+        <div className="grid items-end gap-1 pb-2" style={columns} aria-hidden>
+          <span className="t-caption pl-1 text-ink-2">kcal, g</span>
           {slots.map((slot) => (
             <span key={slot} className="t-caption truncate px-1 text-ink-2">
               {SLOT_LABEL[slot]}
@@ -218,18 +218,26 @@ export default function MealsScreen() {
             const isToday = date === m.today;
             const name = `${isToday ? "Today, " : ""}${DAY[weekdayOf(date)]} ${formatDateShort(date)}`;
             return (
-              <li key={date} className="grid items-stretch gap-1.5" style={columns} aria-label={`${name}, ${macroLine(day.calories, day.protein)}`}>
+              <li key={date} className="grid items-stretch gap-1" style={columns} aria-label={`${name}, ${macroLine(day.calories, day.protein)}`}>
                 <div className="flex min-w-0 flex-col justify-center pl-1">
                   <span className={cn("text-[13px] font-medium", isToday ? "text-accent" : "text-ink")}>
                     {DAY[weekdayOf(date)]} {Number(date.slice(8))}
                   </span>
-                  <span className={cn("t-caption mt-0.5", day.ok ? "text-ink-2" : "text-warn")}>{fmt(day.calories)}</span>
+                  {/* The day's two numbers at a glance: calories, then protein. */}
+                  <span className={cn("t-caption mt-0.5", day.ok ? "text-ink-2" : "text-warn")} data-day-kcal>
+                    {fmt(day.calories)}
+                  </span>
+                  <span className={cn("t-caption", day.ok ? "text-ink-2" : "text-warn")} data-day-protein>
+                    {fmt(day.protein)}g
+                  </span>
                 </div>
                 {slots.map((slot) => {
                   const meal = m.meals.find((x) => x.date === date && x.slot === slot);
                   if (!meal) return <span key={slot} />;
                   const r = m.recipeById.get(meal.recipe_id);
                   const done = !!meal.logged && loggedIds.has(meal.logged);
+                  // A long single word (quesadillas) gets a slightly smaller size so it breaks at a hyphen or not at all, never one letter down.
+                  const longWord = (r?.name ?? "").split(/[\s,]+/).some((w) => w.length >= 10);
                   const detail = `${SLOT_LABEL[slot]}${r ? `, ${servingsLabel(meal.servings)}, ${fmt(r.calories * meal.servings)} kcal, ${fmt(r.protein * meal.servings)}g` : ""}${done ? ", logged" : ""}`;
                   return (
                     <button
@@ -239,11 +247,13 @@ export default function MealsScreen() {
                       onClick={() => setOpen({ date, slot })}
                       aria-label={`${r?.name ?? "Recipe removed"}. ${name}, ${detail}`}
                       className={cn(
-                        "pressable flex min-h-[50px] min-w-0 items-center overflow-hidden rounded-[14px] border px-1.5 py-1 text-left transition-[background-color,border-color] duration-200",
+                        "pressable flex min-h-[56px] min-w-0 items-center overflow-hidden rounded-[14px] border px-[5px] py-1 text-left transition-[background-color,border-color] duration-200",
                         done ? "grad border-transparent" : cn("tile text-ink", isToday && "border-ink-3"),
                       )}
                     >
-                      <span className="line-clamp-3 text-[11.5px] leading-[1.2] tracking-[-0.01em] [overflow-wrap:anywhere]">{r?.name ?? "Recipe removed"}</span>
+                      <span lang="en" className={cn("line-clamp-3 leading-[1.2] hyphens-auto [overflow-wrap:anywhere]", longWord ? "text-[10.5px] tracking-[-0.025em]" : "text-[11.5px] tracking-[-0.01em]")}>
+                        {r?.name ?? "Recipe removed"}
+                      </span>
                       <span className="sr-only">{detail}</span>
                     </button>
                   );
@@ -300,8 +310,8 @@ function Notice({ text }: { text: string }) {
   // "Heard: ..." alone is a confirmation, anything else is a problem to read.
   const plain = text.startsWith("Heard:");
   return (
-    <Note className="mt-5" warn={!plain} role="status" data-plan-notice>
+    <UiNotice className="mt-5" tone={plain ? "quiet" : "warn"} role="status" data-plan-notice>
       {text}
-    </Note>
+    </UiNotice>
   );
 }

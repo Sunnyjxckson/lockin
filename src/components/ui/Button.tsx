@@ -37,6 +37,16 @@ const SIZE: Record<ButtonSize, string> = {
   lg: "h-14 px-6 text-[16px] gap-2",
 };
 
+function buttonClass(variant: ButtonVariant, size: ButtonSize, full: boolean, className?: string): string {
+  return cn(
+    "pressable inline-flex items-center justify-center rounded-full font-medium tracking-[-0.01em] whitespace-nowrap select-none",
+    VARIANT[variant],
+    SIZE[size],
+    full ? "w-full min-w-0 shrink" : "shrink-0",
+    className,
+  );
+}
+
 export function Button({
   variant = "primary",
   size = "md",
@@ -53,13 +63,7 @@ export function Button({
     <button
       type={type}
       disabled={disabled || loading}
-      className={cn(
-        "pressable inline-flex items-center justify-center rounded-full font-medium tracking-[-0.01em] whitespace-nowrap select-none",
-        VARIANT[variant],
-        SIZE[size],
-        full ? "w-full min-w-0 shrink" : "shrink-0",
-        className,
-      )}
+      className={buttonClass(variant, size, full, className)}
       {...rest}
     >
       {loading ? (
@@ -69,6 +73,35 @@ export function Button({
       )}
       {children}
     </button>
+  );
+}
+
+export interface ButtonLinkProps {
+  href: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  full?: boolean;
+  /** Icon before the label. */
+  icon?: ReactNode;
+  /** Icon after the label, for an arrow. */
+  iconAfter?: ReactNode;
+  children: ReactNode;
+  className?: string;
+  "aria-label"?: string;
+}
+
+/**
+ * A Button that is a link: the same variants and sizes, for a main action
+ * that goes to another screen ("Open Today", "Start a challenge"). The one
+ * primary per view rule counts these too.
+ */
+export function ButtonLink({ href, variant = "primary", size = "md", full = false, icon, iconAfter, children, className, ...aria }: ButtonLinkProps) {
+  return (
+    <Link href={href} aria-label={aria["aria-label"]} className={buttonClass(variant, size, full, className)}>
+      {icon}
+      {children}
+      {iconAfter}
+    </Link>
   );
 }
 

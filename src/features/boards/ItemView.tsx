@@ -13,7 +13,7 @@ import { usePhoto } from "@/lib/storage/hooks";
 import type { Board, BoardItem } from "@/lib/types";
 import { addColor, deleteItem, reorderItems, saveBoard, saveError, saveItem } from "./data";
 import { loadPixels, type Pixels } from "./images";
-import { Overlay } from "./Overlay";
+import { Overlay } from "@/components/ui";
 
 export interface ItemViewProps {
   board: Board;
@@ -164,8 +164,8 @@ function ColorPart({ item }: { item: BoardItem }) {
   const color = item.color ?? "#808080";
   return (
     <div className="flex aspect-[4/3] w-full flex-col justify-end rounded-[26px] p-5" style={{ backgroundColor: color, color: inkOnColor(color) }}>
-      {item.note ? <p className="t-title">{item.note}</p> : null}
-      <p className="mt-1.5 text-[11px] font-medium tracking-[0.18em] uppercase">{color.replace("#", "")}</p>
+      {item.note ? <p className="on-swatch t-title">{item.note}</p> : null}
+      <p className="on-swatch mt-1.5 text-[11px] font-medium tracking-[0.18em] uppercase">{color.replace("#", "")}</p>
     </div>
   );
 }
@@ -256,7 +256,7 @@ function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: stri
                   style={{ backgroundColor: c, color: inkOnColor(c) }}
                 >
                   {on ? <Check size={16} strokeWidth={2} aria-hidden className="absolute top-1.5 right-1.5" /> : null}
-                  <span className="tnum absolute bottom-1.5 left-1.5 text-[9px] font-medium tracking-[0.08em] uppercase">{c.replace("#", "")}</span>
+                  <span className="on-swatch absolute bottom-1.5 left-1.5 text-[9px] font-medium tracking-[0.08em] uppercase">{c.replace("#", "")}</span>
                 </button>
               );
             })}

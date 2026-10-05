@@ -10,13 +10,15 @@
 // challenge with the ongoing history left alone, ongoing mode, and themes
 // with a contrast check. Then scripts/e2e-features.mjs walks boards, meals
 // and the focus timer and the places they meet the rest of the app.
-// Screenshots land in .shots/final2-*.png.
+// Screenshots land in .shots/final3-*.png, and scripts/contact.mjs lays the
+// main screens out on one sheet.
 //
 //   node scripts/e2e.mjs http://localhost:3210 --features   runs only that last part.
 // Any failed check, console error or page error makes it exit non-zero.
 
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { chromium } from "playwright";
+import { contactSheet } from "./contact.mjs";
 import { runFeatures } from "./e2e-features.mjs";
 
 const base = process.argv.slice(2).find((a) => !a.startsWith("--")) ?? "http://localhost:3000";
@@ -74,11 +76,11 @@ const nav = (page) => page.getByRole("navigation", { name: "Main" });
 const done = (page, n, of = 12) => page.getByText(`${n} of ${of}`, { exact: true }).first().waitFor();
 const count = async (page) => ((await page.locator("[data-count]").textContent()) ?? "").trim();
 
-/** Every screenshot is .shots/final2-<name>.png. A prefix other than the default names a group, as final2-<group>-<name>. */
+/** Every screenshot is .shots/final3-<name>.png. A prefix other than the default names a group, as final3-<group>-<name>. */
 async function shot(page, name, fullPage = false, prefix = "final-") {
   await page.waitForTimeout(350);
   const group = prefix === "final-" ? "" : prefix.replace(/^v2-/, "");
-  await page.screenshot({ path: `${shots}final2-${group}${name}.png`, fullPage });
+  await page.screenshot({ path: `${shots}final3-${group}${name}.png`, fullPage });
 }
 
 // ---------- device store ----------
@@ -314,10 +316,19 @@ check("Today opens on a greeting by time of day, with the date and day 1 of 30 u
   check("the day is summed up in four tracks: Body, Money, Mind, Clean", (await tracks.allInnerTexts()).map((t) => t.replace(/\s+/g, " ").trim().toLowerCase()).join(" | ") === "0/6 body | $0 money | 0/2 mind | 0d clean", (await tracks.allInnerTexts()).join(" | "));
   check("the checklist is twelve tiles, each at least 44px to tap", (await page.locator("section[aria-label='Checklist'] .grid > *").count()) === 12 && (await page.locator("section[aria-label='Checklist'] .grid > *").evaluateAll((els) => els.every((e) => e.getBoundingClientRect().height >= 44 && e.getBoundingClientRect().width >= 44))));
 }
-const nowCard = page.getByRole("link", { name: "Open schedule" });
+const nowCard = page.getByRole("link", { name: "Open plan" });
+const brief = (p) => p.getByRole("button", { name: /^Morning brief/ });
 check("Now is Wake and Next is the workout at 5:50 AM", /Wake/.test(await nowCard.innerText()) && /Lift \+ core/.test(await nowCard.innerText()));
-check("the morning brief is on Today, above Now and Next", (await page.getByText("Morning brief").boundingBox()).y < (await nowCard.boundingBox()).y);
-check("Now and Next is above the fold with the brief open", (await nowCard.boundingBox()).y < 844);
+await brief(page).waitFor();
+{
+  const b = await brief(page).boundingBox();
+  check("the morning brief is one folded line on Today, above Now and Next", (await brief(page).getAttribute("aria-expanded")) === "false" && b.height <= 48 && b.y < (await nowCard.boundingBox()).y && /\S/.test(await page.locator("[data-brief-line]").innerText()), JSON.stringify(b));
+  // The approved first screen at 390 x 844: greeting, Now, the four tracks, then tiles clear of the tab bar.
+  const bar = await nav(page).locator("ul").boundingBox();
+  const tiles = await page.locator("section[aria-label='Checklist'] .grid > *").evaluateAll((els) => els.map((e) => e.getBoundingClientRect().bottom));
+  const tracksBox = await page.getByRole("group", { name: "The day in four tracks" }).boundingBox();
+  check("the first screen holds the greeting, Now, the four tracks and two full rows of tiles above the tab bar", (await nowCard.boundingBox()).y < 320 && tracksBox.y + tracksBox.height < 520 && tiles.filter((y) => y <= bar.y).length >= 6, `now ${(await nowCard.boundingBox()).y}, tracks ${tracksBox.y}, tiles above the bar ${tiles.filter((y) => y <= bar.y).length}`);
+}
 check("the tab bar has five tabs and Today is lit", (await nav(page).getByRole("link").count()) === 5 && (await activeTab(page)) === "Today");
 check("the day strip is folded away until the date line is tapped", (await page.getByRole("tablist").count()) === 0);
 await openStrip(page);
@@ -331,9 +342,12 @@ await noOverflow(page, "Today");
 await shot(page, "02-today-start");
 await shot(page, "03-today-start-full", true);
 
-// Close the brief: it stays closed for the day.
-await page.getByRole("button", { name: /Morning brief/ }).click();
-check("the brief collapses to one line", (await page.getByRole("button", { name: /Morning brief/ }).getAttribute("aria-expanded")) === "false");
+// Open the brief in place: the first paragraph and a way to the coach. Then fold it again.
+await brief(page).click();
+check("a tap opens the brief in place, with a link to the coach", (await brief(page).getAttribute("aria-expanded")) === "true" && (await page.locator("#coach-brief p").count()) === 1 && (await page.locator("#coach-brief").getByRole("link", { name: /Read the rest|Open coach/ }).count()) === 1);
+await shot(page, "03b-today-brief-open");
+await brief(page).click();
+check("the brief folds back to one line", (await brief(page).getAttribute("aria-expanded")) === "false" && (await page.locator("#coach-brief").count()) === 0);
 
 await row(page, "Workout").click();
 await done(page, 1);
@@ -473,7 +487,7 @@ check("Today: the slip makes No smoking not done, though it was ticked", (await 
 await page.evaluate(() => window.scrollTo(0, 0));
 await shot(page, "12-today-after-slip", true);
 
-await openTab(page, "Progress");
+await openTab(page, "Record");
 await page.getByText("Streaks").first().waitFor();
 const cell1 = page.getByRole("button", { name: /^Day 1\b/ }).first();
 check("Progress: day 1 is partial, not full", /partial/i.test((await cell1.getAttribute("aria-label")) ?? ""), (await cell1.getAttribute("aria-label")) ?? "");
@@ -508,7 +522,7 @@ check("removing the slip makes the day clean again on Today", (await row(page, "
 
 // ---------- Progress: the full day ----------
 console.log("Progress");
-await openTab(page, "Progress");
+await openTab(page, "Record");
 await page.getByText("Streaks").first().waitFor();
 check("Progress: day 1 is full once every daily item is done", /full|locked/i.test((await cell1.getAttribute("aria-label")) ?? ""), (await cell1.getAttribute("aria-label")) ?? "");
 check("Progress: one day locked in", /1\s*Locked in/i.test((await page.locator("main").innerText()).replace(/\s+/g, " ")));
@@ -524,15 +538,39 @@ await page.goto(`${base}/progress`);
 await page.getByRole("link", { name: /Share/ }).click();
 await page.getByRole("heading", { name: "Share card", level: 1 }).waitFor();
 await page.getByRole("button", { name: /Save image/ }).waitFor();
-check("Share card opens, keeps Progress lit and has a way back", (await activeTab(page)) === "Progress" && (await page.getByRole("link", { name: "Back" }).count()) === 1);
+check("Share card opens, keeps Record lit and has a way back", (await activeTab(page)) === "Record" && (await page.getByRole("link", { name: "Back" }).count()) === 1);
 await page.waitForTimeout(600);
 await shot(page, "17-share-card", true);
+{
+  // Save image: the card comes out as a real PNG file.
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: /Save image/ }).click()]);
+  const file = `${shots}final3-17b-share-card-export.png`;
+  await download.saveAs(file);
+  const bytes = readFileSync(file);
+  const png = bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  const width = bytes.readUInt32BE(16);
+  const height = bytes.readUInt32BE(20);
+  check("Save image exports the share card as a PNG", png && /\.png$/.test(download.suggestedFilename()) && width >= 1000 && height >= 1000 && bytes.length > 20_000, `${download.suggestedFilename()} ${width}x${height}, ${bytes.length} bytes`);
+  // The card is drawn in the look that is on: its corner is the page color, not white or empty.
+  const corner = await page.evaluate(async (src) => {
+    const img = new Image();
+    img.src = src;
+    await img.decode();
+    const c = document.createElement("canvas");
+    c.width = img.width;
+    c.height = img.height;
+    const g = c.getContext("2d");
+    g.drawImage(img, 0, 0);
+    return [...g.getImageData(img.width - 6, img.height - 6, 1, 1).data];
+  }, `data:image/png;base64,${bytes.toString("base64")}`);
+  check("the exported card is painted, in the dark look", corner[3] === 255 && corner[0] < 60 && corner[1] < 60 && corner[2] < 70, corner.join(","));
+}
 await page.getByRole("link", { name: "Back" }).click();
-await page.getByRole("heading", { name: "Progress", level: 1 }).waitFor();
+await page.getByRole("heading", { name: "Record", level: 1 }).waitFor();
 
 // ---------- Schedule: edit a block, Now and Next follow ----------
 console.log("Schedule and Today");
-await openTab(page, "Schedule");
+await openTab(page, "Plan");
 await page.getByText("9:00 clock-in errand").waitFor();
 await noOverflow(page, "Schedule");
 await shot(page, "18-schedule", true);
@@ -548,10 +586,120 @@ await page.getByRole("button", { name: /Add/ }).last().click();
 await dialog(page).waitFor();
 await shot(page, "20-add-block-sheet");
 await closeSheet(page);
+
+// ---------- Plan: the timeline by touch ----------
+console.log("Plan: errand, touch drag, resize, tap a gap");
+{
+  const block = (name) => page.locator(`[data-block][data-name="${name}"]`).first();
+  const label = async (name) => (await block(name).getAttribute("aria-label")) ?? "";
+  const morning = async () => Object.fromEntries(await page.locator("[data-block]").evaluateAll((els) => els.map((e) => [e.dataset.name, e.getAttribute("aria-label")])));
+  // Real touch input through the browser, so the timeline sees pointer events of type touch.
+  const cdp = await ctx.newCDPSession(page);
+  const touch = (type, x, y) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x, y }] });
+  const centerOf = async (locator) => {
+    await locator.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    await page.waitForTimeout(250);
+    const b = await locator.boundingBox();
+    return { x: b.x + b.width / 2, y: b.y + b.height / 2, box: b };
+  };
+  const slide = async (x, y, dy, steps = 8) => {
+    for (let i = 1; i <= steps; i += 1) {
+      await touch("touchMove", x, y + (dy * i) / steps);
+      await page.waitForTimeout(30);
+    }
+  };
+
+  // The 9:00 errand, on Thursday, when the morning runs up to a 10:00 class:
+  // the flexible block in its way is cut short, fixed ones stay put.
+  await page.getByRole("tab", { name: "Thu 8", exact: true }).click();
+  await page.getByText("Thursday, Oct 8").first().waitFor();
+  await block("Home, shower, eat").waitFor();
+  const before = await morning();
+  const errand = page.locator('[data-block][data-name="Clock-in errand"]');
+  await page.getByRole("switch", { name: "9:00 clock-in errand" }).click();
+  await errand.waitFor();
+  await page.waitForTimeout(1200);
+  const withErrand = await morning();
+  const shifted = Object.keys(before).filter((n) => withErrand[n] !== before[n]);
+  check(
+    "the errand toggle puts a fixed hour at 9:00 AM and the flexible morning block gives way to it",
+    /^Clock-in errand, 9:00 AM to 10:00 AM, fixed/.test(withErrand["Clock-in errand"] ?? "") && shifted.includes("Home, shower, eat") && / to 9:00 AM/.test(withErrand["Home, shower, eat"]) && withErrand.Class === before.Class && withErrand["Lift + core"] === before["Lift + core"],
+    JSON.stringify({ errand: withErrand["Clock-in errand"], shifted: shifted.map((n) => `${before[n]} -> ${withErrand[n]}`) }),
+  );
+  check("the errand row shows its hour", /9:00 AM to 10:00 AM/.test(await page.locator("main").innerText()));
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await shot(page, "18b-plan-errand", true);
+  await page.getByRole("switch", { name: "9:00 clock-in errand" }).click();
+  await errand.waitFor({ state: "detached" });
+  await page.waitForTimeout(1200);
+  const restored = await morning();
+  check("switching the errand off puts the morning back", JSON.stringify(restored) === JSON.stringify(before), JSON.stringify(Object.keys(before).filter((n) => restored[n] !== before[n]).map((n) => `${before[n]} -> ${restored[n]}`)));
+  await page.getByRole("tab", { name: "Mon 5, today", exact: true }).click();
+  await block("Lift heavy").waitFor();
+
+  // A quick swipe over a block scrolls the page and moves nothing.
+  {
+    const { x, y } = await centerOf(block("Basketball"));
+    const was = await label("Basketball");
+    await touch("touchStart", x, y);
+    await slide(x, y, -70, 5);
+    await touch("touchEnd", x, y - 70);
+    await page.waitForTimeout(300);
+    check("a swipe across a block is a scroll, not a drag", (await label("Basketball")) === was && (await dialog(page).count()) === 0, await label("Basketball"));
+  }
+
+  // Hold, then drag: the block moves by the distance dragged, snapped to 5 minutes. 1.3px is a minute.
+  {
+    const { x, y } = await centerOf(block("Basketball"));
+    check("Basketball starts at 5:00 PM", /^Basketball, 5:00 PM to 7:00 PM/.test(await label("Basketball")), await label("Basketball"));
+    await touch("touchStart", x, y);
+    await page.waitForTimeout(420);
+    await slide(x, y, -39);
+    await shot(page, "18c-plan-dragging");
+    await touch("touchEnd", x, y - 39);
+    await page.waitForFunction(() => /4:30 PM to 6:30 PM/.test(document.querySelector('[data-block][data-name="Basketball"]')?.getAttribute("aria-label") ?? ""), null, { timeout: 5000 }).catch(() => null);
+    check("touch: hold and drag moves a block half an hour earlier", /^Basketball, 4:30 PM to 6:30 PM/.test(await label("Basketball")), await label("Basketball"));
+    check("the drag did not open the block", (await dialog(page).count()) === 0);
+  }
+
+  // The grip at the bottom edge resizes without a hold.
+  {
+    const grip = page.locator(`[data-grip="${await block("Basketball").getAttribute("data-block")}"]`);
+    const { x, y } = await centerOf(grip);
+    await touch("touchStart", x, y);
+    await page.waitForTimeout(80);
+    await slide(x, y, 26);
+    await touch("touchEnd", x, y + 26);
+    await page.waitForFunction(() => /4:30 PM to 6:50 PM/.test(document.querySelector('[data-block][data-name="Basketball"]')?.getAttribute("aria-label") ?? ""), null, { timeout: 5000 }).catch(() => null);
+    check("touch: dragging the grip makes the block 20 minutes longer", /^Basketball, 4:30 PM to 6:50 PM/.test(await label("Basketball")), await label("Basketball"));
+    await page.waitForTimeout(400);
+    await noOverflow(page, "Plan after a drag");
+  }
+
+  // Tap an empty spot: the add sheet opens on that time.
+  {
+    const basket = await centerOf(block("Basketball"));
+    // 4:00 PM to 4:30 PM is open now. Aim at 4:15 PM, a quarter hour above the block's top edge.
+    const tapY = basket.box.y - 15 * 1.3 + 4;
+    await page.touchscreen.tap(basket.x, tapY);
+    await dialog(page).waitFor();
+    const slot = await dialog(page).locator("[data-slot]").innerText();
+    check("tapping a gap opens Add to the day at the time tapped", (await dialog(page).getByRole("heading", { name: "Add to the day" }).count()) === 1 && /4:(00|15) PM/.test(slot), slot.replace(/\s+/g, " "));
+    await dialog(page).getByRole("textbox", { name: "What" }).fill("Call home");
+    await dialog(page).getByRole("button", { name: "15m" }).click();
+    await shot(page, "20b-add-at-gap-sheet");
+    await dialog(page).getByRole("button", { name: /^Add at 4:(00|15) PM/ }).click();
+    await dialog(page).waitFor({ state: "detached" });
+    await block("Call home").waitFor();
+    check("the new block lands in the gap", /^Call home, 4:(00|15) PM to 4:(15|30) PM/.test(await label("Call home")), await label("Call home"));
+  }
+  await cdp.detach();
+}
+
 await openTab(page, "Today");
 check("Today's Next follows the edited block", /Lift heavy/.test(await nowCard.innerText()), await nowCard.innerText());
 await page.goto(`${base}/settings/schedule`);
-await page.getByRole("heading", { name: "Schedule", level: 1 }).waitFor();
+await page.getByRole("heading", { name: "Weekly plan", level: 1 }).waitFor();
 await page.getByRole("radio", { name: "M" }).first().click();
 check("the weekday template is untouched by a one day edit", (await page.getByRole("button", { name: /^Lift \+ core/ }).count()) === 1);
 await shot(page, "21-settings-schedule", true);
@@ -622,13 +770,13 @@ await closeSheet(page);
 for (const [name, lit, backTo] of [
   ["Boards", "Today", null],
   ["Meals", "Body", "Body"],
-  ["Focus", "Schedule", "Schedule"],
+  ["Focus", "Plan", "Plan"],
 ]) {
   await page.goto(`${base}/today`);
   await todayReady(page);
   await openMore(page, name);
   await page.getByRole("heading", { name, level: 1 }).waitFor();
-  check(`${name} opens from More, lights ${lit} and has an empty state`, (await activeTab(page)) === lit && (await page.getByRole("heading", { level: 3 }).count()) === 1);
+  check(`${name} opens from More, lights ${lit} and has an empty state`, (await activeTab(page)) === lit && (await (name === "Meals" ? page.getByText(/^No plan for the week of/) : page.getByRole("heading", { level: 3 })).count()) === 1);
   await noOverflow(page, name);
   await page.getByRole("link", { name: "Back" }).click();
   if (backTo) await page.getByRole("heading", { name: backTo, level: 1 }).waitFor();
@@ -640,7 +788,7 @@ await page.getByRole("heading", { name: "Meals", level: 1 }).waitFor();
 await page.goto(`${base}/schedule`);
 await page.getByRole("link", { name: "Focus timer" }).click();
 await page.getByRole("heading", { name: "Focus", level: 1 }).waitFor();
-check("Meals opens from Body and Focus opens from Schedule", true);
+check("Meals opens from Body and Focus opens from Plan", true);
 
 // ---------- Settings ----------
 console.log("Settings");
@@ -729,7 +877,7 @@ console.log("Upgrade from a version 1 store");
   await openTab(page, "Money");
   await page.getByText("$860 to go by Oct 14").waitFor();
   check("Money still shows the running total after the upgrade", true);
-  await openTab(page, "Progress");
+  await openTab(page, "Record");
   await page.getByText("Streaks").first().waitFor();
   check("Progress still shows day 1 as full after the upgrade", /full|locked/i.test((await page.getByRole("button", { name: /^Day 1\b/ }).first().getAttribute("aria-label")) ?? ""));
   await page.reload();
@@ -757,7 +905,8 @@ async function at(iso, path = "/today", from = state, date = null) {
 let s = await at("2026-10-06T13:00:00Z");
 check("the next morning opens on day 2, empty", await isDay(s.p, "Day 2 of 30"));
 await done(s.p, 0);
-check("the brief is open again on a new day", (await s.p.getByRole("button", { name: /Morning brief/ }).getAttribute("aria-expanded")) === "true");
+await brief(s.p).waitFor();
+check("a new day has its own brief, folded to one line", (await brief(s.p).getAttribute("aria-expanded")) === "false" && /\S/.test(await s.p.locator("[data-brief-line]").innerText()));
 await shot(s.p, "32-today-day-2");
 
 // Change the protein target today.
@@ -878,7 +1027,7 @@ await shot(s.p, "challenge-end-sheet", false, "v2-core-");
 await dialog(s.p).getByRole("button", { name: "End challenge" }).click();
 await s.p.getByText("Challenge ended. Ongoing from here.").waitFor();
 await dialog(s.p).waitFor({ state: "detached" });
-await s.p.getByText("No challenge is running.").waitFor();
+await s.p.locator("main").getByText("Ongoing", { exact: true }).first().waitFor();
 let all = await rows(s.p, "challenge");
 check("the challenge is kept as ended on the day it stopped", all.length === 1 && all[0].status === "ended" && all[0].ended_on === "2026-10-08", JSON.stringify(all));
 let diff = sameTables(beforeEnd, await readTables(s.p, HISTORY));
@@ -911,7 +1060,7 @@ await s.p.getByText("Earned so far").waitFor();
 check("Money keeps the earnings and the floor, with no target outside a challenge", /Earned so far \$ ?140/i.test(await main1(s.p)) && /Floor \$100/i.test(await main1(s.p)) && (await s.p.getByRole("link", { name: "Start a challenge" }).count()) === 1, (await main1(s.p)).slice(0, 200));
 await shot(s.p, "ongoing-money", true, "v2-core-");
 
-await openTab(s.p, "Progress");
+await openTab(s.p, "Record");
 await s.p.getByText("Over time").waitFor();
 let text = await main1(s.p);
 check("Progress leads with full days over the days so far, not a day count", /Days locked in 1 of 3/i.test(text) && !/Day \d+ of 30/i.test(text), text.slice(0, 200));
@@ -930,8 +1079,8 @@ await s.p.getByRole("heading", { name: "30 day lock in", level: 1 }).waitFor();
 text = await main1(s.p);
 check("a past challenge can be opened with its grid and record", /Past challenge · Ended early/i.test(text) && /Oct 5 to Oct 8, 4 of 30 days/.test(text) && /full|locked/i.test((await s.p.getByRole("button", { name: /^Day 1\b/ }).first().getAttribute("aria-label")) ?? ""), text.slice(0, 200));
 await shot(s.p, "past-challenge", true, "v2-core-");
-await s.p.getByRole("button", { name: "Back to progress" }).click();
-await s.p.getByRole("heading", { name: "Progress", level: 1 }).waitFor();
+await s.p.getByRole("button", { name: "Back to record" }).click();
+await s.p.getByRole("heading", { name: "Record", level: 1 }).waitFor();
 await s.p.getByRole("link", { name: /Share/ }).click();
 await s.p.getByRole("button", { name: /Save image/ }).waitFor();
 await s.p.waitForTimeout(600);
@@ -948,8 +1097,8 @@ await s.p.goto(`${base}/body`);
 await s.p.getByRole("radio", { name: "Weight" }).click();
 await s.p.getByText("182.4").first().waitFor();
 await s.p.goto(`${base}/schedule`);
-await s.p.getByRole("heading", { name: "Schedule", level: 1 }).waitFor();
-check("Vices, Body and Schedule open in ongoing mode", !/Day \d+ of \d+/i.test(await main1(s.p)));
+await s.p.getByRole("heading", { name: "Plan", level: 1 }).waitFor();
+check("Vices, Body and Plan open in ongoing mode", !/Day \d+ of \d+/i.test(await main1(s.p)));
 
 await looks(s.p, "ongoing");
 
@@ -1166,6 +1315,13 @@ console.log("Late install and the wake cutoff");
 }
 
 await runFeatures({ browser, base, device, check, watch, shot, rows, dialog, nav, row, done, count, createPasscode, checkContrast, rootVar, noOverflow, openMore, closeSheet, PREFIX });
+
+// The main screens on one sheet, from the screenshots just taken.
+try {
+  console.log(`Contact sheet: ${await contactSheet(browser)}`);
+} catch (e) {
+  check("the contact sheet is built", false, e.message);
+}
 
 await browser.close();
 console.log(`\n${passed} checks passed, ${problems.length} problems`);

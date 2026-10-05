@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { haptics } from "@/lib/haptics";
 import { cn } from "./cn";
 
@@ -84,6 +84,54 @@ export function Checkbox({ checked, onChange, label, off, disabled, size = 30, c
       className={cn("inline-flex size-11 shrink-0 items-center justify-center rounded-full disabled:opacity-60", className)}
     >
       <CheckMark checked={checked} off={off} size={size} />
+    </button>
+  );
+}
+
+export interface PillCheckProps {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  /** The words on the pill: "Clean today". */
+  children: ReactNode;
+  disabled?: boolean;
+  /** Read by screen readers in place of the words. */
+  "aria-label"?: string;
+  className?: string;
+}
+
+/**
+ * A checkbox drawn as a pill with words on it: resting it is a tile with an
+ * empty ring, done it turns to the gradient with a tick. For a yes or no that
+ * reads better as a sentence than as a bare tick ("Clean today"). It
+ * stretches to the room it is given.
+ */
+export function PillCheck({ checked, onChange, children, disabled, className, ...aria }: PillCheckProps) {
+  return (
+    <button
+      type="button"
+      role="checkbox"
+      aria-checked={checked}
+      aria-label={aria["aria-label"]}
+      disabled={disabled}
+      onClick={() => {
+        if (checked) haptics.tap();
+        else haptics.done();
+        onChange(!checked);
+      }}
+      className={cn(
+        "pressable flex h-11 min-w-0 flex-1 items-center gap-2.5 rounded-full border px-4 text-left text-[14px] font-medium transition-colors disabled:opacity-60",
+        checked ? "grad shadow-glow border-transparent" : "tile text-ink",
+        className,
+      )}
+    >
+      {checked ? (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0" aria-hidden>
+          <path d="M3 8.4l3.2 3.1L13 4.6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ) : (
+        <span className="size-4 shrink-0 rounded-full border-[1.5px] border-ink-3" aria-hidden />
+      )}
+      <span className="min-w-0 truncate">{children}</span>
     </button>
   );
 }

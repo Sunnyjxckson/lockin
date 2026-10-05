@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CalendarClock, MapPin, Plus, RotateCcw, Timer } from "lucide-react";
-import { Button, Card, EmptyState, IconButton, IconLink, PageHeader, Screen, Section, Sheet, Toggle, useToast } from "@/components/ui";
+import { Button, Card, EmptyState, IconButton, IconLink, Screen, Section, Sheet, Toggle, useToast, TopBar } from "@/components/ui";
 import { getBlocksForDate, type DayBlock } from "@/lib/blocks";
 import { useDayBlocks, useList, useMode, useNow } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
@@ -183,8 +183,8 @@ export default function SchedulePage() {
 
   return (
     <Screen>
-      <PageHeader
-        title="Schedule"
+      <TopBar
+        title="Plan"
         right={
           <>
             {!isToday ? (
@@ -210,10 +210,12 @@ export default function SchedulePage() {
         }
       />
 
-      <WeekStrip dates={dates} selected={date} today={today} edited={edited} onSelect={setPicked} />
+      <div className="pt-1">
+        <WeekStrip dates={dates} selected={date} today={today} edited={edited} onSelect={setPicked} />
+      </div>
 
       <div className="mt-5 flex items-baseline justify-between gap-3 px-1">
-        <p className="t-h2 min-w-0 truncate">{formatDateLong(date)}</p>
+        <p className="t-title min-w-0 truncate">{formatDateLong(date)}</p>
         <p className="t-label shrink-0">{[inChallenge && challenge ? `Day ${n} of ${challenge.length_days}` : null, own ? "Edited" : null].filter(Boolean).join(", ")}</p>
       </div>
 

@@ -14,7 +14,7 @@ export interface SegmentedControlProps<T extends string | number> {
   onChange: (value: T) => void;
   /** Read by screen readers: what is being chosen. */
   label?: string;
-  /** sm is 36px tall for dense rows such as weekday pickers. Default md, 44px. */
+  /** sm draws 36px tall for dense rows such as weekday pickers, and still takes taps over 44px. Default md, 44px. */
   size?: "sm" | "md";
   disabled?: boolean;
   className?: string;
@@ -48,7 +48,8 @@ export function SegmentedControl<T extends string | number>({
             }}
             className={cn(
               "min-w-0 flex-1 truncate rounded-full px-1 text-[14px] font-medium transition-colors duration-150",
-              size === "md" ? "h-11" : "h-9",
+              // sm: the pill is 36px, and an unseen 4px above and below it (the track's own padding) makes the tap target 44px.
+              size === "md" ? "h-11" : "relative h-9 before:absolute before:inset-x-0 before:-inset-y-1 before:content-['']",
               on ? "bg-ink text-bg" : "text-ink-2",
             )}
           >

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Button, NumberField, SegmentedControl, Sheet, TextField, TimeField, Toggle, cn } from "@/components/ui";
+import { Button, NumberField, SegmentedControl, Sheet, TextField, TimeField, Toggle, Chip } from "@/components/ui";
 import type { DayBlock } from "@/lib/blocks";
 import { haptics } from "@/lib/haptics";
 import { formatDuration, formatTime, minutesOf, timeFromMinutes } from "@/lib/logic/dates";
@@ -70,22 +70,16 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
             {FREE_PRESETS.map((p) => {
               const on = name === p.name;
               return (
-                <button
+                <Chip
                   key={p.name}
-                  type="button"
-                  aria-pressed={on}
+                  on={on}
                   onClick={() => {
-                    haptics.tap();
                     setName(p.name);
                     setMinutes(p.minutes);
                   }}
-                  className={cn(
-                    "pressable h-11 rounded-full px-4 text-[14px] font-medium",
-                    on ? "border border-ink bg-ink text-bg" : "tile text-ink",
-                  )}
                 >
                   {p.name}
-                </button>
+                </Chip>
               );
             })}
           </div>
@@ -97,21 +91,9 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
             {LENGTH_CHOICES.map((m) => {
               const on = minutes === m;
               return (
-                <button
-                  key={m}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => {
-                    haptics.tap();
-                    setMinutes(m);
-                  }}
-                  className={cn(
-                    "pressable h-11 rounded-full text-[14px] font-medium",
-                    on ? "border border-ink bg-ink text-bg" : "tile text-ink",
-                  )}
-                >
+                <Chip key={m} on={on} onClick={() => setMinutes(m)} className="justify-center px-0">
                   {m < 60 ? `${m}m` : formatDuration(m).replace(" ", "")}
-                </button>
+                </Chip>
               );
             })}
           </div>

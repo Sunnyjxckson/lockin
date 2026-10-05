@@ -6,7 +6,7 @@
 
 import Link from "next/link";
 import { CalendarClock } from "lucide-react";
-import { Card, GlassCard, cn } from "@/components/ui";
+import { Card, EmptyState, GlassCard, cn } from "@/components/ui";
 import { useList, useToday } from "@/lib/db/hooks";
 import { nextReviewDate } from "@/lib/logic/coach";
 import { formatDateLong } from "@/lib/logic/dates";
@@ -20,13 +20,13 @@ export function WeeklyReview({ className }: { className?: string }) {
 
   if (!note) {
     return (
-      <div className={cn("tile flex items-center gap-3.5 rounded-[20px] px-4 py-3.5", className)}>
-        <CalendarClock size={20} strokeWidth={1.75} className="shrink-0 text-ink-2" aria-hidden />
-        <div className="min-w-0">
-          <h3 className="text-[15px] text-ink">First review lands {formatDateLong(nextReviewDate(today))}</h3>
-          <p className="t-caption mt-0.5 text-ink-2">What held, what slipped, one change.</p>
-        </div>
-      </div>
+      <EmptyState
+        row
+        className={className}
+        icon={<CalendarClock size={20} strokeWidth={1.75} aria-hidden />}
+        title={`First review lands ${formatDateLong(nextReviewDate(today))}`}
+        body="What held, what slipped, one change."
+      />
     );
   }
 

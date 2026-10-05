@@ -2,9 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { Check } from "lucide-react";
-import { Button, ProgressBar, cn } from "@/components/ui";
-import { haptics } from "@/lib/haptics";
+import {  } from "lucide-react";
+import { Button, PillCheck, ProgressBar, cn } from "@/components/ui";
 import { formatTime } from "@/lib/logic/dates";
 import { formatAmount } from "@/lib/logic/vices";
 import type { ChecklistItem, DateStr, ViceSlip } from "@/lib/types";
@@ -118,26 +117,9 @@ export function ViceToday({ view, today, onSlip, onAdd }: ViceTodayProps) {
           </span>
         </p>
       ) : (
-        <button
-          type="button"
-          role="checkbox"
-          aria-checked={clean}
-          aria-label={`${item.name}: clean today`}
-          onClick={() => {
-            if (clean) haptics.tap();
-            else haptics.done();
-            void setClean(item, today, !clean);
-          }}
-          className={cn(
-            "pressable flex h-11 min-w-0 flex-1 items-center gap-2.5 rounded-full border pr-4 pl-1.5 text-left text-[14px] font-medium transition-[background-color,border-color,box-shadow] duration-200",
-            clean ? "grad shadow-glow border-transparent" : "tile text-ink",
-          )}
-        >
-          <span className={cn("flex size-[30px] shrink-0 items-center justify-center rounded-full", clean ? null : "border border-ink-3")} aria-hidden>
-            {clean ? <Check size={18} strokeWidth={2.25} className="animate-check-pop" /> : null}
-          </span>
-          <span className="truncate">{clean ? "Clean today" : "Mark clean today"}</span>
-        </button>
+        <PillCheck checked={clean} aria-label={`${item.name}: clean today`} onChange={(v) => void setClean(item, today, v)}>
+          {clean ? "Clean today" : "Mark clean today"}
+        </PillCheck>
       )}
       <Button variant="secondary" size="sm" onClick={onSlip} className="shrink-0">
         Log a slip

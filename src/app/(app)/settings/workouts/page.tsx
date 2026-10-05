@@ -137,7 +137,7 @@ function WorkoutEditor({ workout, weekday, slot }: { workout: Workout | null; we
         />
         {slot === "main" ? (
           <div>
-            <p className="t-label mb-2.5">Kind of day</p>
+            <p className="mb-1.5 text-[13px] text-ink-2">Kind of day</p>
             <SegmentedControl label="Kind of day" size="sm" options={KINDS} value={workout.kind} onChange={(v) => save({ kind: v })} />
           </div>
         ) : null}

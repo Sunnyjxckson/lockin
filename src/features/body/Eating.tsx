@@ -1,6 +1,6 @@
 "use client";
 
-import { BigNumber, cn } from "@/components/ui";
+import { BigNumber, TrackStat, cn } from "@/components/ui";
 import { remainingFor, remainingLabel, ringFor, type Goal, type Goals, type Macros } from "@/lib/logic/body";
 import { fmt } from "./format";
 
@@ -33,19 +33,18 @@ export function CaloriesHero({ totals, goals }: { totals: Macros; goals: Goals }
 function MacroStat({ label, total, goal }: { label: string; total: number; goal: Goal }) {
   const ring = ringFor(total, goal);
   const over = ring.state === "over";
-  const met = ring.state === "met";
+  const left = remainingLabel(total, goal, "g");
   return (
-    <div className="min-w-0" role="group" aria-label={`${label}: ${fmt(total)}g, ${remainingLabel(total, goal, "g")}`}>
-      <span className="t-stat block truncate text-ink">
-        {fmt(total)}
-        <span className="text-[14px] font-normal tracking-normal text-ink-2">g</span>
-      </span>
-      <span className="t-label mt-1.5 block truncate text-[10px]">{label}</span>
-      <span className="mt-2 block h-0.5 overflow-hidden rounded-full bg-hair" aria-hidden>
-        <span className={cn("block h-full rounded-full", over ? "bg-warn" : "bg-accent")} style={{ width: `${ring.fill * 100}%`, transition: "width 600ms var(--ease-out)" }} />
-      </span>
-      <span className={cn("t-caption mt-2 block truncate", over ? "text-warn" : met ? "text-accent" : "text-ink-2")}>{remainingLabel(total, goal, "g")}</span>
-    </div>
+    <TrackStat
+      value={fmt(total)}
+      unit="g"
+      label={label}
+      progress={ring.fill}
+      attention={over}
+      caption={left}
+      captionTone={over ? "warn" : ring.state === "met" ? "done" : "quiet"}
+      aria-label={`${label}: ${fmt(total)}g, ${left}`}
+    />
   );
 }
 

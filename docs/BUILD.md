@@ -556,6 +556,7 @@ Colors come from the theme at runtime (`logic/theme`), so a board palette re-the
 | `grad` (utility) | The gradient fill: done, or the one primary action. Sets its own text color |
 | `grad-line` (utility) | The gradient as a progress line or a dot |
 | `frost` (utility) | Real backdrop blur. Only the tab bar uses it. Ask before adding another |
+| `lit` (utility) | The page color with the three lights, for a fixed layer that covers the whole screen. `Overlay` uses it. Never on anything smaller than the viewport |
 | `bg-surface`, `bg-surface-2`, `bg-surface-3` | Solid surfaces: a sheet, a card inside a sheet, a native control. Not for cards on the page |
 | `text-ink` | Main text, numbers, headings |
 | `text-ink-2` | Secondary text, labels, icons |
@@ -572,7 +573,7 @@ Colors come from the theme at runtime (`logic/theme`), so a board palette re-the
 | `shadow-glow` | The soft rose glow under anything `grad` |
 | `shadow-float` | Things that float: the tab bar, a sheet, a toast |
 
-Text on `bg-ink` is `text-bg`. Text on `grad` is `text-accent-ink`. Anything drawn in inline SVG or on a canvas reads `var(--token)`: `--accent`, `--accent-2`, `--hair`, `--ink`. The lights are `--glow-1` to `--glow-3` and are drawn once, behind everything, by the body. Do not draw more.
+Text on `bg-ink` is `text-bg`. Text on `grad` is `text-accent-ink`. Anything drawn in inline SVG or on a canvas reads `var(--token)`: `--accent`, `--accent-2`, `--hair`, `--ink`. The lights are `--glow-1` to `--glow-3` and are drawn once, behind everything, by the body. Do not draw more. The one exception is a layer that hides the page: it carries `lit`, which is the same three gradients over the page color (`--lights`), so a full screen view does not fall back to a flat panel.
 
 The pairs that are guaranteed readable, in every theme and under every palette: `ink`, `ink-2`, `ink-3`, `accent`, `warn` and `danger` as text on the page, on `glass`, on `tile` and on the solid surfaces. `warn` on `warn-soft`, `danger` on `danger-soft`, `accent` on `accent-soft`. `accent-ink` and `accent-ink-2` on `grad`. `bg` on `ink`. Nothing else is. So never fade text with an opacity or a `/70` color, never put `ink-2` on `grad` or on `ink`, and never put text on `bg-accent` or `bg-warn` other than `accent-ink`.
 
@@ -629,19 +630,21 @@ All from `@/components/ui`. Icons from `lucide-react` at size 18 to 22 with `str
 | --- | --- | --- |
 | `Screen` | `children, className?` | Wrap every page in it. Column, side padding, safe area, room for the tab bar |
 | `TopBar` | `title, right?, as? ("h1" / "p")` | Top row of a tab screen that leads with a hero: name small on the left, a status or icons on the right |
-| `PageHeader` | `title, eyebrow?, subtitle?, back? (href), right?` | Top of a screen that leads with its name. Every sub-screen passes `back` |
+| `PageHeader` | `title, eyebrow?, subtitle?, back? (href), onBack?, backLabel?, right?` | Top of a screen that leads with its name. Every sub-screen passes `back`. A view that is a state of its screen and has no address passes `onBack` |
 | `GlassCard` | `pad? ("lg" / "md" / false), frost?`, plus div props | The one or two feature cards a screen leads with |
 | `Card` | `padded? = true, raised?`, plus div props | Every other card. `raised` is solid, for inside a card or sheet. `padded={false}` with `overflow-hidden` for rows |
 | `Section` | `title, right?, children` | A labeled group with the standard gap above |
 | `SectionLabel` | `children, right?, as?` | The small uppercase line that opens a group: "TODAY   7 OF 12" |
 | `Tile` | `value, label?, state? ("off" / "done" / "attention"), onClick? / href? / htmlFor?, checked?, disabled?, corner?, aria-label?` | A tap tile. Pass `checked` to make it a checkbox. `corner` holds a second small action with its own tap target |
 | `NumberTile` | `value, onChange, name, label?, unit?, prefix?, state?, disabled?, decimal?` | A tile a number is typed straight into |
-| `TrackStat` | `value, label, progress?, attention?, onClick?, pressed?` | One of a row of two to four stats, with a hairline that fills. Leave `progress` out for no line |
-| `BigNumber` | `value, prefix?, unit?, label?, sub?, size? ("hero" / "display")` | The hero number. `prefix="$"` is drawn small in the accent |
+| `TrackStat` | `value, label, unit?, progress?, attention?, caption?, captionTone? ("quiet" / "done" / "warn"), onClick?, pressed?` | One of a row of two to four stats, with a hairline that fills. Leave `progress` out for no line. `caption` is a short line under the hairline ("60g left") |
+| `BigNumber` | `value, prefix?, unit?, label?, sub?, size? ("hero" / "display")` | The hero number, set as one line of text. `prefix="$"` is drawn small and raised in the accent, `unit` small on the baseline. Pass the amount without its sign: `prefix="$" value="52.30"` |
+| `ClockText` | `text, className?` | A clock that is counting ("19:38"): fixed width digits, colons at their natural width |
 | `Stat` | `label, value, unit?, sub?, size? ("display" / "lg" / "sm"), done?, align?` | A number with its label above, inside a card |
 | `List` | `children, label?` | Rows divided by hairlines, straight on the page, no card |
 | `ListRow` | `title, sub?, left?, right?, value?, href?, onClick?, plain?` | A row. `value` is a large number at the right end. Tappable rows get a chevron unless they have a `value` |
 | `Button` | `variant? ("primary" / "solid" / "secondary" / "ghost" / "danger"), size? ("sm" / "md" / "lg"), full?, loading?, icon?` | `primary` is the gradient: one per screen or sheet. `secondary` is glass and is the everyday button. `solid` is cream |
+| `ButtonLink` | `href, variant?, size?, full?, icon?, iconAfter?` | The same button as a link, for a main action that goes to another screen. Do not hand-build a `grad` link |
 | `ActionButton` | `label, size? = 52` | The round gradient button holding one icon: the main action of a card. One per view |
 | `IconButton` | `label, filled?` | 44px round icon button. `filled` puts glass behind it |
 | `IconLink` | `href, label, filled?` | The same as a link, for a header |
@@ -651,12 +654,16 @@ All from `@/components/ui`. Icons from `lucide-react` at size 18 to 22 with `str
 | `TimeField`, `DateField` | `value, onChange, label?, hint?` (`min?, max?` on date) | Native pickers |
 | `Select` | `value, onChange, options, label?, hint?` | Native picker with a chevron |
 | `Field` | `label, hint?, error?, htmlFor?` | Label wrapper for a custom control |
-| `SegmentedControl` | `options, value, onChange, label?, size? ("sm" / "md")` | Two to five choices. The chosen one is a cream pill |
+| `SegmentedControl` | `options, value, onChange, label?, size? ("sm" / "md")` | Two to seven even choices. The chosen one is a cream pill. `sm` draws 36px tall and still takes taps over 44px |
+| `Chip` | `on, onClick, icon?, disabled?` | One choice as a 44px pill, in a `flex flex-wrap gap-2` row, where the choices are too many or too uneven for segments. Pick one or pick several: the parent holds what is on. Chosen is cream |
 | `Toggle` | `checked, onChange, label?` | On is cream, not the gradient |
 | `Checkbox`, `CheckMark` | `checked, onChange, label, off?, size?` | The round tick, gradient when done. For rows. On a grid use `Tile` |
+| `PillCheck` | `checked, onChange, children, disabled?, aria-label?` | A checkbox as a pill with words on it ("Clean today"): a tile with an empty ring, the gradient with a tick when done |
 | `ProgressBar` | `value, height? = 3, tone? ("accent" / "ink" / "warn"), marker?, label?` | A hairline by default. `accent` is the gradient |
 | `ProgressRing` | `value, size? = 88, stroke?, tone?, label?, children?` | Thin ring, gradient stroke. For a moment or a summary, not as a screen's header |
-| `EmptyState` | `title, body?, icon?, action?, compact?` | Every list and screen has one |
+| `EmptyState` | `title, body?, icon?, action?, compact?, row?` | Every list and screen has one. `row` is one quiet left aligned tile, for a small group with nothing in it yet |
+| `Notice` | `tone? ("quiet" / "warn"), icon?, title?, action?, actions?`, plus div props | One row that needs reading: locked, a conflict, a setup prompt. `action` sits at the right end, `actions` is a row of buttons under the text |
+| `Overlay` | `onClose, label, header?, footer?, className?` | A full screen layer over the app, tab bar included, with the page lights (`lit`). `header` and `footer` are pinned and do not scroll |
 | `useToast()` | `toast(message, { kind?: "info" / "done" / "error" })` | The provider is mounted |
 | `TabBar` | none | Rendered by the app layout. Do not render it. Lit routes are in `src/lib/nav.ts` |
 
@@ -669,7 +676,9 @@ All from `@/components/ui`. Icons from `lucide-react` at size 18 to 22 with `str
 - **Lists.** Things you log (earnings, meals, sessions, slips): `SectionLabel` then `List` of `ListRow` with the number as `value`, no card. Settings and menus: `Card padded={false} className="overflow-hidden"` around `<div className="divide-y divide-hair">`.
 - **Things you tick or enter every day**: a `grid grid-cols-3 gap-2.5` of `Tile`s, not rows with checkboxes.
 - **Forms** live in a `Sheet`: fields stacked with `gap-4`, labels from the field's `label`, one `Button` (primary, `full`, `size="lg"`) in `footer`. A destructive second button sits to its left as `variant="danger"`. A hero number at the top of a sheet is `NumberField variant="hero"`.
-- **Notices** (locked, a conflict, a setup prompt): one quiet row, `tile rounded-[20px] px-4 py-3 t-sub`, or `border-warn-line bg-warn-soft` when it needs a look. At most one at a time near the top.
+- **Notices** (locked, a conflict, a setup prompt): `Notice`, with `tone="warn"` when it needs a look. At most one at a time near the top. Do not hand-build a `bg-warn-soft` box.
+- **Full screen views** (a board piece, the look studio, the focus view, a finish moment): `Overlay`, or `lit` on your own `fixed inset-0` layer when the element has to be yours (full screen API, a moment that fades). Never `bg-bg` on a full screen layer: that is the flat panel.
+- **Tab names.** The tabs read Today, Plan, Money, Body, Record. The routes are still `/schedule` and `/progress`. Say Plan and Record in titles, links and copy that point at those tabs. The weekday template in Settings is "Weekly plan".
 - **Charts**: thin. Lines 1.5 to 2px, bars with fully round ends, no grid lines, at most one hairline baseline in `var(--hair)`. The series is `var(--accent)` or the accent to accent-2 gradient, anything secondary is `var(--ink-3)`. Axis labels are `t-caption text-ink-2`. Put the number the chart is about above it in `t-num` or `t-stat`, so the chart supports a number and is not the only way to read it. No chart inside a chart card inside a section: label, number, chart.
 - **Calendars and grids of days**: cells are `tile`, a full day is `grad`, a partial day is `tile` with a `bg-ink-3` dot, today is ringed with `border-ink`.
 - **Empty states**: `EmptyState` with one short title, one sentence, one action. Inside a group use `compact` in a `Card padded={false}`.

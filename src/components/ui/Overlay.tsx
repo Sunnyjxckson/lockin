@@ -2,24 +2,32 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { cn } from "@/components/ui";
+import { cn } from "./cn";
 
 let openOverlays = 0;
 
 export interface OverlayProps {
   onClose: () => void;
+  /** Read by screen readers: what this layer is. */
   label: string;
   children: ReactNode;
+  /** On the scrolling body. */
   className?: string;
+  /** Pinned to the top, under the safe area. It does not scroll, so it needs no fill of its own and the lights run on behind it. */
+  header?: ReactNode;
   /** Pinned to the bottom, above the safe area. */
   footer?: ReactNode;
 }
 
 /**
- * A full screen layer over the app, tab bar included. For looking at one
- * thing with nothing else on screen. Escape closes it.
+ * A full screen layer over the app, tab bar included, for looking at one
+ * thing with nothing else on screen (a board item, the look studio). It is
+ * `lit`: the page color with the same three lights as the page, so it reads
+ * as the app and not as a flat panel. Escape closes it. Anything else that
+ * has to cover the whole screen (the focus view, a finish moment) puts `lit`
+ * on its own fixed layer.
  */
-export function Overlay({ onClose, label, children, className, footer }: OverlayProps) {
+export function Overlay({ onClose, label, children, className, header, footer }: OverlayProps) {
   const panel = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,17 +53,10 @@ export function Overlay({ onClose, label, children, className, footer }: Overlay
 
   if (typeof document === "undefined") return null;
   return createPortal(
-    <div
-      ref={panel}
-      data-layer
-      role="dialog"
-      aria-modal="true"
-      aria-label={label}
-      tabIndex={-1}
-      className="animate-fade-in fixed inset-0 z-50 flex flex-col bg-bg text-ink outline-none"
-    >
+    <div ref={panel} data-layer role="dialog" aria-modal="true" aria-label={label} tabIndex={-1} className="lit animate-fade-in fixed inset-0 z-50 flex flex-col text-ink outline-none">
+      {header ? <div className="shrink-0 border-b border-hair px-5 pt-[var(--safe-t)]">{header}</div> : null}
       <div className={cn("no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain", className)}>{children}</div>
-      {footer ? <div className="shrink-0 border-t border-hair bg-bg px-5 pt-3 pb-[calc(var(--safe-b)+12px)]">{footer}</div> : null}
+      {footer ? <div className="shrink-0 border-t border-hair px-5 pt-3 pb-[calc(var(--safe-b)+12px)]">{footer}</div> : null}
     </div>,
     document.body,
   );

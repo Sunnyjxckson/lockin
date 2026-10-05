@@ -48,7 +48,7 @@ function planLine(s: CoachSnapshot): string {
   }
   const study = blocks.find((b) => b.kind === "study");
   if (study) parts.push(`study at ${study.start}`);
-  if (parts.length === 0) return "Today: nothing on the schedule yet. Add blocks in Schedule.";
+  if (parts.length === 0) return "Today: nothing on the schedule yet. Add blocks in Plan.";
   return `Today: ${list(parts.slice(0, 5))}.`;
 }
 

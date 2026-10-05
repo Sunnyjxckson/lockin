@@ -7,6 +7,7 @@
 
 import Link from "next/link";
 import { ChevronRight, TriangleAlert } from "lucide-react";
+import { Notice, cn } from "@/components/ui";
 import { useDayBlocks, useToday } from "@/lib/db/hooks";
 import { describeConflict, findCalendarConflicts } from "@/lib/logic/calendar";
 import { formatDuration, formatTime } from "@/lib/logic/dates";
@@ -31,18 +32,15 @@ export function TodaySlot({ date, className }: TodaySlotProps) {
   return (
     <Link
       href={`/schedule?date=${day}`}
-      aria-label={`Schedule conflict: ${describeConflict(first)}. Open schedule`}
-      className={`pressable animate-fade-in flex items-center gap-3 rounded-[20px] border border-warn-line bg-warn-soft px-4 py-3 ${className ?? ""}`}
+      aria-label={`Schedule conflict: ${describeConflict(first)}. Open plan`}
+      className={cn("pressable animate-fade-in block rounded-[20px]", className)}
     >
-      <TriangleAlert size={18} className="shrink-0 text-warn" aria-hidden />
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-[15px] text-ink">{describeConflict(first)}</p>
-        <p className="tnum t-caption mt-0.5 truncate text-ink-2">
+      <Notice tone="warn" icon={<TriangleAlert size={18} aria-hidden />} title={<span className="block truncate">{describeConflict(first)}</span>} action={<ChevronRight size={18} className="mr-2 text-ink-3" aria-hidden />}>
+        <span className="block truncate">
           {formatTime(first.start)} to {formatTime(first.end)}, {formatDuration(first.minutes)}
           {more > 0 ? `, and ${more} more` : ""}
-        </p>
-      </div>
-      <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
+        </span>
+      </Notice>
     </Link>
   );
 }

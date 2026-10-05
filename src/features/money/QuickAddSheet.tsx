@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { Camera, X } from "lucide-react";
-import { Button, DateField, NumberField, SegmentedControl, Sheet, cn, useToast } from "@/components/ui";
+import { Button, DateField, NumberField, SegmentedControl, Sheet, cn, useToast, Chip } from "@/components/ui";
 import { useInstalledOn, useToday } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { formatDateShort, isDayLocked } from "@/lib/logic/dates";
@@ -224,21 +224,9 @@ function Form({ onClose, defaultApp = "DoorDash", editing, date: firstDate, file
             {HOUR_CHIPS.map((h) => {
               const on = hours === h;
               return (
-                <button
-                  key={h}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => {
-                    haptics.tap();
-                    setHours(on ? null : h);
-                  }}
-                  className={cn(
-                    "pressable tnum h-12 min-w-[46px] shrink-0 rounded-[14px] border px-2.5 text-[15px] font-semibold",
-                    on ? "border-ink bg-ink text-bg" : "border-line bg-surface-2 text-ink-2",
-                  )}
-                >
+                <Chip key={h} on={on} onClick={() => setHours(on ? null : h)} className="min-w-11 justify-center px-3.5">
                   {h}
-                </button>
+                </Chip>
               );
             })}
           </div>

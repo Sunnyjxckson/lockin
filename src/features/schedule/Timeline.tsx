@@ -266,6 +266,8 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
   for (let m = range.s; m <= range.e; m += 60) hours.push(m);
   const nowMin = nowSeconds !== null ? nowSeconds / 60 : null;
   const nowInView = nowMin !== null && nowMin >= range.s && nowMin <= range.e;
+  // Where the pill in the gutter is: the time being dragged to, or now.
+  const pillAt = draft ? (draft.mode === "move" ? draft.s : draft.e) : nowInView ? nowMin : null;
 
   return (
     <div
@@ -287,7 +289,10 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
       >
         {hours.map((m) => (
           <div key={m} className="absolute right-0 left-0" style={{ top: y(m) }}>
-            <span className="t-caption absolute top-[-7px] left-0 w-[42px] text-right leading-none text-ink-2">{m === DAY_END ? "12 AM" : hourLabel(m)}</span>
+            {/* The now pill sits in the same gutter. An hour label it would cover steps aside for it. */}
+            {pillAt !== null && Math.abs(y(m) - y(pillAt)) < 16 ? null : (
+              <span className="t-caption absolute top-[-7px] left-0 w-[42px] text-right leading-none text-ink-2">{m === DAY_END ? "12 AM" : hourLabel(m)}</span>
+            )}
             <span className="absolute right-0 block h-px bg-hair" style={{ left: GUTTER }} />
           </div>
         ))}
@@ -322,12 +327,13 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
           const line = h < 62;
           const grip = h >= 44 && !disabled;
           const warn = flagged.has(b.id);
-          // One look per state. Live is the gradient. Fixed blocks are solid tiles with a rail
+          // One look per state. Live is tinted with the accent and outlined in it: the gradient is for
+          // done and the one primary action, and a block can be hours tall. Fixed blocks are solid tiles with a rail
           // and a lock, flexible ones are glass. A block that is over is only an outline.
           const look = dragging
             ? "z-30 cursor-grabbing border border-ink bg-surface-3 shadow-float transition-none"
             : live
-              ? "grad shadow-glow z-10 cursor-pointer border border-transparent"
+              ? "z-10 cursor-pointer border border-accent-line bg-accent-soft"
               : alert
                 ? "z-10 cursor-pointer border border-warn-line bg-warn-soft"
                 : past
@@ -335,8 +341,8 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
                   : b.flexible
                     ? "glass z-10 cursor-pointer"
                     : "tile z-10 cursor-pointer";
-          const main = live ? "text-accent-ink" : past && !alert && !dragging ? "text-ink-2" : "text-ink";
-          const quiet = live ? "text-accent-ink-2" : "text-ink-2";
+          const main = past && !alert && !dragging ? "text-ink-2" : "text-ink";
+          const quiet = "text-ink-2";
           const box = {
             top,
             height: h,
@@ -380,7 +386,7 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
             >
               {!b.flexible && !live ? <span className={cn("absolute top-0 bottom-0 left-0 w-[3px]", past ? "bg-ink-3" : "bg-ink-2")} aria-hidden /> : null}
               {/* where now is inside the block that is live */}
-              {live && timer && !line ? <span className="pointer-events-none absolute right-0 left-0 h-[2px] -translate-y-px bg-accent-ink" style={{ top: `${timer.progress * 100}%` }} aria-hidden /> : null}
+              {live && timer && !line ? <span className="pointer-events-none absolute right-0 left-0 h-px bg-accent" style={{ top: `${timer.progress * 100}%` }} aria-hidden /> : null}
               <div className={cn("relative flex h-full min-w-0 gap-2.5 pr-3", b.flexible || live ? "pl-3.5" : "pl-4", tiny || !grip ? "items-center" : line ? "items-start pt-2" : "items-start pt-2.5")}>
                 {!tiny && lane.lanes === 1 ? <Icon size={16} strokeWidth={1.75} className={cn("shrink-0", !line && "mt-[2px]", quiet)} aria-hidden /> : null}
                 <div className={cn("min-w-0 flex-1", line && "flex items-baseline gap-2")}>
@@ -393,13 +399,13 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
                   )}
                 </div>
                 {b.kind === "free" && live && timer ? (
-                  <span className="tabular shrink-0 self-center text-[20px] leading-none font-medium tracking-[-0.03em] text-accent-ink" data-countdown>
+                  <span className="tabular shrink-0 self-center text-[20px] leading-none font-medium tracking-[-0.03em] text-ink" data-countdown>
                     {formatCountdown(timer.remaining)}
                   </span>
                 ) : alert ? (
                   <span className="t-label shrink-0 self-center text-warn">Time is up</span>
                 ) : live ? (
-                  <span className={cn("t-label shrink-0 text-accent-ink", line && "self-center")} aria-label="Now">
+                  <span className={cn("t-label shrink-0 text-accent", line && "self-center")} aria-label="Now">
                     Now
                   </span>
                 ) : !b.flexible && !tiny ? (
@@ -418,7 +424,7 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
                   onPointerCancel={() => end(false)}
                   className="absolute bottom-0 left-1/2 flex h-[22px] w-[88px] -translate-x-1/2 cursor-ns-resize touch-none items-end justify-center pb-[5px]"
                 >
-                  <span className={cn("h-[3px] w-7 rounded-full", live ? "bg-accent-ink-2" : dragging && draft.mode === "resize" ? "bg-ink" : past ? "bg-ink-3" : "bg-ink-2")} />
+                  <span className={cn("h-[3px] w-7 rounded-full", live ? "bg-accent" : dragging && draft.mode === "resize" ? "bg-ink" : past ? "bg-ink-3" : "bg-ink-2")} />
                 </div>
               ) : null}
             </div>

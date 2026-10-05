@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { CalendarClock, Flag as FlagIcon, History, RefreshCw, Sunrise } from "lucide-react";
 import { Button, Card, EmptyState, GlassCard, List, ListRow, PageHeader, Screen, Section, Sheet } from "@/components/ui";
 import { FlagCard, FlagDetail, NoteBody, SourceTag, weekLabel } from "@/features/coach/parts";
@@ -15,20 +15,6 @@ function historyTitle(n: CoachNote): { title: string; sub: string } {
   const f = parseFlagNote(n.body);
   const state = f?.resolved_on ? `Cleared ${formatDateShort(f.resolved_on)}` : f?.dismissed_on ? `Dismissed ${formatDateShort(f.dismissed_on)}` : "Flag";
   return { title: f?.flag.title ?? "Flag", sub: `${state} · flagged ${formatDateShort(n.date)}` };
-}
-
-/** A quiet row for a group with nothing in it yet. */
-function Quiet({ icon, title, body, action }: { icon: ReactNode; title: string; body: string; action?: ReactNode }) {
-  return (
-    <div className="tile flex items-center gap-3.5 rounded-[20px] px-4 py-3.5">
-      <span className="shrink-0 text-ink-2">{icon}</span>
-      <div className="min-w-0 flex-1">
-        <h3 className="text-[15px] text-ink">{title}</h3>
-        <p className="t-caption mt-0.5 text-ink-2">{body}</p>
-      </div>
-      {action ? <div className="shrink-0">{action}</div> : null}
-    </div>
-  );
 }
 
 export default function CoachPage() {
@@ -109,7 +95,7 @@ export default function CoachPage() {
 
       <Section title="Flags" right={coach.flags.length > 0 ? `${coach.flags.length} active` : null}>
         {coach.flags.length === 0 ? (
-          <Quiet icon={<FlagIcon size={20} strokeWidth={1.75} aria-hidden />} title="Nothing flagged" body="A pattern needs a few days of data." />
+          <EmptyState row icon={<FlagIcon size={20} strokeWidth={1.75} aria-hidden />} title="Nothing flagged" body="A pattern needs a few days of data." />
         ) : (
           <div className="divide-y divide-hair border-b border-hair">
             {coach.flags.map((f) => (
@@ -133,7 +119,8 @@ export default function CoachPage() {
             </div>
           </Card>
         ) : (
-          <Quiet
+          <EmptyState
+            row
             icon={<CalendarClock size={20} strokeWidth={1.75} aria-hidden />}
             title={sundayToday ? "This week's review is ready" : `First review lands ${formatDateLong(nextReviewDate(coach.today))}`}
             body={sundayToday ? "It writes itself at 8:00 PM." : "What held, what slipped, one change."}
@@ -150,7 +137,7 @@ export default function CoachPage() {
 
       <Section title="History" right={coach.history.length > 0 ? coach.history.length : null}>
         {coach.history.length === 0 ? (
-          <Quiet icon={<History size={20} strokeWidth={1.75} aria-hidden />} title="No past notes" body="Earlier briefs, reviews and cleared flags collect here." />
+          <EmptyState row icon={<History size={20} strokeWidth={1.75} aria-hidden />} title="No past notes" body="Earlier briefs, reviews and cleared flags collect here." />
         ) : (
           <List>
             {coach.history.slice(0, 40).map((n) => {

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { Pencil, Plus, Search } from "lucide-react";
-import { Button, EmptyState, IconButton, List, ListRow, PageHeader, Screen, SegmentedControl, Sheet } from "@/components/ui";
+import { Button, EmptyState, IconButton, List, ListRow, PageHeader, Screen, Sheet, Chip } from "@/components/ui";
 import { useList, useSettings } from "@/lib/db/hooks";
 import { amountLabel, dollars, isExcluded, SLOT_LABEL, SLOTS } from "@/lib/logic/meals";
 import { displayName } from "@/lib/logic/mealsGrocery";
@@ -50,12 +50,14 @@ export default function RecipesScreen() {
           </IconButton>
         }
       />
-      <SegmentedControl
-        label="Meal"
-        value={slot}
-        onChange={setSlot}
-        options={[{ value: "all" as Filter, label: "All" }, ...SLOTS.map((s) => ({ value: s as Filter, label: SLOT_LABEL[s] }))]}
-      />
+      {/* Five uneven words: chips, not segments, so "Breakfast" is never cut short. */}
+      <div role="radiogroup" aria-label="Meal" className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
+        {[{ value: "all" as Filter, label: "All" }, ...SLOTS.map((s) => ({ value: s as Filter, label: SLOT_LABEL[s] }))].map((o) => (
+          <Chip key={o.value} radio on={slot === o.value} onClick={() => setSlot(o.value)}>
+            {o.label}
+          </Chip>
+        ))}
+      </div>
       <label className="tile mt-3 flex h-[52px] items-center gap-2.5 rounded-[16px] px-4 transition-colors focus-within:border-ink-2">
         <Search size={18} strokeWidth={1.75} className="shrink-0 text-ink-2" aria-hidden />
         <input

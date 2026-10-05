@@ -18,10 +18,10 @@ export interface Tab {
 
 export const TABS: readonly Tab[] = [
   { href: "/today", label: "Today", icon: CircleCheck, also: ["/coach", "/vices", "/reminders", "/settings", "/boards"] },
-  { href: "/schedule", label: "Schedule", icon: CalendarClock, also: ["/focus"] },
+  { href: "/schedule", label: "Plan", icon: CalendarClock, also: ["/focus"] },
   { href: "/money", label: "Money", icon: DollarSign },
   { href: "/body", label: "Body", icon: Activity, also: ["/meals"] },
-  { href: "/progress", label: "Progress", icon: LayoutGrid },
+  { href: "/progress", label: "Record", icon: LayoutGrid },
 ];
 
 export interface MoreLink {
@@ -36,5 +36,5 @@ export const MORE_LINKS: readonly MoreLink[] = [
   { href: "/focus", label: "Focus", sub: "Study timer and hours", icon: Timer },
   { href: "/meals", label: "Meals", sub: "Week plan, recipes and the grocery list", icon: UtensilsCrossed },
   { href: "/boards", label: "Boards", sub: "Mood boards and the look of the app", icon: Images },
-  { href: "/settings", label: "Settings", sub: "Checklist, schedule, challenge, theme", icon: Settings },
+  { href: "/settings", label: "Settings", sub: "Checklist, plan, challenge, look", icon: Settings },
 ];

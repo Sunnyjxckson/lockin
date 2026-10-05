@@ -214,10 +214,7 @@ export function FoodTab() {
             ))}
           </List>
         ) : (
-          <p className="tile t-sub mt-3 flex items-center gap-2.5 rounded-[20px] px-4 py-3">
-            <Star size={16} strokeWidth={1.75} className="shrink-0" aria-hidden />
-            No favorites yet. Save a meal as one and it logs in a tap.
-          </p>
+          <EmptyState row className="mt-3" icon={<Star size={18} strokeWidth={1.75} aria-hidden />} title="No favorites yet" body="Save a meal as one and it logs in a tap." />
         )}
       </section>
 
