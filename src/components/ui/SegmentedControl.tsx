@@ -31,10 +31,11 @@ export function SegmentedControl<T extends string | number>({
   className,
 }: SegmentedControlProps<T>) {
   return (
-    <div role="radiogroup" aria-label={label} className={cn("tile flex w-full gap-1 rounded-full p-1", disabled && "opacity-50", className)}>
+    <div role="radiogroup" aria-label={label} className={cn("tile flex w-full gap-1 rounded-full px-1", size === "md" && "py-1", disabled && "opacity-50", className)}>
       {options.map((o) => {
         const on = o.value === value;
         return (
+          // The button is the tap target, always 44px tall. The pill inside it is what is drawn: 44px, or 36px for sm.
           <button
             key={String(o.value)}
             type="button"
@@ -46,14 +47,17 @@ export function SegmentedControl<T extends string | number>({
               haptics.tap();
               onChange(o.value);
             }}
-            className={cn(
-              "min-w-0 flex-1 truncate rounded-full px-1 text-[14px] font-medium transition-colors duration-150",
-              // sm: the pill is 36px, and an unseen 4px above and below it (the track's own padding) makes the tap target 44px.
-              size === "md" ? "h-11" : "relative h-9 before:absolute before:inset-x-0 before:-inset-y-1 before:content-['']",
-              on ? "bg-ink text-bg" : "text-ink-2",
-            )}
+            className="flex h-11 min-w-0 flex-1 items-center rounded-full"
           >
-            {o.label}
+            <span
+              className={cn(
+                "block w-full truncate rounded-full px-1 text-center text-[14px] font-medium transition-colors duration-150",
+                size === "md" ? "h-11 leading-[44px]" : "h-9 leading-9",
+                on ? "bg-ink text-bg" : "text-ink-2",
+              )}
+            >
+              {o.label}
+            </span>
           </button>
         );
       })}

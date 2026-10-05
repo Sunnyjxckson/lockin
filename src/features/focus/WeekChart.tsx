@@ -15,10 +15,6 @@ const BASE = 96;
 const SLOT = W / 7;
 const BAR = 10;
 
-function short(m: number): string {
-  return m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? ` ${m % 60}` : ""}` : `${m}m`;
-}
-
 export function WeekChart({ days, goal }: { days: readonly WeekDay[]; goal: number }) {
   const id = useId();
   const max = Math.max(goal, ...days.map((d) => d.minutes), 30);
@@ -43,7 +39,7 @@ export function WeekChart({ days, goal }: { days: readonly WeekDay[]; goal: numb
               <>
                 <rect x={cx - BAR / 2} y={BASE - h} width={BAR} height={h} rx={BAR / 2} fill={d.met ? `url(#${id})` : "var(--ink-3)"} />
                 <text x={cx} y={BASE - h - 7} textAnchor="middle" fontSize={11} fill={d.today ? "var(--ink)" : "var(--ink-2)"}>
-                  {short(d.minutes)}
+                  {formatDuration(d.minutes)}
                 </text>
               </>
             ) : d.future ? null : (

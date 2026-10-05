@@ -4,12 +4,12 @@
 
 import { useState } from "react";
 import { Button, DateField, NumberField, SegmentedControl, Sheet, TextField, TimeField, useToast, Chip } from "@/components/ui";
-import { addMinutes, timeNY } from "@/lib/logic/dates";
+import { addMinutes, timeNY, formatDuration } from "@/lib/logic/dates";
 import { LABELS, manualProblem } from "@/lib/logic/focus";
 import type { DateStr, FocusSession } from "@/lib/types";
 import { deleteSession, editSession, logManual } from "./store";
 
-const QUICK = [30, 45, 60, 90, 120].map((m) => ({ value: m, label: m < 60 ? `${m}m` : m % 60 ? `${Math.floor(m / 60)}h ${m % 60}` : `${m / 60}h` }));
+const QUICK = [30, 45, 60, 90, 120].map((m) => ({ value: m, label: formatDuration(m) }));
 
 export interface SessionSheetProps {
   open: boolean;

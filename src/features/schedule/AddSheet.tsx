@@ -91,8 +91,8 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
             {LENGTH_CHOICES.map((m) => {
               const on = minutes === m;
               return (
-                <Chip key={m} on={on} onClick={() => setMinutes(m)} className="justify-center px-0">
-                  {m < 60 ? `${m}m` : formatDuration(m).replace(" ", "")}
+                <Chip key={m} on={on} onClick={() => setMinutes(m)} className="justify-center px-0 text-[13px]">
+                  {formatDuration(m)}
                 </Chip>
               );
             })}

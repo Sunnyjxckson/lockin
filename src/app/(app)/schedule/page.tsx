@@ -214,9 +214,10 @@ export default function SchedulePage() {
         <WeekStrip dates={dates} selected={date} today={today} edited={edited} onSelect={setPicked} />
       </div>
 
-      <div className="mt-5 flex items-baseline justify-between gap-3 px-1">
-        <p className="t-title min-w-0 truncate">{formatDateLong(date)}</p>
-        <p className="t-label shrink-0">{[inChallenge && challenge ? `Day ${n} of ${challenge.length_days}` : null, own ? "Edited" : null].filter(Boolean).join(", ")}</p>
+      {/* The day leads, with its label above it as on Money and Record, so a long date is never cut short. */}
+      <div className="mt-5 px-1">
+        <p className="t-label min-h-[13px]">{[inChallenge && challenge ? `Day ${n} of ${challenge.length_days}` : null, own ? "Edited" : null].filter(Boolean).join(", ") || (isToday ? "Today" : "From the weekly plan")}</p>
+        <p className="t-title mt-2 truncate">{formatDateLong(date)}</p>
       </div>
 
       {isToday && nowSeconds !== null && !day.loading && blocks.length > 0 ? (
