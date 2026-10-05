@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { SEED_ITEMS, SEED_VICE_LIBRARY, SEED_WORKOUTS } from "../seed/data";
 import type { Challenge, ChecklistItem, CoachNote, DayLog, Earning, SetLog, ViceSlip, Workout } from "../types";
 import {
+  briefBasis,
+  briefIsStale,
   activeFlagNotes,
   buildSnapshot,
   buildWeek,
@@ -469,8 +471,8 @@ describe("ongoing mode and challenge mode", () => {
     const d = base();
     d.settings = { carbs_target: 180, fat_target: 60, weight_unit: "lb", focus_goal_minutes: 90 };
     d.focus = [
-      row({ date: TODAY, start: "09:00", end: "09:50", minutes: 50, label: "Stats", source: "timer" as const, block_id: null }),
-      row({ date: TODAY, start: "14:00", end: "14:30", minutes: 30, label: null, source: "manual" as const, block_id: null }),
+      row({ date: TODAY, start: "09:00", end: "09:50", minutes: 50, label: "Stats", source: "timer" as const, block_id: null, away_count: 0, away_minutes: 0, clock_minutes: 50, planned_minutes: null, completed: false, live: null }),
+      row({ date: TODAY, start: "14:00", end: "14:30", minutes: 30, label: null, source: "manual" as const, block_id: null, away_count: 0, away_minutes: 0, clock_minutes: null, planned_minutes: null, completed: false, live: null }),
     ];
     const s = buildSnapshot(d, []);
     expect(s.focus.goalMinutes).toBe(90);
@@ -680,5 +682,26 @@ describe("reviewDue", () => {
     // The first challenge ended on Nov 3. The history is ongoing, so reviews keep coming.
     expect(reviewDue("2026-11-17", "07:00", c)?.weekEnd).toBe("2026-11-15");
     expect(reviewDue("2027-03-03", "07:00", c)?.weekEnd).toBe("2027-02-28");
+  });
+});
+
+describe("a brief and what it was written from", () => {
+  const c = { id: "c1", start_date: "2026-10-05", length_days: 30, money_target: 1000, money_deadline: "2026-10-14", money_target_start: null };
+
+  it("is stale once the challenge, its money target or the floor changes", () => {
+    const written = { basis: briefBasis(c, 100) };
+    expect(briefIsStale(written, briefBasis(c, 100))).toBe(false);
+    expect(briefIsStale(written, briefBasis(null, 100))).toBe(true);
+    expect(briefIsStale(written, briefBasis({ ...c, money_target: 1500 }, 100))).toBe(true);
+    expect(briefIsStale(written, briefBasis({ ...c, money_target: null, money_deadline: null }, 100))).toBe(true);
+    expect(briefIsStale(written, briefBasis({ ...c, money_target_start: "2026-10-08" }, 100))).toBe(true);
+    expect(briefIsStale(written, briefBasis(c, 150))).toBe(true);
+    expect(briefIsStale(written, briefBasis({ ...c, id: "c2" }, 100))).toBe(true);
+  });
+
+  it("leaves a brief with no basis alone, and a day with no brief is not stale", () => {
+    expect(briefIsStale({ basis: null }, briefBasis(null, 100))).toBe(false);
+    expect(briefIsStale({}, briefBasis(c, 100))).toBe(false);
+    expect(briefIsStale(null, briefBasis(c, 100))).toBe(false);
   });
 });

@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { db, subscribe, type Query } from "./index";
 import { getBlocksForDate, type DayBlock } from "../blocks";
-import { activeChallenge, modeOn, scoringVersions, type ModeInfo } from "../logic/challenge";
+import { activeChallenge, floorOn, modeOn, scoringVersions, type ModeInfo } from "../logic/challenge";
 import { nyParts, todayNY } from "../logic/dates";
 import { summarizeDay, summarizeWeek, type DaySummary, type WeekSummary } from "../logic/day";
 import type { AppSettings, Challenge, ChecklistItem, DateStr, DayLog, Row, TableName, TargetVersion, Workout } from "../types";
@@ -108,13 +108,17 @@ export function useChallenge(): Loadable<Challenge | null> {
   return { data: active, loading: all.loading, error: all.error, reload: all.reload };
 }
 
+const EARNED_QUERY = { eq: { key: "earned" } } as const;
+
 export interface ModeState extends ModeInfo {
   loading: boolean;
   today: DateStr;
   /** Every challenge, oldest start first. */
   challenges: Challenge[];
-  /** The least to earn each day, challenge or not. */
+  /** The least to earn today: the running challenge's own target for "Earned today" when it has one, otherwise `baseFloor`. */
   floor: number;
+  /** The floor saved in settings, which applies whenever no challenge overrides it. */
+  baseFloor: number;
 }
 
 /**
@@ -127,10 +131,13 @@ export function useMode(): ModeState {
   const today = useToday();
   const all = useChallenges();
   const settings = useSettings();
+  const earned = useList("checklist_item", EARNED_QUERY);
+  const earnedId = earned.data[0]?.id ?? null;
   return useMemo(() => {
     const info = modeOn(all.data, settings.data?.history_start ?? today, today);
-    return { ...info, loading: all.loading || settings.loading, today, challenges: all.data, floor: settings.data?.daily_floor ?? 0 };
-  }, [all.data, all.loading, settings.data, settings.loading, today]);
+    const baseFloor = settings.data?.daily_floor ?? 0;
+    return { ...info, loading: all.loading || settings.loading, today, challenges: all.data, floor: floorOn(baseFloor, info.challenge, earnedId), baseFloor };
+  }, [all.data, all.loading, settings.data, settings.loading, today, earnedId]);
 }
 
 export function useSettings(): Loadable<AppSettings | null> {

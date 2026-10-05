@@ -1,32 +1,23 @@
 // Reads and writes for meal planning. Everything goes through the
-// foundation's db. Tables: recipe, meal_plan, grocery_item, expense, and the
-// food fields on app_settings.
-//
-// The pantry (what is already at home), receipt price corrections and the
-// preferred store have no table of their own, so they live on one reserved
-// meal_plan row, the "book", dated long before any real week. Its
-// grocery_item rows are the pantry entries and the corrected prices. That
-// keeps them in the database (and in Supabase) without a schema change.
+// foundation's db. Tables: recipe, meal_plan, grocery_item, pantry_item (what
+// is already at home), receipt_price (what a pack really cost at a store),
+// expense, and the food fields on app_settings, including the preferred
+// store.
 
 import { db } from "@/lib/db";
 import { updateSettings } from "@/lib/db/helpers";
 import { addMeal } from "@/features/body/data";
 import { foodKey, indexFoods, recipeNumbers, round, derivedTags, type IngredientLine, type RecipeLike } from "@/lib/logic/meals";
-import { FOODS, STAPLES } from "@/lib/logic/mealsFoods";
+import { FOODS } from "@/lib/logic/mealsFoods";
 import { linePrices, listTotal, pantrySet, rollUp } from "@/lib/logic/mealsGrocery";
 import { LIBRARY } from "@/lib/logic/mealsLibrary";
 import { DEFAULT_STORE, estimateSource, isStore, pricesAt, withCorrections, type Corrections, type PriceSource, type Store } from "@/lib/logic/mealsPricing";
-import type { DateStr, Expense, GroceryItem, MealPlan, MealSlot, PlannedMeal, Recipe } from "@/lib/types";
+import type { DateStr, Expense, GroceryItem, MealPlan, MealSlot, PantryItem, PlannedMeal, ReceiptPrice, Recipe } from "@/lib/types";
 
 export const FOOD_INDEX = indexFoods(FOODS);
 
-/** A Monday that no real plan uses. */
-export const BOOK_WEEK: DateStr = "2000-01-03";
-const PANTRY = "@pantry";
-const PRICE = "@price";
-
-/** A planned meal that may have been cooked and logged. `logged` is the meal row it wrote. */
-export type Planned = PlannedMeal & { logged?: string | null };
+/** A planned meal. `logged` is the meal row it wrote when it was cooked. */
+export type Planned = PlannedMeal;
 
 // ---------- library ----------
 
@@ -47,44 +38,17 @@ export function ensureLibrary(): Promise<void> {
 
 // ---------- the book: pantry, receipt prices, preferred store ----------
 
-let bookReady: Promise<MealPlan> | null = null;
-
-export function ensureBook(): Promise<MealPlan> {
-  bookReady ??= (async () => {
-    const existing = await db.first("meal_plan", { eq: { week_start: BOOK_WEEK } });
-    if (existing) return existing;
-    const book = await db.upsert("meal_plan", { week_start: BOOK_WEEK, budget: 0, recipe_ids: [], meals: [], total_cost: 0, store: null }, ["week_start"]);
-    await db.insertMany(
-      "grocery_item",
-      STAPLES.map((name) => ({ plan_id: book.id, name, quantity: 1, unit: null, category: PANTRY, store: null, price: null, prices: null, bought: true })),
-    );
-    return book;
-  })().catch((e) => {
-    bookReady = null;
-    throw e;
-  });
-  return bookReady;
-}
-
 export interface Book {
-  id: string | null;
+  /** Food keys that are at home. */
   pantry: string[];
   corrections: Corrections;
   store: Store;
 }
 
-export function readBook(plans: readonly MealPlan[], items: readonly GroceryItem[]): Book {
-  const row = plans.find((p) => p.week_start === BOOK_WEEK) ?? null;
-  const mine = row ? items.filter((i) => i.plan_id === row.id) : [];
+export function readBook(pantry: readonly PantryItem[], prices: readonly ReceiptPrice[], preferredStore: string | null | undefined): Book {
   const corrections: Corrections = {};
-  for (const i of mine) if (i.category === PRICE && i.prices) corrections[foodKey(i.name)] = i.prices;
-  return {
-    id: row?.id ?? null,
-    // Before the book exists the staples count as at home, the same as right after.
-    pantry: row ? mine.filter((i) => i.category === PANTRY).map((i) => foodKey(i.name)) : [...STAPLES],
-    corrections,
-    store: isStore(row?.store) ? row.store : DEFAULT_STORE,
-  };
+  for (const p of prices) (corrections[foodKey(p.name)] ??= {})[p.store] = p.price;
+  return { pantry: pantry.map((i) => foodKey(i.name)), corrections, store: isStore(preferredStore) ? preferredStore : DEFAULT_STORE };
 }
 
 export function sourceFor(book: Book): PriceSource {
@@ -92,33 +56,20 @@ export function sourceFor(book: Book): PriceSource {
 }
 
 export async function setAtHome(name: string, atHome: boolean): Promise<void> {
-  const book = await ensureBook();
   const key = foodKey(name);
-  const rows = (await db.list("grocery_item", { eq: { plan_id: book.id } })).filter((r) => r.category === PANTRY && foodKey(r.name) === key);
-  if (atHome && rows.length === 0) {
-    await db.insert("grocery_item", { plan_id: book.id, name: key, quantity: 1, unit: null, category: PANTRY, store: null, price: null, prices: null, bought: true });
-  }
-  if (!atHome) for (const r of rows) await db.remove("grocery_item", r.id);
+  if (atHome) await db.upsert("pantry_item", { name: key }, ["name"]);
+  else await db.removeWhere("pantry_item", { name: key });
 }
 
 /** Save what a pack really cost at a store, from a receipt. Null goes back to the estimate. */
 export async function setReceiptPrice(name: string, store: Store, price: number | null): Promise<void> {
-  const book = await ensureBook();
   const key = foodKey(name);
-  const row = (await db.list("grocery_item", { eq: { plan_id: book.id } })).find((r) => r.category === PRICE && foodKey(r.name) === key);
-  const prices: Record<string, number> = { ...(row?.prices ?? {}) };
-  if (price === null || !(price >= 0)) delete prices[store];
-  else prices[store] = round(price, 2);
-  if (row && Object.keys(prices).length === 0) await db.remove("grocery_item", row.id);
-  else if (row) await db.update("grocery_item", row.id, { prices });
-  else if (Object.keys(prices).length > 0) {
-    await db.insert("grocery_item", { plan_id: book.id, name: key, quantity: 1, unit: null, category: PRICE, store: null, price: null, prices, bought: false });
-  }
+  if (price === null || !(price >= 0)) await db.removeWhere("receipt_price", { name: key, store });
+  else await db.upsert("receipt_price", { name: key, store, price: round(price, 2) }, ["name", "store"]);
 }
 
 export async function setPreferredStore(store: Store): Promise<void> {
-  const book = await ensureBook();
-  if (book.store !== store) await db.update("meal_plan", book.id, { store });
+  await updateSettings({ preferred_store: store });
 }
 
 // ---------- settings ----------
@@ -147,23 +98,42 @@ function costAt(meals: readonly PlannedMeal[], store: Store, ctx: SaveContext): 
 export async function savePlan(weekStart: DateStr, meals: readonly Planned[], budget: number, store: Store, ctx: SaveContext): Promise<MealPlan> {
   const plan = await db.upsert(
     "meal_plan",
-    { week_start: weekStart, budget, recipe_ids: [...new Set(meals.map((m) => m.recipe_id))], meals: meals as PlannedMeal[], total_cost: costAt(meals, store, ctx), store },
+    { week_start: weekStart, budget, recipe_ids: [...new Set(meals.map((m) => m.recipe_id))], meals: [...meals], total_cost: costAt(meals, store, ctx), store },
     ["week_start"],
   );
   await syncGrocery(plan, ctx);
   return plan;
 }
 
+let syncing: Promise<unknown> = Promise.resolve();
+
 /**
  * One grocery_item row per thing to buy, with the price at the chosen store
  * and at every store. Rows that are still needed keep their tick.
+ *
+ * Runs one at a time and reads the plan again when its turn comes. A save and
+ * the screen's own keep in step check can both ask for this at once, and two
+ * runs side by side each added the rows the other was adding.
  */
-export async function syncGrocery(plan: MealPlan, ctx: SaveContext): Promise<void> {
+export function syncGrocery(plan: MealPlan, ctx: SaveContext): Promise<void> {
+  const run = syncing.then(() => syncGroceryNow(plan.id, ctx));
+  syncing = run.catch(() => undefined);
+  return run;
+}
+
+async function syncGroceryNow(planId: string, ctx: SaveContext): Promise<void> {
+  const plan = await db.get("meal_plan", planId);
+  if (!plan) return;
   const source = sourceFor(ctx.book);
   const store = isStore(plan.store) ? plan.store : ctx.book.store;
   const lines = rollUp(plan.meals, recipeMap(ctx.recipes), FOOD_INDEX);
   const rows = await db.list("grocery_item", { eq: { plan_id: plan.id } });
-  const byName = new Map(rows.map((r) => [foodKey(r.name), r]));
+  const byName = new Map<string, GroceryItem>();
+  for (const r of rows) {
+    // A second row for the same food is left over from an older build. One is enough.
+    if (byName.has(foodKey(r.name))) await db.remove("grocery_item", r.id);
+    else byName.set(foodKey(r.name), r);
+  }
   const keep = new Set<string>();
   for (const line of lines) {
     const key = foodKey(line.name);
@@ -177,7 +147,7 @@ export async function syncGrocery(plan: MealPlan, ctx: SaveContext): Promise<voi
       await db.update("grocery_item", row.id, { ...next, bought: row.bought && next.quantity <= row.quantity });
     }
   }
-  for (const r of rows) if (!keep.has(foodKey(r.name))) await db.remove("grocery_item", r.id);
+  for (const [key, r] of byName) if (!keep.has(key)) await db.remove("grocery_item", r.id);
   const total = costAt(plan.meals, store, ctx);
   if (plan.total_cost !== total) await db.update("meal_plan", plan.id, { total_cost: total });
 }
@@ -204,7 +174,7 @@ export async function removePlan(plan: MealPlan): Promise<void> {
  * also pushes the day's calories and protein to the checklist for Today.
  */
 export async function logCooked(plan: MealPlan, date: DateStr, slot: MealSlot, recipe: RecipeLike): Promise<void> {
-  const meals = plan.meals as Planned[];
+  const meals = plan.meals;
   const at = meals.findIndex((m) => m.date === date && m.slot === slot);
   if (at < 0) return;
   const s = meals[at].servings;
@@ -215,7 +185,7 @@ export async function logCooked(plan: MealPlan, date: DateStr, slot: MealSlot, r
     carbs: round(recipe.carbs * s, 1),
     fat: round(recipe.fat * s, 1),
   });
-  await db.update("meal_plan", plan.id, { meals: meals.map((m, i) => (i === at ? { ...m, logged: meal.id } : m)) as PlannedMeal[] });
+  await db.update("meal_plan", plan.id, { meals: meals.map((m, i) => (i === at ? { ...m, logged: meal.id } : m)) });
 }
 
 // ---------- money ----------

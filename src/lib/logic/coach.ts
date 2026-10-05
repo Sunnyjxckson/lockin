@@ -115,6 +115,22 @@ export function round1(n: number): number {
 }
 
 /** "$1,000", "$42.50". */
+/**
+ * What a morning brief depends on beyond the day's logs: the challenge
+ * running today, its money target and the floor. A brief saved with one basis
+ * is written again when the basis is different later that day, so ending a
+ * challenge at noon does not leave the brief quoting its target until tomorrow.
+ */
+export function briefBasis(challenge: Pick<Challenge, "id" | "money_target" | "money_deadline" | "money_target_start" | "length_days" | "start_date"> | null, floor: number): string {
+  if (!challenge) return `none|${floor}`;
+  return [challenge.id, challenge.start_date, challenge.length_days, challenge.money_target ?? "", challenge.money_deadline ?? "", challenge.money_target_start ?? "", floor].join("|");
+}
+
+/** True when a saved brief was written from something that has since changed. A brief with no basis is left alone. */
+export function briefIsStale(note: { basis?: string | null } | null | undefined, basis: string): boolean {
+  return !!note && typeof note.basis === "string" && note.basis !== basis;
+}
+
 export function money(n: number): string {
   const v = Math.round((Number.isFinite(n) ? n : 0) * 100) / 100;
   const whole = Number.isInteger(v);

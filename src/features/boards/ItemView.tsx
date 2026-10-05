@@ -11,7 +11,7 @@ import { haptics } from "@/lib/haptics";
 import { colorAt, colorDistance, inkOnColor, linkHost, moveId } from "@/lib/logic/boards";
 import { usePhoto } from "@/lib/storage/hooks";
 import type { Board, BoardItem } from "@/lib/types";
-import { addColor, deleteItem, reorderItems, saveBoard, saveError, saveItem, useAspects } from "./data";
+import { addColor, deleteItem, reorderItems, saveBoard, saveError, saveItem } from "./data";
 import { loadPixels, type Pixels } from "./images";
 import { Overlay } from "./Overlay";
 
@@ -165,15 +165,14 @@ function ColorPart({ item }: { item: BoardItem }) {
   return (
     <div className="flex aspect-[4/3] w-full flex-col justify-end rounded-[4px] p-4" style={{ backgroundColor: color, color: inkOnColor(color) }}>
       {item.note ? <p className="text-[28px] leading-[1.05] font-semibold tracking-[-0.03em]">{item.note}</p> : null}
-      <p className="tnum mt-1 text-[13px] font-medium tracking-[0.14em] uppercase opacity-80">{color.replace("#", "")}</p>
+      <p className="tnum mt-1 text-[13px] font-medium tracking-[0.14em] uppercase">{color.replace("#", "")}</p>
     </div>
   );
 }
 
 function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: string) => BoardItem | null; onToggle: (hex: string) => Promise<void> }) {
   const url = usePhoto(item.image_url);
-  const aspects = useAspects();
-  const aspect = aspects[item.id] ?? 0.8;
+  const aspect = item.aspect ?? 0.8;
   const [pixels, setPixels] = useState<Pixels | null>(null);
   const [pick, setPick] = useState<{ x: number; y: number; hex: string } | null>(null);
   const palette = item.palette ?? [];
@@ -257,7 +256,7 @@ function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: stri
                   style={{ backgroundColor: c, color: inkOnColor(c) }}
                 >
                   {on ? <Check size={18} strokeWidth={3} aria-hidden className="absolute top-1.5 right-1.5" /> : null}
-                  <span className="tnum absolute bottom-1.5 left-1.5 text-[9px] font-medium tracking-[0.08em] uppercase opacity-80">{c.replace("#", "")}</span>
+                  <span className="tnum absolute bottom-1.5 left-1.5 text-[9px] font-medium tracking-[0.08em] uppercase">{c.replace("#", "")}</span>
                 </button>
               );
             })}

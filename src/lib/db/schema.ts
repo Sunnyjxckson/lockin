@@ -110,7 +110,7 @@ export const COLUMNS: Columns = {
     enabled: "boolean",
     sort_order: "integer",
   },
-  coach_note: { ...base, date: "date", kind: "text", body: "text", source: "text" },
+  coach_note: { ...base, date: "date", kind: "text", body: "text", source: "text", basis: "text" },
   push_subscription: { ...base, endpoint: "text", p256dh: "text", auth: "text", user_agent: "text" },
   calendar_token: {
     ...base,
@@ -140,6 +140,8 @@ export const COLUMNS: Columns = {
     food_likes: "jsonb",
     food_dislikes: "jsonb",
     focus_goal_minutes: "integer",
+    business_goal: "text",
+    preferred_store: "text",
   },
   mood_log: { ...base, date: "date", time: "text", mood: "smallint", note: "text" },
   motivation: { ...base, kind: "text", body: "text", url: "text", sort_order: "integer" },
@@ -155,6 +157,7 @@ export const COLUMNS: Columns = {
     source: "text",
     source_url: "text",
     sort_order: "integer",
+    aspect: "numeric",
   },
   theme: { ...base, name: "text", base: "text", palette: "jsonb", accent: "text", board_id: "text", active: "boolean" },
   recipe: {
@@ -186,8 +189,25 @@ export const COLUMNS: Columns = {
     prices: "jsonb",
     bought: "boolean",
   },
+  pantry_item: { ...base, name: "text" },
+  receipt_price: { ...base, name: "text", store: "text", price: "numeric" },
   expense: { ...base, date: "date", amount: "numeric", category: "text", note: "text", store: "text", plan_id: "text" },
-  focus_session: { ...base, date: "date", start: "text", end: "text", minutes: "integer", label: "text", source: "text", block_id: "text" },
+  focus_session: {
+    ...base,
+    date: "date",
+    start: "text",
+    end: "text",
+    minutes: "integer",
+    label: "text",
+    source: "text",
+    block_id: "text",
+    away_count: "integer",
+    away_minutes: "integer",
+    clock_minutes: "integer",
+    planned_minutes: "integer",
+    completed: "boolean",
+    live: "jsonb",
+  },
 };
 
 /**
@@ -205,4 +225,6 @@ export const UNIQUE_KEYS: { [K in TableName]?: (keyof Row<K> & string)[][] } = {
   calendar_token: [["provider"]],
   reminder_sent: [["key"]],
   meal_plan: [["week_start"]],
+  pantry_item: [["name"]],
+  receipt_price: [["name", "store"]],
 };

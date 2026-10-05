@@ -1,7 +1,9 @@
 "use client";
 
 // Watches the app going to the background while a focus timer runs.
-// Renders nothing. Mount it once on any screen that should keep watch.
+// Renders nothing. Mounted once, in AppShell, so it keeps watch on every
+// screen and keeps this device's copy of the running timer in step with its
+// row (a timer started on another phone shows up here with its pauses).
 //
 // A web app cannot stop the phone opening another app. What it can do is
 // notice: the moment the page is hidden is written down at once, so the
@@ -12,7 +14,8 @@ import { useEffect } from "react";
 import { useToast } from "@/components/ui";
 import { registration } from "@/features/reminders/client";
 import { comeBack, formatAway, leave, staleInfo, strictBreach } from "@/lib/logic/focus";
-import { changeLive, discardTimer, finishTimer, getLive, getStrict, writeText } from "./store";
+import { changeLive, discardTimer, finishTimer, getLive, getStrict, refreshLive, writeText } from "./store";
+import { useFocusTimer } from "./useFocus";
 
 const TAG = "lockin-focus";
 let mounted = 0;
@@ -39,6 +42,7 @@ async function clearNudge(): Promise<void> {
 
 export function FocusWatcher() {
   const toast = useToast();
+  useFocusTimer();
 
   useEffect(() => {
     mounted += 1;
@@ -56,6 +60,8 @@ export function FocusWatcher() {
 
     const onShow = async () => {
       const now = Date.now();
+      // Another device may have paused or finished it while this one was away.
+      await refreshLive();
       const live = changeLive((l) => comeBack(l, now));
       void clearNudge();
       if (!live) return;

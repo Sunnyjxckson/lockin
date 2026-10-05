@@ -45,6 +45,8 @@ export const SEED_SETTINGS: Omit<AppSettings, "created_at" | "history_start"> = 
   food_likes: [],
   food_dislikes: [],
   focus_goal_minutes: 60,
+  business_goal: null,
+  preferred_store: null,
 };
 
 type ItemSeed = Omit<ChecklistItem, "id" | "created_at" | "sort_order" | "archived">;

@@ -274,10 +274,14 @@ export default function ChallengeSettingsPage() {
               <NumberField
                 label="Earn at least"
                 prefix="$"
-                hint="Applies every day, with or without a challenge. It does not drop when you are ahead."
-                value={mode.floor}
+                hint={
+                  mode.floor !== mode.baseFloor && mode.challenge
+                    ? `${mode.challenge.name} holds Earned today to $${mode.floor.toLocaleString("en-US")} while it runs. This is the floor outside it.`
+                    : "Applies every day, with or without a challenge. It does not drop when you are ahead."
+                }
+                value={mode.baseFloor}
                 onChange={(v) => {
-                  if (v === null || v === mode.floor) return;
+                  if (v === null || v === mode.baseFloor) return;
                   void setDailyFloor(v, today).then(
                     () => toast("Floor saved. Applies from today.", { kind: "done" }),
                     () => toast("Could not save", { kind: "error" }),

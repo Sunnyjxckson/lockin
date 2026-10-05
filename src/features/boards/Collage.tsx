@@ -11,7 +11,7 @@ import { haptics } from "@/lib/haptics";
 import { NOTE_PAD, inkOnColor, layoutBoard, linkHost, moveId, noteMetrics, tileAt, type TileInput, type TileRect } from "@/lib/logic/boards";
 import { usePhoto } from "@/lib/storage/hooks";
 import type { BoardItem } from "@/lib/types";
-import { rememberAspect, useAspects } from "./data";
+import { rememberAspect } from "./data";
 
 export interface CollageProps {
   items: BoardItem[];
@@ -42,7 +42,6 @@ interface Drag {
 export function Collage({ items, onOpen, onReorder, gap = 6, bare = false, className }: CollageProps) {
   const box = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
-  const aspects = useAspects();
   const [order, setOrder] = useState<string[] | null>(null);
   const [drag, setDrag] = useState<Drag | null>(null);
   const dragRef = useRef<Drag | null>(null);
@@ -74,10 +73,10 @@ export function Collage({ items, onOpen, onReorder, gap = 6, bare = false, class
   const layout = useMemo(() => {
     const inputs: TileInput[] = ids.map((id) => {
       const item = byId.get(id) as BoardItem;
-      return { id, kind: item.kind, aspect: aspects[id] ?? null, chars: item.note?.length ?? 0, link: !!item.source_url };
+      return { id, kind: item.kind, aspect: item.aspect ?? null, chars: item.note?.length ?? 0, link: !!item.source_url };
     });
     return layoutBoard(inputs, { width: width || 320, gap });
-  }, [ids, byId, aspects, width, gap]);
+  }, [ids, byId, width, gap]);
   const layoutRef = useRef(layout);
   const idsRef = useRef(ids);
   useEffect(() => {
@@ -332,7 +331,7 @@ function ImageBody({ item }: { item: BoardItem }) {
           draggable={false}
           onLoad={(e) => {
             const img = e.currentTarget;
-            if (img.naturalWidth && img.naturalHeight) rememberAspect(item.id, img.naturalWidth / img.naturalHeight);
+            if (img.naturalWidth && img.naturalHeight) rememberAspect(item, img.naturalWidth / img.naturalHeight);
             setLoaded(true);
           }}
           className={cn("pointer-events-none size-full object-cover transition-opacity duration-500", loaded ? "opacity-100" : "opacity-0")}
@@ -348,7 +347,7 @@ function ColorBody({ item, wide, bare }: { item: BoardItem; wide: boolean; bare:
   return (
     <span className={cn("flex size-full flex-col justify-end p-3", bare ? "" : "rounded-[4px] border border-line")} style={{ backgroundColor: color, color: ink }}>
       {item.note ? <span className={cn("line-clamp-2 font-semibold tracking-[-0.02em]", wide ? "text-[17px] leading-[1.15]" : "text-[14px] leading-[1.15]")}>{item.note}</span> : null}
-      <span className="tnum mt-1 text-[11px] font-medium tracking-[0.12em] uppercase opacity-80">{color.replace("#", "")}</span>
+      <span className="tnum mt-1 text-[11px] font-medium tracking-[0.12em] uppercase">{color.replace("#", "")}</span>
     </span>
   );
 }

@@ -300,6 +300,11 @@ function money(n: number): string {
   return `$${n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
+/** A budget is a round number the user typed: "$15", not "$15.00". Cents only when it has them. */
+function budgetMoney(n: number): string {
+  return Number.isInteger(n) ? `$${n.toLocaleString("en-US")}` : money(n);
+}
+
 /**
  * Build a week. Tries many seeded combinations of recipes, scales each day's
  * portions, prices the week's grocery list, and keeps the best: every day on
@@ -463,7 +468,7 @@ export function planWeek(input: PlanInput): PlanResult {
     message = `These recipes cannot hit your numbers every day. ${why} This is the nearest week, at about ${money(summary.cost)}.`;
   } else if (summary.cost > input.budget + 0.004) {
     status = "over_budget";
-    message = `${money(input.budget)} a week is not enough to reach ${t.proteinMin}g protein and ${range} every day at these estimated prices. The cheapest week found costs about ${money(summary.cost)}, which is ${money(summary.overBy)} over. Raise the budget to about ${money(Math.ceil(summary.cost))}, or mark what you already have at home.`;
+    message = `${budgetMoney(input.budget)} a week is not enough to reach ${t.proteinMin}g protein and ${range} every day at these estimated prices. The cheapest week found costs about ${money(summary.cost)}, which is ${money(summary.overBy)} over. Raise the budget to about ${budgetMoney(Math.ceil(summary.cost))}, or mark what you already have at home.`;
   }
   return { ...summary, status, message, meals, recipeIds: [...new Set(meals.map((m) => m.recipe_id))] };
 }

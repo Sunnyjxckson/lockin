@@ -4,8 +4,10 @@
 import { getBlocksForDate } from "@/lib/blocks";
 import { db } from "@/lib/db";
 import { getChallenges, getScoringVersions, getSettings } from "@/lib/db/helpers";
-import { modeOn } from "@/lib/logic/challenge";
+import { floorOn, modeOn } from "@/lib/logic/challenge";
 import {
+  briefBasis,
+  briefIsStale,
   buildSnapshot,
   cleanCoachText,
   encodeFlagNote,
@@ -54,7 +56,7 @@ export async function loadCoachData(today: DateStr): Promise<CoachData | null> {
     today,
     historyStart: from,
     challenge: mode.challenge,
-    floor: settings.daily_floor ?? mode.challenge?.daily_floor ?? 0,
+    floor: floorOn(settings.daily_floor ?? mode.challenge?.daily_floor ?? 0, mode.challenge, items.find((i) => i.key === "earned")?.id),
     focus,
     settings,
     items,
@@ -95,10 +97,10 @@ export async function writeNote(kind: CoachKind, snapshot: CoachSnapshot): Promi
   return { body: fallbackFor(kind, snapshot), source: "fallback" };
 }
 
-async function saveNote(kind: CoachKind, date: DateStr, written: Written): Promise<CoachNote> {
+async function saveNote(kind: CoachKind, date: DateStr, written: Written, basis: string | null = null): Promise<CoachNote> {
   const existing = await db.first("coach_note", { eq: { date, kind } });
-  if (existing) return db.update("coach_note", existing.id, { body: written.body, source: written.source });
-  return db.insert("coach_note", { date, kind, body: written.body, source: written.source });
+  if (existing) return db.update("coach_note", existing.id, { body: written.body, source: written.source, basis });
+  return db.insert("coach_note", { date, kind, body: written.body, source: written.source, basis });
 }
 
 /** Run the rules and bring the saved flag notes in line. Returns the flags that are live and not dismissed. */
@@ -118,7 +120,7 @@ async function syncFlags(data: CoachData): Promise<Flag[]> {
 
 export async function writeMorning(data: CoachData, flags: Flag[]): Promise<CoachNote> {
   const snapshot = buildSnapshot(data, flags);
-  return saveNote("morning", data.today, await writeNote("morning", snapshot));
+  return saveNote("morning", data.today, await writeNote("morning", snapshot), briefBasis(data.challenge, data.floor));
 }
 
 /** The review for the week ending on `sunday`, saved under that date. */
@@ -152,7 +154,8 @@ export function syncCoach(today: DateStr, options: SyncOptions = {}): Promise<vo
 
     if (active) {
       const brief = await db.first("coach_note", { eq: { date: today, kind: "morning" } });
-      if (!brief || options.regenerate) await writeMorning(data, flags);
+      // Also when the challenge, its money target or the floor changed since it was written.
+      if (!brief || options.regenerate || briefIsStale(brief, briefBasis(data.challenge, data.floor))) await writeMorning(data, flags);
     }
 
     const due = reviewDue(today, timeNY(), data.historyStart);

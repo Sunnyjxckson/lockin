@@ -1,35 +1,28 @@
 "use client";
 
-// The running timer's state on this device, and every write the focus
-// feature makes.
+// The running timer's state, and every write the focus feature makes.
 //
-// The focus_session row (end null) is the timer itself and is what survives
-// everywhere. The pieces the table has no columns for (pauses, time away,
-// the countdown length, and a finished session's away numbers) are kept per
-// device through prefs. With those missing, the timer still runs from the
-// row's created_at.
+// The focus_session row (end null) is the timer. Its pauses and time away are
+// kept on the row too (`live`), so another device shows the same clock, and a
+// finished session keeps its away numbers in its own columns.
+//
+// This device also holds a copy of the running state in prefs. It is written
+// first and at once, because a page that is being hidden cannot wait for the
+// network, and then pushed to the row. Whichever copy is newer wins.
+//
+// Still per device, on purpose: how strict the timer is when the app is left,
+// the full screen switch, the phone blocker walk through being done, and the
+// note of which days this feature ticked Study by itself (so it only ever
+// unticks its own tick).
 
 import { db } from "@/lib/db";
 import { getItemByKey, getLogs, getSettings, setChecked } from "@/lib/db/helpers";
 import { addDays, todayNY } from "@/lib/logic/dates";
-import {
-  cleanLabel,
-  editPatch,
-  finish,
-  manualRow,
-  minutesOn,
-  newLive,
-  startRow,
-  studyTick,
-  type LiveTimer,
-  type SessionMeta,
-  type StrictMode,
-} from "@/lib/logic/focus";
+import { cleanLabel, editPatch, finish, manualRow, minutesOn, newLive, pickLive, revOf, startRow, studyTick, toState, type LiveTimer, type SessionMeta, type StrictMode } from "@/lib/logic/focus";
 import { getPref, setPref } from "@/lib/prefs";
 import type { DateStr, FocusSession, TimeStr } from "@/lib/types";
 
 const K_LIVE = "focus:live";
-const K_META = "focus:meta";
 const K_TICKS = "focus:autotick";
 
 // ---------- a tiny store over prefs ----------
@@ -84,8 +77,30 @@ export function getLive(): LiveTimer | null {
   return readJson<LiveTimer | null>(K_LIVE, null);
 }
 
-export function setLive(live: LiveTimer | null): void {
+/** Keep a copy on this device without touching the row (it came from the row). */
+export function cacheLive(live: LiveTimer | null): void {
   writeJson(K_LIVE, live);
+}
+
+let pushed = 0;
+
+/** Write the running state to its row, for other devices. A failure is left for the next change to retry. */
+export function pushLive(live: LiveTimer): void {
+  const rev = revOf(live);
+  if (rev <= pushed) return;
+  pushed = rev;
+  db.update("focus_session", live.id, { live: toState(live) }).catch(() => {
+    if (pushed === rev) pushed = 0;
+  });
+}
+
+/** Save a change to the running timer: here at once, then on the row. */
+export function setLive(live: LiveTimer | null): void {
+  if (!live) return cacheLive(null);
+  const prev = getLive();
+  const stamped: LiveTimer = { ...live, rev: Math.max(Date.now(), (prev?.rev ?? 0) + 1, (live.rev ?? 0) + 1) };
+  cacheLive(stamped);
+  pushLive(stamped);
 }
 
 /** Change the live timer, if there is one. */
@@ -93,8 +108,26 @@ export function changeLive(fn: (live: LiveTimer) => LiveTimer): LiveTimer | null
   const live = getLive();
   if (!live) return null;
   const next = fn(live);
-  if (next !== live) setLive(next);
-  return next;
+  if (next === live) return live;
+  setLive(next);
+  return getLive();
+}
+
+/**
+ * Bring this device's copy in line with the row before acting on it: another
+ * device may have paused, resumed or finished the timer since.
+ */
+export async function refreshLive(): Promise<LiveTimer | null> {
+  const row = await runningRow().catch(() => undefined);
+  if (row === undefined) return getLive();
+  if (!row) {
+    const have = getLive();
+    if (have && Date.now() - have.startedAt > 10000) cacheLive(null);
+    return getLive();
+  }
+  const picked = pickLive(getLive(), row);
+  if (picked.from === "row") cacheLive(picked.live);
+  return picked.live;
 }
 
 // ---------- settings on this device ----------
@@ -103,19 +136,6 @@ export function getStrict(): { mode: StrictMode; grace: number } {
   const mode = readText("focus:strict");
   const grace = Number(readText("focus:grace"));
   return { mode: mode === "end" || mode === "void" ? mode : "off", grace: grace > 0 ? grace : 60 };
-}
-
-// ---------- what a finished session keeps beyond its columns ----------
-
-export function getMetaMap(): Record<string, SessionMeta> {
-  return readJson<Record<string, SessionMeta>>(K_META, {});
-}
-
-function saveMeta(id: string, meta: SessionMeta | null): void {
-  const map = { ...getMetaMap() };
-  if (meta) map[id] = meta;
-  else delete map[id];
-  writeJson(K_META, map);
 }
 
 // ---------- the study item ----------
@@ -134,13 +154,12 @@ export async function syncStudy(date: DateStr): Promise<void> {
     getLogs(date, date),
   ]);
   if (!item || !item.active) return;
-  const meta = getMetaMap();
   const ticks = readJson<Record<string, boolean>>(K_TICKS, {});
   const log = logs.find((l) => l.item_id === item.id);
   const decision = studyTick({
     minutes: minutesOn(sessions, date),
     goal: settings?.focus_goal_minutes ?? 0,
-    blockCompleted: sessions.some((s) => s.end !== null && s.block_id !== null && meta[s.id]?.completed === true),
+    blockCompleted: sessions.some((s) => s.end !== null && s.block_id !== null && s.completed === true),
     checked: log?.checked === true,
     autoTicked: ticks[date] === true,
   });
@@ -169,12 +188,12 @@ export async function startTimer(p: { label: string; plannedSeconds: number | nu
   const label = cleanLabel(p.label);
   // The saved state goes in before the row, so nothing ever sees the row without it.
   const id = crypto.randomUUID();
-  const live = newLive({ id, startedAt: now, label, plannedSeconds: p.plannedSeconds, blockId: p.blockId ?? null });
-  setLive(live);
+  const live: LiveTimer = { ...newLive({ id, startedAt: now, label, plannedSeconds: p.plannedSeconds, blockId: p.blockId ?? null }), rev: now };
+  cacheLive(live);
   try {
-    await db.insert("focus_session", { ...startRow(now, label, p.blockId ?? null), id });
+    await db.insert("focus_session", { ...startRow(now, label, p.blockId ?? null, live), id });
   } catch (e) {
-    setLive(null);
+    cacheLive(null);
     throw e;
   }
   return live;
@@ -202,9 +221,9 @@ export async function finishTimer(live: LiveTimer, opts: { at?: number; minutes?
     await db.remove("focus_session", live.id);
     return { logged: false, minutes: 0, meta: null };
   }
+  // A length the user typed in is their word, so the countdown no longer vouches for it.
   const meta: SessionMeta = opts.minutes !== undefined ? { ...done.meta, completed: false } : done.meta;
-  saveMeta(live.id, meta);
-  await db.update("focus_session", live.id, { end: done.patch.end, minutes });
+  await db.update("focus_session", live.id, { ...done.patch, ...meta, minutes });
   await syncStudy(row.date);
   return { logged: true, minutes, meta };
 }
@@ -223,16 +242,13 @@ export async function logManual(input: { date: DateStr; minutes: number; label: 
 }
 
 export async function editSession(row: FocusSession, input: { date: DateStr; minutes: number; label: string }): Promise<void> {
-  await db.update("focus_session", row.id, editPatch(row, input));
   // An edited length is the user's word, so the countdown no longer vouches for it.
-  const meta = getMetaMap()[row.id];
-  if (meta && input.minutes !== row.minutes) saveMeta(row.id, { ...meta, completed: false });
+  await db.update("focus_session", row.id, { ...editPatch(row, input), ...(Math.round(input.minutes) !== row.minutes ? { completed: false } : {}) });
   await syncStudy(row.date);
   if (input.date !== row.date) await syncStudy(input.date);
 }
 
 export async function deleteSession(row: FocusSession): Promise<void> {
   await db.remove("focus_session", row.id);
-  saveMeta(row.id, null);
   await syncStudy(row.date);
 }

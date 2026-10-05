@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useList } from "@/lib/db/hooks";
-import { clockOf, liveFromRow, type Clock, type LiveTimer, type SessionMeta, type StrictMode } from "@/lib/logic/focus";
+import { clockOf, pickLive, revOf, type Clock, type LiveTimer, type StrictMode } from "@/lib/logic/focus";
 import type { FocusSession } from "@/lib/types";
-import { getLive, getMetaMap, getStrict, readText, setLive, subscribePrefs, writeText } from "./store";
+import { cacheLive, getLive, getStrict, pushLive, readText, subscribePrefs, writeText } from "./store";
 
 const none = () => null;
 
@@ -20,11 +20,6 @@ export function useStrict(): { mode: StrictMode; grace: number } {
   return useMemo(() => getStrict(), [mode, grace]); // eslint-disable-line react-hooks/exhaustive-deps
 }
 
-const EMPTY_META: Record<string, SessionMeta> = {};
-export function useMetaMap(): Record<string, SessionMeta> {
-  return useSyncExternalStore(subscribePrefs, getMetaMap, () => EMPTY_META);
-}
-
 export interface FocusTimer {
   loading: boolean;
   /** The running timer, or null. */
@@ -33,26 +28,32 @@ export interface FocusTimer {
 }
 
 /**
- * The running timer. The row is the truth about whether one runs. The saved
- * state adds pauses and time away when it belongs to that row.
+ * The running timer. The row is the truth about whether one runs, and it
+ * carries the pauses and time away. This device's copy is used while it is
+ * the newer of the two (it is written first), and each is brought up to the
+ * other here.
  */
 export function useFocusTimer(): FocusTimer {
   const saved = useSyncExternalStore(subscribePrefs, getLive, none);
   const recent = useList("focus_session", { orderBy: "created_at", ascending: false, limit: 40 });
   const row = useMemo(() => recent.data.find((r) => r.end === null) ?? null, [recent.data]);
-  const live = useMemo(() => {
-    if (!row) return null;
-    return saved && saved.id === row.id ? saved : liveFromRow(row);
-  }, [row, saved]);
+  const live = useMemo(() => (row ? pickLive(saved, row).live : null), [row, saved]);
 
-  // Keep the saved state and the row in step.
   useEffect(() => {
     if (recent.loading) return;
     // Read the store again here, and leave a timer that started seconds ago
     // alone: its saved state is written just before its row.
     const fresh = getLive();
-    if (!row && fresh && Date.now() - fresh.startedAt > 10000) setLive(null);
-    else if (row && (!fresh || fresh.id !== row.id)) setLive(liveFromRow(row));
+    if (!row) {
+      if (fresh && Date.now() - fresh.startedAt > 10000) cacheLive(null);
+      return;
+    }
+    const picked = pickLive(fresh, row);
+    if (picked.from === "row") {
+      if (!fresh || fresh.id !== row.id || revOf(fresh) !== revOf(picked.live)) cacheLive(picked.live);
+    } else if (!row.live || revOf(picked.live) > row.live.rev) {
+      pushLive(picked.live);
+    }
   }, [recent.loading, row, saved]);
 
   return { loading: recent.loading, live, row };

@@ -6,9 +6,10 @@ import { checkLocalPasscode, createLocalPasscode, hasLocalPasscode, isLocallyUnl
 import { subscribe } from "@/lib/db";
 import { getSettings } from "@/lib/db/helpers";
 import { setHapticsEnabled } from "@/lib/haptics";
-import { upgradeLocalData } from "@/lib/db/upgrade";
+import { adoptDevicePrefs, upgradeLocalData } from "@/lib/db/upgrade";
 import { ensureSeeded } from "@/lib/seed";
 import { loadTheme } from "@/lib/theme";
+import { FocusWatcher } from "@/features/focus/FocusWatcher";
 import { LocalScheduler } from "@/features/reminders/LocalScheduler";
 import { LockScreen } from "./LockScreen";
 
@@ -70,6 +71,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       });
     ensureSeeded()
       .then(() => upgradeLocalData())
+      // Device copies an earlier build kept. A failure leaves them for the next load.
+      .then(() => adoptDevicePrefs().catch(() => undefined))
       .then(applySettings)
       // The saved theme, so a look set on another device shows up here. A failure leaves the cached one.
       .then(() => loadTheme().catch(() => undefined))
@@ -123,6 +126,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       <TabBar />
       {/* Keeps the service worker holding today's reminders on every screen. */}
       <LocalScheduler />
+      {/* Notices the app being left while a focus timer runs, on every screen. */}
+      <FocusWatcher />
     </>
   );
 }

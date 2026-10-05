@@ -6,6 +6,9 @@ import {
   comeBack,
   editPatch,
   finish,
+  isPaused,
+  pickLive,
+  toState,
   formatAway,
   leave,
   liveFromRow,
@@ -64,6 +67,50 @@ describe("clock", () => {
     expect(l.startedAt).toBe(T0);
     expect(l.label).toBe("Study");
     expect(l.blockId).toBe("b");
+  });
+
+  it("pausing at the instant on screen keeps the number the user paused on", () => {
+    // The screen last drew at 10:00.2 and the tap lands at 10:00.9. Paused at
+    // the tap, the next redraw would read 10:01.
+    const drawn = T0 + 10 * MIN + 200;
+    const l = pause(live0(), drawn);
+    for (const at of [drawn, drawn + 700, drawn + 1300, drawn + 60000]) expect(clockOf(l, at).focusedSeconds).toBe(600);
+    const counting = pause({ ...live0(), plannedSeconds: 25 * 60 }, drawn);
+    expect(clockOf(counting, drawn + 5000).remaining).toBe(clockOf(counting, drawn).remaining);
+  });
+
+  it("a pause never starts before the last one ended", () => {
+    // Resumed at the tap, then paused again before the screen redrew.
+    const once = resume(pause(live0(), T0 + 5 * MIN), T0 + 6 * MIN);
+    const again = pause(once, T0 + 6 * MIN - 800);
+    expect(again.pauses[1].from).toBe(T0 + 6 * MIN);
+    expect(clockOf(again, T0 + 9 * MIN).pausedSeconds).toBe(4 * 60);
+    expect(clockOf(again, T0 + 9 * MIN).focusedSeconds).toBe(5 * 60);
+  });
+
+  it("keeps pauses and time away on the row, and reads them back on another device", () => {
+    let l = pause({ ...live0(), plannedSeconds: 45 * 60, rev: T0 }, T0 + 5 * MIN);
+    l = resume(l, T0 + 8 * MIN);
+    l = comeBack(leave(l, T0 + 10 * MIN), T0 + 12 * MIN);
+    const row = { id: l.id, created_at: new Date(T0 + 400).toISOString(), label: l.label, block_id: null, live: { ...toState(l), rev: T0 + 12 * MIN } };
+    const there = liveFromRow(row);
+    expect(there.startedAt).toBe(T0);
+    expect(there.plannedSeconds).toBe(45 * 60);
+    expect(clockOf(there, T0 + 20 * MIN)).toEqual(clockOf(l, T0 + 20 * MIN));
+    expect(clockOf(there, T0 + 20 * MIN)).toMatchObject({ pausedSeconds: 180, awayCount: 1, awaySeconds: 120, focusedSeconds: 15 * 60 });
+  });
+
+  it("believes the newer of the device copy and the row", () => {
+    const base = { ...live0(), rev: T0 + 1000 };
+    const row = (rev: number | null) => ({ id: base.id, created_at: new Date(T0).toISOString(), label: "Study", block_id: null, live: rev === null ? null : { ...toState(pause(base, T0 + 2000)), rev } });
+    expect(pickLive(base, row(T0 + 500)).from).toBe("device");
+    expect(pickLive(base, row(T0 + 1000)).from).toBe("device");
+    expect(pickLive(base, row(null)).from).toBe("device");
+    const newer = pickLive(base, row(T0 + 5000));
+    expect(newer.from).toBe("row");
+    expect(isPaused(newer.live)).toBe(true);
+    expect(pickLive(null, row(T0 + 500)).from).toBe("row");
+    expect(pickLive({ ...base, id: "another" }, row(T0 + 500)).from).toBe("row");
   });
 });
 
@@ -148,8 +195,8 @@ describe("finish", () => {
     l = resume(pause(l, T0 + 20 * MIN), T0 + 26 * MIN);
     const f = finish(l, T0 + 60 * MIN);
     expect(f.log).toBe(true);
-    expect(f.patch).toEqual({ end: "21:00", minutes: 50 });
-    expect(f.meta).toMatchObject({ clock_minutes: 60, away_count: 1, away_minutes: 4, paused_minutes: 6, completed: false, planned_minutes: null });
+    expect(f.patch).toEqual({ end: "21:00", minutes: 50, live: null, clock_minutes: 60, away_count: 1, away_minutes: 4, planned_minutes: null, completed: false });
+    expect(f.meta).toMatchObject({ clock_minutes: 60, away_count: 1, away_minutes: 4, completed: false, planned_minutes: null });
   });
 
   it("closes an open pause at the finish", () => {
@@ -173,7 +220,7 @@ describe("finish", () => {
     expect(row).toMatchObject({ date: "2026-10-05", start: "23:30", end: null, minutes: 0, source: "timer" });
     expect(Date.parse(row.created_at)).toBe(start);
     const f = finish(newLive({ id: "s", startedAt: start, label: "Study" }), start + 75 * MIN);
-    expect(f.patch).toEqual({ end: "00:45", minutes: 75 });
+    expect(f.patch).toMatchObject({ end: "00:45", minutes: 75, live: null });
     expect(minutesOn([{ ...row, ...f.patch }], "2026-10-05")).toBe(75);
     expect(minutesOn([{ ...row, ...f.patch }], "2026-10-06")).toBe(0);
   });

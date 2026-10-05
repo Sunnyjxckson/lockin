@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { workoutsFor } from "@/lib/db/helpers";
-import { useDayBlocks, useList, useSettings, useToday, useWorkouts } from "@/lib/db/hooks";
+import { useDayBlocks, useList, useMode, useSettings, useToday, useWorkouts } from "@/lib/db/hooks";
 import { weekdayOf } from "@/lib/logic/dates";
 import { planDay, type PlannedNotification, type ReminderDay } from "@/lib/logic/reminders";
 
@@ -26,13 +26,14 @@ export function useTodayPlan(): TodayPlan {
   const earnings = useList("earning", { from: today, to: today });
   const settings = useSettings();
   const workouts = useWorkouts();
+  // The floor in force today: a running challenge's own target for "Earned today" when it has one.
+  const liveFloor = useMode().floor;
 
   const loading = reminders.loading || blocks.loading || earnings.loading || settings.loading || workouts.loading;
 
   return useMemo(() => {
     const earned = earnings.data.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
-    // The floor applies every day, challenge or not.
-    const floor = settings.data?.daily_floor ?? 0;
+    const floor = liveFloor;
     const enabledCount = reminders.data.filter((r) => r.enabled).length;
     if (loading || !settings.data) return { loading: true, plan: [], toSend: [], earned, floor, enabledCount };
     const day: ReminderDay = {
@@ -50,5 +51,5 @@ export function useTodayPlan(): TodayPlan {
       floor,
       enabledCount,
     };
-  }, [loading, today, reminders.data, blocks.data, earnings.data, settings.data, workouts.data]);
+  }, [loading, today, reminders.data, blocks.data, earnings.data, settings.data, workouts.data, liveFloor]);
 }

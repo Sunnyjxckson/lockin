@@ -10,7 +10,7 @@ import { pricesAt, isStore, type PriceSource, type Store } from "@/lib/logic/mea
 import { targetOn } from "@/lib/logic/targets";
 import type { DateStr, Expense, GroceryItem, MealPlan, Recipe } from "@/lib/types";
 import { listTotal } from "@/lib/logic/mealsGrocery";
-import { BOOK_WEEK, ensureBook, ensureLibrary, FOOD_INDEX, readBook, sourceFor, syncGrocery, type Book, type Planned } from "./data";
+import { ensureLibrary, FOOD_INDEX, readBook, sourceFor, syncGrocery, type Book, type Planned } from "./data";
 
 export type WeekChoice = "this" | "next";
 
@@ -63,11 +63,12 @@ export function useMeals(week: WeekChoice): MealsState {
   const recipes = useList("recipe", { orderBy: "name" });
   const plans = useList("meal_plan");
   const items = useList("grocery_item");
+  const pantryRows = useList("pantry_item", { orderBy: "name" });
+  const priceRows = useList("receipt_price");
   const expenses = useList("expense", { orderBy: "date" });
 
   useEffect(() => {
     void ensureLibrary().catch(() => undefined);
-    void ensureBook().catch(() => undefined);
   }, []);
 
   const today = mode.today;
@@ -84,13 +85,16 @@ export function useMeals(week: WeekChoice): MealsState {
   const itemsData = items.data;
   const itemsLoading = items.loading;
   const expensesData = expenses.data;
+  const pantryData = pantryRows.data;
+  const priceData = priceRows.data;
+  const bookLoading = pantryRows.loading || priceRows.loading;
   const start = week === "next" ? addDays(weekStart(today), 7) : weekStart(today);
 
   return useMemo(() => {
     const dates = [0, 1, 2, 3, 4, 5, 6].map((i) => addDays(start, i));
-    const book = readBook(plansData, itemsData);
+    const book = readBook(pantryData, priceData, settingsData?.preferred_store);
     const source = sourceFor(book);
-    const plan = plansData.find((p) => p.week_start === start && p.week_start !== BOOK_WEEK) ?? null;
+    const plan = plansData.find((p) => p.week_start === start) ?? null;
     const store: Store = isStore(plan?.store) ? plan.store : book.store;
 
     const cal = checklistData.items.find((i) => i.key === "calories");
@@ -116,12 +120,12 @@ export function useMeals(week: WeekChoice): MealsState {
       dislikes,
       budget: plan?.budget ?? budget ?? 0,
     };
-    const meals = (plan?.meals ?? []) as Planned[];
+    const meals: Planned[] = plan?.meals ?? [];
     const pantry = pantrySet(book.pantry);
     const shops = expensesData.filter((e) => e.category === "groceries" && (plan ? e.plan_id === plan.id : false));
     const c = challenge;
     return {
-      loading: modeLoading || settingsLoading || recipesLoading || plansLoading || itemsLoading || checklistLoading || recipesData.length === 0,
+      loading: modeLoading || settingsLoading || recipesLoading || plansLoading || itemsLoading || bookLoading || checklistLoading || recipesData.length === 0,
       today,
       weekStart: start,
       dates,
@@ -145,7 +149,7 @@ export function useMeals(week: WeekChoice): MealsState {
       spent: shops.reduce((a, e) => a + e.amount, 0),
       challengeName: c && c.rules?.some((r) => r.item_id === cal?.id || r.item_id === pro?.id) ? c.name : null,
     };
-  }, [start, today, modeLoading, challenge, settingsData, settingsLoading, checklistData, checklistLoading, recipesData, recipesLoading, plansData, plansLoading, itemsData, itemsLoading, expensesData]);
+  }, [start, today, modeLoading, challenge, settingsData, settingsLoading, checklistData, checklistLoading, recipesData, recipesLoading, plansData, plansLoading, itemsData, itemsLoading, expensesData, pantryData, priceData, bookLoading]);
 }
 
 /**

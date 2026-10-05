@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { COLUMNS, UNIQUE_KEYS } from "./schema";
+import { STAPLES } from "../logic/mealsFoods";
 import { TABLE_NAMES } from "../types";
 
 const dir = fileURLToPath(new URL("../../../supabase/migrations/", import.meta.url));
@@ -65,6 +66,11 @@ describe("the migrations match types.ts", () => {
     for (const [table, keys] of Object.entries(UNIQUE_KEYS)) {
       for (const cols of keys ?? []) expect(parsed[table].unique, `${table} (${cols.join(",")})`).toContain(cols.join(","));
     }
+  });
+
+  it("gives an app that was already set up the same pantry staples a new install is seeded with", () => {
+    const values = /from \(values ([^\n]+)\) as s \(name\)/.exec(sql)?.[1] ?? "";
+    expect([...values.matchAll(/'([^']+)'/g)].map((m) => m[1]).sort()).toEqual([...STAPLES].sort());
   });
 
   it("gives no access to the anon key", () => {

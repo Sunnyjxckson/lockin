@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useToast } from "@/components/ui";
 import { useList, useMode, useNow } from "@/lib/db/hooks";
-import { activeFlagNotes, parseFlagNote, reviewDue, type FlagNote, type ReviewDue } from "@/lib/logic/coach";
+import { activeFlagNotes, briefBasis, briefIsStale, parseFlagNote, reviewDue, type FlagNote, type ReviewDue } from "@/lib/logic/coach";
 import { timeNY } from "@/lib/logic/dates";
 import type { Challenge, CoachNote, DateStr } from "@/lib/types";
 import { dismissFlag, restoreFlag, syncCoach } from "./data";
@@ -81,16 +81,22 @@ export function useCoach(auto: "always" | "missing" = "always"): CoachState {
       .sort((a, b) => (a.date === b.date ? (a.created_at < b.created_at ? 1 : -1) : a.date < b.date ? 1 : -1));
   }, [notes.data, brief, weekly, flags]);
 
-  // Run the routine once per day per mount.
+  // Run the routine once per day per mount, and again when today's brief goes
+  // missing or was written from a challenge, money target or floor that has
+  // since changed (a challenge ended at noon, say).
   const ran = useRef<string | null>(null);
   const hasBrief = !!brief;
+  const basis = briefBasis(c, mode.floor);
+  const stale = briefIsStale(brief, basis);
   useEffect(() => {
     if (loading || phase === "before") return;
-    if (ran.current === today) return;
-    if (auto === "missing" && (hasBrief || phase !== "active")) return;
-    ran.current = today;
+    const key = `${today}|${hasBrief ? basis : "none"}`;
+    if (ran.current === key) return;
+    if (ran.current?.startsWith(`${today}|`) && hasBrief && !stale) return;
+    if (auto === "missing" && ((hasBrief && !stale) || phase !== "active")) return;
+    ran.current = key;
     syncCoach(today).catch(() => setFailed(true));
-  }, [loading, phase, today, auto, hasBrief]);
+  }, [loading, phase, today, auto, hasBrief, basis, stale]);
 
   const regenerate = useCallback(() => {
     setBusy("morning");
@@ -133,7 +139,7 @@ export function useCoach(auto: "always" | "missing" = "always"): CoachState {
     phase,
     dayNumber: mode.day,
     brief,
-    writingBrief: !loading && phase === "active" && !brief && !failed,
+    writingBrief: !loading && phase === "active" && (!brief || stale) && !failed,
     flags,
     weekly,
     due,

@@ -119,7 +119,7 @@ export default function NewChallengePage() {
     rules,
     money_target: hasMoney ? money : null,
     money_deadline: hasMoney ? (deadline ?? end) : null,
-    daily_floor: mode.floor,
+    daily_floor: mode.baseFloor,
   };
   const incomplete = Object.entries(bad).some(([id, v]) => v && id in picked);
   const problem = challengeProblem(input, today) ?? (incomplete ? "Finish the targets for the items you picked." : null);

@@ -73,7 +73,8 @@ export function FocusModeCard({ fullScreen, onFullScreen }: { fullScreen: boolea
   const [done, setDone] = usePrefText("focus:setup_done");
   const [open, setOpen] = useState(false);
   const [phone, setPhone] = useState<"iphone" | "android">(() => (typeof navigator !== "undefined" && !isIOS() && /Android/i.test(navigator.userAgent) ? "android" : "iphone"));
-  const show = open || done !== "1";
+  // Closed until asked for: three screens of phone settings should not sit between the timer and the sessions.
+  const show = open;
   const groups = phone === "iphone" ? IPHONE : ANDROID;
 
   return (
@@ -100,13 +101,13 @@ export function FocusModeCard({ fullScreen, onFullScreen }: { fullScreen: boolea
       </Card>
 
       <Card padded={false} data-setup={done === "1" ? "done" : "todo"}>
-        <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={show} disabled={done !== "1"} className="flex w-full items-center gap-3 p-4 text-left">
+        <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={show} className="flex w-full items-center gap-3 p-4 text-left">
           <ShieldCheck size={22} className={cn("shrink-0", done === "1" ? "text-accent" : "text-ink-2")} aria-hidden />
           <span className="min-w-0 flex-1">
             <span className="block text-[16px] font-semibold">{done === "1" ? "Phone blocker set up" : "Block the other apps"}</span>
-            <span className="block text-[13px] text-ink-2">{done === "1" ? "Tap to see the steps again." : "One time setup, about three minutes."}</span>
+            <span className="block text-[13px] text-ink-2">{done === "1" ? "Tap to see the steps again." : "One time setup on your phone, about three minutes."}</span>
           </span>
-          {done === "1" ? <ChevronDown size={18} className={cn("shrink-0 text-ink-3 transition-transform", show && "rotate-180")} aria-hidden /> : null}
+          <ChevronDown size={18} className={cn("shrink-0 text-ink-3 transition-transform", show && "rotate-180")} aria-hidden />
         </button>
         {show ? (
           <div className="border-t border-line p-4">

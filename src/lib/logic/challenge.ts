@@ -149,6 +149,19 @@ export function ruleTarget(c: Pick<Challenge, "rules">, itemId: string): Target 
   return c.rules?.find((r) => r.item_id === itemId)?.target ?? null;
 }
 
+/**
+ * The daily earnings floor in force. A running challenge that holds "Earned
+ * today" to its own minimum sets the floor while it runs. Otherwise it is the
+ * floor from settings. Nothing is written: when the challenge ends the
+ * settings floor is simply back.
+ */
+export function floorOn(base: number, challenge: Pick<Challenge, "rules"> | null | undefined, earnedItemId: string | null | undefined): number {
+  if (!challenge || !earnedItemId) return base;
+  const t = ruleTarget(challenge, earnedItemId);
+  const min = t?.kind === "min" || t?.kind === "range" ? t.min : null;
+  return min !== null && min > 0 ? min : base;
+}
+
 /** A day scored for the challenge: the same day, counting only the challenge's items. */
 export function challengeDay(c: Pick<Challenge, "rules">, summary: DaySummary): DaySummary {
   if (!c.rules) return summary;

@@ -134,7 +134,7 @@ export function LookStudio({ board, items, imageId = null, onClose }: LookStudio
                 return (
                   <div key={role} className="flex min-h-0 flex-1 flex-col justify-end rounded-[4px] border border-line px-2 py-1.5" style={{ backgroundColor: used, color: inkOnColor(used) }}>
                     <span className="text-[10px] leading-tight font-semibold">{ROLE_LABEL[role]}</span>
-                    <span className="tnum text-[9px] leading-tight tracking-[0.1em] uppercase opacity-80">
+                    <span className="tnum text-[9px] leading-tight tracking-[0.1em] uppercase">
                       {used.replace("#", "")}
                       {roles[role] ? (moved ? " adjusted" : "") : " base"}
                     </span>

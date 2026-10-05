@@ -55,7 +55,7 @@ function useWakeLock(on: boolean): boolean {
   return held;
 }
 
-export function FocusView({ live, clock, onClose }: { live: LiveTimer; clock: Clock; onClose: () => void }) {
+export function FocusView({ live, clock, now, onClose }: { live: LiveTimer; clock: Clock; now: number; onClose: () => void }) {
   const frame = useRef<HTMLDivElement>(null);
   const awake = useWakeLock(true);
 
@@ -87,7 +87,7 @@ export function FocusView({ live, clock, onClose }: { live: LiveTimer; clock: Cl
         </button>
       </div>
       <div className="flex flex-1 items-center justify-center">
-        <RunningTimer live={live} clock={clock} big />
+        <RunningTimer live={live} clock={clock} now={now} big />
       </div>
       <p className="mx-auto max-w-[300px] text-center text-[13px] text-ink-3">
         {awake ? "Screen stays on. " : ""}

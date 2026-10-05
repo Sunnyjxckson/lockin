@@ -199,7 +199,7 @@ describe("planWeek when it cannot be done", () => {
     for (const d of p.days) expect(d.protein).toBeGreaterThanOrEqual(180);
     expect(p.cost).toBeGreaterThan(30);
     expect(p.overBy).toBeCloseTo(p.cost - 30, 2);
-    expect(p.message).toContain("$30.00 a week is not enough");
+    expect(p.message).toContain("$30 a week is not enough");
     expect(p.message).toContain("180g protein");
     expect(p.message).toContain(`$${p.cost.toFixed(2)}`);
     expect(p.message).toContain("estimated");

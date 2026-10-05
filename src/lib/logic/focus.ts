@@ -11,7 +11,7 @@
 //                 user did not claim back. This is what gets logged.
 
 import { addDays, nyParts, weekDates, weekStart } from "./dates";
-import type { DateStr, DayLog, FocusSession, TimeStr } from "../types";
+import type { DateStr, DayLog, FocusLive, FocusSession, TimeStr } from "../types";
 
 // ---------- constants ----------
 
@@ -57,19 +57,55 @@ export interface LiveTimer {
   blockId: string | null;
   pauses: Span[];
   aways: Away[];
+  /** When this state last changed. Between a device's copy and the row's, the newer one wins. */
+  rev?: number;
 }
 
 export function newLive(p: { id: string; startedAt: number; label: string; plannedSeconds?: number | null; blockId?: string | null }): LiveTimer {
   return { id: p.id, startedAt: p.startedAt, label: p.label, plannedSeconds: p.plannedSeconds ?? null, blockId: p.blockId ?? null, pauses: [], aways: [] };
 }
 
+export function revOf(live: Pick<LiveTimer, "rev" | "startedAt">): number {
+  return live.rev ?? live.startedAt;
+}
+
+/** What the row keeps of a running timer, so another device shows the same clock. */
+export function toState(live: LiveTimer): FocusLive {
+  return { started_at: live.startedAt, planned_seconds: live.plannedSeconds, pauses: live.pauses, aways: live.aways, rev: revOf(live) };
+}
+
+const isSpan = (s: unknown): s is Span => !!s && typeof (s as Span).from === "number" && ((s as Span).to === null || typeof (s as Span).to === "number");
+
 /**
- * The timer rebuilt from the row alone, for a device that has no saved
- * pauses (another phone, cleared storage). created_at is the start instant.
+ * The timer rebuilt from its row: the saved pauses and time away when the row
+ * has them, otherwise a plain clock from created_at (a row written before
+ * the state was kept on it).
  */
-export function liveFromRow(row: Pick<FocusSession, "id" | "created_at" | "label" | "block_id">): LiveTimer {
+export function liveFromRow(row: Pick<FocusSession, "id" | "created_at" | "label" | "block_id"> & { live?: FocusLive | null }): LiveTimer {
   const at = Date.parse(row.created_at);
-  return newLive({ id: row.id, startedAt: Number.isFinite(at) ? at : Date.now(), label: row.label ?? "Study", blockId: row.block_id });
+  const state = row.live ?? null;
+  const base = newLive({ id: row.id, startedAt: Number.isFinite(at) ? at : Date.now(), label: row.label ?? "Study", blockId: row.block_id });
+  if (!state || typeof state.started_at !== "number") return base;
+  return {
+    ...base,
+    startedAt: state.started_at,
+    plannedSeconds: typeof state.planned_seconds === "number" ? state.planned_seconds : null,
+    pauses: Array.isArray(state.pauses) ? state.pauses.filter(isSpan) : [],
+    aways: Array.isArray(state.aways) ? state.aways.filter(isSpan).map((a) => ({ ...a, counted: a.counted === true, reviewed: a.reviewed === true })) : [],
+    rev: typeof state.rev === "number" ? state.rev : state.started_at,
+  };
+}
+
+/**
+ * Which copy of a running timer to believe: the one saved on this device or
+ * the one on the row. The device copy is written first and at once (a page
+ * being hidden cannot wait for the network), the row is what other devices
+ * see. The newer one wins, and a tie goes to the device.
+ */
+export function pickLive(saved: LiveTimer | null, row: Pick<FocusSession, "id" | "created_at" | "label" | "block_id" | "live">): { live: LiveTimer; from: "device" | "row" } {
+  const fromRow = liveFromRow(row);
+  if (saved && saved.id === row.id && revOf(saved) >= (row.live?.rev ?? 0)) return { live: saved, from: "device" };
+  return { live: fromRow, from: "row" };
 }
 
 const lengthOf = (s: Span, now: number) => Math.max(0, Math.min(s.to ?? now, now) - s.from);
@@ -82,9 +118,16 @@ export function openAway(live: LiveTimer): Away | null {
   return live.aways.find((a) => a.to === null) ?? null;
 }
 
+/**
+ * Pause at `now`. Pass the instant the clock on screen was drawn for, not the
+ * instant of the tap, so the number the user paused on is the number that
+ * stays: paused a moment later, the clock would tick once more after the tap.
+ * A pause never starts before the last one ended.
+ */
 export function pause(live: LiveTimer, now: number): LiveTimer {
   if (isPaused(live)) return live;
-  return { ...live, pauses: [...live.pauses, { from: now, to: null }] };
+  const floor = live.pauses.reduce((m, p) => Math.max(m, p.to ?? 0), live.startedAt);
+  return { ...live, pauses: [...live.pauses, { from: Math.max(now, floor), to: null }] };
 }
 
 export function resume(live: LiveTimer, now: number): LiveTimer {
@@ -216,23 +259,22 @@ export function strictBreach(live: LiveTimer, mode: StrictMode, graceSeconds: nu
 
 // ---------- finishing ----------
 
-export interface Finished {
-  /** False when it is too short to log. */
-  log: boolean;
-  /** The row patch. Minutes are focused minutes. */
-  patch: { end: TimeStr; minutes: number };
-  meta: SessionMeta;
-}
-
-/** What is kept about a session beyond the row's own columns. */
+/** What a finished session keeps beyond its length: the columns added in migration 0009. */
 export interface SessionMeta {
   clock_minutes: number;
   away_count: number;
   away_minutes: number;
-  paused_minutes: number;
   planned_minutes: number | null;
   /** A countdown that reached its length. */
   completed: boolean;
+}
+
+export interface Finished {
+  /** False when it is too short to log. */
+  log: boolean;
+  /** The row patch. Minutes are focused minutes. The running state is cleared. */
+  patch: { end: TimeStr; minutes: number; live: null } & SessionMeta;
+  meta: SessionMeta;
 }
 
 /**
@@ -244,24 +286,38 @@ export function finish(live: LiveTimer, at: number): Finished {
   const closed = comeBack(resume(live, at), at);
   const c = clockOf(closed, at);
   const planned = closed.plannedSeconds;
+  const meta: SessionMeta = {
+    clock_minutes: Math.round(c.clockSeconds / 60),
+    away_count: c.awayCount,
+    away_minutes: Math.round(c.awaySeconds / 60),
+    planned_minutes: planned === null ? null : Math.round(planned / 60),
+    completed: planned !== null && c.focusedSeconds >= planned - COMPLETE_SLACK_SECONDS,
+  };
   return {
     log: c.focusedSeconds >= MIN_LOG_SECONDS,
-    patch: { end: nyParts(new Date(at)).time, minutes: Math.round(c.focusedSeconds / 60) },
-    meta: {
-      clock_minutes: Math.round(c.clockSeconds / 60),
-      away_count: c.awayCount,
-      away_minutes: Math.round(c.awaySeconds / 60),
-      paused_minutes: Math.round(c.pausedSeconds / 60),
-      planned_minutes: planned === null ? null : Math.round(planned / 60),
-      completed: planned !== null && c.focusedSeconds >= planned - COMPLETE_SLACK_SECONDS,
-    },
+    patch: { end: nyParts(new Date(at)).time, minutes: Math.round(c.focusedSeconds / 60), live: null, ...meta },
+    meta,
   };
 }
 
+const NO_META = { away_count: 0, away_minutes: 0, clock_minutes: null, planned_minutes: null, completed: false, live: null } as const;
+
 /** The row for a timer that starts at `now`. created_at carries the exact instant. */
-export function startRow(now: number, label: string, blockId: string | null) {
+export function startRow(now: number, label: string, blockId: string | null, live?: LiveTimer) {
   const p = nyParts(new Date(now));
-  return { date: p.date, start: p.time, end: null, minutes: 0, label, source: "timer" as const, block_id: blockId, created_at: new Date(now).toISOString() };
+  return {
+    date: p.date,
+    start: p.time,
+    end: null,
+    minutes: 0,
+    label,
+    source: "timer" as const,
+    block_id: blockId,
+    ...NO_META,
+    planned_minutes: live?.plannedSeconds ? Math.round(live.plannedSeconds / 60) : null,
+    live: live ? toState(live) : null,
+    created_at: new Date(now).toISOString(),
+  };
 }
 
 // ---------- logging by hand, editing ----------
@@ -269,7 +325,7 @@ export function startRow(now: number, label: string, blockId: string | null) {
 export const MAX_MANUAL_MINUTES = 16 * 60;
 
 export function cleanLabel(label: string | null | undefined): string {
-  const t = (label ?? "").replace(/[‒-―]/g, ", ").replace(/\s+/g, " ").trim().slice(0, 40);
+  const t = (label ?? "").replace(/[\u2012-\u2015]/g, ", ").replace(/\s+/g, " ").trim().slice(0, 40);
   return t || "Study";
 }
 
@@ -290,7 +346,7 @@ function wrapTime(start: TimeStr, minutes: number): TimeStr {
 /** A row logged by hand. End wraps past midnight, the date stays. */
 export function manualRow(input: { date: DateStr; minutes: number; label: string; start: TimeStr }) {
   const minutes = Math.round(input.minutes);
-  return { date: input.date, start: input.start, end: wrapTime(input.start, minutes), minutes, label: cleanLabel(input.label), source: "manual" as const, block_id: null };
+  return { date: input.date, start: input.start, end: wrapTime(input.start, minutes), minutes, label: cleanLabel(input.label), source: "manual" as const, block_id: null, ...NO_META };
 }
 
 /** The patch for editing a finished session. End follows the new length. */

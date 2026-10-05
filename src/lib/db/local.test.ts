@@ -184,6 +184,8 @@ describe("upsert", () => {
       food_likes: [],
       food_dislikes: [],
       focus_goal_minutes: 60,
+      business_goal: null,
+      preferred_store: null,
     };
     await db.upsert("app_settings", settings, ["id"]);
     await db.upsert("app_settings", { ...settings, haptics: false }, ["id"]);

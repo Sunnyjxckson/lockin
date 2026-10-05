@@ -7,9 +7,8 @@
 import { useMemo, useState } from "react";
 import { Briefcase } from "lucide-react";
 import { Button, Card, EmptyState, ListRow, PageHeader, Screen, Section, Stat, TextField, useToast } from "@/components/ui";
-import { usePrefText } from "@/features/focus/useFocus";
-import { setText } from "@/lib/db/helpers";
-import { useChecklist, useLogs, useMode } from "@/lib/db/hooks";
+import { setText, updateSettings } from "@/lib/db/helpers";
+import { useChecklist, useLogs, useMode, useSettings } from "@/lib/db/hooks";
 import { formatDateShort, weekStart } from "@/lib/logic/dates";
 import { businessSummary, businessWeeks } from "@/lib/logic/focus";
 
@@ -21,7 +20,9 @@ export default function BusinessLogPage() {
   const item = checklist.data.items.find((i) => i.key === "business") ?? null;
   const weeks = useMemo(() => (item ? businessWeeks(logs.data, item.id) : []), [logs.data, item]);
   const sum = businessSummary(weeks, mode.today);
-  const [goal, setGoal] = usePrefText("focus:business_goal");
+  const settings = useSettings();
+  const goal = settings.data?.business_goal ?? null;
+  const setGoal = (text: string | null) => updateSettings({ business_goal: text }).catch(() => toast("Could not save the goal", { kind: "error" }));
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState("");
   const [move, setMove] = useState("");
@@ -49,7 +50,7 @@ export default function BusinessLogPage() {
               <Button
                 full
                 onClick={() => {
-                  setGoal(draft.trim() || null);
+                  void setGoal(draft.trim() || null);
                   setEditing(false);
                 }}
               >

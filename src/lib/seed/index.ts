@@ -4,6 +4,7 @@
 import { db } from "../db";
 import { plannedEnd } from "../logic/challenge";
 import { todayNY } from "../logic/dates";
+import { STAPLES } from "../logic/mealsFoods";
 import { BASELINE_DATE } from "../logic/targets";
 import type { DateStr, NewRow } from "../types";
 import {
@@ -69,6 +70,8 @@ async function seedIfEmpty(today: DateStr): Promise<boolean> {
       SEED_REMINDERS.map((r, i) => ({ ...r, item_id: null, sort_order: (i + 1) * 10 })),
     );
   }
+  // Salt, oil and spices are assumed to be at home until the grocery list is told otherwise.
+  if ((await db.list("pantry_item", { limit: 1 })).length === 0) await db.insertMany("pantry_item", STAPLES.map((name) => ({ name })));
   // Written last: its presence is what marks the seed as complete.
   // The history opens on the challenge start, so the days before a late
   // install can be backfilled, and never later than the install day.

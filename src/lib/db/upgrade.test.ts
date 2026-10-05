@@ -5,7 +5,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { db, setBackend } from "./index";
 import { getChallenge, getChallenges, getScoringVersions, getSettings } from "./helpers";
 import { LocalBackend, memoryStore, STORAGE_PREFIX, type KeyValueStore } from "./local";
-import { upgradeLocalData } from "./upgrade";
+import { adoptDevicePrefs, upgradeLocalData } from "./upgrade";
+import { STAPLES } from "../logic/mealsFoods";
 import { modeOn } from "../logic/challenge";
 import { summarizeDay } from "../logic/day";
 import { allStreaks } from "../logic/streaks";
@@ -13,8 +14,8 @@ import { ensureSeeded } from "../seed";
 import { TABLE_NAMES, type TableName } from "../types";
 
 const CHALLENGE_V2 = ["name", "status", "ended_on", "rules", "restart_of"];
-const SETTINGS_V2 = ["history_start", "daily_floor", "weekly_food_budget", "food_likes", "food_dislikes", "focus_goal_minutes"];
-const NEW_TABLES: TableName[] = ["mood_log", "motivation", "board", "board_item", "theme", "recipe", "meal_plan", "grocery_item", "expense", "focus_session"];
+const SETTINGS_V2 = ["history_start", "daily_floor", "weekly_food_budget", "food_likes", "food_dislikes", "focus_goal_minutes", "business_goal", "preferred_store"];
+const NEW_TABLES: TableName[] = ["mood_log", "motivation", "board", "board_item", "theme", "recipe", "meal_plan", "grocery_item", "pantry_item", "receipt_price", "expense", "focus_session"];
 
 let store: KeyValueStore;
 
@@ -138,6 +139,8 @@ describe("upgrading a version 1 device store", () => {
   it("loses nothing: every row that was there is still there, field for field", async () => {
     await upgradeLocalData();
     for (const table of TABLE_NAMES) {
+      // The pantry is the one table the upgrade fills: the staples a new install is seeded with.
+      if (table === "pantry_item") continue;
       const after = read(table);
       expect(after, table).toHaveLength(before[table].length);
       for (const old of before[table]) {
@@ -148,7 +151,7 @@ describe("upgrading a version 1 device store", () => {
     }
     // Only the two reshaped tables gained fields.
     for (const table of TABLE_NAMES) {
-      if (table === "challenge" || table === "app_settings") continue;
+      if (table === "challenge" || table === "app_settings" || table === "pantry_item") continue;
       expect(read(table), table).toEqual(before[table]);
     }
   });
@@ -208,5 +211,89 @@ describe("upgrading a version 1 device store", () => {
     for (const t of TABLE_NAMES) fresh[t] = read(t);
     await upgradeLocalData();
     for (const t of TABLE_NAMES) expect(read(t), t).toEqual(fresh[t]);
+  });
+});
+
+describe("moving the pantry, receipt prices and preferred store off the reserved meal plan row", () => {
+  beforeEach(async () => {
+    await v1Store();
+  });
+
+  it("gives a store that never opened Meals the staples, once", async () => {
+    await upgradeLocalData();
+    expect((await db.list("pantry_item")).map((p) => p.name).sort()).toEqual([...STAPLES].sort());
+    expect((await getSettings())?.preferred_store).toBeNull();
+    // Emptied by the user afterwards, it stays empty.
+    for (const p of await db.list("pantry_item")) await db.remove("pantry_item", p.id);
+    await upgradeLocalData();
+    expect(await db.list("pantry_item")).toHaveLength(0);
+  });
+
+  it("moves the reserved row's data to the new tables and removes the row", async () => {
+    const book = await db.insert("meal_plan", { week_start: "2000-01-03", budget: 0, recipe_ids: [], meals: [], total_cost: 0, store: "Walmart" });
+    const real = await db.insert("meal_plan", { week_start: "2026-10-05", budget: 70, recipe_ids: [], meals: [], total_cost: 61.2, store: "Aldi" });
+    const item = { quantity: 1, unit: null, store: null, price: null };
+    await db.insertMany("grocery_item", [
+      { ...item, plan_id: book.id, name: "salt", category: "@pantry", prices: null, bought: true },
+      { ...item, plan_id: book.id, name: "Whey  Protein", category: "@pantry", prices: null, bought: true },
+      { ...item, plan_id: book.id, name: "chicken breast", category: "@price", prices: { Aldi: 2.49, Walmart: 2.97 }, bought: false },
+      { ...item, plan_id: real.id, name: "rice", category: "pantry", prices: { Aldi: 1.59 }, bought: false },
+    ]);
+    await upgradeLocalData();
+    expect((await db.list("pantry_item")).map((p) => p.name).sort()).toEqual(["salt", "whey protein"]);
+    expect((await db.list("receipt_price", { orderBy: "store" })).map((p) => [p.name, p.store, p.price])).toEqual([
+      ["chicken breast", "Aldi", 2.49],
+      ["chicken breast", "Walmart", 2.97],
+    ]);
+    expect((await getSettings())?.preferred_store).toBe("Walmart");
+    expect((await db.list("meal_plan")).map((p) => p.week_start)).toEqual(["2026-10-05"]);
+    expect((await db.list("grocery_item")).map((g) => g.name)).toEqual(["rice"]);
+    const once = TABLE_NAMES.map((t) => read(t));
+    await upgradeLocalData();
+    expect(TABLE_NAMES.map((t) => read(t))).toEqual(once);
+  });
+});
+
+describe("adopting what an earlier build kept per device", () => {
+  let prefs: Map<string, string>;
+  const readPref = (k: string) => prefs.get(k) ?? null;
+  const writePref = (k: string, v: string | null) => void (v === null ? prefs.delete(k) : prefs.set(k, v));
+
+  beforeEach(async () => {
+    await v1Store();
+    await upgradeLocalData();
+    prefs = new Map();
+  });
+
+  it("moves a finished session's away numbers, the business goal and image shapes into the tables", async () => {
+    const blank = { away_count: 0, away_minutes: 0, clock_minutes: null, planned_minutes: null, completed: false, live: null };
+    const done = await db.insert("focus_session", { date: "2026-10-07", start: "20:00", end: "20:50", minutes: 44, label: "Study", source: "timer", block_id: "b1", ...blank });
+    const running = await db.insert("focus_session", { date: "2026-10-08", start: "09:00", end: null, minutes: 0, label: "Study", source: "timer", block_id: null, ...blank });
+    const board = await db.insert("board", { name: "Body", kind: "body", cover_item_id: null, sort_order: 0 });
+    const piece = { board_id: board.id, kind: "image" as const, image_url: "idb:x", note: null, color: null, palette: null, source: null, source_url: null, sort_order: 0 };
+    const unmeasured = await db.insert("board_item", { ...piece, aspect: null });
+    const measured = await db.insert("board_item", { ...piece, aspect: 1.5 });
+    prefs.set("focus:meta", JSON.stringify({ [done.id]: { clock_minutes: 50, away_count: 2, away_minutes: 6, paused_minutes: 0, planned_minutes: 45, completed: true }, [running.id]: { away_count: 9 }, gone: { away_count: 1 } }));
+    prefs.set("focus:business_goal", "  Sign three paying clients by December ");
+    prefs.set("board-aspects", JSON.stringify({ [unmeasured.id]: 0.667, [measured.id]: 0.5, gone: 2 }));
+
+    await adoptDevicePrefs(readPref, writePref);
+
+    expect(await db.get("focus_session", done.id)).toMatchObject({ minutes: 44, clock_minutes: 50, away_count: 2, away_minutes: 6, planned_minutes: 45, completed: true });
+    expect(await db.get("focus_session", running.id)).toMatchObject({ away_count: 0, end: null });
+    expect((await getSettings())?.business_goal).toBe("Sign three paying clients by December");
+    expect((await db.get("board_item", unmeasured.id))?.aspect).toBe(0.667);
+    expect((await db.get("board_item", measured.id))?.aspect).toBe(1.5);
+    expect(prefs.size).toBe(0);
+  });
+
+  it("does nothing when there is nothing kept, and never overwrites a goal already saved", async () => {
+    const before = TABLE_NAMES.map((t) => read(t));
+    await adoptDevicePrefs(readPref, writePref);
+    expect(TABLE_NAMES.map((t) => read(t))).toEqual(before);
+    await db.update("app_settings", "app", { business_goal: "The saved one" });
+    prefs.set("focus:business_goal", "An old device copy");
+    await adoptDevicePrefs(readPref, writePref);
+    expect((await getSettings())?.business_goal).toBe("The saved one");
   });
 });

@@ -9,11 +9,10 @@ import { useMemo, useState } from "react";
 import { Briefcase, Pencil, Plus, Timer } from "lucide-react";
 import { Button, Card, EmptyState, IconButton, ListRow, NumberField, PageHeader, ProgressBar, Screen, Section, Sheet, useToast } from "@/components/ui";
 import { FocusModeCard } from "@/features/focus/FocusModeCard";
-import { FocusWatcher } from "@/features/focus/FocusWatcher";
 import { RunningTimer, StartPanel } from "@/features/focus/TimerPanel";
 import { WeekChart } from "@/features/focus/WeekChart";
 import { changeLive, discardTimer, finishTimer, startTimer } from "@/features/focus/store";
-import { useClock, useFocusTimer, useMetaMap, usePrefText } from "@/features/focus/useFocus";
+import { useClock, useFocusTimer, usePrefText } from "@/features/focus/useFocus";
 import { updateSettings } from "@/lib/db/helpers";
 import { useDayBlocks, useList, useMode, useNow, useSettings } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
@@ -33,7 +32,6 @@ export default function FocusPage() {
   const timer = useFocusTimer();
   const { live } = timer;
   const { now, clock } = useClock(live);
-  const meta = useMetaMap();
   const from = useMemo(() => {
     const d = addDays(weekStart(today), -28);
     return d < mode.historyStart ? mode.historyStart : d;
@@ -94,7 +92,6 @@ export default function FocusPage() {
 
   return (
     <Screen>
-      <FocusWatcher />
       <PageHeader
         title="Focus"
         back="/schedule"
@@ -159,7 +156,7 @@ export default function FocusPage() {
 
         {live && clock && !stale ? (
           <Card>
-            <RunningTimer live={live} clock={clock} onExpand={() => setViewId(live.id)} />
+            <RunningTimer live={live} clock={clock} now={now} onExpand={() => setViewId(live.id)} />
           </Card>
         ) : null}
 
@@ -221,10 +218,6 @@ export default function FocusPage() {
         </Card>
       </Section>
 
-      <Section title="Focus mode">
-        <FocusModeCard fullScreen={fullScreen} onFullScreen={(on) => setFullPref(on ? "1" : null)} />
-      </Section>
-
       <Section title="Sessions">
         {done.length === 0 ? (
           <EmptyState
@@ -242,10 +235,9 @@ export default function FocusPage() {
           <Card padded={false} className="overflow-hidden">
             <div className="divide-y divide-line">
               {done.slice(0, 30).map((s) => {
-                const m = meta[s.id];
                 const bits = [s.date === today ? "Today" : formatDateShort(s.date), s.source === "manual" ? "by hand" : formatTime(s.start)];
-                if (m && m.away_count > 0) bits.push(`left the app ${m.away_count}x${m.away_minutes > 0 ? `, ${m.away_minutes}m away` : ""}`);
-                if (m?.completed && s.block_id) bits.push("block done");
+                if (s.away_count > 0) bits.push(`left the app ${s.away_count} ${s.away_count === 1 ? "time" : "times"}${s.away_minutes > 0 ? `, ${formatDuration(s.away_minutes)} away` : ""}`);
+                if (s.completed && s.block_id) bits.push("block done");
                 return (
                   <ListRow
                     key={s.id}
@@ -259,6 +251,10 @@ export default function FocusPage() {
             </div>
           </Card>
         )}
+      </Section>
+
+      <Section title="Focus mode">
+        <FocusModeCard fullScreen={fullScreen} onFullScreen={(on) => setFullPref(on ? "1" : null)} />
       </Section>
 
       <Section title="Business">
@@ -295,7 +291,7 @@ export default function FocusPage() {
         <NumberField label="Minutes a day" value={goalDraft} onChange={setGoalDraft} live unit="min" decimal={false} max={720} autoFocus />
       </Sheet>
 
-      {view && live && clock ? <FocusView live={live} clock={clock} onClose={() => setViewId(null)} /> : null}
+      {view && live && clock ? <FocusView live={live} clock={clock} now={now} onClose={() => setViewId(null)} /> : null}
     </Screen>
   );
 }

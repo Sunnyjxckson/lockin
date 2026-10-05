@@ -301,6 +301,11 @@ export interface CoachNote extends Base {
   kind: "morning" | "weekly" | "flag";
   body: string;
   source: "ai" | "fallback";
+  /**
+   * Morning briefs only: the challenge, money target and floor it was written
+   * from (briefBasis in logic/coach). Null or missing for older notes, flags and reviews.
+   */
+  basis?: string | null;
 }
 
 // ---------- device and integration ----------
@@ -389,6 +394,8 @@ export interface BoardItem extends Base {
   source: BoardItemSource | null;
   /** Where a web image came from. */
   source_url: string | null;
+  /** Width over height of an image, so the collage knows its shape before it loads. Null until measured. */
+  aspect: number | null;
   sort_order: number;
 }
 
@@ -460,6 +467,8 @@ export interface PlannedMeal {
   recipe_id: string;
   /** Portions to eat, so the day hits its numbers. */
   servings: number;
+  /** The meal row written when it was cooked and logged. Missing or null until then. */
+  logged?: string | null;
 }
 
 /** One planned week, Monday to Sunday. One row per week_start. */
@@ -508,7 +517,48 @@ export interface Expense extends Base {
   plan_id: string | null;
 }
 
+/** A food that is already at home, so the grocery list leaves it off. One row per food. */
+export interface PantryItem extends Base {
+  /** The food's key: lowercase, single spaces. */
+  name: string;
+}
+
+/** What a pack really cost at a store, typed in from a receipt. It replaces the estimate. */
+export interface ReceiptPrice extends Base {
+  /** The food's key. */
+  name: string;
+  store: string;
+  /** Dollars for one pack. */
+  price: number;
+}
+
 // ---------- focus ----------
+
+/** A stretch of time in milliseconds since the epoch. `to` is null while it is still open. */
+export interface FocusSpan {
+  from: number;
+  to: number | null;
+}
+
+/** Time the app spent in the background while the timer ran. */
+export interface FocusAway extends FocusSpan {
+  /** The user said they were still working, so it stays in focused time. */
+  counted: boolean;
+  /** The user has answered the "you were gone" card. */
+  reviewed: boolean;
+}
+
+/** The moving parts of a running timer, kept on its row so another device shows the same clock. */
+export interface FocusLive {
+  /** The exact start, milliseconds since the epoch. */
+  started_at: number;
+  /** Countdown length, or null to count up. */
+  planned_seconds: number | null;
+  pauses: FocusSpan[];
+  aways: FocusAway[];
+  /** When this state was last changed. The newer copy wins between a device and the row. */
+  rev: number;
+}
 
 /**
  * One stretch of study or deep work. A running timer is a row with `end`
@@ -525,6 +575,18 @@ export interface FocusSession extends Base {
   source: "timer" | "manual";
   /** The schedule block it ran in, if it was started from one. */
   block_id: string | null;
+  /** Times the app was left while the timer ran. */
+  away_count: number;
+  /** Minutes away, claimed back or not. */
+  away_minutes: number;
+  /** Wall clock minutes from start to finish. Null for a session logged by hand. */
+  clock_minutes: number | null;
+  /** The countdown length. Null when it counted up or was logged by hand. */
+  planned_minutes: number | null;
+  /** A countdown that reached its length. */
+  completed: boolean;
+  /** Pauses and time away while the timer runs. Null once it is finished. */
+  live: FocusLive | null;
 }
 
 /** Single row with id "app". */
@@ -551,6 +613,10 @@ export interface AppSettings extends Base {
   food_dislikes: string[];
   /** Minutes of focus that count as the day's study block. */
   focus_goal_minutes: number;
+  /** Where the business is going, in a sentence. Shown on the business log. */
+  business_goal: string | null;
+  /** The store grocery lists are priced at by default. Null until one is picked. */
+  preferred_store: string | null;
 }
 
 // ---------- table map ----------
@@ -585,6 +651,8 @@ export interface Tables {
   recipe: Recipe;
   meal_plan: MealPlan;
   grocery_item: GroceryItem;
+  pantry_item: PantryItem;
+  receipt_price: ReceiptPrice;
   expense: Expense;
   focus_session: FocusSession;
 }
@@ -627,6 +695,8 @@ export const TABLE_NAMES = [
   "recipe",
   "meal_plan",
   "grocery_item",
+  "pantry_item",
+  "receipt_price",
   "expense",
   "focus_session",
 ] as const satisfies readonly TableName[];

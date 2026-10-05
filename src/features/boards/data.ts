@@ -3,12 +3,11 @@
 // Reads and writes for boards. Everything goes through the shared db and
 // photo storage, so it works the same on this device and on Supabase.
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useMemo } from "react";
 import { db } from "@/lib/db";
 import { useList } from "@/lib/db/hooks";
 import { boardPalette, cleanBoardName, cleanLink, coverOf, orderPatches } from "@/lib/logic/boards";
 import { normalizeHex } from "@/lib/logic/theme";
-import { getPref, setPref } from "@/lib/prefs";
 import { removePhoto, uploadPhoto } from "@/lib/storage";
 import type { Board, BoardItem, BoardItemSource, BoardKind } from "@/lib/types";
 import { prepareImage } from "./images";
@@ -56,53 +55,23 @@ export function countLabel(n: number): string {
 // ---------- image shapes ----------
 //
 // The collage needs each image's shape before the image loads, or the layout
-// jumps. board_item has no column for it, so the shape is remembered on this
-// device when the image is added, and measured once on load anywhere else.
+// jumps. It is saved on the row (board_item.aspect) when the image is added,
+// and measured once on load for a row that has none.
 
-const ASPECT_PREF = "board-aspects";
-let aspects: Record<string, number> | null = null;
-const aspectListeners = new Set<() => void>();
-
-function readAspects(): Record<string, number> {
-  if (aspects) return aspects;
-  try {
-    aspects = JSON.parse(getPref(ASPECT_PREF) ?? "{}") as Record<string, number>;
-  } catch {
-    aspects = {};
-  }
-  return aspects;
+function roundAspect(aspect: number): number | null {
+  return Number.isFinite(aspect) && aspect > 0 ? Math.round(aspect * 1000) / 1000 : null;
 }
 
-export function rememberAspect(id: string, aspect: number): void {
-  if (!Number.isFinite(aspect) || aspect <= 0) return;
-  const now = readAspects();
-  const rounded = Math.round(aspect * 1000) / 1000;
-  if (now[id] === rounded) return;
-  aspects = { ...now, [id]: rounded };
-  setPref(ASPECT_PREF, JSON.stringify(aspects));
-  for (const fn of Array.from(aspectListeners)) fn();
-}
+const measuring = new Set<string>();
 
-function forgetAspect(id: string): void {
-  const now = readAspects();
-  if (!(id in now)) return;
-  const next = { ...now };
-  delete next[id];
-  aspects = next;
-  setPref(ASPECT_PREF, JSON.stringify(aspects));
-}
-
-const NO_ASPECTS: Record<string, number> = {};
-
-export function useAspects(): Record<string, number> {
-  return useSyncExternalStore(
-    (fn) => {
-      aspectListeners.add(fn);
-      return () => void aspectListeners.delete(fn);
-    },
-    readAspects,
-    () => NO_ASPECTS,
-  );
+/** Save the shape of an image that was stored without one. */
+export function rememberAspect(item: Pick<BoardItem, "id" | "aspect">, aspect: number): void {
+  const rounded = roundAspect(aspect);
+  if (rounded === null || item.aspect === rounded || measuring.has(item.id)) return;
+  measuring.add(item.id);
+  db.update("board_item", item.id, { aspect: rounded })
+    .catch(() => undefined)
+    .finally(() => measuring.delete(item.id));
 }
 
 // ---------- errors ----------
@@ -145,7 +114,6 @@ export async function deleteBoard(id: string): Promise<void> {
   const items = await db.list("board_item", { eq: { board_id: id } });
   for (const item of items) {
     if (item.image_url) await removePhoto(item.image_url).catch(() => undefined);
-    forgetAspect(item.id);
   }
   await db.removeWhere("board_item", { board_id: id });
   await db.remove("board", id);
@@ -163,6 +131,7 @@ async function insertItem(boardId: string, fields: Partial<BoardItem> & Pick<Boa
     palette: null,
     source: null,
     source_url: null,
+    aspect: null,
     sort_order: await nextOrder(items),
     ...fields,
   });
@@ -174,9 +143,7 @@ export async function addImage(boardId: string, file: Blob, source: BoardItemSou
   // Already scaled, so storage is told to keep it as it is.
   const ref = await uploadPhoto(prepared.blob, { folder: "boards", maxSize: 0 });
   try {
-    const item = await insertItem(boardId, { kind: "image", image_url: ref, palette: prepared.palette, source, source_url: sourceUrl });
-    rememberAspect(item.id, prepared.aspect);
-    return item;
+    return await insertItem(boardId, { kind: "image", image_url: ref, palette: prepared.palette, source, source_url: sourceUrl, aspect: roundAspect(prepared.aspect) });
   } catch (e) {
     await removePhoto(ref).catch(() => undefined);
     throw e;
@@ -211,7 +178,6 @@ export async function saveItem(id: string, patch: { note?: string | null; source
 export async function deleteItem(item: BoardItem): Promise<void> {
   await db.remove("board_item", item.id);
   if (item.image_url) await removePhoto(item.image_url).catch(() => undefined);
-  forgetAspect(item.id);
   const board = await db.get("board", item.board_id);
   if (board?.cover_item_id === item.id) await db.update("board", board.id, { cover_item_id: null });
 }

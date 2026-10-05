@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Challenge, ChallengeRule } from "../types";
 import {
+  floorOn,
   activeChallenge,
   canFinish,
   challengeDay,
@@ -423,5 +424,21 @@ describe("challengeRecord", () => {
     expect(challengeRecord(challenge(), { ...s, "2026-10-08": "full" }, "2026-10-08")).toMatchObject({ full: 2, partial: 1, missed: 1 });
     const ended = challenge({ status: "ended", ended_on: "2026-10-06" });
     expect(challengeRecord(ended, s, "2026-10-20")).toEqual({ days: 2, length: 30, full: 1, partial: 1, missed: 0 });
+  });
+});
+
+describe("the floor in force", () => {
+  it("is the settings floor with no challenge, or one that leaves Earned today alone", () => {
+    expect(floorOn(100, null, "earned")).toBe(100);
+    expect(floorOn(100, { rules: null }, "earned")).toBe(100);
+    expect(floorOn(100, { rules: [{ item_id: "workout", target: null }, { item_id: "earned", target: null }] }, "earned")).toBe(100);
+    expect(floorOn(100, { rules: [{ item_id: "earned", target: { kind: "min", min: 150 } }] }, null)).toBe(100);
+  });
+
+  it("is the challenge's own target for Earned today while it runs", () => {
+    expect(floorOn(100, { rules: [{ item_id: "earned", target: { kind: "min", min: 150 } }] }, "earned")).toBe(150);
+    expect(floorOn(100, { rules: [{ item_id: "earned", target: { kind: "min", min: 60 } }] }, "earned")).toBe(60);
+    expect(floorOn(100, { rules: [{ item_id: "earned", target: { kind: "range", min: 120, max: 300 } }] }, "earned")).toBe(120);
+    expect(floorOn(100, { rules: [{ item_id: "earned", target: { kind: "min", min: 0 } }] }, "earned")).toBe(100);
   });
 });

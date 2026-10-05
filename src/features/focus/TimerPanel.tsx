@@ -31,7 +31,7 @@ export function useFinish() {
 }
 
 /** The big clock and its controls while a timer runs. */
-export function RunningTimer({ live, clock, big, onExpand }: { live: LiveTimer; clock: Clock; big?: boolean; onExpand?: () => void }) {
+export function RunningTimer({ live, clock, now, big, onExpand }: { live: LiveTimer; clock: Clock; /** The instant `clock` was worked out for. */ now: number; big?: boolean; onExpand?: () => void }) {
   const finish = useFinish();
   const [busy, setBusy] = useState(false);
   const countdown = clock.remaining !== null;
@@ -106,7 +106,8 @@ export function RunningTimer({ live, clock, big, onExpand }: { live: LiveTimer; 
             icon={clock.paused ? <Play size={18} aria-hidden /> : <Pause size={18} aria-hidden />}
             onClick={() => {
               haptics.tap();
-              changeLive((l) => (clock.paused ? resume(l, Date.now()) : pause(l, Date.now())));
+              // Pause at the instant on screen, so the clock does not tick once more after the tap.
+              changeLive((l) => (clock.paused ? resume(l, Date.now()) : pause(l, now)));
             }}
           >
             {clock.paused ? "Resume" : "Pause"}

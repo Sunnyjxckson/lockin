@@ -4,8 +4,9 @@
 
 import { getBlocksForDate } from "@/lib/blocks";
 import { db, isUniqueViolation } from "@/lib/db";
-import { getSettings, getWorkouts, workoutsFor } from "@/lib/db/helpers";
-import { addDays, weekdayOf } from "@/lib/logic/dates";
+import { getChallenges, getItemByKey, getSettings, getWorkouts, workoutsFor } from "@/lib/db/helpers";
+import { floorOn, modeOn } from "@/lib/logic/challenge";
+import { addDays, todayNY, weekdayOf } from "@/lib/logic/dates";
 import type { ReminderDay } from "@/lib/logic/reminders";
 import type { DateStr } from "@/lib/types";
 import type { CronData, CronDeps } from "./cron";
@@ -14,11 +15,16 @@ import type { PushTarget } from "./push";
 const RUN_ID = "cron";
 
 export async function loadCronData(dates: DateStr[]): Promise<CronData> {
-  const [reminders, settings, workouts] = await Promise.all([
+  const [reminders, settings, workouts, challenges, earned] = await Promise.all([
     db.list("reminder", { orderBy: "sort_order" }),
     getSettings(),
     getWorkouts(),
+    getChallenges(),
+    getItemByKey("earned"),
   ]);
+  // The floor in force today: a running challenge's own target for "Earned today" when it has one.
+  const today = todayNY();
+  const running = modeOn(challenges, settings?.history_start ?? today, today).challenge;
   const days: ReminderDay[] = await Promise.all(
     dates.map(async (date) => {
       const [blocks, earnings] = await Promise.all([getBlocksForDate(date), db.list("earning", { from: date, to: date })]);
@@ -33,7 +39,7 @@ export async function loadCronData(dates: DateStr[]): Promise<CronData> {
   );
   return {
     reminders,
-    floor: settings?.daily_floor ?? 0,
+    floor: floorOn(settings?.daily_floor ?? 0, running, earned?.id),
     quiet_start: settings?.quiet_start ?? "23:00",
     quiet_end: settings?.quiet_end ?? "05:30",
     days,
