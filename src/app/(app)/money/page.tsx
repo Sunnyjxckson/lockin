@@ -86,6 +86,14 @@ export default function MoneyPage() {
                       <span className="tnum shrink-0 font-semibold text-ink">{formatMoney(Math.ceil(m.needed.perDay))} a day</span>
                     ) : null}
                   </div>
+                  {m.wasReset && m.since ? (
+                    <p className="mt-3 flex items-baseline justify-between gap-3 border-t border-line pt-3 text-[14px] text-ink-2">
+                      <span>Counting from {formatDateShort(m.since)}</span>
+                      <span className="tnum">
+                        All time <span className="font-semibold text-ink">{formatMoney(m.allTime)}</span>
+                      </span>
+                    </p>
+                  ) : null}
                   {hit || past ? (
                     <Button className="mt-4" variant="secondary" full onClick={() => setResetOpen(true)}>
                       Set a new target
@@ -177,7 +185,7 @@ export default function MoneyPage() {
       </ScreenshotPicker>
 
       <QuickAddSheet open={sheet !== null} onClose={() => setSheet(null)} editing={sheet?.editing} file={sheet?.file} defaultApp={m.lastApp} />
-      {m.challenge ? <ResetTargetSheet open={resetOpen} onClose={() => setResetOpen(false)} challenge={m.challenge} total={m.total} today={m.today} /> : null}
+      {m.challenge ? <ResetTargetSheet open={resetOpen} onClose={() => setResetOpen(false)} challenge={m.challenge} earnedToday={m.todayFloor.earned} allTime={m.allTime} today={m.today} /> : null}
     </Screen>
   );
 }

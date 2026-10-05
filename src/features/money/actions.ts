@@ -69,7 +69,10 @@ export async function readScreenshot(file: Blob): Promise<ReadResult> {
   }
 }
 
-/** Point the challenge at a new money target and deadline. The floor is left alone. */
-export async function resetTarget(money_target: number, money_deadline: DateStr): Promise<void> {
-  await updateChallenge({ money_target, money_deadline });
+/**
+ * Point the challenge at a new money target and deadline. The new target
+ * starts a fresh running total from `from` (today). The floor is left alone.
+ */
+export async function resetTarget(money_target: number, money_deadline: DateStr, from: DateStr): Promise<void> {
+  await updateChallenge({ money_target, money_deadline, money_target_start: from });
 }

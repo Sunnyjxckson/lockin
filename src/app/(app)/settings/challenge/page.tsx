@@ -7,7 +7,7 @@ import { useChallenge, useToday } from "@/lib/db/hooks";
 import { challengeEndDate, dayNumber, formatDateLong, isDateStr } from "@/lib/logic/dates";
 import type { Challenge } from "@/lib/types";
 
-type Form = Pick<Challenge, "start_date" | "length_days" | "money_target" | "money_deadline" | "daily_floor">;
+type Form = Pick<Challenge, "start_date" | "length_days" | "money_target" | "money_deadline" | "daily_floor" | "money_target_start">;
 
 function Editor({ challenge }: { challenge: Challenge }) {
   const toast = useToast();
@@ -18,10 +18,11 @@ function Editor({ challenge }: { challenge: Challenge }) {
     money_target: challenge.money_target,
     money_deadline: challenge.money_deadline,
     daily_floor: challenge.daily_floor,
+    money_target_start: challenge.money_target_start ?? null,
   });
   const [saving, setSaving] = useState(false);
 
-  const dirty = (Object.keys(form) as (keyof Form)[]).some((k) => form[k] !== challenge[k]);
+  const dirty = (Object.keys(form) as (keyof Form)[]).some((k) => (form[k] ?? null) !== (challenge[k] ?? null));
   const valid =
     isDateStr(form.start_date) && isDateStr(form.money_deadline) && form.length_days >= 1 && form.length_days <= 365 && form.money_target >= 0 && form.daily_floor >= 0;
   const set = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
@@ -74,6 +75,13 @@ function Editor({ challenge }: { challenge: Challenge }) {
         <Card className="flex flex-col gap-4">
           <NumberField label="Target" prefix="$" value={form.money_target} onChange={(v) => set("money_target", v ?? 0)} live />
           <DateField label="Deadline" value={form.money_deadline} onChange={(v) => set("money_deadline", v)} />
+          <DateField
+            label="Counts from"
+            hint="Earnings from this date on count toward the target. Resetting the target on Money moves it to that day."
+            value={form.money_target_start && form.money_target_start > form.start_date ? form.money_target_start : form.start_date}
+            min={form.start_date}
+            onChange={(v) => set("money_target_start", v && v > form.start_date ? v : null)}
+          />
           <NumberField
             label="Daily floor"
             prefix="$"

@@ -41,7 +41,7 @@ const row = <T extends object>(r: T): T & { id: string; created_at: string } => 
 function base(today = TODAY, start = "2026-09-13"): CoachData {
   return {
     today,
-    challenge: { id: "challenge", created_at: CREATED, start_date: start, length_days: 30, money_target: 1000, money_deadline: addDays(today, 4), daily_floor: 100 },
+    challenge: { id: "challenge", created_at: CREATED, start_date: start, length_days: 30, money_target: 1000, money_deadline: addDays(today, 4), daily_floor: 100, money_target_start: null },
     settings: { carbs_target: 180, fat_target: 60, weight_unit: "lb" },
     items: ITEMS,
     versions: [],
@@ -80,7 +80,7 @@ function fixtureData(today = TODAY): CoachData {
 /** A clean day: every daily item done. */
 function cleanDay(date: string, over: Partial<Record<string, number | false>> = {}): DayLog[] {
   const out: DayLog[] = [];
-  const add = (key: string, p: Partial<DayLog>) => out.push(row({ date, item_id: key, value: null, checked: true, text: null, completed_at: null, ...p }));
+  const add = (key: string, p: Partial<DayLog>) => out.push(row({ date, item_id: key, value: null, checked: true, text: null, completed_at: null, slips: 0, ...p }));
   for (const key of ["workout", "core", "study", "bed", "vice_smoking", "vice_drinking", "vice_masturbation"]) {
     if (over[key] !== false) add(key, {});
   }

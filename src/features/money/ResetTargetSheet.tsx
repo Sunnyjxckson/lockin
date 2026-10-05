@@ -8,15 +8,16 @@ import { formatMoney, neededPerDay, validNewTarget } from "@/lib/logic/money";
 import type { Challenge, DateStr } from "@/lib/types";
 import { resetTarget } from "./actions";
 
-export function ResetTargetSheet({ open, onClose, challenge, total, today }: { open: boolean; onClose: () => void; challenge: Challenge; total: number; today: DateStr }) {
+/** `earnedToday` is what already counts toward the new target: it starts fresh today. */
+export function ResetTargetSheet({ open, onClose, challenge, earnedToday, allTime, today }: { open: boolean; onClose: () => void; challenge: Challenge; earnedToday: number; allTime: number; today: DateStr }) {
   if (!open) return null;
-  return <Form onClose={onClose} challenge={challenge} total={total} today={today} />;
+  return <Form onClose={onClose} challenge={challenge} total={earnedToday} allTime={allTime} today={today} />;
 }
 
-function Form({ onClose, challenge, total, today }: { onClose: () => void; challenge: Challenge; total: number; today: DateStr }) {
+function Form({ onClose, challenge, total, allTime, today }: { onClose: () => void; challenge: Challenge; total: number; allTime: number; today: DateStr }) {
   const toast = useToast();
   const end = challengeEndDate(challenge.start_date, challenge.length_days);
-  const [target, setTarget] = useState<number | null>(Math.ceil((Math.max(total, challenge.money_target) + 500) / 100) * 100);
+  const [target, setTarget] = useState<number | null>(challenge.money_target > 0 ? challenge.money_target : 1000);
   const [deadline, setDeadline] = useState<DateStr>(end > today ? end : addDays(today, 7));
   const [saving, setSaving] = useState(false);
 
@@ -27,7 +28,7 @@ function Form({ onClose, challenge, total, today }: { onClose: () => void; chall
     if (!valid || target === null) return;
     setSaving(true);
     try {
-      await resetTarget(target, deadline);
+      await resetTarget(target, deadline, today);
       haptics.done();
       toast("New target set", { kind: "done" });
       onClose();
@@ -42,7 +43,7 @@ function Form({ onClose, challenge, total, today }: { onClose: () => void; chall
       open
       onClose={onClose}
       title="New target"
-      subtitle={`${formatMoney(total)} earned so far. It all counts toward the new number.`}
+      subtitle={`Starts a fresh total from today. The ${formatMoney(allTime)} earned so far stays as your all time total.`}
       footer={
         <Button size="lg" full disabled={!valid} loading={saving} onClick={() => void save()}>
           Set target

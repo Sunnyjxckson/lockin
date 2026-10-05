@@ -11,6 +11,7 @@ import {
   normalizeApp,
   runningTotal,
   surplusBanked,
+  targetStart,
   targetState,
   type DeliveryApp,
 } from "@/lib/logic/money";
@@ -30,7 +31,9 @@ export function useMoney() {
     const deadline = c?.money_deadline ?? today;
     const from = c?.start_date ?? null;
     const counted = from ? earnings.filter((e) => e.date >= from) : earnings;
-    const total = runningTotal(counted);
+    const since = c ? targetStart(c) : null;
+    const total = runningTotal(counted, since);
+    const allTime = runningTotal(counted);
     const todays = earnings.filter((e) => e.date === today);
     const banked = surplusBanked(counted, floor);
     const lastApp: DeliveryApp = normalizeApp(earnings[0]?.app) ?? "DoorDash";
@@ -43,6 +46,11 @@ export function useMoney() {
       target,
       deadline,
       total,
+      /** The first date that counts toward the current target. */
+      since,
+      /** True once the target has been reset, so the total and the all time total differ in meaning. */
+      wasReset: !!c && !!since && since > c.start_date,
+      allTime,
       progress: target > 0 ? Math.min(1, total / target) : 0,
       daysLeft: daysLeft(today, deadline),
       state: targetState(target, total, today, deadline),
