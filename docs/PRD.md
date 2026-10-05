@@ -4,7 +4,7 @@ Oct 5, 2026 · @Sunny
 
 ## Overview
 
-Lock In is a single-user, mobile-first web app that runs a 30 day challenge of structured, uncomfortable days. Day 1 is Oct 5, 2026 and day 30 is Nov 3, 2026.
+Lock In is a mobile-first web app for staying consistent in life, not just a 30 day challenge. The default is ongoing: you use it for the long run, and a slip, like ice cream today, does not reset anything, you just keep going. Challenge mode is an optional layer on top for a set run with its own rules, like 30 days of a strict diet. The first use of it is a personal 30 day lock-in starting Oct 5, 2026.
 
 It answers three questions every time it opens: what am I supposed to be doing right now, what is left today, and am I on track for the 30 days. It replaces spontaneous days with a fixed schedule and tracks body, money, sobriety, school, and business in one place.
 
@@ -70,6 +70,57 @@ Five main screens with Today as home, plus calendar sync, reminders, a coach, an
 - Blocks can be dragged, resized, or edited for that day only without changing the template
 - If one block runs long, the flexible blocks after it shift and the new times show right away
 - A toggle for the 9:00 clock-in errand, which shifts the morning blocks
+
+## Lock In is about life, not just weight
+
+The body is one track. The point is locking in with life: the brand, the degree, the money, the person you are becoming. The app treats all of it as one push.
+
+**14. Mood board**
+
+Built for a designer. The way a fashion house sets its world before any clothes exist, like Rick Owens or Balenciaga, you set the world you are locking in toward.
+
+- Build a board of images, colors, and references: the physique, the brand direction, the life
+- Add images from the camera, the web, or screenshots, and pull a color palette from any image
+- It is the visual version of the why. When motivation dips, you see the whole world you are building toward, not just a quote
+- More than one board, for example a body board and a brand board
+
+**15. The board sets the app's look**
+
+- The palette you pull from a board becomes the app's theme: colors, accent, the whole vibe
+- A few base themes to start, for example dark minimal or high contrast, then yours on top
+- It stops feeling like a generic tracker and starts feeling like your world. For a designer that is the difference between using it and living in it
+
+**16. Meal planning on a budget**
+
+Closes the food loop: goal to plan to grocery list to cooking, all inside a set budget.
+
+- Put in a weekly food budget, the calorie and macro targets, and food likes and dislikes
+- It builds a week of meals from a recipe library, each with ingredients, macros, and cost, and keeps the week under budget with the running total shown as it plans
+- Swap any meal and it rebalances cost and macros
+- Grocery list: the week rolled into one list with combined quantities. It prices the same list across stores (Food Lion, Harris Teeter, Aldi, Walmart, Publix) so you see where the week is cheapest, like $85 at one store but $60 at Aldi, then go there or push the list to Instacart to order in one tap
+- Each meal keeps its recipe and exact portions to hit the numbers
+- Ties into the Money screen, since groceries are a real expense during the 30 days
+
+Build note: live store prices are the hard part, so v1 uses estimated prices and gets exact once an Instacart or store integration is wired. Portion and macro math works from day one.
+
+**17. Ongoing vs challenge mode**
+
+- Default is ongoing, used for the long run. A slip does not reset anything, the point is consistency over time
+- Challenge mode is an optional layer with a duration and its own rules, for example 30 days of a set diet or a set routine
+- A challenge can end, succeed, or be restarted without touching the ongoing history underneath
+
+**18. Study and focus timer**
+
+- Log study hours, or hit start and a focus timer runs
+- Focus mode locks the phone into study so there is no slipping into TikTok or social while the clock runs
+- Same timer idea as the scheduled free-time blocks, pointed at deep work
+- Feeds the daily checklist and the coach
+
+**19. Finances via the other app**
+
+- Money and business do not get rebuilt here. They integrate from the separate finance app already being built to track money and pay off debt
+- Lock In keeps the simple $100 a day earnings floor for the challenge, the deeper money tracking lives in the finance app and feeds in
+- Business stays light: a goal-driven log, not a full build
 
 **3. Money**
 
@@ -176,6 +227,14 @@ Mobile-first web app installed to the home screen as a PWA. One user, one passco
 | set\_log | date, exercise, set\_number, weight, reps |
 | reminder | block\_name or item\_id, offset\_minutes, enabled |
 | coach\_note | date, kind (morning, weekly, flag), body |
+| mood\_log | date, time, mood, note |
+| motivation | kind (quote, clip, why), body, url |
+| board | name, kind (body, brand, life) |
+| board\_item | board\_id, image\_url, note, color |
+| theme | palette, accent, base (dark, contrast), board\_id |
+| recipe | name, ingredients, steps, calories, protein, carbs, fat, est\_cost |
+| meal\_plan | week\_start, budget, recipe\_ids, total\_cost |
+| grocery\_item | plan\_id, name, quantity, store, price, bought |
 
 Rules the app enforces:
 
