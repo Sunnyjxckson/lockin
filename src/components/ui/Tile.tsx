@@ -61,7 +61,7 @@ function long(value: ReactNode): boolean {
 export function Tile({ value, label, state = "off", onClick, href, htmlFor, checked, disabled, corner, className, ...rest }: TileProps) {
   const body = (
     <>
-      <span className={cn("block min-w-0", corner ? "pr-7" : null, long(value) ? "line-clamp-2 text-[14px] leading-[1.15] font-medium tracking-[-0.02em] break-words" : "t-value truncate")}>{value}</span>
+      <span className={cn("block min-w-0", corner ? "pr-7" : null, long(value) ? "line-clamp-2 text-[13px] leading-[1.2] font-medium tracking-[-0.02em] break-words" : "t-value truncate")}>{value}</span>
       {label !== undefined && label !== null && label !== "" ? <span className={cn("t-caption mt-1.5 block min-w-0 truncate", SUB[state])}>{label}</span> : null}
     </>
   );

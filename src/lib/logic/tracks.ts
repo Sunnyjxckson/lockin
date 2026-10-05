@@ -173,7 +173,7 @@ const HINT: Record<string, string> = {
 /** The small line of a tile when nothing better is known: the item's own note when it is short, a short one for seeded items otherwise. */
 export function shortHint(item: Pick<ChecklistItem, "key" | "hint">): string {
   const own = (item.hint ?? "").trim();
-  if (own && own.length <= 13) return own;
+  if (own && own.length <= 12) return own;
   return (item.key && HINT[item.key]) || "";
 }
 
