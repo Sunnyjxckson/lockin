@@ -2,6 +2,8 @@
 
 Read docs/PRD.md first. It is the spec. This file is the contract between agents working in this repo at the same time.
 
+The parallel build is over and the integration pass has merged it. The ownership rules below describe how the repo was built and still say where each kind of code lives. One agent working alone may edit shared files, and must keep this document true when it does.
+
 ## Stack
 
 - Next.js (App Router, latest stable), TypeScript strict, Tailwind CSS, npm
@@ -17,7 +19,7 @@ Nobody has provisioned Supabase, Google, VAPID, or Anthropic keys yet. The app m
 
 - Data: every read and write goes through `src/lib/db` (owned by the foundation agent). It exposes one small generic interface (list, get, insert, update, upsert, remove, with equality and date-range filters) and typed helpers on top. Two backends: Supabase when `NEXT_PUBLIC_SUPABASE_URL` is set, browser localStorage otherwise. Feature code never imports Supabase directly and never touches localStorage directly.
 - Photos: `src/lib/storage` with the same split (Supabase Storage, or data URLs in IndexedDB locally).
-- AI: server routes under `src/app/api/ai/*`. With no `ANTHROPIC_API_KEY` they return a clearly marked fallback (rule-based coach text; an empty editable form for photo reads) with `{ source: "fallback" }`, never an error screen.
+- AI: each feature owns its route: `src/app/api/coach` (brief and review wording), `src/app/api/body/meal-estimate` (meal photo), `src/app/api/money/read` (earnings screenshot). All three take the model id, the client and the fallback response from `src/lib/ai/server.ts`. With no `ANTHROPIC_API_KEY` they answer 200 `{ source: "fallback", reason: "no_key" }` (the coach route adds the rule-based `body`), never an error screen.
 - Calendar and push: with no keys the UI shows a "not connected" state with what to set, and everything else keeps working.
 - `.env.example` lists every variable. README.md has the setup steps for each service.
 
@@ -37,7 +39,7 @@ Put these in `src/lib/logic/*` with Vitest tests. No React, no db calls inside t
 
 - Foundation owns: package.json, config, `src/lib/db`, `src/lib/storage`, `src/lib/logic/{dates,day,streaks,targets}`, `src/lib/types.ts`, `src/lib/seed`, `src/components/ui/*`, `src/app/layout.tsx`, nav, passcode, `src/app/(app)/today`, `src/app/(app)/settings`, `supabase/migrations/0001_init.sql`
 - Each feature agent owns `src/app/(app)/<feature>/**`, `src/features/<feature>/**`, `src/lib/logic/<feature>*.ts`, `src/app/api/<feature>/**`
-- Need a new dependency, table column, or shared UI component? Feature agents may add a NEW file (a new migration `supabase/migrations/00NN_<feature>.sql`, a new component under `src/features/<feature>/`). They do not edit shared files. If a shared file truly must change, make the smallest additive edit and list it in your final report.
+- Need a new dependency, table column, or shared UI component? Feature agents may add a NEW file (a new migration `supabase/migrations/00NN_<what>.sql`, numbered one above the highest file there with no gaps, which `schema.test.ts` checks, a new component under `src/features/<feature>/`). They do not edit shared files. If a shared file truly must change, make the smallest additive edit and list it in your final report.
 - Do not run `npm install` for new packages while other agents are working unless you need to. If you do, use `npm install <pkg>` once and report it.
 - Do not run `next build` while other agents are editing (it will fail on their half-written files). Use `npx tsc --noEmit` filtered to your files, and `npx vitest run <your tests>`.
 
@@ -61,9 +63,9 @@ A few lines: what works, what is stubbed and behind which env var, any shared fi
 
 ## Foundation API
 
-What the foundation gives you. Import from these paths and you should not need to read the source. `/dev/ui` in the running app shows every component.
+What the foundation gives you. Import from these paths and you should not need to read the source. `/dev/ui` in the dev server shows every component (it answers 404 in a production build).
 
-Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/lib/auth/*`, `src/lib/haptics.ts`, `src/components/app/*`, `src/app/api/{auth,db,storage}`, `src/app/dev/ui`, `public/sw.js`, `scripts/*`.
+Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/lib/auth/*`, `src/lib/haptics.ts`, `src/components/app/*`, `src/app/api/{auth,db,storage}`, `src/app/dev/*`, `src/lib/ai/*`, `src/lib/prefs.ts`, `src/lib/install.ts`, `src/lib/logic/text.ts`, `public/sw.js`, `scripts/*`.
 
 ### Conventions
 
@@ -79,11 +81,11 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 
 | Table | Row type | Notes |
 | --- | --- | --- |
-| `challenge` | `Challenge` | One row, id `"challenge"`. `start_date, length_days, money_target, money_deadline, daily_floor` |
-| `checklist_item` | `ChecklistItem` | `key, name, type ("yesno" / "number" / "text"), cadence ("daily" / "weekly"), target, category ("habit" / "vice"), mode ("quit" / "cap" / null), unit, hint, sort_order, active, archived, weekly_day, with_photo, tracks_money` |
+| `challenge` | `Challenge` | One row, id `"challenge"`. `start_date, length_days, money_target, money_deadline, daily_floor, money_target_start`. `money_target_start` is the first date that counts toward the current target, null means the challenge start. Read it with `targetStart(challenge)` from `logic/money` |
+| `checklist_item` | `ChecklistItem` | `key, name, type ("yesno" / "number" / "text"), cadence ("daily" / "weekly"), target, category ("habit" / "vice"), mode ("quit" / "cap" / null), unit, hint, sort_order, active, archived, weekly_day, with_photo, tracks_money, typical_spend, spend_period ("day" / "week" / null)`. The last two are the typical spend of a money vice, read with `spendOf(item)` from `logic/vices` |
 | `target_version` | `TargetVersion` | `item_id, effective_from, target, active`. Target history. Do not write it by hand, use the helpers |
-| `day_log` | `DayLog` | `date, item_id, value, checked, text, completed_at`. One row per item per day |
-| `vice_slip` | `ViceSlip` | `item_id, date, time, trigger, amount` |
+| `day_log` | `DayLog` | `date, item_id, value, checked, text, completed_at, slips`. One row per item per day. `slips` is the number of `vice_slip` rows for that item and date. Above zero the item is not done that day whatever the tick or number says |
+| `vice_slip` | `ViceSlip` | `item_id, date, time, trigger, amount`. After any insert, update or delete call `syncSlipCount(itemId, date)` |
 | `schedule_template` | `ScheduleTemplate` | `weekday, block_name, start, end, kind, flexible, note` |
 | `schedule_block` | `ScheduleBlock` | `date, block_name, start, end, duration, flexible, kind, note, calendar_event_id, template_id, source` |
 | `earning` | `Earning` | `date, amount, app, hours, screenshot_url` |
@@ -96,18 +98,21 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 | `coach_note` | `CoachNote` | `date, kind ("morning" / "weekly" / "flag"), body, source ("ai" / "fallback")` |
 | `push_subscription` | `PushSubscriptionRow` | `endpoint, p256dh, auth, user_agent`. Server only in Supabase mode |
 | `calendar_token` | `CalendarToken` | `provider, access_token, refresh_token, expires_at, calendar_id, sync_token`. Server only in Supabase mode |
+| `reminder_sent` | `ReminderSent` | `date, key`. One row per reminder the scheduled job sent, unique on `key`. Server only |
+| `reminder_run` | `ReminderRun` | `last_run_at`. One row, id `"cron"`. Server only |
+| `login_attempt` | `LoginAttempt` | `failures, locked_until`. One row, id `"passcode"`. Server only |
 | `app_settings` | `AppSettings` | One row, id `"app"`. `seeded, timezone, quiet_start, quiet_end, carbs_target, fat_target, weight_unit, haptics` |
 
 `Target` is one of `{ kind: "check" }`, `{ kind: "check_by", by }`, `{ kind: "min", min }`, `{ kind: "max", max }`, `{ kind: "range", min, max }`, `{ kind: "text" }`.
 
 Seeded item keys, for `getItemByKey`: `wake, workout, core, calories, protein, earned, study, business, bed, talk, weighin`, and the vices `vice_smoking, vice_drinking, vice_masturbation` (on) plus `vice_vaping, vice_weed, vice_gambling, vice_porn, vice_junk_food, vice_fast_food, vice_energy_drinks, vice_doomscrolling, vice_impulse_spending` (off, `active: false`). Vices are checklist items with `category: "vice"`. Carbs and fat targets are `app_settings.carbs_target` and `fat_target`. Calories and protein targets are the `calories` and `protein` items.
 
-Need a new column or table? Add `supabase/migrations/00NN_<feature>.sql`. A new table also needs an entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), which are shared files: make the smallest additive edit and report it.
+Need a new column or table? Add the next numbered file in `supabase/migrations/` (they run in order: `0001_init`, `0002_reminders`, `0003_vice_spend`, `0004_slip_count`, `0005_money_target_start`, `0006_login_attempt`). Use plain `create table name (` and `alter table name add column col type` so `schema.test.ts` can read it. A new table or column also needs its entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), and a server only table goes in `SERVER_ONLY_TABLES`. Rows already on a device have no migration: add a step to `src/lib/db/upgrade.ts`, which runs on every load in local mode.
 
 ### Data: `@/lib/db`
 
 ```ts
-import { db, subscribe, notify, isSupabaseMode, type Query } from "@/lib/db";
+import { db, subscribe, notify, isSupabaseMode, isUniqueViolation, type Query } from "@/lib/db";
 
 db.list(table, query?)                 // Promise<Row[]>
 db.first(table, query?)                // Promise<Row | null>
@@ -133,9 +138,9 @@ interface Query<K> {
 
 - Everything is typed by table name: `db.list("earning", { from, to })` returns `Earning[]`.
 - Always pass `orderBy` when order matters. Without it local returns insert order and Supabase returns `created_at` order.
-- `upsert` conflict columns need a unique index in Supabase. These exist: `day_log (date, item_id)`, `target_version (item_id, effective_from)`, `body_log (date)`, `workout (weekday, slot)`, `set_log (date, exercise, set_number)`, `push_subscription (endpoint)`, `calendar_token (provider)`, and `id` on every table. For any other pair, add a unique index in your migration.
+- `upsert` conflict columns need a unique index in Supabase. These exist: `day_log (date, item_id)`, `target_version (item_id, effective_from)`, `body_log (date)`, `workout (weekday, slot)`, `set_log (date, exercise, set_number)`, `push_subscription (endpoint)`, `calendar_token (provider)`, `reminder_sent (key)`, and `id` on every table. For any other pair, add a unique index in your migration.
 - Every write notifies subscribers of that table. `subscribe(table, fn)` returns an unsubscribe function. The hooks do this for you.
-- Errors are `DbError` with a readable message.
+- Errors are `DbError` with a readable message. `insert` fails when a row with the same unique key exists, on both backends, and `isUniqueViolation(e)` tells that apart from other failures (the reminder job uses it as a lock).
 
 ### Hooks: `@/lib/db/hooks`
 
@@ -193,6 +198,7 @@ setChecked(itemId, date, checked)             // yes/no and text items
 setValue(itemId, date, value | null)          // number items
 setText(itemId, date, text)                   // text items
 setValueByKey(key, date, value | null)        // number item by seeded key, null if no such item
+syncSlipCount(itemId, date)                   // recount vice_slip rows into day_log.slips
 logWeight(date, weight | null)                // writes body_log and the weekly weigh-in item
 
 getWorkouts(): Promise<Workout[]>
@@ -200,11 +206,11 @@ workoutsFor(all, weekday): { main: Workout | null; core: Workout | null }
 resetAllData()
 ```
 
-Keeping the checklist in step with your feature. Today scores from `day_log` only, so:
+Keeping the checklist in step with your feature. Everything is scored from `day_log` only (Today, Progress, streaks, Coach), so:
 
-- Money: after any earning is added, changed or removed, call `setValueByKey("earned", date, totalForThatDate)`.
-- Body: after any meal change, call `setValueByKey("calories", date, total)` and `setValueByKey("protein", date, total)`. Save weight with `logWeight(date, weight)`.
-- Vices: turn library vices on with `setItemActive`. A capped vice is `type: "number"`, `mode: "cap"`, target `{ kind: "max", max }`.
+- Money: after any earning is added, changed or removed, call `setValueByKey("earned", date, totalForThatDate)`. Today's Earned row has no number field: it opens quick add, so the earning table is the only way in.
+- Body: after any meal change, call `setValueByKey("calories", date, total)` and `setValueByKey("protein", date, total)`. On Today those two rows take a typed number until a meal is logged that day, then show the meal totals and link to Body. Save weight with `logWeight(date, weight)`.
+- Vices: after a slip is added, moved or removed, call `syncSlipCount(itemId, date)`. That is the one source of truth for a slip: `itemState` returns `"off"` while `day_log.slips` is above zero, and a slip today ends the streak that day. The tick and number are left alone, so removing the slip puts the day back. Turn library vices on with `setItemActive`. A capped vice is `type: "number"`, `mode: "cap"`, target `{ kind: "max", max }`.
 - `challenge.daily_floor` and the `earned` item's target are the same number. Settings keeps them in step. If you change one, change the other.
 
 ### Photos: `@/lib/storage`
@@ -256,7 +262,7 @@ Never build a calendar date from `toISOString()`. Use `todayNY()`, `nyParts()` a
 ```ts
 type DayStatus = "full" | "partial" | "missed";
 type ItemState = "done" | "open" | "off";      // off: logged but does not meet the target
-meetsNumber(target, value): boolean
+meetsNumber(target, value): boolean            hasSlip(log): boolean
 itemState(item, target, log): ItemState        isItemDone(item, target, log): boolean
 summarizeDay(date, items, versions, logs): DaySummary
   // { date, status, done, total, percent, items: { item, target, log, state, done }[] }, daily items only
@@ -276,7 +282,7 @@ allStreaks(items, versions, logs, today, from): Record<itemId, Streak>
 fullDayStreak(statusByDate, today, from): number
 ```
 
-Daily items count days, weekly items count weeks. Today (or this week) not being done yet does not break a streak.
+Daily items count days, weekly items count weeks. Today (or this week) not being done yet does not break a streak. A slip logged today does: the current streak is 0 from that moment.
 
 `targets`:
 
@@ -320,6 +326,39 @@ nowAndNext(blocks, time): { now, next, minutesLeft, minutesUntilNext }
 
 Block kinds: `wake, workout, home, class, delivery, basketball, study, bed, free, errand, other`. Delivery blocks are named `Delivery`, `Delivery: lunch`, `Delivery: dinner`, `Delivery: late night`, all with `kind: "delivery"`.
 
+### Text from a model: `@/lib/logic/text`
+
+```ts
+stripDashes(text)        // a dash between numbers becomes "to", any other becomes ", "
+cleanLine(text, max)     // stripDashes, whitespace folded, cut to max. For short fields
+```
+
+Everything a model wrote goes through one of these before it is stored or shown. `cleanCoachText` in `logic/coach` builds on `stripDashes`.
+
+### AI routes: `@/lib/ai/server`
+
+Server only. The three AI routes use nothing else to reach Claude.
+
+```ts
+DEFAULT_ANTHROPIC_MODEL          // "claude-sonnet-5-5", a current Sonnet with vision
+anthropicModel(): string         // ANTHROPIC_MODEL if set, else the default
+anthropicClient(opts?)           // Anthropic | null. Null when ANTHROPIC_API_KEY is unset
+aiFallback(reason, extra?)       // 200 { ...extra, source: "fallback", reason }
+readImageDataUrl(image)          // { mediaType, data } or { error: Response }
+```
+
+`reason` is one of `no_key, no_read, error, bad_image, refused, empty, too_long, numbers_not_in_data`. A success is `{ source: "ai", ... }`.
+
+### Device preferences and install: `@/lib/prefs`, `@/lib/install`
+
+```ts
+getPref(key): string | null      setPref(key, value | null)   // per device, not app data
+installMode(): "prompt" | "ios" | "ios-other" | "none"        promptInstall(): Promise<boolean>
+isIOS()   isStandalone()   subscribeInstall(fn)
+```
+
+`prefs` is for things like a dismissed prompt. App data still goes through `db`.
+
 ### Auth: `@/lib/auth/server`
 
 Every API route you add must start with this:
@@ -336,6 +375,8 @@ export async function POST(request: Request) {
 
 It returns a 401 response when `LOCKIN_PASSCODE` is set and the cookie is missing, otherwise null. Routes called by a cron job cannot carry the cookie, so guard those with their own secret.
 
+Login tries go through `tryLogin` in `@/lib/auth/limiter`: every 5 wrong tries in a row lock the login, 1 minute at first and doubling up to an hour. The count is in the `login_attempt` table in Supabase mode, so it holds across serverless instances, and in module memory in local mode.
+
 Server routes and data: in local mode the server has no data (it is in the browser). An API route that needs data must be sent it in the request body. Only in Supabase mode can a route call `db` and the helpers directly. Features that need the server to act alone (scheduled push) need Supabase, and should say so in their not connected state.
 
 ### UI: `@/components/ui`
@@ -349,13 +390,13 @@ Icons come from `lucide-react` (installed), usually at size 18 to 24.
 | Component | Props |
 | --- | --- |
 | `Screen` | `children, className?`. Page container: centered column up to 480px, 20px side padding, room for the tab bar. Wrap every page in it |
-| `PageHeader` | `title, eyebrow?, subtitle?, back? (href), right? (node)` |
+| `PageHeader` | `title, eyebrow?, subtitle?, back? (href), right? (node)`. With `back` (every sub-screen) there is a back arrow row above the title and `right` sits on that row. Without it (tab screens) `right` sits on the title line |
 | `Section` | `title, right?, children`. Uppercase eyebrow then content, with top margin |
 | `Card` | `padded? = true, raised? = false`, plus div props. Use `padded={false}` with `overflow-hidden` for lists |
 | `ListRow` | `title, sub?, left?, right?, href?, onClick?, plain?`. Stack inside `<Card padded={false}><div className="divide-y divide-line">` |
 | `Button` | `variant? ("primary" / "secondary" / "ghost" / "danger"), size? ("sm" / "md" / "lg"), full?, loading?, icon?`, plus button props |
 | `IconButton` | `label (required), filled?`, plus button props. 44px round |
-| `Sheet` | `open, onClose, title?, subtitle?, footer?, children`. Bottom sheet |
+| `Sheet` | `open, onClose, title?, subtitle?, footer?, children`. Bottom sheet. Follows the visual viewport, so it stays above the on-screen keyboard. Import sheet components with `next/dynamic` and render them only while open, so their code loads on first use |
 | `NumberField` | `value: number | null, onChange(value), live?, label?, hint?, unit?, prefix?, placeholder?, min? = 0, max?, decimal? = true, disabled?, variant? ("field" / "inline" / "hero"), done?, autoFocus?`. `onChange` fires on blur or Enter. Pass `live` for every keystroke |
 | `TextField` | `value, onChange(value), onCommit?(value), label?, hint?, error?, placeholder?, rows?, maxLength?, disabled?, autoFocus?` |
 | `TimeField` | `value ("HH:MM"), onChange, label?, hint?, disabled?` |
@@ -371,7 +412,7 @@ Icons come from `lucide-react` (installed), usually at size 18 to 24.
 | `Stat` | `label, value, unit?, sub?, size? ("display" / "lg" / "sm"), done?, align?`. A big numeral with a label |
 | `EmptyState` | `title, body?, icon?, action?, compact?` |
 | `useToast()` | `toast(message, { kind?: "info" / "done" / "error", duration? })`. The provider is already mounted |
-| `TabBar` | No props. Already rendered by the app layout, do not render it again |
+| `TabBar` | No props. Already rendered by the app layout, do not render it again. A tab is lit on its own sub-routes, and Today is also lit on `/coach`, `/vices`, `/reminders` and `/settings` |
 | `cn(...)` | Joins class names |
 
 Haptics: `import { haptics } from "@/lib/haptics"`, then `haptics.tap()`, `haptics.done()`, `haptics.celebrate()`, `haptics.error()`. `Checkbox`, `Toggle` and `SegmentedControl` already call it.
@@ -394,7 +435,7 @@ Buttons, selected segments and switches use ink, not the accent, so the accent a
 
 Type classes: `t-display` (64px hero numeral), `t-num` (40px), `t-num-sm` (28px), `t-title` (28px page title), `t-h2` (20px), `t-sub` (14px secondary), `t-label` (12px uppercase eyebrow), `tnum` (tabular figures). Body text is 16px with no class.
 
-Other utilities: `pressable` (press feedback), `no-scrollbar`, and the animations `animate-fade-in`, `animate-rise-in`, `animate-sheet-up`, `animate-toast-in`, `animate-check-pop`, `animate-shake`, `animate-ring-glow`, `animate-pulse-dot`. All motion is switched off under `prefers-reduced-motion`.
+Other utilities: `pressable` (press feedback), `no-scrollbar`, and the animations `animate-fade-in`, `animate-rise-in`, `animate-sheet-up`, `animate-toast-in`, `animate-check-pop`, `animate-shake`, `animate-ring-glow`, `animate-pulse-dot`, and `animate-day-ring`, `animate-day-check`, `animate-day-text` for the full day moment. All motion is switched off under `prefers-reduced-motion`.
 
 Layout variables: `--tabbar-h` (60px), `--safe-b`, `--safe-t`. Anything fixed to the bottom of the screen sits at `bottom-[calc(var(--tabbar-h)+var(--safe-b))]`. Radii: cards 20px, controls 14px, small controls 12px.
 
@@ -416,12 +457,23 @@ export default function MoneyPage() {
 }
 ```
 
-Routes that exist: `/today`, `/schedule`, `/money`, `/body`, `/progress` (tabs), `/coach`, `/vices`, `/reminders` (stubs, linked from Today or Settings), `/settings` and `/settings/{checklist,schedule,workouts,challenge,reminders}`. Coach and Vices use `back="/today"`.
+Routes that exist: `/today`, `/schedule`, `/money`, `/body`, `/progress` (tabs), `/body/workout`, `/progress/card`, `/coach`, `/vices`, `/vices/[id]`, `/reminders`, `/settings` and `/settings/{checklist,schedule,workouts,challenge,reminders}`. Every sub-screen passes `back`. `/today?date=YYYY-MM-DD` opens Today on that day.
 
-The reminder rows (on/off, time, minutes before) and quiet hours are already editable at `/settings/reminders`. `/reminders` is for the push permission and connection state. `public/sw.js` already shows a notification for a push with a JSON payload `{ title, body, url, tag }` and opens `url` on tap.
+Dev only, 404 in a production build: `/dev/ui`, `/dev/coach`.
+
+### Today
+
+Today is the home screen and has to answer three questions at a glance: what now, what is left today, am I on track. Its order, top to bottom: day and percent ring, the day strip, one setup row at most (`SetupRow`: add to Home Screen, then turn on reminders, each dismissible and remembered), the morning brief (open on the first visit of the day, then closed for the day once closed), Now and Next with the conflict banner under it, the checklist, this week, the workout.
+
+Features plug into the checklist rows instead of adding cards: the Earned row is `EarnedAction` from `features/money/TodaySlot`, a vice with a slip renders `SlipRow`, `Log a slip` sits under the checklist, and `Log sets` sits in the workout section header. Before adding anything to Today, look for a row it belongs in.
+
+`LocalScheduler` (reminders while the app is open) is mounted once in `AppShell`, so it runs on every screen.
+
+The reminder rows (on/off, time, minutes before) and quiet hours are editable at `/settings/reminders`. `/reminders` (Settings, Notifications) is for the push permission and connection state. `public/sw.js` shows a notification for a push with a JSON payload `{ title, body, url, tag }` and opens `url` on tap.
 
 ### Checks
 
 - `npx vitest run src/lib/logic/<yours>.test.ts`
 - `npx tsc --noEmit`
-- `npm run e2e -- http://localhost:<port>` clicks through the foundation at 390 x 844 and must keep passing. It expects a fresh browser and a seeded app, and it looks for the stub headings (`Schedule`, `Money`, `Body`, `Progress`, `Coach`, `Vices`) as the level 1 heading of each page.
+- `npx eslint .`
+- `npm run build`, then `scripts/serve.sh start 3210` and `npm run e2e -- http://localhost:3210`. The walkthrough runs against the production build with an empty `.env`, at 390 x 844, covers every screen and the cross-feature flows, and fails on any console error. Keep it passing and extend it when you add a flow. `scripts/serve.sh stop` ends the server.
