@@ -15,10 +15,10 @@ Open http://localhost:3000 in a phone-sized window. With an empty `.env` the who
 
 - It asks you to create a 4 digit passcode, then seeds the first 30 day challenge (Oct 5, 2026), the checklist, schedule, workouts, reminders and the vice library. Opened after that challenge's last day, it starts in ongoing mode with no challenge.
 - Settings, Challenge is where a challenge is started, ended early, finished or restarted, and where its rules are set. Settings, Look switches between the Aubergine (default) and high contrast themes.
-- Today, Schedule, Money, Body, Progress, Vices, Coach and Settings all work. Data is in the browser's localStorage, photos in IndexedDB.
+- Today, Plan, Money, Body, Record, Vices, Coach and Settings all work (the Plan and Record tabs live at `/schedule` and `/progress`). Data is in the browser's localStorage, photos in IndexedDB.
 - Boards (More, Boards): make a board, add images from the camera, your photos, the clipboard or a web link, add colors and notes, and turn a board's palette into the look of the whole app. Text contrast is checked and fixed before a palette is applied, and one tap goes back to the base theme. The first board with anything on it shows as a row at the bottom of Today.
 - Meals (the icon in Body's header): set a weekly budget and it plans seven days from the built in recipe library that hit your calories and protein, with one grocery list priced at five stores. Swap a meal, change a portion, tick off the list, record the shop (it shows on Money as groceries), and log a cooked meal to Body and Today. Every price is an estimate until you type one in from a receipt.
-- Focus (the icon in Schedule's header, or the timer button on Today's study row): a count up or countdown timer that survives a reload, records when you leave the app, and ticks the study item when the day's minutes reach the goal. Time can also be logged by hand. The business log is under it.
+- Focus (the icon in Plan's header, or the timer button on Today's study row): a count up or countdown timer that survives a reload, records when you leave the app, and ticks the study item when the day's minutes reach the goal. Time can also be logged by hand. The business log is under it.
 - The coach writes its morning brief, Sunday review and flags from rules instead of Claude, and says so on the note.
 - Snapping a meal or an earnings screenshot attaches the photo and opens the form empty for you to type the numbers.
 - Reminders show as notifications while the app is open or recently in the background, if you allow notifications. Nothing arrives when the app is closed.
@@ -106,7 +106,7 @@ With the key set, the grocery list shows Order on Instacart, which sends the lis
 | `GOOGLE_CLIENT_SECRET` | From the OAuth client |
 | `GOOGLE_REDIRECT_URI` | `https://YOUR-APP.vercel.app/api/calendar/callback`, the same string you gave Google |
 
-Redeploy, then open Schedule, scroll to Calendar sync and connect. While the consent screen is in Testing, Google expires the sign in after 7 days. Publish the consent screen to make it stick.
+Redeploy, then open Plan, scroll to Calendar sync and connect. While the consent screen is in Testing, Google expires the sign in after 7 days. Publish the consent screen to make it stick.
 
 ### 5. Reminders (web push)
 
@@ -172,7 +172,8 @@ Device data does not sync between devices and is lost if the browser's site data
 | `npm test` | Unit tests (Vitest) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` | ESLint |
-| `npm run e2e` | Full walkthrough in headless Chromium at 390 x 844: every screen and the flows that cross features, then boards, meals and the focus timer. Build and start the app with an empty `.env` first, then pass the base URL: `npm run e2e -- http://localhost:3210`. Add `--features` to run only the boards, meals and focus part. Screenshots go to `.shots/final2-*.png` |
+| `npm run e2e` | Full walkthrough in headless Chromium at 390 x 844: every screen and the flows that cross features, then boards, meals and the focus timer. Build and start the app with an empty `.env` first, then pass the base URL: `npm run e2e -- http://localhost:3210`. Add `--features` to run only the boards, meals and focus part. Screenshots go to `.shots/final3-*.png`, and `.shots/final3-contact.png` is the main screens on one sheet (`node scripts/contact.mjs` rebuilds it) |
+| `npm run perf -- http://localhost:3210` | First load of Today on a throttled phone profile: bytes of script, style and font over the wire, whether the typeface was ready at the first text, layout shift, and where backdrop blur is used. Fails over its budget. The walkthrough runs the same measure |
 | `npm run icons` | Redraw the PWA icons in `public/icons` |
 
 `scripts/serve.sh start 3210` serves the last production build in the background and `scripts/serve.sh stop` ends it.

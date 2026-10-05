@@ -20,6 +20,7 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { chromium } from "playwright";
 import { contactSheet } from "./contact.mjs";
 import { runFeatures } from "./e2e-features.mjs";
+import { BUDGET, measureFirstLoad } from "./perf.mjs";
 
 const base = process.argv.slice(2).find((a) => !a.startsWith("--")) ?? "http://localhost:3000";
 const CORE = !process.argv.includes("--features");
@@ -700,6 +701,14 @@ await openTab(page, "Today");
 check("Today's Next follows the edited block", /Lift heavy/.test(await nowCard.innerText()), await nowCard.innerText());
 await page.goto(`${base}/settings/schedule`);
 await page.getByRole("heading", { name: "Weekly plan", level: 1 }).waitFor();
+{
+  // The small weekday picker draws 36px tall and still takes a tap anywhere in its 44px track.
+  const tue = page.getByRole("radio", { name: "T" }).first();
+  const box = await tue.boundingBox();
+  const pill = await tue.locator("span").boundingBox();
+  const hit = await page.evaluate(([x, y1, y2]) => [y1, y2].map((y) => document.elementFromPoint(x, y)?.closest("[role=radio]")?.textContent), [box.x + box.width / 2, box.y + 1, box.y + box.height - 1]);
+  check("a small segment draws 36px tall and takes taps over 44px", Math.round(pill.height) === 36 && box.height >= 44 && box.width >= 44 && hit[0] === "T" && hit[1] === "T", `${pill.height} ${box.height} ${JSON.stringify(hit)}`);
+}
 await page.getByRole("radio", { name: "M" }).first().click();
 check("the weekday template is untouched by a one day edit", (await page.getByRole("button", { name: /^Lift \+ core/ }).count()) === 1);
 await shot(page, "21-settings-schedule", true);
@@ -1296,6 +1305,44 @@ console.log("Late install and the wake cutoff");
   await p.getByText("Checked after the cutoff. Does not count.").waitFor();
   check("a same day wake check after 6:00 does not count", (await count(p)) === "0 of 12");
   await shot(p, "38-late-wake");
+  await c.close();
+}
+
+// The first load of Today on a phone: a mid 4G connection and a CPU four times slower.
+console.log("First load on a phone");
+{
+  const r = await measureFirstLoad(browser, base);
+  console.log(`    script ${r.scriptKB} KB, style ${r.styleKB} KB, font ${r.fontKB} KB over the wire. Lock screen at ${r.lockScreenMs} ms, first text at ${r.firstText?.at} ms. Layout shift ${r.cls}.`);
+  check(`first load stays inside its budget: ${BUDGET.scriptKB} KB of script, ${BUDGET.styleKB} KB of style, ${BUDGET.fontKB} KB of font`, r.scriptKB <= BUDGET.scriptKB && r.styleKB <= BUDGET.styleKB && r.fontKB <= BUDGET.fontKB, `${r.scriptKB} ${r.styleKB} ${r.fontKB}`);
+  check("the typeface is preloaded and already there when the first text is painted, so no fallback text flashes", r.fontPreloads === 1 && r.firstText?.fontReady === true, JSON.stringify(r.firstText));
+  check("nothing shifts between the first paint and Today settled, on a slow phone", r.cls <= BUDGET.cls, `cls ${r.cls}`);
+  check("only the tab bar blurs what is behind it, and nothing uses a blur filter", r.blur.length === 1 && r.blur[0].includes("tab bar") && r.filterBlur === 0, JSON.stringify(r.blur));
+  check("the slow first load throws nothing", r.errors.length === 0, r.errors.join("; "));
+}
+
+// The setup row: with notifications not yet answered, Today offers reminders in one quiet row.
+{
+  const c = await browser.newContext(device);
+  await c.addInitScript(() => {
+    if ("Notification" in window) Object.defineProperty(Notification, "permission", { configurable: true, get: () => "default" });
+  });
+  const p = await c.newPage();
+  watch(p);
+  await p.clock.install({ time: new Date("2026-10-05T09:50:00Z") });
+  await p.goto(`${base}/today`);
+  await createPasscode(p, "2468");
+  const setup = p.getByRole("link", { name: /Turn on reminders/ });
+  await setup.scrollIntoViewIfNeeded();
+  const dismiss = setup.locator("xpath=..").getByRole("button", { name: "Dismiss" });
+  const boxes = [await setup.boundingBox(), await dismiss.boundingBox()];
+  check("Today offers reminders in one row, under the checklist, with 44px targets", boxes.every((b) => b && b.height >= 44 && b.width >= 44) && boxes[0].y > (await p.locator("section[aria-label='Checklist']").boundingBox()).y, JSON.stringify(boxes));
+  await checkContrast(p, "Today with the setup row", 4.5);
+  await shot(p, "39-setup-row");
+  await dismiss.click();
+  await p.reload();
+  await p.locator("[data-today]").waitFor();
+  await p.locator("[data-count]").waitFor();
+  check("a dismissed setup row stays gone", (await p.getByRole("link", { name: /Turn on reminders/ }).count()) === 0);
   await c.close();
 }
 

@@ -116,6 +116,52 @@ export async function runFeatures(h) {
   check("the plan says its prices are estimates for the store", /Estimated prices, not Aldi's shelf prices/.test(costCard));
   await noOverflow(page, "Meals, planned");
   await shot(page, "f-meals-02-week", true);
+  {
+    // The week at a glance: each day's calories and protein sit beside its meals.
+    const shown = await page.locator("section[aria-label='The week'] li").evaluateAll((els) => els.map((li) => [li.querySelector("[data-day-kcal]")?.textContent.trim(), li.querySelector("[data-day-protein]")?.textContent.trim()]));
+    const want = dates.map((d) => [Math.round(dayOf(plan, d).calories).toLocaleString("en-US"), `${Math.round(dayOf(plan, d).protein)}g`]);
+    check("the week view shows each day's calories and protein total", JSON.stringify(shown) === JSON.stringify(want), JSON.stringify(shown));
+    // A meal with one long word must not drop a letter onto a line of its own.
+    const long = recipes.find((r) => r.name === "Chicken quesadillas");
+    await page.evaluate(
+      ([prefix, id]) => {
+        const plans = JSON.parse(localStorage.getItem(prefix + "meal_plan"));
+        window.__keptPlan = localStorage.getItem(prefix + "meal_plan");
+        plans[0].meals[1].recipe_id = id;
+        localStorage.setItem(prefix + "meal_plan", JSON.stringify(plans));
+      },
+      [PREFIX, long.id],
+    );
+    const kept = await page.evaluate(() => window.__keptPlan);
+    await page.reload();
+    await page.locator("[data-plan-cost]").waitFor();
+    const cell = page.locator("[data-meal-cell]", { hasText: "Chicken quesadillas" }).first();
+    await cell.waitFor();
+    // Lines of the name as laid out: the text of each visual line.
+    const lines = await cell.locator("span").first().evaluate((el) => {
+      const node = el.firstChild;
+      const out = [];
+      let top = null;
+      const range = document.createRange();
+      for (let i = 0; i < node.length; i += 1) {
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        const r = range.getClientRects()[0];
+        if (!r) continue;
+        if (top === null || Math.abs(r.top - top) > 3) {
+          out.push("");
+          top = r.top;
+        }
+        out[out.length - 1] += node.data[i];
+      }
+      return out.map((l) => l.trim()).filter(Boolean);
+    });
+    check("a long word in the week grid is not broken one letter down", lines.every((l) => l.replace(/-$/, "").length >= 3) && lines.join("").replace(/-/g, "").includes("quesadillas"), JSON.stringify(lines));
+    await shot(page, "f-meals-02b-long-word");
+    await page.evaluate(([prefix, raw]) => localStorage.setItem(prefix + "meal_plan", raw), [PREFIX, kept]);
+    await page.reload();
+    await page.locator("[data-plan-cost]").waitFor();
+  }
 
   // ---------- swap ----------
   console.log("Meals: swap, portion");
@@ -298,6 +344,15 @@ export async function runFeatures(h) {
   await page.waitForFunction(() => /^(19:5\d|20:00)$/.test(document.querySelector("[data-clock]")?.textContent ?? ""));
   check("five minutes in, the countdown reads about 20:00", true);
   await shot(page, "f-focus-02-running");
+  // Focus mode: the timer alone on a full screen layer that keeps the page lights.
+  await page.getByRole("button", { name: "Open focus mode" }).click();
+  await page.getByRole("dialog", { name: "Focus mode" }).waitFor();
+  await page.waitForTimeout(400);
+  check("focus mode covers the screen and keeps the lights, not a flat panel", await page.locator("[data-focus-view]").evaluate((el) => getComputedStyle(el).backgroundImage.includes("radial-gradient") && el.getBoundingClientRect().height >= window.innerHeight));
+  await checkContrast(page, "Focus mode, Aubergine", 4.5);
+  await shot(page, "f-focus-02b-focus-mode");
+  await page.getByRole("button", { name: "Exit" }).click();
+  await page.getByRole("dialog", { name: "Focus mode" }).waitFor({ state: "detached" });
 
   // Pause: the number on screen at the tap is the number that stays.
   await page.waitForTimeout(700);
@@ -452,6 +507,15 @@ export async function runFeatures(h) {
   await page.getByText("2 pieces").first().waitFor();
   await noOverflow(page, "Board");
   await shot(page, "f-boards-06-board", true);
+  // One piece, full screen.
+  await page.getByRole("list", { name: "Pieces on this board" }).or(page.locator('[aria-label="Pieces on this board"]')).first().getByRole("button").first().click();
+  await page.locator("[data-layer]").waitFor();
+  await page.waitForTimeout(400);
+  check("a piece opens on a full screen layer that keeps the lights", await page.locator("[data-layer]").evaluate((el) => getComputedStyle(el).backgroundImage.includes("radial-gradient")));
+  await checkContrast(page, "Board piece, Aubergine", 4.5);
+  await shot(page, "f-boards-06b-piece");
+  await page.keyboard.press("Escape");
+  await page.locator("[data-layer]").waitFor({ state: "detached" });
 
   // Pull the palette: the board's colors, sorted, become choices for the look.
   await page.getByRole("button", { name: "Set the app's look from this board" }).click();
@@ -460,6 +524,7 @@ export async function runFeatures(h) {
   const swatches = await studio.getByRole("radiogroup", { name: "Background" }).getByRole("radio").count();
   check("the palette pulled from the board is offered for each role", swatches >= 4 && (await studio.getByRole("radiogroup", { name: "Accent" }).getByRole("radio").count()) === swatches, `${swatches} choices`);
   check("the studio says every pair of text passes before it is applied", /Every piece of text passes the contrast standard/.test(await studio.innerText()));
+  await checkContrast(page, "Look studio, Aubergine", 4.5);
   await shot(page, "f-boards-07-look-studio");
   await studio.getByRole("button", { name: "Apply to the app" }).click();
   await toastSays(page, "The app now wears The body");
@@ -571,6 +636,9 @@ export async function runFeatures(h) {
       await page.waitForTimeout(300);
       await checkContrast(page, `${name}, ${label}`, min);
       await noOverflow(page, `${name}, ${label}`);
+      // Real blur is for the tab bar alone. A card or a row that blurs costs a phone a frame on every scroll.
+      const blurred = await page.evaluate(() => [...document.querySelectorAll("*")].filter((el) => (getComputedStyle(el).backdropFilter ?? "none") !== "none" && !el.closest("nav[aria-label=Main]")).map((el) => el.className.toString().slice(0, 40)));
+      if (blurred.length > 0 || main) check(`${name}: no backdrop blur outside the tab bar`, blurred.length === 0, blurred.join(" | "));
       if (main) {
         // The default look is the one the owner reviews: the first screen at phone size, and the whole page.
         await page.evaluate(() => window.scrollTo(0, 0));
