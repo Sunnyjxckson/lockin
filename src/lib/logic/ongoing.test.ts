@@ -45,7 +45,7 @@ describe("tally", () => {
     const cells = ongoingCells(input(), "2026-09-28", "2026-10-09");
     expect(tally(cells)).toEqual({ full: 9, partial: 1, missed: 1, days: 11, percent: 82 });
     const done = input();
-    done.logs.push(tick("b", "2026-10-09"));
+    done.logs = [...done.logs, tick("b", "2026-10-09")];
     expect(tally(ongoingCells(done, "2026-09-28", "2026-10-09"))).toMatchObject({ full: 10, days: 12 });
   });
 

@@ -6,8 +6,9 @@
 import { useMemo } from "react";
 import { db } from "@/lib/db";
 import { addItem, saveItem, setChecked, setItemActive, setValue, syncSlipCount } from "@/lib/db/helpers";
-import { useChallenge, useChecklist, useList, useLogs, useToday } from "@/lib/db/hooks";
-import { challengeEndDate } from "@/lib/logic/dates";
+import { useChecklist, useList, useLogs, useMode } from "@/lib/db/hooks";
+import { dayWindow, type DayWindow } from "@/lib/logic/challenge";
+import { addDays } from "@/lib/logic/dates";
 import type { Streak } from "@/lib/logic/streaks";
 import { targetOn } from "@/lib/logic/targets";
 import {
@@ -22,7 +23,7 @@ import {
   type TypicalSpend,
   type ViceDayState,
 } from "@/lib/logic/vices";
-import type { Challenge, ChecklistItem, DateStr, DayLog, Target, TargetVersion, TimeStr, ViceSlip } from "@/lib/types";
+import type { ChecklistItem, DateStr, DayLog, Target, TargetVersion, TimeStr, ViceSlip } from "@/lib/types";
 
 export interface ViceView {
   item: ChecklistItem;
@@ -44,7 +45,8 @@ export interface ViceView {
 export interface VicesData {
   loading: boolean;
   today: DateStr;
-  challenge: Challenge | null;
+  /** The days the vice calendar draws: the running challenge, or the last five weeks. */
+  window: DayWindow;
   versions: TargetVersion[];
   logs: DayLog[];
   /** Vices that are on, in checklist order. */
@@ -54,20 +56,22 @@ export interface VicesData {
 }
 
 export function useVices(): VicesData {
-  const today = useToday();
-  const challenge = useChallenge();
+  const mode = useMode();
+  const today = mode.today;
   const checklist = useChecklist();
-  const start = challenge.data?.start_date ?? today;
+  // Clean streaks belong to the ongoing history: they count from its start
+  // and carry on across the start and the end of a challenge.
+  const back = addDays(today, -400);
+  const start = mode.historyStart > back ? mode.historyStart : back;
   const logs = useLogs(start, today);
   const slips = useList("vice_slip", { orderBy: "date" });
 
   return useMemo(() => {
     const { items, versions } = checklist.data;
-    const end = challenge.data ? challengeEndDate(challenge.data.start_date, challenge.data.length_days) : today;
     const library = items
       .filter((i) => i.category === "vice" && !i.archived)
       .map((item): ViceView => {
-        const mine = sortSlips(slips.data.filter((s) => s.item_id === item.id && s.date >= start && s.date <= end));
+        const mine = sortSlips(slips.data.filter((s) => s.item_id === item.id && s.date >= start && s.date <= today));
         const log = logs.data.find((l) => l.item_id === item.id && l.date === today) ?? null;
         const slipsToday = mine.filter((s) => s.date === today);
         const target = targetOn(item, versions, today);
@@ -86,15 +90,15 @@ export function useVices(): VicesData {
         };
       });
     return {
-      loading: challenge.loading || checklist.loading || logs.loading || slips.loading,
+      loading: mode.loading || checklist.loading || logs.loading || slips.loading,
       today,
-      challenge: challenge.data,
+      window: dayWindow(mode, today, 35),
       versions,
       logs: logs.data,
       active: library.filter((v) => v.item.active),
       library,
     };
-  }, [today, start, challenge.data, challenge.loading, checklist.data, checklist.loading, logs.data, logs.loading, slips.data, slips.loading]);
+  }, [today, start, mode, checklist.data, checklist.loading, logs.data, logs.loading, slips.data, slips.loading]);
 }
 
 // ---------- writes ----------
@@ -114,7 +118,7 @@ export interface SlipInput {
  * is what makes the day not clean on Today, Progress, streaks and the coach.
  * The tick and the number are left as they were, so removing a slip logged by
  * mistake puts the day back exactly. Nothing else is touched: other vices,
- * other streaks and the challenge carry on.
+ * other streaks and everything else carry on.
  */
 export async function saveSlip(input: SlipInput): Promise<ViceSlip> {
   const row = { item_id: input.item.id, date: input.date, time: input.time, trigger: input.trigger, amount: input.amount };

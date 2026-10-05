@@ -3,9 +3,11 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Download, Share } from "lucide-react";
 import { Button, Card, Toggle, useToast } from "@/components/ui";
-import { useChallenge, useChecklist, useList, useLogs, useToday } from "@/lib/db/hooks";
+import { useChecklist, useList, useLogs, useMode } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
-import { challengeEndDate, weekStart } from "@/lib/logic/dates";
+import { challengeItems } from "@/lib/logic/challenge";
+import { addDays, weekStart } from "@/lib/logic/dates";
+import { ongoingCardData } from "@/lib/logic/ongoing";
 import { buildProgress, cardData } from "@/lib/logic/progress";
 import { resolvePhoto } from "@/lib/storage";
 import { CARD_H, CARD_W, canvasToPng, drawCard, loadImage, readTheme } from "./draw";
@@ -33,13 +35,14 @@ function download(blob: Blob, name: string) {
 
 /** The card preview with its photo switches and the share and save buttons. */
 export function ShareCard() {
-  const today = useToday();
-  const challenge = useChallenge();
+  const mode = useMode();
+  const today = mode.today;
   const checklist = useChecklist();
-  const c = challenge.data;
-  const start = c?.start_date ?? today;
-  const end = c ? challengeEndDate(c.start_date, c.length_days) : today;
-  const logs = useLogs(weekStart(start), today > end ? end : today);
+  const c = mode.challenge;
+  // A challenge card reads from its start. The ongoing card reads far enough back for streaks.
+  const back = addDays(today, -400);
+  const from = c && c.start_date < mode.historyStart ? c.start_date : mode.historyStart;
+  const logs = useLogs(weekStart(from > back ? from : back), today);
   const body = useList("body_log", { orderBy: "date" });
   const toast = useToast();
 
@@ -50,18 +53,26 @@ export function ShareCard() {
   const [painted, setPainted] = useState(0);
   const canvas = useRef<HTMLCanvasElement>(null);
 
+  // In a challenge: its day count and its grid. Otherwise: the last 30 days
+  // and how many of them were full.
   const data = useMemo(() => {
-    if (!c) return null;
+    if (mode.loading || checklist.loading || logs.loading) return null;
+    const { items, versions } = checklist.data;
+    if (!c) {
+      const start = mode.historyStart > back ? mode.historyStart : back;
+      return ongoingCardData({ historyStart: start, today, items, versions, logs: logs.data }, body.data);
+    }
     const model = buildProgress({
       startDate: c.start_date,
       lengthDays: c.length_days,
+      streakFrom: mode.historyStart > back ? mode.historyStart : back,
       today,
-      items: checklist.data.items,
-      versions: checklist.data.versions,
+      items: challengeItems(c, items),
+      versions,
       logs: logs.data,
     });
     return cardData(model, c.start_date, today, body.data);
-  }, [c, today, checklist.data, logs.data, body.data]);
+  }, [c, mode.loading, mode.historyStart, back, today, checklist.loading, checklist.data, logs.loading, logs.data, body.data]);
 
   const beforeRef = showBefore ? (data?.before?.ref ?? null) : null;
   const afterRef = showAfter ? (data?.after?.ref ?? null) : null;
@@ -96,7 +107,7 @@ export function ShareCard() {
     () => false,
   );
 
-  const fileName = `lock-in-day-${data?.day ?? 0}.png`;
+  const fileName = `lock-in-${data?.fileTag ?? "card"}.png`;
 
   async function makeBlob(): Promise<Blob | null> {
     const el = canvas.current;
@@ -131,7 +142,7 @@ export function ShareCard() {
       return;
     }
     try {
-      await navigator.share({ files: [file], title: "Lock In", text: `Day ${data.day} of ${data.length}.` });
+      await navigator.share({ files: [file], title: "Lock In", text: `${data.caption}.` });
       haptics.done();
     } catch (e) {
       // Closing the share sheet is not an error.
@@ -153,7 +164,7 @@ export function ShareCard() {
           width={CARD_W}
           height={CARD_H}
           role="img"
-          aria-label={data ? `Progress card. Day ${data.day} of ${data.length}, ${data.percent} percent complete.` : "Progress card"}
+          aria-label={data ? `Progress card. ${data.caption}, ${data.percent} percent complete.` : "Progress card"}
           className="block h-auto w-full"
           style={{ aspectRatio: `${CARD_W} / ${CARD_H}` }}
         />

@@ -2,24 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarClock, CircleCheck, DollarSign, Activity, LayoutGrid, type LucideIcon } from "lucide-react";
+import { TABS } from "@/lib/nav";
 import { cn } from "./cn";
 
-interface Tab {
-  href: string;
-  /** Other routes that light this tab: screens reached from it that are not under its path. */
-  also?: readonly string[];
-  label: string;
-  icon: LucideIcon;
-}
-
-export const TABS: readonly Tab[] = [
-  { href: "/today", label: "Today", icon: CircleCheck, also: ["/coach", "/vices", "/reminders", "/settings"] },
-  { href: "/schedule", label: "Schedule", icon: CalendarClock },
-  { href: "/money", label: "Money", icon: DollarSign },
-  { href: "/body", label: "Body", icon: Activity },
-  { href: "/progress", label: "Progress", icon: LayoutGrid },
-];
+export { TABS };
 
 /** Bottom tab bar. Rendered once by the app layout. */
 export function TabBar() {

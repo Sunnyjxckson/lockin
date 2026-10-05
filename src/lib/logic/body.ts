@@ -133,7 +133,7 @@ export function remainingLabel(total: number, goal: Goal, unit = ""): string {
 
 export interface WeightPoint {
   date: DateStr;
-  /** Challenge day number, 1 based. Can be below 1 or past the end. */
+  /** Day number from the start of the window (a challenge, or a run of plain days), 1 based. Can be below 1 or past the end. */
   day: number;
   weight: number;
 }

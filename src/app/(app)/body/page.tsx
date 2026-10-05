@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { PageHeader, Screen, SegmentedControl } from "@/components/ui";
+import { UtensilsCrossed } from "lucide-react";
+import { IconLink, PageHeader, Screen, SegmentedControl } from "@/components/ui";
 import { FoodTab } from "@/features/body/FoodTab";
 import { WorkoutRow } from "@/features/body/TodaySlot";
 import { WeightTab } from "@/features/body/WeightTab";
@@ -17,7 +18,14 @@ export default function BodyPage() {
   const [tab, setTab] = useState<Tab>("food");
   return (
     <Screen>
-      <PageHeader title="Body" />
+      <PageHeader
+        title="Body"
+        right={
+          <IconLink href="/meals" label="Meal plan">
+            <UtensilsCrossed size={22} aria-hidden />
+          </IconLink>
+        }
+      />
       <SegmentedControl className="mt-2" label="Section" options={TABS} value={tab} onChange={setTab} />
       {tab === "food" ? <FoodTab /> : <WeightTab />}
       <WorkoutRow />

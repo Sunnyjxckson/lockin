@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
   BASE_THEMES,
@@ -234,6 +236,30 @@ describe("buildTheme with a palette", () => {
     const t = buildTheme("contrast", { background: "#14213d", accent: "#fca311", text: "#e5e5e5" });
     expect(Math.min(...auditTheme(t).map((c) => c.ratio))).toBeGreaterThanOrEqual(7);
     expect(luminance(t.tokens.bg)).toBeLessThanOrEqual(0.012);
+  });
+});
+
+describe("the stylesheet", () => {
+  const css = readFileSync(fileURLToPath(new URL("../../app/globals.css", import.meta.url)), "utf8");
+  const root = /:root \{([\s\S]*?)\n\}/.exec(css)?.[1] ?? "";
+  const declared: Record<string, string> = {};
+  for (const m of root.matchAll(/(--[\w-]+):\s*([^;]+);/g)) declared[m[1]] = m[2].trim();
+
+  it("ships the dark minimal base as its defaults, value for value", () => {
+    const vars = themeVars(buildTheme("dark"));
+    for (const [name, value] of Object.entries(vars)) expect(declared[name], name).toBe(value);
+  });
+
+  it("maps every color token to a Tailwind name", () => {
+    for (const name of [...TOKEN_NAMES, "accent-soft", "accent-line", "danger-soft", "warn-soft", "scrim", "shadow"]) {
+      expect(css, name).toContain(`--color-${name}: var(--${name});`);
+    }
+  });
+
+  it("holds no color outside the token block", () => {
+    const rest = css.replace(root, "");
+    expect(rest).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
+    expect(rest).not.toMatch(/rgba?\(/);
   });
 });
 

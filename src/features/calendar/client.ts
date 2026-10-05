@@ -8,13 +8,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { resolveBlocks } from "@/lib/blocks";
 import { db } from "@/lib/db";
-import { getChallenge } from "@/lib/db/helpers";
 import type { LocalOp, SyncDay, SyncStats } from "@/lib/logic/calendarSync";
-import { addDays, challengeEndDate, dateRange, nowIso, todayNY } from "@/lib/logic/dates";
+import { addDays, dateRange, nowIso, todayNY } from "@/lib/logic/dates";
 import type { DateStr, IsoStr } from "@/lib/types";
 
 /** Template days this far ahead are sent to Google. Days with their own rows always are. */
 export const EXPORT_DAYS = 7;
+/** How many days, from today, a sync round reads and reconciles. */
+export const SYNC_DAYS = 28;
 
 export interface CalendarStatus {
   configured: boolean;
@@ -41,7 +42,7 @@ export interface SyncOutcome {
   stats: SyncStats;
   errors: string[];
   lastSyncAt: IsoStr | null;
-  /** Nothing to sync: the challenge is over. */
+  /** Nothing was synced this round. */
   skipped?: boolean;
 }
 
@@ -84,7 +85,7 @@ export function disconnectCalendar(): Promise<{ ok: boolean }> {
 
 // ---------- one round ----------
 
-/** The days of the rest of the challenge, as they show now. Two reads, not two per day. */
+/** The days in the sync window, as they show now. Two reads, not two per day. */
 export async function readDays(from: DateStr, to: DateStr): Promise<SyncDay[]> {
   const [rows, template] = await Promise.all([db.list("schedule_block", { from, to }), db.list("schedule_template")]);
   return dateRange(from, to).map((date) => ({ date, blocks: resolveBlocks(date, rows, template) }));
@@ -124,12 +125,11 @@ let running: Promise<SyncOutcome> | null = null;
 
 async function round(): Promise<SyncOutcome> {
   const none: SyncStats = { pulled: 0, pushed: 0, removed: 0 };
-  const challenge = await getChallenge();
+  // The schedule runs with or without a challenge, so the sync does too: it
+  // always covers today and the four weeks after it.
   const today = todayNY();
-  if (!challenge) return { ok: true, stats: none, errors: [], lastSyncAt: null, skipped: true };
-  const to = challengeEndDate(challenge.start_date, challenge.length_days);
-  const from = today > challenge.start_date ? today : challenge.start_date;
-  if (from > to) return { ok: true, stats: none, errors: [], lastSyncAt: null, skipped: true };
+  const from = today;
+  const to = addDays(today, SYNC_DAYS - 1);
   const lastExport = addDays(from, EXPORT_DAYS - 1);
   const exportDates = dateRange(from, lastExport < to ? lastExport : to);
 

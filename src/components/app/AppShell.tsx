@@ -8,6 +8,7 @@ import { getSettings } from "@/lib/db/helpers";
 import { setHapticsEnabled } from "@/lib/haptics";
 import { upgradeLocalData } from "@/lib/db/upgrade";
 import { ensureSeeded } from "@/lib/seed";
+import { loadTheme } from "@/lib/theme";
 import { LocalScheduler } from "@/features/reminders/LocalScheduler";
 import { LockScreen } from "./LockScreen";
 
@@ -68,8 +69,10 @@ export function AppShell({ children }: { children: ReactNode }) {
         if (s) setHapticsEnabled(s.haptics);
       });
     ensureSeeded()
-      .then(upgradeLocalData)
+      .then(() => upgradeLocalData())
       .then(applySettings)
+      // The saved theme, so a look set on another device shows up here. A failure leaves the cached one.
+      .then(() => loadTheme().catch(() => undefined))
       .then(
         () => live && setReady(true),
         (e: unknown) => live && setGate({ state: "problem", message: e instanceof Error ? e.message : "Could not load your data." }),

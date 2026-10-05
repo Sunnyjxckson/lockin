@@ -5,8 +5,23 @@ import { fmt } from "./format";
 
 const BOX = { width: 350, height: 170, padLeft: 34, padRight: 14, padTop: 14, padBottom: 26 };
 
-/** Weigh-ins over the challenge. x is day 1 to the last day. Inline SVG. */
-export function WeightChart({ series, lengthDays, todayDay, unit }: { series: WeightPoint[]; lengthDays: number; todayDay: number | null; unit: string }) {
+/**
+ * Weigh-ins over a run of days. x is day 1 to the last day. Inline SVG.
+ * `label` names a day on the axis: "Day 12" by default, a date outside a challenge.
+ */
+export function WeightChart({
+  series,
+  lengthDays,
+  todayDay,
+  unit,
+  label = (d) => `Day ${d}`,
+}: {
+  series: WeightPoint[];
+  lengthDays: number;
+  todayDay: number | null;
+  unit: string;
+  label?: (day: number) => string;
+}) {
   const chart = weightChart(series, lengthDays, BOX);
   const x0 = BOX.padLeft;
   const x1 = BOX.width - BOX.padRight;
@@ -15,7 +30,7 @@ export function WeightChart({ series, lengthDays, todayDay, unit }: { series: We
   const mid = Math.round(lengthDays / 2);
   const last = chart.points[chart.points.length - 1];
   const area = chart.points.length > 1 ? `${chart.path} L${last.x} ${yBase} L${chart.points[0].x} ${yBase} Z` : "";
-  const summary = series.map((p) => `day ${p.day} ${fmt(p.weight, 1)} ${unit}`).join(", ");
+  const summary = series.map((p) => `${label(p.day)} ${fmt(p.weight, 1)} ${unit}`).join(", ");
   return (
     <svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} className="block h-auto w-full" role="img" aria-label={`Weight by day: ${summary}`}>
       <defs>
@@ -37,7 +52,7 @@ export function WeightChart({ series, lengthDays, todayDay, unit }: { series: We
       ) : null}
       {[1, mid, lengthDays].map((d, i) => (
         <text key={d} x={xOfDay(d)} y={BOX.height - 6} textAnchor={i === 0 ? "start" : i === 2 ? "end" : "middle"} fontSize="11" fill="var(--ink-3)">
-          Day {d}
+          {label(d)}
         </text>
       ))}
       {area ? <path d={area} fill="url(#weight-fill)" /> : null}

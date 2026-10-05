@@ -1,7 +1,7 @@
 // The design system. Import from "@/components/ui".
 
 export { cn } from "./cn";
-export { Button, IconButton, type ButtonProps, type IconButtonProps, type ButtonVariant, type ButtonSize } from "./Button";
+export { Button, IconButton, IconLink, type ButtonProps, type IconButtonProps, type IconLinkProps, type ButtonVariant, type ButtonSize } from "./Button";
 export { Card, Section, type CardProps, type SectionProps } from "./Card";
 export { Sheet, type SheetProps } from "./Sheet";
 export {

@@ -79,7 +79,7 @@ export function PhotoCompare({ logs, startDate, unit, onAdd }: { logs: BodyLog[]
           compact
           icon={<Camera size={22} aria-hidden />}
           title="No progress photos yet"
-          body="Take one on day 1 and one each Friday. They show up here side by side."
+          body="Take one now and one each Friday. They show up here side by side."
           action={
             <Button variant="secondary" onClick={onAdd}>
               Add the first photo

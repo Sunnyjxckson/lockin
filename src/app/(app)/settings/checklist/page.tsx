@@ -19,8 +19,9 @@ import {
   Toggle,
   useToast,
 } from "@/components/ui";
-import { addItem, removeItem, reorderItems, saveItem, updateChallenge } from "@/lib/db/helpers";
-import { useChecklist } from "@/lib/db/hooks";
+import { addItem, removeItem, reorderItems, saveItem, setDailyFloor } from "@/lib/db/helpers";
+import { useChecklist, useMode } from "@/lib/db/hooks";
+import { ruleTarget } from "@/lib/logic/challenge";
 import { describeTarget } from "@/lib/logic/targets";
 import type { Cadence, ChecklistItem, ItemType, Target } from "@/lib/types";
 
@@ -99,8 +100,8 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
       const fields = { name: d.name.trim(), cadence: d.cadence, hint: d.hint.trim() || null, unit: d.type === "number" ? d.unit.trim() || null : null, target };
       if (d.id) await saveItem(d.id, fields);
       else await addItem({ ...fields, type: d.type });
-      // "Earned today" and the challenge's daily floor are the same number.
-      if (d.key === "earned" && target.kind === "min") await updateChallenge({ daily_floor: target.min });
+      // "Earned today" and the daily floor are the same number.
+      if (d.key === "earned" && target.kind === "min") await setDailyFloor(target.min);
       toast(d.id ? "Saved. Applies from today." : "Added. Counts from today.", { kind: "done" });
       onClose();
     } catch {
@@ -191,14 +192,20 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
   );
 }
 
-function summary(item: ChecklistItem): string {
+/** `held` is the target a running challenge sets for the item, when it sets one. */
+function summary(item: ChecklistItem, held: Target | null): string {
   const t = describeTarget(item.target, item.unit);
-  const parts = [item.cadence === "weekly" ? "Weekly" : null, t || (item.type === "yesno" ? "Yes / no" : null)];
+  const parts = [
+    item.cadence === "weekly" ? "Weekly" : null,
+    t || (item.type === "yesno" ? "Yes / no" : null),
+    held ? `Challenge: ${describeTarget(held, item.unit)}` : null,
+  ];
   return parts.filter(Boolean).join(" · ");
 }
 
 export default function ChecklistSettingsPage() {
   const checklist = useChecklist();
+  const { challenge } = useMode();
   const [editing, setEditing] = useState<ChecklistItem | "new" | null>(null);
 
   const items = checklist.data.items.filter((i) => !i.archived && i.active).sort((a, b) => a.sort_order - b.sort_order);
@@ -226,7 +233,7 @@ export default function ChecklistSettingsPage() {
                 <li key={item.id} className="flex min-h-[60px] items-center gap-1 pr-1.5 pl-4">
                   <button type="button" onClick={() => setEditing(item)} className="min-h-[60px] min-w-0 flex-1 py-2.5 text-left">
                     <span className="block truncate text-[16px] font-medium">{item.name}</span>
-                    <span className="mt-0.5 block truncate text-[13px] text-ink-3">{summary(item)}</span>
+                    <span className="mt-0.5 block truncate text-[13px] text-ink-3">{summary(item, challenge ? ruleTarget(challenge, item.id) : null)}</span>
                   </button>
                   <IconButton label={`Move ${item.name} up`} disabled={i === 0} onClick={() => move(i, -1)}>
                     <ArrowUp size={18} aria-hidden />

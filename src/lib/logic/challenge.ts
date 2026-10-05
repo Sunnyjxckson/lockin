@@ -99,6 +99,28 @@ export function modeOn<C extends Run>(challenges: readonly C[], historyStart: Da
   };
 }
 
+/** A run of days for a screen to draw: a chart axis, a calendar, a strip. */
+export interface DayWindow {
+  start: DateStr;
+  length: number;
+  /** True when the days count from a challenge start (Day 1, Day 2). False when they are plain dates. */
+  numbered: boolean;
+  /** The challenge's name. Null for a plain window. */
+  name: string | null;
+}
+
+/**
+ * The days a screen should show. While a challenge runs it is the challenge.
+ * Otherwise it is `ongoingDays` plain days that start at the history start
+ * and, once there are more than that, roll along ending on today.
+ */
+export function dayWindow(mode: Pick<ModeInfo<Challenge>, "challenge" | "historyStart">, today: DateStr, ongoingDays = 30): DayWindow {
+  if (mode.challenge) return { start: mode.challenge.start_date, length: mode.challenge.length_days, numbered: true, name: mode.challenge.name };
+  const size = Math.max(1, Math.floor(ongoingDays));
+  const rolling = addDays(today, -(size - 1));
+  return { start: rolling < mode.historyStart ? mode.historyStart : rolling, length: size, numbered: false, name: null };
+}
+
 /** Closed challenges, newest first. */
 export function pastChallenges<C extends Run>(challenges: readonly C[]): C[] {
   return challenges

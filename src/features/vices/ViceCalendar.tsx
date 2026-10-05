@@ -44,7 +44,7 @@ function Key({ className, label }: { className: string; label: string }) {
   );
 }
 
-/** Clean and slip days over the challenge, Monday first so weekday patterns line up. */
+/** Clean and slip days over a run of days, Monday first so weekday patterns line up. */
 export function ViceCalendar({ days }: { days: ViceDay[] }) {
   if (days.length === 0) return null;
   const lead = (weekdayOf(days[0].date) + 6) % 7;

@@ -159,7 +159,7 @@ export function CalendarSection({ calendar }: { calendar: CalendarSync }) {
           icon={<RefreshCw size={16} aria-hidden />}
           onClick={() => {
             void calendar.sync().then((out) => {
-              if (out?.ok) toast(out.skipped ? "The challenge is over, nothing to sync" : summary(out.stats.pulled, out.stats.pushed, out.stats.removed), { kind: "done" });
+              if (out?.ok) toast(out.skipped ? "Nothing to sync" : summary(out.stats.pulled, out.stats.pushed, out.stats.removed), { kind: "done" });
               else if (out) toast("Some changes did not go through. They will be tried again.", { kind: "error" });
             });
           }}

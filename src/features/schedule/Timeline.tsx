@@ -339,7 +339,7 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
                 "absolute overflow-hidden rounded-[12px] border text-left outline-offset-2",
                 "transition-[top,height,left,width,box-shadow,opacity,background-color] duration-150 ease-out motion-reduce:transition-none",
                 dragging
-                  ? "z-30 cursor-grabbing border-ink bg-surface-3 shadow-[0_14px_40px_rgba(0,0,0,0.7)] transition-none"
+                  ? "z-30 cursor-grabbing border-ink bg-surface-3 shadow-[0_14px_40px_var(--shadow)] transition-none"
                   : "z-10 cursor-pointer bg-surface",
                 !dragging && (alert ? "border-warn bg-warn-soft" : warn ? "border-warn/60" : live ? "border-ink-2" : shifted ? "border-ink-3" : "border-line"),
                 past && !alert && !dragging && "opacity-55",

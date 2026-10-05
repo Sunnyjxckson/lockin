@@ -31,7 +31,7 @@ export default function ViceDetailPage() {
       </Screen>
     );
   }
-  if (!view || !data.challenge) {
+  if (!view) {
     return (
       <Screen>
         <PageHeader title="Vices" back="/vices" />
@@ -41,7 +41,8 @@ export default function ViceDetailPage() {
   }
 
   const { item, streak, slips, kept, spend, state } = view;
-  const days = viceCalendar(item, data.versions, data.logs, slips, data.challenge.start_date, data.challenge.length_days, data.today);
+  const w = data.window;
+  const days = viceCalendar(item, data.versions, data.logs, slips, w.start, w.length, data.today, w.numbered);
   const pattern = slipPattern(slips);
 
   return (
@@ -97,7 +98,7 @@ export default function ViceDetailPage() {
         </Card>
       ) : null}
 
-      <Section title="Challenge">
+      <Section title={w.name ?? `Last ${w.length} days`}>
         <Card>
           <ViceCalendar days={days} />
         </Card>

@@ -403,6 +403,19 @@ export interface CardStreak {
 }
 
 export interface CardData {
+  /** "challenge" shows a day count. "ongoing" shows full days out of the last 30. */
+  mode: "challenge" | "ongoing";
+  /** Small label over the big number: "Day", "Last 30 days". */
+  eyebrow: string;
+  /** The big number, and the words after it: "12" and "of 30". */
+  big: string;
+  bigSub: string;
+  /** The third stat under the grid: days left in a challenge, the full day streak otherwise. */
+  extra: { value: string; label: string };
+  /** One line for the share text and the alt text: "Day 12 of 30", "26 of the last 30 days". */
+  caption: string;
+  /** For the file name: "day-12", "last-30". */
+  fileTag: string;
   day: number;
   length: number;
   started: boolean;
@@ -469,6 +482,13 @@ export function cardData(
   const h = model.headline;
   const last = addDays(startDate, Math.max(0, h.length - 1));
   return {
+    mode: "challenge",
+    eyebrow: "Day",
+    big: `${h.day}`,
+    bigSub: `of ${h.length}`,
+    extra: { value: `${h.remaining}`, label: "Days left" },
+    caption: `Day ${h.day} of ${h.length}`,
+    fileTag: `day-${h.day}`,
     day: h.day,
     length: h.length,
     started: h.started,

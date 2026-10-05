@@ -3,22 +3,30 @@
 import { useEffect, useRef } from "react";
 import { haptics } from "@/lib/haptics";
 import { cn } from "@/components/ui";
-import { dayNumber, weekdayOf } from "@/lib/logic/dates";
+import { weekdayOf } from "@/lib/logic/dates";
 import type { DayStatus } from "@/lib/logic/day";
 import { WEEKDAY_SHORT, type DateStr } from "@/lib/types";
 
+export interface StripDay {
+  date: DateStr;
+  /** The number in the cell: the challenge day, or the day of the month. */
+  label: string;
+  /** What a screen reader hears: "Day 3", or "Monday, Oct 5". */
+  name: string;
+}
+
 export interface DayStripProps {
-  /** Every date in the challenge, in order. */
-  dates: DateStr[];
-  startDate: DateStr;
+  /** The days to show, in order. */
+  days: StripDay[];
   today: DateStr;
   selected: DateStr;
   statusByDate: Record<DateStr, DayStatus>;
   onSelect: (date: DateStr) => void;
+  label?: string;
 }
 
-/** Horizontal strip of challenge days. Tap an earlier day to backfill it. */
-export function DayStrip({ dates, startDate, today, selected, statusByDate, onSelect }: DayStripProps) {
+/** Horizontal strip of days. Tap an earlier day to open it and backfill it. */
+export function DayStrip({ days, today, selected, statusByDate, onSelect, label = "Days" }: DayStripProps) {
   const current = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -26,8 +34,8 @@ export function DayStrip({ dates, startDate, today, selected, statusByDate, onSe
   }, [selected]);
 
   return (
-    <div className="no-scrollbar -mx-5 flex gap-1.5 overflow-x-auto px-5 py-1" role="tablist" aria-label="Challenge days">
-      {dates.map((date) => {
+    <div className="no-scrollbar -mx-5 flex gap-1.5 overflow-x-auto px-5 py-1" role="tablist" aria-label={label}>
+      {days.map(({ date, label: text, name }) => {
         const future = date > today;
         const on = date === selected;
         const status = future ? null : statusByDate[date];
@@ -38,7 +46,7 @@ export function DayStrip({ dates, startDate, today, selected, statusByDate, onSe
             type="button"
             role="tab"
             aria-selected={on}
-            aria-label={`Day ${dayNumber(startDate, date)}${date === today ? ", today" : ""}`}
+            aria-label={`${name}${date === today ? ", today" : ""}`}
             disabled={future}
             onClick={() => {
               haptics.tap();
@@ -50,16 +58,16 @@ export function DayStrip({ dates, startDate, today, selected, statusByDate, onSe
               future && "opacity-35",
             )}
           >
-            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg/60" : "text-ink-3")}>
+            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg/70" : "text-ink-3")}>
               {WEEKDAY_SHORT[weekdayOf(date)].slice(0, 2)}
             </span>
-            <span className="tnum text-[17px] leading-none font-semibold">{dayNumber(startDate, date)}</span>
+            <span className="tnum text-[17px] leading-none font-semibold">{text}</span>
             <span
               className={cn(
                 "mt-1 size-1.5 rounded-full",
                 status === "full" && "bg-accent",
                 status === "partial" && (on ? "bg-bg/40" : "bg-ink-3"),
-                (status === "missed" || status === null) && "bg-transparent",
+                (status === "missed" || status === null || status === undefined) && "bg-transparent",
                 status === "full" && on && "ring-1 ring-bg/30",
               )}
             />

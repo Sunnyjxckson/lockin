@@ -56,7 +56,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={item.id}
             role="status"
             className={cn(
-              "animate-toast-in pointer-events-auto flex max-w-full items-center gap-2.5 rounded-full border px-4 py-3 text-[15px] font-medium shadow-[0_8px_30px_rgba(0,0,0,0.6)]",
+              "animate-toast-in pointer-events-auto flex max-w-full items-center gap-2.5 rounded-full border px-4 py-3 text-[15px] font-medium shadow-[0_8px_30px_var(--shadow)]",
               item.kind === "error" ? "border-danger/40 bg-surface-2 text-ink" : "border-line-strong bg-surface-2 text-ink",
             )}
           >

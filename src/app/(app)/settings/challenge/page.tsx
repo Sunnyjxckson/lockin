@@ -1,41 +1,76 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Card, DateField, NumberField, PageHeader, Screen, Section, useToast } from "@/components/ui";
-import { getItemByKey, setItemTarget, updateChallenge } from "@/lib/db/helpers";
-import { useChallenge, useToday } from "@/lib/db/hooks";
-import { challengeEndDate, dayNumber, formatDateLong, isDateStr } from "@/lib/logic/dates";
-import type { Challenge } from "@/lib/types";
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { ChevronRight, Flag, Infinity as InfinityIcon, Plus } from "lucide-react";
+import { Button, Card, DateField, EmptyState, NumberField, PageHeader, Screen, Section, Sheet, TextField, Toggle, useToast } from "@/components/ui";
+import { endChallenge, finishChallenge, restartChallenge, setDailyFloor, updateChallenge, updateSettings } from "@/lib/db/helpers";
+import { useChecklist, useLogs, useMode } from "@/lib/db/hooks";
+import { haptics } from "@/lib/haptics";
+import {
+  MAX_CHALLENGE_DAYS,
+  STATUS_LABEL,
+  challengeDay,
+  challengeItems,
+  challengeRecord,
+  consistency,
+  consistencyLabel,
+  daysRun,
+  lastDay,
+  pastChallenges,
+  plannedEnd,
+  ranOn,
+} from "@/lib/logic/challenge";
+import { addDays, dateRange, dayNumber, formatDateLong, formatDateShort, isDateStr } from "@/lib/logic/dates";
+import { summarizeDay, type DayStatus } from "@/lib/logic/day";
+import { describeTarget } from "@/lib/logic/targets";
+import type { Challenge, ChecklistItem, DateStr } from "@/lib/types";
 
-type Form = Pick<Challenge, "start_date" | "length_days" | "money_target" | "money_deadline" | "daily_floor" | "money_target_start">;
+function plural(n: number, word: string): string {
+  return `${n} ${word}${n === 1 ? "" : "s"}`;
+}
 
-function Editor({ challenge }: { challenge: Challenge }) {
+/** "Whole checklist", or the items a challenge names with the target each is held to. */
+function rulesLine(c: Challenge, items: ChecklistItem[]): string {
+  if (!c.rules) return "Counts the whole checklist";
+  const named = challengeItems(c, items);
+  return `Counts ${plural(named.length, "item")}: ${named.map((i) => i.name).join(", ")}`;
+}
+
+function Editor({ challenge, historyStart, today }: { challenge: Challenge; historyStart: DateStr; today: DateStr }) {
   const toast = useToast();
-  const today = useToday();
-  const [form, setForm] = useState<Form>({
-    start_date: challenge.start_date,
-    length_days: challenge.length_days,
-    money_target: challenge.money_target,
-    money_deadline: challenge.money_deadline,
-    daily_floor: challenge.daily_floor,
-    money_target_start: challenge.money_target_start ?? null,
-  });
+  const [name, setName] = useState(challenge.name);
+  const [start, setStart] = useState(challenge.start_date);
+  const [length, setLength] = useState<number>(challenge.length_days);
+  const [hasMoney, setHasMoney] = useState(challenge.money_target !== null);
+  const [target, setTarget] = useState<number | null>(challenge.money_target);
+  const [deadline, setDeadline] = useState<DateStr>(challenge.money_deadline ?? plannedEnd(challenge));
+  const [from, setFrom] = useState<DateStr | null>(challenge.money_target_start ?? null);
   const [saving, setSaving] = useState(false);
 
-  const dirty = (Object.keys(form) as (keyof Form)[]).some((k) => (form[k] ?? null) !== (challenge[k] ?? null));
+  const next = {
+    name: name.trim(),
+    start_date: start,
+    length_days: length,
+    money_target: hasMoney ? target : null,
+    money_deadline: hasMoney ? deadline : null,
+    money_target_start: hasMoney ? from : null,
+  };
+  const dirty = (Object.keys(next) as (keyof typeof next)[]).some((k) => (next[k] ?? null) !== (challenge[k] ?? null));
   const valid =
-    isDateStr(form.start_date) && isDateStr(form.money_deadline) && form.length_days >= 1 && form.length_days <= 365 && form.money_target >= 0 && form.daily_floor >= 0;
-  const set = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
+    next.name.length > 0 &&
+    isDateStr(start) &&
+    Number.isInteger(length) &&
+    length >= 1 &&
+    length <= MAX_CHALLENGE_DAYS &&
+    (!hasMoney || (target !== null && target > 0 && isDateStr(deadline) && deadline >= start));
 
   const save = async () => {
     setSaving(true);
     try {
-      await updateChallenge(form);
-      // The daily floor is also the target of the "Earned today" item.
-      if (form.daily_floor !== challenge.daily_floor) {
-        const earned = await getItemByKey("earned");
-        if (earned) await setItemTarget(earned.id, { kind: "min", min: form.daily_floor });
-      }
+      await updateChallenge(next);
+      // A start moved back before the history opens the history up to it.
+      if (start < historyStart) await updateSettings({ history_start: start });
       toast("Challenge saved", { kind: "done" });
     } catch {
       toast("Could not save", { kind: "error" });
@@ -44,56 +79,57 @@ function Editor({ challenge }: { challenge: Challenge }) {
     }
   };
 
-  const end = valid ? challengeEndDate(form.start_date, form.length_days) : null;
-  const n = valid ? dayNumber(form.start_date, today) : null;
+  const end = valid ? addDays(start, length - 1) : null;
+  const n = valid ? dayNumber(start, today) : null;
 
   return (
     <>
-      <Section title="Dates">
+      <Section title="Details">
         <Card className="flex flex-col gap-4">
-          <DateField label="Start date" value={form.start_date} onChange={(v) => set("start_date", v)} />
-          <NumberField
-            label="Length"
-            unit="days"
-            decimal={false}
-            min={1}
-            max={365}
-            value={form.length_days}
-            onChange={(v) => set("length_days", v ?? 0)}
-            live
-          />
+          <TextField label="Name" value={name} onChange={setName} maxLength={40} />
+          <DateField label="Start date" value={start} onChange={(v) => setStart(v as DateStr)} />
+          <NumberField label="Length" unit="days" decimal={false} min={1} max={MAX_CHALLENGE_DAYS} value={length} onChange={(v) => setLength(v ?? 0)} live />
           {end && n !== null ? (
             <p className="t-sub">
-              Ends {formatDateLong(end)}.{" "}
-              {n < 1 ? `Starts in ${1 - n} ${1 - n === 1 ? "day" : "days"}.` : n > form.length_days ? "That is already over." : `Today is day ${n}.`}
+              Ends {formatDateLong(end)}. {n < 1 ? `Starts in ${plural(1 - n, "day")}.` : n > length ? "That is already over." : `Today is day ${n}.`}
             </p>
           ) : null}
         </Card>
       </Section>
 
-      <Section title="Money">
+      <Section title="Money target">
         <Card className="flex flex-col gap-4">
-          <NumberField label="Target" prefix="$" value={form.money_target} onChange={(v) => set("money_target", v ?? 0)} live />
-          <DateField label="Deadline" value={form.money_deadline} onChange={(v) => set("money_deadline", v)} />
-          <DateField
-            label="Counts from"
-            hint="Earnings from this date on count toward the target. Resetting the target on Money moves it to that day."
-            value={form.money_target_start && form.money_target_start > form.start_date ? form.money_target_start : form.start_date}
-            min={form.start_date}
-            onChange={(v) => set("money_target_start", v && v > form.start_date ? v : null)}
-          />
-          <NumberField
-            label="Daily floor"
-            prefix="$"
-            hint="The least to earn each day. It does not drop when you are ahead."
-            value={form.daily_floor}
-            onChange={(v) => set("daily_floor", v ?? 0)}
-            live
-          />
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[16px] font-medium">This challenge has a money target</p>
+              <p className="text-[13px] text-ink-3">A total to reach by a date. The daily floor is separate.</p>
+            </div>
+            <Toggle
+              label="This challenge has a money target"
+              checked={hasMoney}
+              onChange={(v) => {
+                setHasMoney(v);
+                if (v && target === null) setTarget(1000);
+              }}
+            />
+          </div>
+          {hasMoney ? (
+            <>
+              <NumberField label="Target" prefix="$" value={target} onChange={setTarget} live />
+              <DateField label="Deadline" value={deadline} min={start} onChange={(v) => setDeadline(v as DateStr)} />
+              <DateField
+                label="Counts from"
+                hint="Earnings from this date on count toward the target. Resetting the target on Money moves it to that day."
+                value={from && from > start ? from : start}
+                min={start}
+                onChange={(v) => setFrom(v && v > start ? (v as DateStr) : null)}
+              />
+            </>
+          ) : null}
         </Card>
       </Section>
 
-      <div className="mt-7">
+      <div className="mt-5">
         <Button full size="lg" disabled={!dirty || !valid} loading={saving} onClick={() => void save()}>
           Save
         </Button>
@@ -102,12 +138,260 @@ function Editor({ challenge }: { challenge: Challenge }) {
   );
 }
 
+type Confirm = "end" | "restart" | { runAgain: Challenge } | null;
+
 export default function ChallengeSettingsPage() {
-  const challenge = useChallenge();
+  const toast = useToast();
+  const mode = useMode();
+  const checklist = useChecklist();
+  const today = mode.today;
+  const logs = useLogs(mode.historyStart, today);
+  const [confirm, setConfirm] = useState<Confirm>(null);
+  const [busy, setBusy] = useState(false);
+
+  const active = mode.challenge ?? mode.finished ?? mode.upcoming;
+  const past = useMemo(() => pastChallenges(mode.challenges), [mode.challenges]);
+  const items = checklist.data.items;
+
+  // Every day of the history scored once: by the whole checklist for the
+  // ongoing number, and by each challenge's own items for its record.
+  const scored = useMemo(() => {
+    if (checklist.loading || logs.loading || mode.historyStart > today) return [];
+    return dateRange(mode.historyStart, today).map((d) => summarizeDay(d, items, checklist.data.versions, logs.data));
+  }, [checklist.loading, checklist.data.versions, items, logs.loading, logs.data, mode.historyStart, today]);
+
+  const ongoing = useMemo(() => {
+    const status: Record<DateStr, DayStatus> = {};
+    for (const s of scored) status[s.date] = s.status;
+    return consistency(status, today, mode.historyStart, 30);
+  }, [scored, today, mode.historyStart]);
+
+  const recordOf = (c: Challenge) => {
+    const status: Record<DateStr, DayStatus> = {};
+    for (const s of scored) if (ranOn(c, s.date)) status[s.date] = challengeDay(c, s).status;
+    return challengeRecord(c, status, today);
+  };
+
+  const run = async (work: () => Promise<unknown>, done: string) => {
+    setBusy(true);
+    try {
+      await work();
+      haptics.done();
+      toast(done, { kind: "done" });
+      setConfirm(null);
+    } catch (e) {
+      toast(e instanceof Error ? e.message : "That did not work", { kind: "error" });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const loading = mode.loading || checklist.loading;
+  const startLink = (
+    <Link href="/settings/challenge/new" className="pressable flex h-[52px] w-full items-center justify-center gap-2 rounded-[14px] bg-ink text-[16px] font-semibold text-bg">
+      <Plus size={18} aria-hidden />
+      Start a challenge
+    </Link>
+  );
+
   return (
     <Screen>
-      <PageHeader title="Challenge" back="/settings" />
-      {challenge.data ? <Editor key={challenge.data.id} challenge={challenge.data} /> : null}
+      <PageHeader title="Challenge" back="/settings" subtitle="Ongoing is the default and never resets. A challenge is a set run on top of it, with its own rules." />
+
+      {loading ? null : (
+        <>
+          {!active ? (
+            <Card className="mt-3">
+              <div className="flex items-center gap-2 text-ink-2">
+                <InfinityIcon size={18} aria-hidden />
+                <span className="t-label">Mode</span>
+              </div>
+              <p className="t-title mt-2">Ongoing</p>
+              <p className="t-sub mt-2">
+                No challenge is running. {ongoing.days > 0 ? `${consistencyLabel(ongoing)} locked in.` : "Today is the first day of your history."} A slip costs that one day and nothing else.
+              </p>
+              <div className="mt-4">{startLink}</div>
+            </Card>
+          ) : (
+            <Card className="mt-3" data-challenge-card>
+              <span className="t-label">{mode.challenge ? "Running" : mode.finished ? "Done, waiting to be closed" : "Coming up"}</span>
+              <p className="t-title mt-2">{active.name}</p>
+              <p className="mt-2 text-[15px] text-ink-2">
+                {mode.challenge
+                  ? `Day ${mode.day} of ${active.length_days}`
+                  : mode.finished
+                    ? `All ${plural(active.length_days, "day")} are behind you`
+                    : `Starts ${formatDateLong(active.start_date)}`}
+                {" · "}
+                {formatDateShort(active.start_date)} to {formatDateShort(plannedEnd(active))}
+              </p>
+              <p className="t-sub mt-1.5">{rulesLine(active, items)}</p>
+              {active.rules?.some((r) => r.target) ? (
+                <ul className="mt-2 space-y-1 text-[13px] text-ink-3">
+                  {active.rules
+                    .filter((r) => r.target)
+                    .map((r) => {
+                      const item = items.find((i) => i.id === r.item_id);
+                      return item && r.target ? (
+                        <li key={r.item_id}>
+                          {item.name}: {describeTarget(r.target, item.unit)} while it runs
+                        </li>
+                      ) : null;
+                    })}
+                </ul>
+              ) : null}
+              {mode.challenge || mode.finished ? (
+                <p className="tnum mt-3 border-t border-line pt-3 text-[14px] text-ink-2">
+                  {(() => {
+                    const r = recordOf(active);
+                    return `${r.full} full, ${r.partial} partial, ${r.missed} missed so far`;
+                  })()}
+                </p>
+              ) : null}
+              <div className="mt-4 flex gap-2.5">
+                {mode.finished ? (
+                  <Button full loading={busy} icon={<Flag size={18} aria-hidden />} onClick={() => void run(() => finishChallenge(today), "Challenge finished")}>
+                    Finish challenge
+                  </Button>
+                ) : (
+                  <Button variant="secondary" full onClick={() => setConfirm("end")}>
+                    {mode.upcoming ? "Cancel it" : "End early"}
+                  </Button>
+                )}
+                {mode.upcoming ? null : (
+                  <Button variant="secondary" full onClick={() => setConfirm("restart")}>
+                    Restart
+                  </Button>
+                )}
+              </div>
+            </Card>
+          )}
+
+          {active ? <Editor key={`${active.id}:${active.start_date}:${active.length_days}:${active.name}`} challenge={active} historyStart={mode.historyStart} today={today} /> : null}
+
+          <Section title="Daily floor">
+            <Card>
+              <NumberField
+                label="Earn at least"
+                prefix="$"
+                hint="Applies every day, with or without a challenge. It does not drop when you are ahead."
+                value={mode.floor}
+                onChange={(v) => {
+                  if (v === null || v === mode.floor) return;
+                  void setDailyFloor(v, today).then(
+                    () => toast("Floor saved. Applies from today.", { kind: "done" }),
+                    () => toast("Could not save", { kind: "error" }),
+                  );
+                }}
+              />
+            </Card>
+          </Section>
+
+          <Section title="Past challenges" right={past.length > 0 ? <span className="tnum">{past.length}</span> : null}>
+            {past.length === 0 ? (
+              <Card padded={false}>
+                <EmptyState compact title="None yet" body="When a challenge ends, finishes or is restarted, it is kept here with its record." />
+              </Card>
+            ) : (
+              <Card padded={false} className="overflow-hidden">
+                <ul className="divide-y divide-line">
+                  {past.map((c) => {
+                    const r = recordOf(c);
+                    const ran = daysRun(c, today);
+                    return (
+                      <li key={c.id} className="flex items-center gap-2 pr-3 pl-4">
+                        <Link href={`/progress?challenge=${c.id}`} className="pressable flex min-h-[64px] min-w-0 flex-1 items-center gap-2 py-2.5">
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate text-[16px] font-medium text-ink">{c.name}</span>
+                            <span className="tnum mt-0.5 block truncate text-[13px] text-ink-3">
+                              {STATUS_LABEL[c.status]}
+                              {ran > 0 ? ` · ${formatDateShort(c.start_date)} to ${formatDateShort(lastDay(c))} · ${r.full} of ${plural(ran, "day")} full` : " · never ran a day"}
+                            </span>
+                          </span>
+                          <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
+                        </Link>
+                        {!active ? (
+                          <Button variant="secondary" size="sm" aria-label={`Run ${c.name} again`} onClick={() => setConfirm({ runAgain: c })}>
+                            Again
+                          </Button>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Card>
+            )}
+            {active ? null : past.length > 0 ? <p className="t-sub mt-3 px-1">Again starts the same name, length and rules today.</p> : null}
+          </Section>
+        </>
+      )}
+
+      <Sheet
+        open={confirm === "end"}
+        onClose={() => setConfirm(null)}
+        title={mode.upcoming ? "Cancel this challenge?" : "End the challenge today?"}
+        subtitle={
+          mode.upcoming
+            ? "It has not started, so nothing is lost. You stay in ongoing mode."
+            : "It is kept as a past challenge with the days it ran. Every day you logged stays exactly as it is, streaks included, and you carry on in ongoing mode."
+        }
+        footer={
+          <div className="flex gap-3">
+            <Button variant="secondary" full onClick={() => setConfirm(null)}>
+              Keep going
+            </Button>
+            <Button variant="danger" full loading={busy} onClick={() => void run(() => endChallenge(today), "Challenge ended. Ongoing from here.")}>
+              End challenge
+            </Button>
+          </div>
+        }
+      >
+        {null}
+      </Sheet>
+
+      <Sheet
+        open={confirm === "restart"}
+        onClose={() => setConfirm(null)}
+        title="Restart from day 1 today?"
+        subtitle="Same name, length and rules, starting today. The run so far is kept as a past challenge. Your history is not touched: every logged day and every streak stays."
+        footer={
+          <div className="flex gap-3">
+            <Button variant="secondary" full onClick={() => setConfirm(null)}>
+              Not now
+            </Button>
+            <Button full loading={busy} onClick={() => void run(() => restartChallenge(null, today), "Restarted. Today is day 1.")}>
+              Restart today
+            </Button>
+          </div>
+        }
+      >
+        {null}
+      </Sheet>
+
+      <Sheet
+        open={!!confirm && typeof confirm === "object"}
+        onClose={() => setConfirm(null)}
+        title={confirm && typeof confirm === "object" ? `Run ${confirm.runAgain.name} again?` : undefined}
+        subtitle={confirm && typeof confirm === "object" ? `${plural(confirm.runAgain.length_days, "day")}, starting today, with the same rules.` : undefined}
+        footer={
+          <div className="flex gap-3">
+            <Button variant="secondary" full onClick={() => setConfirm(null)}>
+              Not now
+            </Button>
+            <Button
+              full
+              loading={busy}
+              onClick={() => {
+                if (confirm && typeof confirm === "object") void run(() => restartChallenge(confirm.runAgain.id, today), "Started. Today is day 1.");
+              }}
+            >
+              Start today
+            </Button>
+          </div>
+        }
+      >
+        {null}
+      </Sheet>
     </Screen>
   );
 }

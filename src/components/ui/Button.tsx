@@ -1,13 +1,14 @@
 "use client";
 
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import Link from "next/link";
 import { cn } from "./cn";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** primary is near white on black. The accent is kept for done states. */
+  /** primary is ink on the page color. The accent is kept for done states. */
   variant?: ButtonVariant;
   size?: ButtonSize;
   /** Stretch to the full width of the parent. */
@@ -89,5 +90,22 @@ export function IconButton({ label, filled = false, className, children, type = 
     >
       {children}
     </button>
+  );
+}
+
+export interface IconLinkProps {
+  href: string;
+  /** Read by screen readers and shown as the tooltip. */
+  label: string;
+  children: ReactNode;
+  className?: string;
+}
+
+/** A 44px round icon that is a link. The header twin of IconButton, for a page's `right` slot. */
+export function IconLink({ href, label, children, className }: IconLinkProps) {
+  return (
+    <Link href={href} aria-label={label} title={label} className={cn("pressable inline-flex size-11 shrink-0 items-center justify-center rounded-full text-ink-2", className)}>
+      {children}
+    </Link>
   );
 }

@@ -10,6 +10,7 @@ import {
   challengeRecord,
   consistency,
   consistencyLabel,
+  dayWindow,
   daysRun,
   endPatch,
   finishPatch,
@@ -137,6 +138,20 @@ describe("modeOn", () => {
       challenge({ id: "c", start_date: "2026-11-20" }),
     ];
     expect(pastChallenges(list).map((c) => c.id)).toEqual(["b", "a"]);
+  });
+});
+
+describe("dayWindow", () => {
+  it("is the challenge while one runs", () => {
+    const m = modeOn([challenge()], "2026-09-01", "2026-10-16");
+    expect(dayWindow(m, "2026-10-16")).toEqual({ start: "2026-10-05", length: 30, numbered: true, name: "30 day lock in" });
+  });
+
+  it("starts at the history start, then rolls along ending today", () => {
+    const early = modeOn([], "2026-10-05", "2026-10-09");
+    expect(dayWindow(early, "2026-10-09")).toEqual({ start: "2026-10-05", length: 30, numbered: false, name: null });
+    const later = modeOn([], "2026-10-05", "2027-02-01");
+    expect(dayWindow(later, "2027-02-01", 35)).toEqual({ start: "2026-12-29", length: 35, numbered: false, name: null });
   });
 });
 

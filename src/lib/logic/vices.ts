@@ -84,7 +84,7 @@ export type ViceDayState =
 
 export interface ViceDay {
   date: DateStr;
-  /** Day of the challenge, starting at 1. */
+  /** The number in the cell: the day of the challenge (from 1) when `numbered`, else the day of the month. */
   day: number;
   state: ViceDayState;
   slips: number;
@@ -108,7 +108,7 @@ export function viceDayState(
   return "open";
 }
 
-/** One entry per challenge day, in order. */
+/** One entry per day of the window, in order. Pass `numbered` false for plain dates outside a challenge. */
 export function viceCalendar(
   item: ChecklistItem,
   versions: readonly TargetVersion[],
@@ -117,6 +117,7 @@ export function viceCalendar(
   startDate: DateStr,
   lengthDays: number,
   today: DateStr,
+  numbered = true,
 ): ViceDay[] {
   const counts = slipCounts(slips, item.id);
   const byDate = new Map<DateStr, DayLog>();
@@ -125,7 +126,7 @@ export function viceCalendar(
     const n = counts.get(date) ?? 0;
     return {
       date,
-      day: dayNumber(startDate, date),
+      day: numbered ? dayNumber(startDate, date) : Number(date.slice(8)),
       state: viceDayState(item, versions, byDate.get(date), n, date, today),
       slips: n,
       isToday: date === today,

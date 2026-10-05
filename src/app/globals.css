@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
 /*
-  Lock In design tokens. Dark only.
+  Lock In design tokens.
   Use these through the Tailwind names in the @theme block below
   (bg-bg, bg-surface, text-ink, text-ink-2, border-line, bg-accent ...).
   Do not add colors anywhere else.
 
+  A theme is data, not CSS. The values here are the "dark minimal" base and
+  the fallback when nothing else is set. At runtime src/lib/theme writes the
+  same variables on the root element from a base theme plus an optional
+  palette (see src/lib/logic/theme.ts, which also holds every pair to WCAG AA),
+  and an inline script in the root layout does it before first paint.
+  Keep these in step with BASE_THEMES.dark there. theme.test.ts checks.
+
   The accent is for done states and primary progress only. Buttons, links and
-  selected controls use ink (near white) so the accent keeps its meaning.
+  selected controls use ink so the accent keeps its meaning.
 */
 :root {
   color-scheme: dark;
@@ -25,7 +32,7 @@
   /* text */
   --ink: #f5f5f2;
   --ink-2: #a5a5ad;
-  --ink-3: #7c7c85;
+  --ink-3: #8c8c93;
 
   /* the one accent */
   --accent: #c8f73a;
@@ -38,6 +45,13 @@
   --danger-soft: rgba(255, 98, 87, 0.12);
   --warn: #f5b544;
   --warn-soft: rgba(245, 181, 68, 0.12);
+
+  /* overlays: what dims the page behind a sheet, drop shadows, text on a dimmed photo */
+  --scrim: rgba(0, 0, 0, 0.7);
+  --shadow: rgba(0, 0, 0, 0.6);
+  --on-scrim: #ffffff;
+  /* 1 on a dark page, 0 on a light one: flips the native date and time picker icons */
+  --picker-invert: 1;
 
   /* shape */
   --radius-sm: 10px;
@@ -78,6 +92,9 @@
   --color-danger-soft: var(--danger-soft);
   --color-warn: var(--warn);
   --color-warn-soft: var(--warn-soft);
+  --color-scrim: var(--scrim);
+  --color-shadow: var(--shadow);
+  --color-on-scrim: var(--on-scrim);
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius);
@@ -142,7 +159,7 @@
   }
   input[type="time"]::-webkit-calendar-picker-indicator,
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+    filter: invert(var(--picker-invert));
     opacity: 0.5;
   }
 
@@ -312,15 +329,15 @@
 }
 @keyframes ring-glow {
   0% {
-    filter: drop-shadow(0 0 0 rgba(200, 247, 58, 0));
+    filter: drop-shadow(0 0 0 transparent);
     transform: scale(1);
   }
   40% {
-    filter: drop-shadow(0 0 18px rgba(200, 247, 58, 0.75));
+    filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 75%, transparent));
     transform: scale(1.08);
   }
   100% {
-    filter: drop-shadow(0 0 0 rgba(200, 247, 58, 0));
+    filter: drop-shadow(0 0 0 transparent);
     transform: scale(1);
   }
 }
@@ -345,11 +362,11 @@
   }
   70% {
     transform: scale(1.04);
-    filter: drop-shadow(0 0 22px rgba(200, 247, 58, 0.55));
+    filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent) 55%, transparent));
   }
   100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0 rgba(200, 247, 58, 0));
+    filter: drop-shadow(0 0 0 transparent);
   }
 }
 @utility animate-day-ring {

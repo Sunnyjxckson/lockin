@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { ProgressRing } from "@/components/ui";
 
 export interface DayCompleteProps {
-  day: number;
+  /** "Day 12" in a challenge, the date ("Oct 16") otherwise. */
+  title: string;
   total: number;
   /** Full days in a row, this one included. */
   streak: number;
@@ -17,7 +18,7 @@ export interface DayCompleteProps {
  * and the day is named. It goes away on its own or on a tap. With reduced
  * motion it shows without the animation.
  */
-export function DayComplete({ day, total, streak, isToday, onDone }: DayCompleteProps) {
+export function DayComplete({ title, total, streak, isToday, onDone }: DayCompleteProps) {
   const [closed, setClosed] = useState(false);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export function DayComplete({ day, total, streak, isToday, onDone }: DayComplete
         </span>
         <span className="animate-day-text mt-8 block">
           <span className="t-label block text-accent">{isToday ? "Locked in" : "Day complete"}</span>
-          <span className="t-display mt-3 block">Day {day}</span>
+          <span className="t-display mt-3 block">{title}</span>
           <span className="tnum mt-4 block text-[16px] text-ink-2">
             {total} of {total} done.{streak > 1 ? ` ${streak} full days in a row.` : ""}
           </span>

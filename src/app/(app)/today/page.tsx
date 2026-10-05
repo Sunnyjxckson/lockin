@@ -2,27 +2,17 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Lock, MessageSquareText, Settings, ShieldBan } from "lucide-react";
-import { Card, EmptyState, ProgressRing, Screen, Section, cn, useToast } from "@/components/ui";
-import { logWeight, setChecked, setText, setValue, workoutsFor } from "@/lib/db/helpers";
-import {
-  useChallenge,
-  useChecklist,
-  useDay,
-  useDayBlocks,
-  useInstalledOn,
-  useList,
-  useLogs,
-  useNow,
-  useToday,
-  useWorkouts,
-} from "@/lib/db/hooks";
+import dynamic from "next/dynamic";
+import { ChevronRight, Ellipsis, Flag, Lock, MessageSquareText, ShieldBan } from "lucide-react";
+import { Button, Card, EmptyState, ProgressRing, Screen, Section, cn, useToast } from "@/components/ui";
+import { finishChallenge, logWeight, setChecked, setText, setValue, workoutsFor } from "@/lib/db/helpers";
+import { useChecklist, useDay, useDayBlocks, useInstalledOn, useList, useLogs, useMode, useNow, useWorkouts } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
+import { challengeDay, challengeRecord, consistency, consistencyLabel, plannedEnd, ranOn } from "@/lib/logic/challenge";
 import {
-  challengeDates,
-  challengeEndDate,
+  addDays,
+  dateRange,
   dayNumber,
-  diffDays,
   formatDateLong,
   formatDateShort,
   formatTime,
@@ -34,7 +24,7 @@ import {
 } from "@/lib/logic/dates";
 import { summarizeDay, type DayStatus, type ItemResult, type WeeklyResult } from "@/lib/logic/day";
 import { allStreaks, fullDayStreak } from "@/lib/logic/streaks";
-import type { ChecklistItem, DateStr } from "@/lib/types";
+import { WEEKDAY_NAMES, type Challenge, type ChecklistItem, type DateStr } from "@/lib/types";
 import { SetupRow } from "@/components/app/SetupRow";
 import BodyTodaySlot from "@/features/body/TodaySlot";
 import CoachTodaySlot from "@/features/coach/TodaySlot";
@@ -43,9 +33,18 @@ import ScheduleTodaySlot from "@/features/schedule/TodaySlot";
 import VicesTodaySlot from "@/features/vices/TodaySlot";
 import { ChecklistRow } from "./ChecklistRows";
 import { DayComplete } from "./DayComplete";
-import { DayStrip } from "./DayStrip";
+import { DayStrip, type StripDay } from "./DayStrip";
 import { NowNext } from "./NowNext";
 import { WorkoutCard } from "./WorkoutCard";
+
+// Opens from the header. Loaded on first use so it costs Today nothing.
+const MoreSheet = dynamic(() => import("@/components/app/MoreSheet").then((m) => m.MoreSheet), { ssr: false });
+const ChallengeComplete = dynamic(() => import("./ChallengeComplete").then((m) => m.ChallengeComplete), { ssr: false });
+
+/** How far back Today reads logs. Streaks on the rows count at most this many days. */
+const HISTORY_WINDOW = 400;
+/** Days on the strip in ongoing mode. */
+const STRIP_DAYS = 14;
 
 function HeaderLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
   return (
@@ -63,9 +62,12 @@ function HeaderLink({ href, label, children }: { href: string; label: string; ch
 export default function TodayPage() {
   const toast = useToast();
   const now = useNow(20_000);
-  const today = useToday();
-  const challenge = useChallenge();
+  const mode = useMode();
+  const today = mode.today;
   const installedOn = useInstalledOn();
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [finished, setFinished] = useState<{ challenge: Challenge; full: number } | null>(null);
+  const [finishing, setFinishing] = useState(false);
 
   // The day on screen. Null means "follow today". /today?date=YYYY-MM-DD
   // (Progress links here) opens on that day. The page only renders in the
@@ -79,35 +81,60 @@ export default function TodayPage() {
     if (window.location.search.includes("date=")) window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
-  const c = challenge.data;
-  const start = c?.start_date ?? today;
-  const end = c ? challengeEndDate(c.start_date, c.length_days) : today;
-  const lastOpen = today > end ? end : today;
-  const date = picked && picked >= start && picked <= lastOpen ? picked : lastOpen;
+  // The ongoing history runs from `start` to today, whatever challenge is or
+  // is not on top of it. Any day in it can be opened.
+  const c = mode.challenge;
+  const start = mode.historyStart;
+  const date = picked && picked >= start && picked <= today ? picked : today;
   const isToday = date === today;
+  const readFrom = addDays(today, -HISTORY_WINDOW) > start ? addDays(today, -HISTORY_WINDOW) : start;
 
   const day = useDay(date);
   const checklist = useChecklist();
-  const history = useLogs(start, lastOpen);
+  const history = useLogs(readFrom, today);
   const blocks = useDayBlocks(today);
   const workouts = useWorkouts();
   const meals = useList("meal", { eq: { date } });
 
-  const dates = useMemo(() => (c ? challengeDates(c.start_date, c.length_days) : []), [c]);
+  // The strip: the challenge's days while one runs (plus yesterday when the
+  // challenge started today, so it can still be finished off), otherwise the
+  // last two weeks.
+  const strip = useMemo<StripDay[]>(() => {
+    const plain = (d: DateStr): StripDay => ({ date: d, label: String(Number(d.slice(8))), name: formatDateLong(d) });
+    if (c) {
+      const before = addDays(c.start_date, -1);
+      const lead = today === c.start_date && before >= start ? [plain(before)] : [];
+      const days = dateRange(c.start_date, plannedEnd(c)).map((d): StripDay => {
+        const n = dayNumber(c.start_date, d);
+        return { date: d, label: String(n), name: `Day ${n}` };
+      });
+      return [...lead, ...days];
+    }
+    const first = addDays(today, -(STRIP_DAYS - 1));
+    const days = dateRange(first < start ? start : first, today).map(plain);
+    return days.some((d) => d.date === date) ? days : [plain(date), ...days];
+  }, [c, start, today, date]);
 
+  // Day status for the strip and for the last 30 days, which is what the
+  // ongoing header counts.
   const statusByDate = useMemo(() => {
     const out: Record<DateStr, DayStatus> = {};
     if (checklist.loading || history.loading) return out;
-    for (const d of dates) {
-      if (d > today) break;
-      out[d] = summarizeDay(d, checklist.data.items, checklist.data.versions, history.data).status;
+    // Days of the challenge in play (running, or waiting to be closed) are
+    // scored by its own items. Every other day by the whole checklist.
+    const scope = c ?? mode.finished;
+    const first = [addDays(today, -45), strip[0]?.date ?? today, mode.finished?.start_date ?? today].sort()[0];
+    for (const d of dateRange(first < readFrom ? readFrom : first, today)) {
+      const s = summarizeDay(d, checklist.data.items, checklist.data.versions, history.data);
+      out[d] = scope && ranOn(scope, d) ? challengeDay(scope, s).status : s.status;
     }
+    if (!(date in out) && date >= readFrom) out[date] = summarizeDay(date, checklist.data.items, checklist.data.versions, history.data).status;
     return out;
-  }, [dates, today, checklist.loading, checklist.data, history.loading, history.data]);
+  }, [strip, today, date, readFrom, c, mode.finished, checklist.loading, checklist.data, history.loading, history.data]);
 
   const streaks = useMemo(
-    () => (checklist.loading || history.loading ? {} : allStreaks(checklist.data.items, checklist.data.versions, history.data, lastOpen, start)),
-    [checklist.loading, checklist.data, history.loading, history.data, lastOpen, start],
+    () => (checklist.loading || history.loading ? {} : allStreaks(checklist.data.items, checklist.data.versions, history.data, today, readFrom)),
+    [checklist.loading, checklist.data, history.loading, history.data, today, readFrom],
   );
 
   // The bigger moment when the last item of a day lands.
@@ -130,18 +157,10 @@ export default function TodayPage() {
   // First paint: wait until everything above the fold has been read, then
   // show the whole screen at once, so nothing jumps as parts arrive. After
   // that (changing day, edits) parts update in place.
-  const loaded = !challenge.loading && (!c || (!day.loading && !blocks.loading && !workouts.loading && !history.loading));
+  const loaded = !mode.loading && !day.loading && !blocks.loading && !workouts.loading && !history.loading;
   const [shown, setShown] = useState(false);
   if (loaded && !shown) setShown(true);
   if (!shown) return <Screen aria-busy="true">{null}</Screen>;
-
-  if (!c) {
-    return (
-      <Screen>
-        <EmptyState title="No challenge yet" body="Set a start date and length to begin." action={<Link href="/settings/challenge" className="text-ink underline underline-offset-4">Open Settings</Link>} />
-      </Screen>
-    );
-  }
 
   const topBar = (
     <div className="-mx-2.5 flex h-12 items-center justify-between pt-1">
@@ -153,38 +172,56 @@ export default function TodayPage() {
         <HeaderLink href="/vices" label="Vices">
           <ShieldBan size={22} aria-hidden />
         </HeaderLink>
-        <HeaderLink href="/settings" label="Settings">
-          <Settings size={22} aria-hidden />
-        </HeaderLink>
+        <button
+          type="button"
+          aria-label="More"
+          title="More"
+          aria-haspopup="dialog"
+          onClick={() => {
+            haptics.tap();
+            setMoreOpen(true);
+          }}
+          className="pressable inline-flex size-11 items-center justify-center rounded-full text-ink-2"
+        >
+          <Ellipsis size={24} aria-hidden />
+        </button>
       </div>
     </div>
   );
 
-  if (today < c.start_date) {
-    const n = diffDays(today, c.start_date);
-    return (
-      <Screen>
-        {topBar}
-        <div className="pt-10">
-          <p className="t-label">Starts {formatDateLong(c.start_date)}</p>
-          <p className="t-display mt-3">{n}</p>
-          <p className="t-h2 mt-2 text-ink-2">{n === 1 ? "day to go" : "days to go"}</p>
-          <p className="t-sub mt-6 max-w-[300px]">
-            {c.length_days} days. The checklist opens on day 1. Set your targets and schedule in Settings before then.
-          </p>
-        </div>
-      </Screen>
-    );
-  }
-
-  const n = dayNumber(c.start_date, date);
-  const over = today > end;
+  // Day X of N only while the day on screen is one of the running challenge's
+  // days. Every other day is a plain date.
+  const inChallenge = !!c && ranOn(c, date);
+  const n = inChallenge && c ? dayNumber(c.start_date, date) : null;
+  const steady = consistency(statusByDate, today, start, 30);
+  const dayTitle = n !== null ? `Day ${n}` : formatDateShort(date);
   const editable = isDayEditable(date, now, installedOn);
   const summary = day.summary;
   const week = day.week;
   const percent = summary?.percent ?? 0;
   const lockAt = nyParts(lockInstant(date, installedOn));
   const w = workoutsFor(workouts.data, weekdayOf(date));
+
+  const scoped = c && inChallenge && c.rules && summary ? challengeDay(c, summary) : null;
+
+  // A challenge whose last day has passed waits here to be closed. Closing it
+  // only marks the challenge. The history under it stays as it is.
+  const closing = mode.finished;
+  const closingRecord = closing ? challengeRecord(closing, statusByDate, today) : null;
+  const finish = async () => {
+    if (!closing) return;
+    setFinishing(true);
+    try {
+      const full = closingRecord?.full ?? 0;
+      await finishChallenge(today);
+      haptics.celebrate();
+      setFinished({ challenge: closing, full });
+    } catch {
+      toast("Could not close the challenge", { kind: "error" });
+    } finally {
+      setFinishing(false);
+    }
+  };
 
   const refuse = () => {
     haptics.error();
@@ -278,14 +315,28 @@ export default function TodayPage() {
 
       <header className="flex items-end justify-between gap-4 pt-3 pb-5">
         <div className="min-w-0">
-          <h1 className="flex items-baseline gap-2.5">
-            <span className="t-display">Day {n}</span>
-            <span className="text-[22px] font-medium tracking-[-0.02em] text-ink-3">of {c.length_days}</span>
-          </h1>
-          <p className="mt-2.5 text-[15px] text-ink-2">
-            {formatDateLong(date)}
-            {over && isToday === false && date === end ? " · Final day" : ""}
-          </p>
+          {n !== null && c ? (
+            <>
+              <h1 className="flex items-baseline gap-2.5">
+                <span className="t-display">Day {n}</span>
+                <span className="text-[22px] font-medium tracking-[-0.02em] text-ink-3">of {c.length_days}</span>
+              </h1>
+              <p className="mt-2.5 text-[15px] text-ink-2">
+                {formatDateLong(date)}
+                {scoped ? ` · ${c.name}: ${scoped.done} of ${scoped.total}` : ""}
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="flex items-baseline gap-2.5">
+                <span className="t-display">{formatDateShort(date)}</span>
+                <span className="text-[22px] font-medium tracking-[-0.02em] text-ink-3">{WEEKDAY_NAMES[weekdayOf(date)].slice(0, 3)}</span>
+              </h1>
+              <p className="mt-2.5 text-[15px] text-ink-2" data-consistency>
+                {steady.days === 0 ? "First day. Keep it going." : `${consistencyLabel(steady)} locked in`}
+              </p>
+            </>
+          )}
         </div>
         <div key={glow} className={cn("shrink-0", glow > 0 && "animate-ring-glow")}>
           <ProgressRing value={percent / 100} size={84} stroke={8} label="Checklist done">
@@ -297,7 +348,36 @@ export default function TodayPage() {
         </div>
       </header>
 
-      <DayStrip dates={dates} startDate={c.start_date} today={today} selected={date} statusByDate={statusByDate} onSelect={setPicked} />
+      <DayStrip days={strip} today={today} selected={date} statusByDate={statusByDate} onSelect={setPicked} label={c ? "Challenge days" : "Recent days"} />
+
+      {closing && closingRecord && isToday ? (
+        <Card className="mt-4 border-accent-line">
+          <p className="t-label text-accent">Challenge done</p>
+          <p className="t-h2 mt-1.5">
+            {closing.name}: all {closing.length_days} {closing.length_days === 1 ? "day" : "days"} are behind you.
+          </p>
+          <p className="t-sub mt-1.5">
+            {closingRecord.full} full, {closingRecord.partial} partial, {closingRecord.missed} missed. Closing it keeps every day you logged. You carry on in ongoing mode.
+          </p>
+          <div className="mt-4 flex gap-2.5">
+            <Button full loading={finishing} icon={<Flag size={18} aria-hidden />} onClick={() => void finish()}>
+              Finish challenge
+            </Button>
+            <Link href="/progress" className="pressable flex h-12 shrink-0 items-center rounded-[14px] border border-line-strong px-4 text-[16px] font-semibold text-ink">
+              Review
+            </Link>
+          </div>
+        </Card>
+      ) : null}
+
+      {mode.upcoming && isToday ? (
+        <Link href="/settings/challenge" className="pressable mt-4 flex items-center justify-between gap-3 rounded-[14px] border border-line bg-surface px-3.5 py-3 text-[14px] text-ink-2">
+          <span>
+            {mode.upcoming.name} starts {formatDateLong(mode.upcoming.start_date)}
+          </span>
+          <ChevronRight size={16} className="shrink-0 text-ink-3" aria-hidden />
+        </Link>
+      ) : null}
 
       {!editable ? (
         <div className="mt-4 flex items-center gap-2.5 rounded-[14px] border border-line bg-surface px-3.5 py-3 text-[14px] text-ink-2">
@@ -315,7 +395,7 @@ export default function TodayPage() {
         </div>
       ) : null}
 
-      {isToday && !over ? (
+      {isToday ? (
         <div className="mt-4 flex flex-col gap-3">
           <SetupRow />
           <CoachTodaySlot />
@@ -371,8 +451,11 @@ export default function TodayPage() {
       </Section>
 
       {moment === date && summary ? (
-        <DayComplete day={n} total={summary.total} streak={fullDayStreak(statusByDate, lastOpen, start)} isToday={isToday} onDone={endMoment} />
+        <DayComplete title={dayTitle} total={summary.total} streak={fullDayStreak(statusByDate, today, start)} isToday={isToday} onDone={endMoment} />
       ) : null}
+
+      {moreOpen ? <MoreSheet onClose={() => setMoreOpen(false)} /> : null}
+      {finished ? <ChallengeComplete challenge={finished.challenge} full={finished.full} onDone={() => setFinished(null)} /> : null}
     </Screen>
   );
 }

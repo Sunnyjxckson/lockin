@@ -2,12 +2,13 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { CalendarClock, MapPin, Plus, RotateCcw } from "lucide-react";
-import { Button, Card, EmptyState, PageHeader, Screen, Section, Sheet, Toggle, useToast } from "@/components/ui";
+import { CalendarClock, MapPin, Plus, RotateCcw, Timer } from "lucide-react";
+import { Button, Card, EmptyState, IconLink, PageHeader, Screen, Section, Sheet, Toggle, useToast } from "@/components/ui";
 import { getBlocksForDate, type DayBlock } from "@/lib/blocks";
-import { useChallenge, useDayBlocks, useList, useNow } from "@/lib/db/hooks";
+import { useDayBlocks, useList, useMode, useNow } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
-import { addDays, challengeDates, dayNumber, formatDateLong, formatDuration, formatTime, isDateStr, nyParts, weekdayOf } from "@/lib/logic/dates";
+import { ranOn } from "@/lib/logic/challenge";
+import { addDays, dateRange, dayNumber, formatDateLong, formatDuration, formatTime, isDateStr, nyParts, weekdayOf } from "@/lib/logic/dates";
 import {
   addBlock,
   findErrand,
@@ -59,7 +60,7 @@ function shiftMessage(result: ShiftResult | null, names: Map<string, string>): {
 export default function SchedulePage() {
   const toast = useToast();
   const calendar = useCalendarSync();
-  const { data: challenge } = useChallenge();
+  const { challenge } = useMode();
 
   // A slow clock runs all the time. A one second clock joins in only while a
   // free time block is live, for its countdown.
@@ -98,10 +99,10 @@ export default function SchedulePage() {
   const template = useList("schedule_template", { eq: { weekday: weekdayOf(date) } });
 
   const dates = useMemo(() => {
-    const list = challenge ? challengeDates(challenge.start_date, challenge.length_days) : [];
-    const base = list.length > 0 ? list : [-3, -2, -1, 0, 1, 2, 3].map((n) => addDays(today, n));
+    // The schedule is not tied to a challenge: a few days back and two weeks ahead, always.
+    const base = dateRange(addDays(today, -3), addDays(today, 14));
     return base.includes(date) ? base : [...base, date].sort();
-  }, [challenge, today, date]);
+  }, [today, date]);
   const rows = useList("schedule_block", { from: dates[0], to: dates[dates.length - 1] });
   const edited = useMemo(() => new Set(rows.data.map((r) => r.date)), [rows.data]);
 
@@ -176,13 +177,20 @@ export default function SchedulePage() {
     }
   }, [day.loading, isToday, blocks.length]);
 
-  const n = challenge ? dayNumber(challenge.start_date, date) : null;
-  const inChallenge = challenge && n !== null && n >= 1 && n <= challenge.length_days;
+  const inChallenge = !!challenge && ranOn(challenge, date);
+  const n = challenge && inChallenge ? dayNumber(challenge.start_date, date) : null;
   const openLive = !!open && nowSeconds !== null && timerState(open, nowSeconds).phase === "live";
 
   return (
     <Screen>
-      <PageHeader title="Schedule" />
+      <PageHeader
+        title="Schedule"
+        right={
+          <IconLink href="/focus" label="Focus timer">
+            <Timer size={22} aria-hidden />
+          </IconLink>
+        }
+      />
 
       <WeekStrip dates={dates} selected={date} today={today} edited={edited} onSelect={setPicked} />
 
@@ -190,8 +198,8 @@ export default function SchedulePage() {
         <div className="min-w-0">
           <p className="t-h2 truncate">{formatDateLong(date)}</p>
           <p className="t-sub mt-0.5">
-            {inChallenge ? `Day ${n} of ${challenge.length_days}` : "Outside the challenge"}
-            {own ? ", edited for this day" : ", from the weekday template"}
+            {inChallenge && challenge ? `Day ${n} of ${challenge.length_days}, ` : ""}
+            {own ? (inChallenge ? "edited for this day" : "Edited for this day") : inChallenge ? "from the weekday template" : "From the weekday template"}
           </p>
         </div>
         {!isToday ? (
@@ -300,7 +308,7 @@ export default function SchedulePage() {
             haptics.tap();
             setAdding({ at: null });
           }}
-          className="pressable pointer-events-auto flex size-14 items-center justify-center rounded-full bg-ink text-bg shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
+          className="pressable pointer-events-auto flex size-14 items-center justify-center rounded-full bg-ink text-bg shadow-[0_10px_30px_var(--shadow)]"
         >
           <Plus size={26} aria-hidden />
         </button>

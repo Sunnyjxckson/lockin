@@ -158,7 +158,8 @@ function label(ctx: Ctx, t: CardTheme, s: string, x: number, y: number, align: C
 
 function photo(ctx: Ctx, t: CardTheme, img: CanvasImageSource, tag: string, x: number, y: number, w: number, h: number) {
   cover(ctx, img, x, y, w, h, 32);
-  // A dark fade at the bottom so the tag reads on any photo.
+  // A dark fade at the bottom so the tag reads on any photo. Black and white
+  // on purpose: it sits on a photo, not on a themed surface.
   ctx.save();
   rounded(ctx, x, y, w, h, 32);
   ctx.clip();
@@ -169,7 +170,7 @@ function photo(ctx: Ctx, t: CardTheme, img: CanvasImageSource, tag: string, x: n
   ctx.fillRect(x, y + h - 180, w, 180);
   ctx.restore();
   font(ctx, t, 30, 700, 3);
-  text(ctx, tag.toUpperCase(), x + 28, y + h - 30, t.ink);
+  text(ctx, tag.toUpperCase(), x + 28, y + h - 30, "#ffffff");
   ctx.lineWidth = 2;
   ctx.strokeStyle = t.line;
   rounded(ctx, x + 1, y + 1, w - 2, h - 2, 32);
@@ -234,34 +235,34 @@ export function drawCard(ctx: Ctx, data: CardData, theme: CardTheme, images: Car
   const cols = Math.max(10, Math.ceil(data.cells.length / 4));
   const percent = `${data.percent}`;
   const locked = `${data.lockedIn}`;
-  const left = `${data.remaining}`;
+  const left = data.extra.value;
 
   if (shots.length === 0) {
-    // Big day count, the grid, three numbers, streaks.
-    label(ctx, t, "Day", PAD, 222);
+    // The big number (the day count, or full days out of the last 30), the grid, three numbers, streaks.
+    label(ctx, t, data.eyebrow, PAD, 222);
     font(ctx, t, 260, 700, -12);
-    const dayText = `${data.day}`;
+    const dayText = data.big;
     text(ctx, dayText, PAD - 8, 452, t.ink);
     const dw = ctx.measureText(dayText).width;
     font(ctx, t, 72, 600, -2);
-    text(ctx, `of ${data.length}`, PAD + dw + 22, 452, t.ink3);
+    text(ctx, data.bigSub, PAD + dw + 22, 452, t.ink3);
 
     const gh = grid(ctx, t, data.cells, PAD, 520, INNER, cols, 14);
     const sy = 520 + gh + 132;
     const third = INNER / 3;
     stat(ctx, t, percent, "%", "Complete", PAD, sy, 92, t.accent);
     stat(ctx, t, locked, "", "Days locked in", PAD + third, sy, 92, t.ink);
-    stat(ctx, t, left, "", "Days left", PAD + third * 2, sy, 92, t.ink);
+    stat(ctx, t, left, "", data.extra.label, PAD + third * 2, sy, 92, t.ink);
     streaks(ctx, t, data, sy + 128, 68);
   } else {
-    // Day count and numbers on one row, then the photos.
-    label(ctx, t, "Day", PAD, 208);
+    // The big number and the stats on one row, then the photos.
+    label(ctx, t, data.eyebrow, PAD, 208);
     font(ctx, t, 150, 700, -7);
-    const dayText = `${data.day}`;
+    const dayText = data.big;
     text(ctx, dayText, PAD - 4, 338, t.ink);
     const dw = ctx.measureText(dayText).width;
     font(ctx, t, 48, 600, -1);
-    text(ctx, `of ${data.length}`, PAD + dw + 16, 338, t.ink3);
+    text(ctx, data.bigSub, PAD + dw + 16, 338, t.ink3);
 
     const top = 392;
     const ph = 520;
@@ -271,7 +272,7 @@ export function drawCard(ctx: Ctx, data: CardData, theme: CardTheme, images: Car
       stat(ctx, t, locked, "", "Locked in", PAD + half + 24 + half / 2 + 10, 292, 76, t.ink);
       photo(ctx, t, shots[0].img, shots[0].tag, PAD, top, half, ph);
       photo(ctx, t, shots[1].img, shots[1].tag, PAD + half + 24, top, half, ph);
-      // The whole challenge as one strip under the photos.
+      // Every day on the card as one strip under the photos.
       grid(ctx, t, data.cells, PAD, top + ph + 40, INNER, data.cells.length, Math.max(3, Math.min(8, 240 / Math.max(1, data.cells.length))));
     } else {
       photo(ctx, t, shots[0].img, shots[0].tag, PAD, top, half, ph);
@@ -280,7 +281,7 @@ export function drawCard(ctx: Ctx, data: CardData, theme: CardTheme, images: Car
       const sy = top + gh + 130;
       stat(ctx, t, percent, "%", "Complete", rx, sy, 84, t.accent);
       stat(ctx, t, locked, "", "Locked in", rx + half / 2 + 10, sy, 84, t.ink);
-      stat(ctx, t, left, "", "Days left", rx, sy + 170, 84, t.ink);
+      stat(ctx, t, left, "", data.extra.label, rx, sy + 170, 84, t.ink);
     }
     streaks(ctx, t, data, 1066, 68);
   }

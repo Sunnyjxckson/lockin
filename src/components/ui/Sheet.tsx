@@ -101,7 +101,7 @@ export function Sheet({ open, onClose, title, subtitle, footer, children, classN
         aria-label="Close"
         tabIndex={-1}
         onClick={onClose}
-        className="animate-fade-in absolute inset-0 cursor-default bg-black/70"
+        className="animate-fade-in absolute inset-0 cursor-default bg-scrim"
       />
       <div
         ref={panel}

@@ -9,7 +9,8 @@ import type { ChecklistItem, DateStr, DayLog, TargetVersion } from "../types";
 import { consistency, type Consistency } from "./challenge";
 import { addDays, addMonths, dateRange, diffDays, formatDateShort, formatMonth, monthEnd, monthStart, weekEnd, weekStart, weekdayOf } from "./dates";
 import { summarizeDay, summarizeWeek, type DayStatus, type WeeklyResult } from "./day";
-import { cellKind, type GridCell } from "./progress";
+import type { BodyLog } from "../types";
+import { buildProgress, cardData, cellKind, type CardData, type GridCell } from "./progress";
 
 export interface OngoingInput {
   /** First date of the history. */
@@ -196,5 +197,43 @@ export function ongoingHeadline(status: Readonly<Record<DateStr, DayStatus>>, hi
     fullDays,
     fullStreak: streak,
     bestFullStreak: Math.max(best, streak),
+  };
+}
+
+// ---------- share card ----------
+
+/**
+ * The share card with no challenge running: the last 30 days as the grid and
+ * "26 of the last 30 days" where a challenge shows its day count. Photos are
+ * tagged with their dates, since there is no day 1.
+ */
+export function ongoingCardData(input: OngoingInput, bodyLogs: readonly BodyLog[] = [], window = 30, maxStreaks = 3): CardData {
+  const { historyStart, today } = input;
+  const first = addDays(today, -(window - 1));
+  const from = first < historyStart ? historyStart : first;
+  const length = Math.max(1, diffDays(from, today) + 1);
+  const model = buildProgress({ startDate: from, lengthDays: length, streakFrom: historyStart, today, items: input.items, versions: input.versions, logs: input.logs });
+  const head = ongoingHeadline(statusByDate(input), historyStart, today);
+  const c = head.last30;
+  const card = cardData(model, from, today, [], maxStreaks);
+  const photos = bodyLogs
+    .filter((b) => !!b.photo_url && b.date <= today)
+    .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+  const tag = (b: BodyLog) => ({ date: b.date, ref: b.photo_url as string, label: formatDateShort(b.date) });
+  const firstPhoto = photos[0];
+  const lastPhoto = photos[photos.length - 1];
+  return {
+    ...card,
+    mode: "ongoing",
+    eyebrow: c.days < c.window ? "Days locked in" : `Last ${c.window} days`,
+    big: `${c.full}`,
+    bigSub: `of ${c.days}`,
+    extra: { value: `${head.fullStreak}`, label: "Full in a row" },
+    caption: c.days < c.window ? `${c.full} of ${c.days} ${c.days === 1 ? "day" : "days"} locked in` : `${c.full} of the last ${c.window} days locked in`,
+    fileTag: `last-${c.window}`,
+    lockedIn: c.full,
+    range: `${formatDateShort(from)} to ${formatDateShort(today)}`,
+    before: firstPhoto ? tag(firstPhoto) : null,
+    after: lastPhoto && firstPhoto && lastPhoto.date !== firstPhoto.date ? tag(lastPhoto) : null,
   };
 }

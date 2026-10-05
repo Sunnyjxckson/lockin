@@ -66,7 +66,7 @@ function Group({ title, rows, pending }: { title: string; rows: ItemResult[]; pe
 }
 
 /** What happened on one day: exactly which items were done and which were not. */
-export function DaySheet({ cell, onClose }: { cell: GridCell | null; onClose: () => void }) {
+export function DaySheet({ cell, title, onClose }: { cell: GridCell | null; /** Default: "Day N". Pass the date for a day outside a challenge. */ title?: string; onClose: () => void }) {
   const s = cell?.summary ?? null;
   const pending = !!cell?.isToday;
   const notDone = s ? s.items.filter((r) => !r.done) : [];
@@ -75,7 +75,7 @@ export function DaySheet({ cell, onClose }: { cell: GridCell | null; onClose: ()
     <Sheet
       open={!!cell}
       onClose={onClose}
-      title={cell ? `Day ${cell.day}` : undefined}
+      title={cell ? (title ?? `Day ${cell.day}`) : undefined}
       subtitle={cell ? formatDateLong(cell.date) : undefined}
       footer={
         cell && s ? (

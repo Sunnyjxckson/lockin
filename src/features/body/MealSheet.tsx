@@ -162,7 +162,7 @@ export function MealSheet({ state, date, onClose }: { state: MealSheetState; dat
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={image} alt="Meal photo" className="h-44 w-full object-cover" />
             {read === "reading" ? (
-              <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-black/60 text-[15px] font-medium">
+              <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-scrim text-[15px] font-medium text-on-scrim">
                 <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
                 Reading the photo
               </div>

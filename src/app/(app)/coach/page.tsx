@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { CalendarClock, Flag as FlagIcon, History, RefreshCw, Sunrise } from "lucide-react";
 import { Button, Card, EmptyState, ListRow, PageHeader, Screen, Section, Sheet } from "@/components/ui";
 import { FlagCard, FlagDetail, NoteBody, SourceTag, weekLabel } from "@/features/coach/parts";

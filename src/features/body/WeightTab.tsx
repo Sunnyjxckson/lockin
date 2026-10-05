@@ -4,9 +4,10 @@ import dynamic from "next/dynamic";
 import { useMemo, useRef, useState } from "react";
 import { Plus, Scale } from "lucide-react";
 import { Button, Card, EmptyState, ListRow, Section, Stat, cn } from "@/components/ui";
-import { useChallenge, useChecklist, useList, useSettings, useToday } from "@/lib/db/hooks";
+import { useChecklist, useList, useMode, useSettings } from "@/lib/db/hooks";
 import { weighInDateFor, weightSeries, weightTrend } from "@/lib/logic/body";
-import { dayNumber, formatDateLong, formatDateShort, weekStart } from "@/lib/logic/dates";
+import { dayWindow } from "@/lib/logic/challenge";
+import { addDays, dayNumber, formatDateLong, formatDateShort, weekStart } from "@/lib/logic/dates";
 import { WEEKDAY_NAMES, type DateStr } from "@/lib/types";
 import { fmt, signed } from "./format";
 import { PhotoCompare } from "./PhotoCompare";
@@ -15,14 +16,17 @@ import { WeightChart } from "./WeightChart";
 const WeighInSheet = dynamic(() => import("./WeighInSheet").then((m) => m.WeighInSheet), { ssr: false });
 
 export function WeightTab() {
-  const today = useToday();
-  const { data: challenge } = useChallenge();
+  const mode = useMode();
+  const today = mode.today;
   const { data: settings } = useSettings();
   const { data: checklist } = useChecklist();
   const { data: logs, loading } = useList("body_log", { orderBy: "date" });
   const unit = settings?.weight_unit ?? "lb";
-  const start = challenge?.start_date ?? null;
-  const length = challenge?.length_days ?? 30;
+  // The chart covers the running challenge, or the last twelve weeks.
+  const w = useMemo(() => dayWindow(mode, today, 84), [mode, today]);
+  const start = w.start;
+  const length = w.length;
+  const numbered = w.numbered;
 
   const [sheet, setSheet] = useState<{ key: number; date: DateStr } | null>(null);
   const seq = useRef(0);
@@ -31,7 +35,7 @@ export function WeightTab() {
     setSheet({ key: seq.current, date });
   };
 
-  const series = useMemo(() => weightSeries(logs, start ?? undefined, length), [logs, start, length]);
+  const series = useMemo(() => weightSeries(logs, start, length), [logs, start, length]);
   const trend = useMemo(() => weightTrend(series), [series]);
   const history = useMemo(() => weightSeries(logs).reverse(), [logs]);
 
@@ -53,17 +57,23 @@ export function WeightTab() {
         {trend ? (
           <>
             <div className="flex items-end justify-between gap-3">
-              <Stat label="Latest" value={fmt(trend.latest.weight, 1)} unit={unit} sub={`${formatDateShort(trend.latest.date)}, day ${trend.latest.day}`} />
+              <Stat label="Latest" value={fmt(trend.latest.weight, 1)} unit={unit} sub={numbered ? `${formatDateShort(trend.latest.date)}, day ${trend.latest.day}` : formatDateShort(trend.latest.date)} />
               {series.length > 1 ? (
                 <div className="pb-1 text-right">
                   <p className={cn("t-num-sm tnum", trend.direction === "down" && "text-accent")}>{signed(trend.change)}</p>
-                  <p className="t-sub mt-1">{unit} since day {trend.first.day}</p>
+                  <p className="t-sub mt-1">{unit} since {numbered ? `day ${trend.first.day}` : formatDateShort(trend.first.date)}</p>
                   {trend.perWeek !== null ? <p className="tnum mt-0.5 text-[13px] text-ink-3">{signed(trend.perWeek)} a week</p> : null}
                 </div>
               ) : null}
             </div>
             <div className="mt-4">
-              <WeightChart series={series} lengthDays={length} todayDay={start ? dayNumber(start, today) : null} unit={unit} />
+              <WeightChart
+                series={series}
+                lengthDays={length}
+                todayDay={dayNumber(start, today)}
+                unit={unit}
+                label={numbered ? undefined : (d) => formatDateShort(addDays(start, d - 1))}
+              />
             </div>
             {series.length === 1 ? <p className="t-sub mt-2">One weigh-in so far. The line starts with the next one.</p> : null}
           </>
@@ -81,7 +91,7 @@ export function WeightTab() {
       </Card>
 
       <Section title="Progress photos">
-        <PhotoCompare logs={logs} startDate={start} unit={unit} onAdd={() => open(today)} />
+        <PhotoCompare logs={logs} startDate={numbered ? start : null} unit={unit} onAdd={() => open(today)} />
       </Section>
 
       {history.length > 0 ? (
@@ -95,7 +105,7 @@ export function WeightTab() {
                   <ListRow
                     key={p.date}
                     title={formatDateLong(p.date)}
-                    sub={start && dayNumber(start, p.date) >= 1 ? `Day ${dayNumber(start, p.date)}` : undefined}
+                    sub={numbered && dayNumber(start, p.date) >= 1 && dayNumber(start, p.date) <= length ? `Day ${dayNumber(start, p.date)}` : undefined}
                     onClick={() => open(p.date)}
                     right={
                       <span className="text-right">
