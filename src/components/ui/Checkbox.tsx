@@ -8,7 +8,7 @@ export interface CheckMarkProps {
   checked: boolean;
   /**
    * Ticked but it does not count (checked after the cutoff, missing text).
-   * Draws in the warn color instead of the accent.
+   * Draws in the warn color instead of the gradient.
    */
   off?: boolean;
   /** Diameter in px. Default 30. */
@@ -38,8 +38,8 @@ export function CheckMark({ checked, off = false, size = 30, className }: CheckM
       ) : null}
       <span
         className={cn(
-          "flex size-full items-center justify-center rounded-full border-2 transition-colors duration-150",
-          checked ? (off ? "border-warn bg-warn" : "border-accent bg-accent") : "border-line-strong bg-transparent",
+          "flex size-full items-center justify-center rounded-full transition-colors duration-150",
+          checked ? (off ? "bg-warn" : "grad shadow-glow") : "border-[1.5px] border-line-strong bg-transparent",
           fresh && "animate-check-pop",
         )}
       >
@@ -48,7 +48,7 @@ export function CheckMark({ checked, off = false, size = 30, className }: CheckM
             <path
               d="M3 8.4l3.2 3.1L13 4.6"
               stroke="var(--accent-ink)"
-              strokeWidth="2.4"
+              strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
               className={fresh ? "animate-check-draw" : undefined}
@@ -81,7 +81,7 @@ export function Checkbox({ checked, onChange, label, off, disabled, size = 30, c
         else haptics.done();
         onChange(!checked);
       }}
-      className={cn("inline-flex size-11 shrink-0 items-center justify-center disabled:opacity-60", className)}
+      className={cn("inline-flex size-11 shrink-0 items-center justify-center rounded-full disabled:opacity-60", className)}
     >
       <CheckMark checked={checked} off={off} size={size} />
     </button>

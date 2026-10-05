@@ -88,6 +88,9 @@ export type Target =
   | { kind: "range"; min: number; max: number }
   | { kind: "text" };
 
+/** The four tracks Today sums the day up in. */
+export type Track = "body" | "money" | "mind" | "clean";
+
 export interface ChecklistItem extends Base {
   /** Stable slug for seeded items so features can find them: wake, workout,
    * core, calories, protein, earned, study, business, bed, talk, weighin,
@@ -107,6 +110,8 @@ export interface ChecklistItem extends Base {
   /** Short helper line under the name. */
   hint: string | null;
   sort_order: number;
+  /** Which of the four tracks on Today the item counts toward. Null means the default for it, see `trackOf` in logic/tracks. */
+  track: Track | null;
   /** In the checklist right now. Vices in the library that are off are false. */
   active: boolean;
   /** Removed in Settings. Hidden everywhere but still scores past days. */
@@ -617,6 +622,8 @@ export interface AppSettings extends Base {
   business_goal: string | null;
   /** The store grocery lists are priced at by default. Null until one is picked. */
   preferred_store: string | null;
+  /** The name Today greets. Null or empty greets without one. */
+  display_name: string | null;
 }
 
 // ---------- table map ----------

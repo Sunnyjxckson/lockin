@@ -1,11 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import localFont from "next/font/local";
 import { ToastProvider } from "@/components/ui";
 import { ServiceWorker } from "@/components/app/ServiceWorker";
 import { ThemeBoot } from "@/components/app/ThemeBoot";
 import { BASE_THEMES, THEME_BOOT_SCRIPT } from "@/lib/logic/theme";
 import "./globals.css";
+
+// Schibsted Grotesk, the one typeface. The variable file ships with the app
+// (src/app/fonts, SIL Open Font License), so nothing is fetched from a font
+// service at build time or at runtime.
+const grotesk = localFont({
+  src: "./fonts/SchibstedGrotesk-latin.woff2",
+  variable: "--font-grotesk",
+  weight: "400 900",
+  style: "normal",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Lock In",
@@ -27,7 +37,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: "cover",
-  // The dark minimal base. The boot script below swaps it for the saved theme's background.
+  // The default base. The boot script below swaps it for the saved theme's background.
   themeColor: BASE_THEMES.dark.tokens.bg,
   colorScheme: "dark",
 };
@@ -36,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // The boot script sets the theme's variables on this element before React
     // hydrates, so the attributes differ from what the server sent on purpose.
-    <html lang="en" data-theme="dark" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${grotesk.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Runs while the HTML is parsed, before first paint: no flash of the wrong theme. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />

@@ -154,6 +154,8 @@ export interface NewItemInput {
   typical_spend?: number | null;
   spend_period?: ChecklistItem["spend_period"];
   weekly_day?: Weekday | null;
+  /** Which of Today's four tracks it counts toward. Leave out for the default. */
+  track?: ChecklistItem["track"];
 }
 
 /** Add an item to the checklist. It counts from today, not on earlier days. */
@@ -179,6 +181,7 @@ export async function addItem(input: NewItemInput, today: DateStr = todayNY()): 
     tracks_money: input.tracks_money ?? false,
     typical_spend: input.typical_spend ?? null,
     spend_period: input.spend_period ?? null,
+    track: input.track ?? null,
   });
   await db.upsert("target_version", versionForChange(item.id, today, target, true), ["item_id", "effective_from"]);
   return item;

@@ -7,16 +7,23 @@ import {
   THEME_BOOT_SCRIPT,
   THEME_CACHE_KEY,
   TOKEN_NAMES,
+  accentGrounds,
+  accentPairFor,
   auditTheme,
+  barGrounds,
   buildTheme,
   cleanPalette,
   contrast,
   ensureContrast,
+  glassGrounds,
+  glowsFor,
   luminance,
   mix,
   normalizeHex,
   over,
+  pageGrounds,
   parseHex,
+  shiftHue,
   themeCache,
   themePasses,
   themeVars,
@@ -122,6 +129,7 @@ describe("base themes", () => {
       for (const empty of [undefined, null, {}, { accent: "not a color" }] as (ThemePalette | null | undefined)[]) {
         const t = buildTheme(base, empty);
         expect(t.tokens).toEqual(BASE_THEMES[base].tokens);
+        expect(t.fx).toEqual(BASE_THEMES[base].fx);
         expect(t.custom).toBe(false);
         expect(t.adjusted).toEqual([]);
         expect(t.scheme).toBe("dark");
@@ -137,17 +145,182 @@ describe("base themes", () => {
   it("falls back to dark for a base it does not know", () => {
     expect(buildTheme("neon" as never).base).toBe("dark");
   });
+
+  it("the default look is the aubergine one: near black plum, cream text, champagne to rose", () => {
+    const t = BASE_THEMES.dark;
+    expect(t.name).toBe("Aubergine");
+    expect(t.tokens.bg).toBe("#0d0b10");
+    expect(t.tokens.ink).toBe("#f4efe8");
+    expect([t.tokens.accent, t.tokens["accent-2"]]).toEqual(["#e3c79a", "#d98fb4"]);
+    // Three lights, glass that holds some white, a bar that is not fully solid.
+    expect(t.fx.glow.every((a) => a > 0.2)).toBe(true);
+    expect(t.fx.glassHi).toBeGreaterThan(t.fx.glassLo);
+    expect(t.fx.bar).toBeLessThan(1);
+    // High contrast keeps the shape of the look and turns the effects right down.
+    expect(Math.max(...BASE_THEMES.contrast.fx.glow)).toBeLessThanOrEqual(0.1);
+    expect(BASE_THEMES.contrast.fx.bar).toBe(1);
+  });
+});
+
+describe("the grounds text is measured on", () => {
+  it("counts the page at the brightest point of each light, and glass over each", () => {
+    const t = buildTheme("dark");
+    const page = pageGrounds(t.tokens, t.fx);
+    expect(page.map((g) => g.name)).toEqual(["bg", "bg under glow-1", "bg under glow-2", "bg under glow-3"]);
+    expect(page[1].color).toBe(over(t.tokens["glow-1"], t.fx.glow[0], t.tokens.bg));
+    for (const g of page.slice(1)) expect(luminance(g.color), g.name).toBeGreaterThan(luminance(t.tokens.bg));
+    const glass = glassGrounds(t.tokens, t.fx);
+    expect(glass).toHaveLength(page.length * 2);
+    // Glass adds white, and dims the light behind it first.
+    expect(luminance(glass[0].color)).toBeGreaterThan(luminance(t.tokens.bg));
+    expect(glass[2].color).toBe(over("#ffffff", t.fx.glassHi, over(t.tokens.bg, t.fx.glassSmoke, page[1].color)));
+  });
+
+  it("leaves a light out once it is turned off", () => {
+    const t = buildTheme("dark");
+    expect(pageGrounds(t.tokens, { ...t.fx, glow: [0, 0.2, 0] }).map((g) => g.name)).toEqual(["bg", "bg under glow-2"]);
+  });
+
+  it("measures the tab bar with a done tile and a primary button under it", () => {
+    const t = buildTheme("dark");
+    const names = barGrounds(t.tokens, t.fx).map((g) => g.name);
+    expect(names).toEqual(expect.arrayContaining(["bar over bg", "bar over bg under glow-1", "bar over accent", "bar over accent-2", "bar over ink"]));
+    const solid = barGrounds(t.tokens, { ...t.fx, bar: 1 });
+    expect(new Set(solid.map((g) => g.color))).toEqual(new Set([t.tokens.surface]));
+  });
+
+  it("audits text on all of them, and the text that sits on the gradient", () => {
+    const labels = auditTheme(buildTheme("dark")).map((c) => c.label);
+    for (const label of [
+      "ink on bg under glow-1",
+      "ink-3 on glass over bg under glow-1",
+      "ink-2 on glass (far corner) over bg",
+      "accent on glass over bg under glow-2",
+      "warn on bg under glow-3",
+      "accent-ink on accent to accent-2, middle",
+      "accent-ink-2 on accent-2",
+      "ink-2 on bar over ink",
+      "ink on bar over accent",
+      "bg on ink",
+    ]) {
+      expect(labels, label).toContain(label);
+    }
+    expect(accentGrounds(buildTheme("dark").tokens).map((g) => g.color)).toEqual(["#e3c79a", mix("#e3c79a", "#d98fb4", 0.5), "#d98fb4"]);
+  });
+
+  it("fails a theme whose light is too strong for its text, so the audit is not decoration", () => {
+    const t = buildTheme("dark");
+    const loud = { ...t, fx: { ...t.fx, glow: [0.95, 0.95, 0.95] as const } };
+    const failed = auditTheme(loud).filter((c) => !c.pass).map((c) => c.label);
+    expect(failed).toEqual(expect.arrayContaining(["ink-3 on bg under glow-1", "ink-2 on glass over bg under glow-2"]));
+    const thin = { ...t, fx: { ...t.fx, bar: 0.3 } };
+    expect(auditTheme(thin).filter((c) => !c.pass).map((c) => c.label)).toContain("ink-2 on bar over ink");
+    const clash = { ...t, tokens: { ...t.tokens, "accent-2": "#3a1030" } };
+    expect(auditTheme(clash).filter((c) => !c.pass).map((c) => c.label)).toContain("accent-ink on accent-2");
+  });
+});
+
+describe("the look under a palette", () => {
+  it("turns the lights with the accent, keeping the relation the shipped look has", () => {
+    const glows = glowsFor("#e3c79a");
+    // Champagne gives a plum, an amber and an indigo, close to the shipped ones.
+    const hue = (c: string) => {
+      const [r, g, b] = parseHex(c)!;
+      return [r, g, b];
+    };
+    expect(hue(glows[0])[0]).toBeGreaterThan(hue(glows[0])[1]);
+    expect(hue(glows[0])[2]).toBeGreaterThan(hue(glows[0])[1]);
+    expect(hue(glows[2])[2]).toBeGreaterThan(hue(glows[2])[0]);
+    const blue = buildTheme("dark", { accent: "#5aa0ff" });
+    expect(blue.tokens["glow-1"]).toBe(glowsFor("#5aa0ff")[0]);
+    expect(blue.tokens["glow-1"]).not.toBe(BASE_THEMES.dark.tokens["glow-1"]);
+    // A gray accent has no hue: the lights go gray instead of inventing a color.
+    for (const g of glowsFor("#888888")) {
+      const [r, gg, b] = parseHex(g)!;
+      expect(Math.max(r, gg, b) - Math.min(r, gg, b)).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("keeps the shipped lights when the palette has no accent", () => {
+    const t = buildTheme("dark", { background: "#0b1410" });
+    expect(t.tokens["glow-1"]).toBe(BASE_THEMES.dark.tokens["glow-1"]);
+    expect(t.tokens.accent).toBe(BASE_THEMES.dark.tokens.accent);
+  });
+
+  it("pairs the accent with a neighboring hue at the same luminance, so one ink reads across the gradient", () => {
+    for (const accent of ["#5aa0ff", "#fca311", "#7ad6a8", "#ff4fa3", "#c8f73a"]) {
+      const t = buildTheme("dark", { accent }).tokens;
+      expect(t["accent-2"], accent).not.toBe(t.accent);
+      expect(Math.abs(luminance(t["accent-2"]) - luminance(t.accent)), accent).toBeLessThan(0.02);
+      expect(t["accent-2"]).toBe(accentPairFor(t.accent));
+      for (const g of accentGrounds(t)) {
+        expect(contrast(t["accent-ink"], g.color), `${accent} ${g.name}`).toBeGreaterThanOrEqual(4.5);
+        expect(contrast(t["accent-ink-2"], g.color), `${accent} ${g.name}`).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+    expect(shiftHue("#ff0000", 120)).toBe("#00ff00");
+  });
+
+  it("turns the lights down, not the text up, when a background leaves less room", () => {
+    const roomy = buildTheme("dark", { background: "#0b0d12", accent: "#7cc4ff" });
+    const tight = buildTheme("dark", { background: "#1c2a3d", accent: "#7cc4ff" });
+    expect(roomy.fx.glow).toEqual(BASE_THEMES.dark.fx.glow);
+    expect(tight.fx.glow[0]).toBeLessThan(roomy.fx.glow[0]);
+    expect(themePasses(tight)).toBe(true);
+    // Still a version of the look: glass keeps its white and the two muted steps stay apart.
+    expect(tight.fx.glassHi).toBeGreaterThan(0);
+    expect(contrast(tight.tokens["ink-2"], tight.tokens.bg)).toBeGreaterThan(contrast(tight.tokens["ink-3"], tight.tokens.bg));
+  });
+
+  it("on a light page the lights become washes and the hairlines go dark", () => {
+    const t = buildTheme("dark", { background: "#f7f3ea", accent: "#b4532a" });
+    expect(t.scheme).toBe("light");
+    expect(t.fx.glassHi).toBeGreaterThan(0.5);
+    for (const g of pageGrounds(t.tokens, t.fx)) expect(luminance(g.color), g.name).toBeGreaterThanOrEqual(luminance(t.tokens["surface-3"]) - 1e-9);
+    const vars = themeVars(t);
+    expect(vars["--glass-line"]).toMatch(/^rgba\(0, 0, 0, /);
+    expect(vars["--hair"]).toMatch(/^rgba\(0, 0, 0, /);
+    expect(themePasses(t)).toBe(true);
+  });
+
+  it("makes the tab bar more solid when its labels would not read over a button", () => {
+    const next = generator(77);
+    const color = () => toHex([next() * 255, next() * 255, next() * 255]);
+    let raised = 0;
+    for (let i = 0; i < 60; i++) {
+      const t = buildTheme("dark", { background: color(), accent: color() });
+      expect(t.fx.bar).toBeGreaterThanOrEqual(BASE_THEMES.dark.fx.bar);
+      expect(t.fx.bar).toBeLessThanOrEqual(1);
+      if (t.fx.bar > BASE_THEMES.dark.fx.bar) raised += 1;
+      for (const g of barGrounds(t.tokens, t.fx)) expect(contrast(t.tokens["ink-2"], g.color), g.name).toBeGreaterThanOrEqual(4.5);
+    }
+    expect(raised).toBeGreaterThan(0);
+  });
+
+  it("keeps every strength between 0 and 1 for any palette", () => {
+    const next = generator(9);
+    const color = () => toHex([next() * 255, next() * 255, next() * 255]);
+    for (let i = 0; i < 120; i++) {
+      for (const base of THEME_BASES) {
+        const { fx } = buildTheme(base, { background: color(), surface: color(), accent: color() });
+        for (const v of [...fx.glow, fx.glassHi, fx.glassLo, fx.glassSmoke, fx.glassLine, fx.tile, fx.tileLine, fx.hair, fx.bar]) {
+          expect(v).toBeGreaterThanOrEqual(0);
+          expect(v).toBeLessThanOrEqual(1);
+        }
+      }
+    }
+  });
 });
 
 describe("buildTheme with a palette", () => {
   it("keeps a palette that already works", () => {
-    const palette = { background: "#0b0d12", text: "#f2f4f8", accent: "#7cc4ff" };
+    const palette = { background: "#0b0d12", text: "#f2f4f8", accent: "#8fd0ff" };
     const t = buildTheme("dark", palette);
     expect(t.custom).toBe(true);
     expect(t.scheme).toBe("dark");
     expect(t.tokens.bg).toBe("#0b0d12");
     expect(t.tokens.ink).toBe("#f2f4f8");
-    expect(t.tokens.accent).toBe("#7cc4ff");
+    expect(t.tokens.accent).toBe("#8fd0ff");
     expect(t.adjusted).toEqual([]);
     expect(failures("dark", palette)).toEqual([]);
   });
@@ -245,13 +418,14 @@ describe("the stylesheet", () => {
   const declared: Record<string, string> = {};
   for (const m of root.matchAll(/(--[\w-]+):\s*([^;]+);/g)) declared[m[1]] = m[2].trim();
 
-  it("ships the dark minimal base as its defaults, value for value", () => {
+  it("ships the default base as its defaults, value for value", () => {
     const vars = themeVars(buildTheme("dark"));
     for (const [name, value] of Object.entries(vars)) expect(declared[name], name).toBe(value);
   });
 
   it("maps every color token to a Tailwind name", () => {
-    for (const name of [...TOKEN_NAMES, "accent-soft", "accent-line", "danger-soft", "warn-soft", "scrim", "shadow"]) {
+    const solid = TOKEN_NAMES.filter((n) => !n.startsWith("glow-"));
+    for (const name of [...solid, "accent-soft", "accent-line", "accent-glow", "danger-soft", "warn-soft", "warn-line", "glass-line", "tile", "tile-line", "hair", "bar", "scrim", "shadow"]) {
       expect(css, name).toContain(`--color-${name}: var(--${name});`);
     }
   });
@@ -272,11 +446,20 @@ describe("palettes and CSS", () => {
 
   it("emits every variable the stylesheet reads", () => {
     const vars = themeVars(buildTheme("dark"));
-    for (const name of TOKEN_NAMES) expect(vars[`--${name}`]).toMatch(HEX);
-    expect(vars["--accent-soft"]).toBe("rgba(200, 247, 58, 0.12)");
-    expect(vars["--accent-line"]).toBe("rgba(200, 247, 58, 0.35)");
-    expect(vars["--danger-soft"]).toBe("rgba(255, 98, 87, 0.12)");
-    expect(vars["--warn-soft"]).toBe("rgba(245, 181, 68, 0.12)");
+    for (const name of TOKEN_NAMES) if (!name.startsWith("glow-")) expect(vars[`--${name}`]).toMatch(HEX);
+    expect(vars["--accent-soft"]).toBe("rgba(227, 199, 154, 0.12)");
+    expect(vars["--accent-line"]).toBe("rgba(227, 199, 154, 0.35)");
+    expect(vars["--danger-soft"]).toBe("rgba(255, 155, 145, 0.12)");
+    expect(vars["--warn-soft"]).toBe("rgba(245, 166, 91, 0.12)");
+    // The lights carry their strength, so the stylesheet only places them.
+    expect(vars["--glow-1"]).toBe("rgba(168, 92, 150, 0.4)");
+    expect(vars["--glow-2"]).toBe("rgba(214, 150, 92, 0.24)");
+    expect(vars["--glow-3"]).toBe("rgba(92, 80, 170, 0.3)");
+    expect(vars["--glass-hi"]).toBe("rgba(255, 255, 255, 0.1)");
+    expect(vars["--glass-smoke"]).toBe("rgba(13, 11, 16, 0.4)");
+    expect(vars["--glass-line"]).toBe("rgba(255, 255, 255, 0.12)");
+    expect(vars["--bar"]).toBe("rgba(23, 20, 27, 0.86)");
+    expect(themeVars(buildTheme("contrast"))["--bar"]).toBe("rgba(11, 11, 11, 1)");
     expect(vars["--picker-invert"]).toBe("1");
     expect(themeVars(buildTheme("dark", { background: "#ffffff" }))["--picker-invert"]).toBe("0");
   });

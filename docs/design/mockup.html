@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lock In look v2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#161517;color:#eee;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;padding:32px 16px 64px}
+.wrap{display:flex;flex-wrap:wrap;gap:40px;justify-content:center}
+.col{width:360px}
+.tag{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#888;margin-bottom:14px}
+.serif{font-family:"Didot","Bodoni MT","Playfair Display",Georgia,"Times New Roman",serif;font-weight:400}
+.phone{width:360px;height:760px;border-radius:44px;overflow:hidden;position:relative;border:8px solid #000;box-shadow:0 30px 80px rgba(0,0,0,.6);color:#f4efe8;
+ background:
+ radial-gradient(70% 38% at 85% 0%,rgba(168,92,150,.55) 0%,transparent 70%),
+ radial-gradient(60% 30% at 0% 22%,rgba(214,150,92,.28) 0%,transparent 70%),
+ radial-gradient(80% 40% at 50% 110%,rgba(92,80,170,.35) 0%,transparent 70%),
+ #0d0b10}
+.gold{color:#e3c79a}
+.muted{color:#a79fae}
+.top{display:flex;justify-content:space-between;align-items:center;padding:26px 24px 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#a79fae}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(140deg,#e3c79a,#a85c96);display:flex;align-items:center;justify-content:center;color:#0d0b10;font-weight:700;font-size:12px;letter-spacing:0}
+.hello{padding:20px 24px 0}
+.hello h1{font-size:38px;line-height:1.05;letter-spacing:-.01em}
+.hello p{margin-top:8px;font-size:13px;color:#a79fae}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);border-radius:26px;backdrop-filter:blur(14px)}
+.now{margin:20px 18px 0;padding:18px 20px}
+.now .r{display:flex;justify-content:space-between;align-items:baseline}
+.now small{font-size:10px;letter-spacing:.22em;color:#e3c79a}
+.now .t{font-size:26px;margin-top:6px}
+.now .left{font-size:13px;color:#a79fae}
+.track{height:3px;border-radius:2px;background:rgba(255,255,255,.12);margin-top:14px;overflow:hidden}
+.track i{display:block;height:100%;width:62%;background:linear-gradient(90deg,#e3c79a,#d98fb4)}
+.now .nx{display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:#a79fae}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 24px 0}
+.four div{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#a79fae}
+.four b{display:block;font-size:22px;letter-spacing:0;color:#f4efe8;margin-bottom:6px;font-weight:400}
+.four i{display:block;height:2px;background:rgba(255,255,255,.12);margin-top:8px;position:relative}
+.four i:after{content:"";position:absolute;left:0;top:0;height:100%;background:#e3c79a;width:var(--w)}
+.h{display:flex;justify-content:space-between;margin:24px 24px 0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#a79fae}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 18px 0}
+.tile{border-radius:20px;padding:12px 12px 11px;height:78px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);font-size:11px;color:#a79fae}
+.tile b{font-size:20px;color:#f4efe8;font-weight:400}
+.tile.on{background:linear-gradient(150deg,rgba(227,199,154,.95),rgba(217,143,180,.9));border:0;color:#3a2a2e;box-shadow:0 10px 26px rgba(217,143,180,.22)}
+.tile.on b{color:#0d0b10}
+.tabs{position:absolute;left:18px;right:18px;bottom:18px;height:60px;border-radius:30px;display:flex;align-items:center;justify-content:space-around;font-size:11px;color:#a79fae}
+.tabs span:first-child,.tabs span.cur{background:#f4efe8;color:#0d0b10;padding:10px 16px;border-radius:20px;font-weight:600}
+.tabs.m span:first-child{background:none;color:#a79fae;padding:0;font-weight:400}
+/* money */
+.big{padding:26px 24px 0}
+.big small{font-size:10px;letter-spacing:.22em;color:#a79fae;text-transform:uppercase}
+.big .n{font-size:84px;line-height:1;margin-top:8px;letter-spacing:-.02em}
+.big .n sup{font-size:30px;vertical-align:top;position:relative;top:10px;margin-right:2px;color:#e3c79a}
+.big p{font-size:13px;color:#a79fae;margin-top:8px}
+.card{margin:20px 18px 0;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.card small{font-size:10px;letter-spacing:.2em;color:#a79fae;display:block;margin-bottom:4px}
+.card b{font-size:24px;font-weight:400}
+.add{width:52px;height:52px;border-radius:50%;background:linear-gradient(140deg,#e3c79a,#d98fb4);color:#0d0b10;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(217,143,180,.3)}
+.list{margin:10px 24px 0}
+.li{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
+.li small{display:block;font-size:11px;color:#a79fae;margin-top:3px}
+.li b{font-size:20px;font-weight:400}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="col"><div class="tag">Today</div>
+<div class="phone">
+ <div class="top"><span>Lock In</span><span class="av">S</span></div>
+ <div class="hello"><h1 class="serif">Good morning,<br>Sunny.</h1><p>Thursday, October 8. Day 4 of 30.</p></div>
+ <div class="glass now">
+  <div class="r"><small>NOW</small><span class="left">30 min left</span></div>
+  <div class="t serif">Home, shower, eat</div>
+  <div class="track"><i></i></div>
+  <div class="nx"><span>Next</span><span>Class at 10:00</span></div>
+ </div>
+ <div class="four">
+  <div style="--w:70%"><b class="serif">3/4</b>Body<i></i></div>
+  <div style="--w:40%"><b class="serif">$40</b>Money<i></i></div>
+  <div style="--w:50%"><b class="serif">1/2</b>Mind<i></i></div>
+  <div style="--w:100%"><b class="serif">4d</b>Clean<i></i></div>
+ </div>
+ <div class="h"><span>Today</span><span>7 of 12</span></div>
+ <div class="tiles">
+  <div class="tile on"><b class="serif">5:41</b>Up early</div>
+  <div class="tile on"><b class="serif">Lift</b>Upper B</div>
+  <div class="tile on"><b class="serif">Core</b>7 min</div>
+  <div class="tile"><b class="serif">1,240</b>of 2,000 kcal</div>
+  <div class="tile"><b class="serif">112g</b>Protein</div>
+  <div class="tile"><b class="serif">$40</b>of $100</div>
+ </div>
+ <div class="glass tabs"><span>Today</span><span>Plan</span><span>Money</span><span>Body</span><span>Record</span></div>
+</div></div>
+
+<div class="col"><div class="tag">Money</div>
+<div class="phone">
+ <div class="top"><span>Money</span><span>6 days left</span></div>
+ <div class="big"><small>Toward $1,000 by Oct 14</small><div class="n serif"><sup>$</sup>140</div><p>$144 a day gets you there.</p><div class="track"><i style="width:14%"></i></div></div>
+ <div class="glass card"><div><small>TODAY</small><b class="serif">$40 <span class="muted" style="font-size:14px">of $100</span></b></div><div class="add">+</div></div>
+ <div class="four" style="grid-template-columns:repeat(3,1fr)">
+  <div style="--w:0%"><b class="serif">$18.40</b>Per hour</div>
+  <div style="--w:0%"><b class="serif">$0</b>Banked</div>
+  <div style="--w:0%"><b class="serif">7.6h</b>Worked</div>
+ </div>
+ <div class="h"><span>This week</span><span>4 entries</span></div>
+ <div class="list">
+  <div class="li"><div>DoorDash<small>Today, 2.0 hours</small></div><b class="serif">$40</b></div>
+  <div class="li"><div>Uber Eats<small>Wednesday, 3.1 hours</small></div><b class="serif">$62</b></div>
+  <div class="li"><div>Instacart<small>Tuesday, 2.5 hours</small></div><b class="serif">$38</b></div>
+ </div>
+ <div class="glass tabs m"><span>Today</span><span>Plan</span><span class="cur">Money</span><span>Body</span><span>Record</span></div>
+</div></div>
+
+</div>
+</body>
+</html>

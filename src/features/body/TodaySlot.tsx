@@ -22,7 +22,7 @@ export default function TodaySlot({ className }: { className?: string }) {
   if (!isLoggable(main) || !main) return null;
   const p = workoutProgress(main, sets, today);
   return (
-    <Link href="/body/workout" className={cn("pressable -my-3 flex min-h-11 items-center gap-0.5 text-[13px] font-semibold tracking-normal normal-case", p.complete ? "text-accent" : "text-ink", className)}>
+    <Link href="/body/workout" className={cn("pressable -my-3 flex min-h-11 items-center gap-0.5 text-[13px] font-normal tracking-normal normal-case", p.complete ? "text-accent" : "text-ink", className)}>
       <span className="tnum">{p.logged > 0 ? `Log sets, ${p.logged} of ${p.total}` : "Log sets"}</span>
       <ChevronRight size={16} aria-hidden />
     </Link>

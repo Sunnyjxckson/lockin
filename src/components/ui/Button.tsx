@@ -4,11 +4,15 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "./cn";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+export type ButtonVariant = "primary" | "solid" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** primary is ink on the page color. The accent is kept for done states. */
+  /**
+   * primary is the champagne to rose gradient: the one main action on a screen or sheet.
+   * solid is cream (ink) for a strong action that is not the main one.
+   * secondary is glass. ghost is text only. danger is for destructive actions.
+   */
   variant?: ButtonVariant;
   size?: ButtonSize;
   /** Stretch to the full width of the parent. */
@@ -20,16 +24,17 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANT: Record<ButtonVariant, string> = {
-  primary: "bg-ink text-bg disabled:bg-surface-3 disabled:text-ink-3",
-  secondary: "bg-surface-2 text-ink border border-line disabled:text-ink-3",
+  primary: "grad shadow-glow disabled:bg-none disabled:bg-tile disabled:text-ink-3 disabled:shadow-none",
+  solid: "bg-ink text-bg disabled:bg-tile disabled:text-ink-3",
+  secondary: "glass text-ink disabled:text-ink-3",
   ghost: "bg-transparent text-ink-2 disabled:text-ink-3",
   danger: "bg-danger-soft text-danger disabled:opacity-50",
 };
 
 const SIZE: Record<ButtonSize, string> = {
-  sm: "h-11 px-4 text-[14px] rounded-[12px] gap-1.5",
-  md: "h-12 px-5 text-[16px] rounded-[14px] gap-2",
-  lg: "h-14 px-6 text-[17px] rounded-[16px] gap-2",
+  sm: "h-11 px-4 text-[14px] gap-1.5",
+  md: "h-12 px-5 text-[15px] gap-2",
+  lg: "h-14 px-6 text-[16px] gap-2",
 };
 
 export function Button({
@@ -49,7 +54,7 @@ export function Button({
       type={type}
       disabled={disabled || loading}
       className={cn(
-        "pressable inline-flex items-center justify-center font-semibold tracking-[-0.01em] whitespace-nowrap select-none",
+        "pressable inline-flex items-center justify-center rounded-full font-medium tracking-[-0.01em] whitespace-nowrap select-none",
         VARIANT[variant],
         SIZE[size],
         full ? "w-full min-w-0 shrink" : "shrink-0",
@@ -70,7 +75,7 @@ export function Button({
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Required: what the button does, for screen readers. */
   label: string;
-  /** Draw a filled circle behind the icon. */
+  /** Draw a glass circle behind the icon. */
   filled?: boolean;
 }
 
@@ -83,9 +88,36 @@ export function IconButton({ label, filled = false, className, children, type = 
       title={label}
       className={cn(
         "pressable inline-flex size-11 shrink-0 items-center justify-center rounded-full text-ink-2 disabled:text-ink-3 disabled:opacity-40",
-        filled && "border border-line bg-surface text-ink",
+        filled && "glass text-ink",
         className,
       )}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+}
+
+export interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Required: what the button does, for screen readers. */
+  label: string;
+  /** Diameter in px. Default 52. Never under 44. */
+  size?: number;
+}
+
+/**
+ * The round gradient button: the single main action of a card or a screen
+ * (add an earning, log a meal). One per view. Holds one icon.
+ */
+export function ActionButton({ label, size = 52, className, children, style, type = "button", ...rest }: ActionButtonProps) {
+  const d = Math.max(44, size);
+  return (
+    <button
+      type={type}
+      aria-label={label}
+      title={label}
+      style={{ width: d, height: d, ...style }}
+      className={cn("pressable grad shadow-glow inline-flex shrink-0 items-center justify-center rounded-full disabled:opacity-50", className)}
       {...rest}
     >
       {children}
@@ -98,13 +130,20 @@ export interface IconLinkProps {
   /** Read by screen readers and shown as the tooltip. */
   label: string;
   children: ReactNode;
+  /** Draw a glass circle behind the icon. */
+  filled?: boolean;
   className?: string;
 }
 
 /** A 44px round icon that is a link. The header twin of IconButton, for a page's `right` slot. */
-export function IconLink({ href, label, children, className }: IconLinkProps) {
+export function IconLink({ href, label, children, filled = false, className }: IconLinkProps) {
   return (
-    <Link href={href} aria-label={label} title={label} className={cn("pressable inline-flex size-11 shrink-0 items-center justify-center rounded-full text-ink-2", className)}>
+    <Link
+      href={href}
+      aria-label={label}
+      title={label}
+      className={cn("pressable inline-flex size-11 shrink-0 items-center justify-center rounded-full text-ink-2", filled && "glass text-ink", className)}
+    >
       {children}
     </Link>
   );

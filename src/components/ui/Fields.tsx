@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "./cn";
 
 // ---------- Field: label, control, hint ----------
@@ -18,7 +19,7 @@ export interface FieldProps {
 export function Field({ label, hint, error, htmlFor, className, children }: FieldProps) {
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={htmlFor} className="text-[13px] font-medium text-ink-2">
+      <label htmlFor={htmlFor} className="text-[13px] text-ink-2">
         {label}
       </label>
       {children}
@@ -27,8 +28,9 @@ export function Field({ label, hint, error, htmlFor, className, children }: Fiel
   );
 }
 
+/** The one shape every text control shares: a resting tile with a hairline, 52px tall, that lights its border on focus. */
 const CONTROL =
-  "h-12 w-full rounded-[14px] border border-line bg-surface-2 px-3.5 text-[16px] text-ink placeholder:text-ink-3 outline-none transition-colors focus:border-ink-3 disabled:opacity-50";
+  "tile h-[52px] w-full rounded-[16px] px-4 text-[16px] text-ink placeholder:text-ink-3 outline-none transition-colors focus:border-ink-2 disabled:opacity-50";
 
 // ---------- NumberField ----------
 
@@ -57,8 +59,9 @@ export interface NumberFieldProps {
    * field: a full width form control (default).
    * inline: compact, right aligned, for use inside a list row.
    * hero: very large centered numerals, for a quick add sheet.
+   * bare: only the number, with no box, in the type and color around it. For a number typed straight into a Tile.
    */
-  variant?: "field" | "inline" | "hero";
+  variant?: "field" | "inline" | "hero" | "bare";
   /** Paint the number in the accent. Use when the value meets its target. */
   done?: boolean;
   autoFocus?: boolean;
@@ -157,29 +160,40 @@ export function NumberField({
       }}
       style={variant === "hero" ? { width: `${Math.max(1, (text || placeholder).length) * 0.68}em` } : undefined}
       className={cn(
-        "tnum min-w-0 bg-transparent outline-none placeholder:text-ink-3 disabled:opacity-60",
-        variant === "field" && "h-full flex-1 text-[17px] font-medium",
-        variant === "inline" && "h-full w-full text-right text-[19px] font-semibold tracking-[-0.02em]",
-        variant === "hero" && "max-w-full text-center text-[64px] leading-none font-bold tracking-[-0.045em]",
-        done ? "text-accent" : "text-ink",
+        "tnum min-w-0 bg-transparent outline-none",
+        variant === "bare" ? "w-full p-0 text-inherit placeholder:text-current placeholder:opacity-60" : "placeholder:text-ink-3 disabled:opacity-60",
+        variant === "field" && "h-full flex-1 text-[16px]",
+        variant === "inline" && "h-full w-full text-right text-[18px] font-medium tracking-[-0.02em]",
+        variant === "hero" && "max-w-full text-center text-[64px] leading-none font-medium tracking-[-0.04em]",
+        variant !== "bare" && (done ? "text-accent" : "text-ink"),
       )}
     />
   );
+
+  if (variant === "bare") {
+    return (
+      <span className={cn("flex min-w-0 items-baseline", className)}>
+        {prefix ? <span>{prefix}</span> : null}
+        {input}
+        {unit ? <span className="t-caption ml-0.5 shrink-0 font-normal tracking-normal opacity-80">{unit}</span> : null}
+      </span>
+    );
+  }
 
   if (variant === "inline") {
     return (
       <label
         htmlFor={inputId}
         className={cn(
-          "flex h-11 w-[116px] shrink-0 items-center gap-1 rounded-[12px] border bg-surface-2 px-3 transition-colors focus-within:border-ink-3",
-          done ? "border-accent-line" : "border-line",
+          "flex h-11 w-[116px] shrink-0 items-center gap-1 rounded-full border bg-tile px-3.5 transition-colors focus-within:border-ink-2",
+          done ? "border-accent-line" : "border-tile-line",
           disabled && "opacity-70",
           className,
         )}
       >
-        {prefix ? <span className={cn("text-[15px] font-medium", done ? "text-accent" : "text-ink-3")}>{prefix}</span> : null}
+        {prefix ? <span className={cn("text-[15px]", done ? "text-accent" : "text-ink-2")}>{prefix}</span> : null}
         {input}
-        {unit ? <span className="shrink-0 text-[13px] font-medium text-ink-3">{unit}</span> : null}
+        {unit ? <span className="shrink-0 text-[13px] text-ink-2">{unit}</span> : null}
       </label>
     );
   }
@@ -189,9 +203,9 @@ export function NumberField({
       <label htmlFor={inputId} className={cn("flex flex-col items-center gap-2 py-4", className)}>
         {label ? <span className="t-label">{label}</span> : null}
         <span className="flex w-full items-baseline justify-center gap-1.5">
-          {prefix ? <span className="text-[32px] font-semibold text-ink-3">{prefix}</span> : null}
+          {prefix ? <span className="text-[30px] font-medium text-accent">{prefix}</span> : null}
           {input}
-          {unit ? <span className="text-[20px] font-medium text-ink-3">{unit}</span> : null}
+          {unit ? <span className="text-[18px] text-ink-2">{unit}</span> : null}
         </span>
         {hint ? <span className="text-[13px] text-ink-3">{hint}</span> : null}
       </label>
@@ -201,14 +215,14 @@ export function NumberField({
   const control = (
     <div
       className={cn(
-        "flex h-12 items-center gap-1.5 rounded-[14px] border border-line bg-surface-2 px-3.5 transition-colors focus-within:border-ink-3",
+        "tile flex h-[52px] items-center gap-1.5 rounded-[16px] px-4 transition-colors focus-within:border-ink-2",
         disabled && "opacity-60",
         !label && className,
       )}
     >
-      {prefix ? <span className="text-ink-3">{prefix}</span> : null}
+      {prefix ? <span className="text-ink-2">{prefix}</span> : null}
       {input}
-      {unit ? <span className="shrink-0 text-[14px] text-ink-3">{unit}</span> : null}
+      {unit ? <span className="shrink-0 text-[14px] text-ink-2">{unit}</span> : null}
     </div>
   );
   if (!label) return control;
@@ -274,7 +288,7 @@ export function TextField({
       {...shared}
       rows={rows}
       onChange={(e) => onChange(e.target.value)}
-      className={cn(CONTROL, "h-auto resize-none py-3 leading-snug", !label && className)}
+      className={cn(CONTROL, "h-auto resize-none py-3.5 leading-snug", !label && className)}
     />
   ) : (
     <input
@@ -390,20 +404,24 @@ export function Select<T extends string>({ value, onChange, options, label, hint
   const auto = useId();
   const inputId = id ?? auto;
   const control = (
-    <select
-      id={inputId}
-      value={value}
-      disabled={disabled}
-      aria-label={label}
-      onChange={(e) => onChange(e.target.value as T)}
-      className={cn(CONTROL, "appearance-none", !label && className)}
-    >
-      {options.map((o) => (
-        <option key={o.value} value={o.value}>
-          {o.label}
-        </option>
-      ))}
-    </select>
+    <span className={cn("relative block", !label && className)}>
+      <select
+        id={inputId}
+        value={value}
+        disabled={disabled}
+        aria-label={label}
+        onChange={(e) => onChange(e.target.value as T)}
+        className={cn(CONTROL, "appearance-none pr-11")}
+      >
+        {options.map((o) => (
+          // The native list is drawn by the system, so it gets solid colors of its own.
+          <option key={o.value} value={o.value} className="bg-surface text-ink">
+            {o.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown size={18} className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-ink-2" aria-hidden />
+    </span>
   );
   if (!label) return control;
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, ListRow, Sheet } from "@/components/ui";
+import { List, ListRow, Sheet } from "@/components/ui";
 import { MORE_LINKS } from "@/lib/nav";
 
 /**
@@ -10,14 +10,14 @@ import { MORE_LINKS } from "@/lib/nav";
 export function MoreSheet({ onClose }: { onClose: () => void }) {
   return (
     <Sheet open onClose={onClose} title="More">
-      <Card padded={false} raised className="mb-2 overflow-hidden">
-        <nav aria-label="More" className="divide-y divide-line">
+      <nav aria-label="More" className="mb-2">
+        <List>
           {MORE_LINKS.map((l) => {
             const Icon = l.icon;
-            return <ListRow key={l.href} href={l.href} left={<Icon size={20} aria-hidden />} title={l.label} sub={l.sub} />;
+            return <ListRow key={l.href} href={l.href} left={<Icon size={20} strokeWidth={1.75} aria-hidden />} title={l.label} sub={l.sub} className="min-h-[64px]" />;
           })}
-        </nav>
-      </Card>
+        </List>
+      </nav>
     </Sheet>
   );
 }

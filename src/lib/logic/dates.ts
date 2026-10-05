@@ -225,6 +225,12 @@ export function formatDateShort(date: DateStr): string {
   return `${MONTHS[m - 1]} ${d}`;
 }
 
+/** "Thursday, October 8" */
+export function formatDateFull(date: DateStr): string {
+  const [, m, d] = date.split("-").map(Number);
+  return `${DAYS[weekdayOf(date)]}, ${MONTHS_LONG[m - 1]} ${d}`;
+}
+
 const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 /** "October 2026" */

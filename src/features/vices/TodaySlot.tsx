@@ -21,7 +21,7 @@ export default function VicesTodaySlot() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="pressable -mb-2 flex min-h-11 items-center px-1 text-[14px] font-medium text-ink-2 underline decoration-line-strong underline-offset-4"
+        className="pressable flex min-h-11 items-center px-1 text-[13px] text-ink-2 underline decoration-hair underline-offset-4"
       >
         Log a slip
       </button>

@@ -30,7 +30,7 @@ export function Keypad({ onDigit, onDelete, onSubmit, submitLabel = "OK", disabl
   }, [onDigit, onDelete, onSubmit, disabled]);
 
   const key =
-    "pressable flex h-[72px] w-[72px] items-center justify-center rounded-full bg-surface text-[30px] font-medium tracking-[-0.02em] text-ink tnum active:bg-surface-3 disabled:opacity-40";
+    "pressable tile flex h-[72px] w-[72px] items-center justify-center rounded-full text-[28px] font-medium tracking-[-0.03em] text-ink tnum disabled:opacity-40";
 
   return (
     <div className="grid grid-cols-3 justify-items-center gap-x-7 gap-y-4">
@@ -52,7 +52,7 @@ export function Keypad({ onDigit, onDelete, onSubmit, submitLabel = "OK", disabl
         <button
           type="button"
           disabled={disabled}
-          className={cn(key, "bg-transparent text-[17px] font-semibold text-ink-2")}
+          className={cn(key, "border-transparent bg-transparent text-[16px] text-ink-2")}
           onClick={onSubmit}
         >
           {submitLabel}
@@ -75,13 +75,13 @@ export function Keypad({ onDigit, onDelete, onSubmit, submitLabel = "OK", disabl
         type="button"
         disabled={disabled}
         aria-label="Delete"
-        className={cn(key, "bg-transparent text-ink-2")}
+        className={cn(key, "border-transparent bg-transparent text-ink-2")}
         onClick={() => {
           haptics.tap();
           onDelete();
         }}
       >
-        <Delete size={26} aria-hidden />
+        <Delete size={24} strokeWidth={1.75} aria-hidden />
       </button>
     </div>
   );

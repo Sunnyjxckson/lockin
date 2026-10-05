@@ -47,6 +47,7 @@ export const SEED_SETTINGS: Omit<AppSettings, "created_at" | "history_start"> = 
   focus_goal_minutes: 60,
   business_goal: null,
   preferred_store: null,
+  display_name: "Sunny",
 };
 
 type ItemSeed = Omit<ChecklistItem, "id" | "created_at" | "sort_order" | "archived">;
@@ -64,6 +65,7 @@ function habit(p: Partial<ItemSeed> & Pick<ItemSeed, "key" | "name" | "type" | "
     tracks_money: false,
     typical_spend: null,
     spend_period: null,
+    track: null,
     ...p,
   };
 }
@@ -85,6 +87,7 @@ function vice(key: string, name: string, active: boolean, tracksMoney = false): 
     tracks_money: tracksMoney,
     typical_spend: null,
     spend_period: null,
+    track: null,
   };
 }
 

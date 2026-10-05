@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BellRing, CalendarClock, Dumbbell, Images, ListChecks, Target, Timer, UtensilsCrossed } from "lucide-react";
-import { Button, Card, ListRow, PageHeader, Screen, Section, Sheet, Toggle, useToast } from "@/components/ui";
+import { Button, Card, ListRow, PageHeader, Screen, Section, Sheet, TextField, Toggle, useToast } from "@/components/ui";
 import { ThemePicker } from "@/components/app/ThemePicker";
 import { LOCK_EVENT } from "@/components/app/AppShell";
 import { lockLocally } from "@/lib/auth/local";
@@ -18,6 +18,7 @@ export default function SettingsPage() {
   const mode = useMode();
   const [confirmReset, setConfirmReset] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [name, setName] = useState<string | null>(null);
   const challengeLine = mode.challenge
     ? `${mode.challenge.name}, day ${mode.day} of ${mode.length}`
     : mode.finished
@@ -82,6 +83,22 @@ export default function SettingsPage() {
             <ListRow href="/focus" left={<Timer size={20} aria-hidden />} title="Focus" sub="Study timer and hours" />
           </div>
         </Card>
+      </Section>
+
+      <Section title="You">
+        <TextField
+          key={settings.data?.display_name ?? ""}
+          label="Name"
+          hint="Today greets you by it. Leave it empty for no name."
+          value={name ?? settings.data?.display_name ?? ""}
+          onChange={setName}
+          onCommit={(v) => {
+            const next = v.trim().slice(0, 24) || null;
+            if (next !== (settings.data?.display_name ?? null)) void updateSettings({ display_name: next }).then(() => toast("Saved", { kind: "done" }));
+          }}
+          maxLength={24}
+          placeholder="Your first name"
+        />
       </Section>
 
       <Section title="This device">

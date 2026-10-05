@@ -33,7 +33,7 @@ export function SetupRow({ className }: { className?: string }) {
     setDismissed((d) => ({ ...d, [which]: true }));
   };
 
-  const row = "flex min-h-[52px] items-center gap-1 rounded-[16px] border border-line bg-surface pl-3.5";
+  const row = "tile flex min-h-[56px] items-center gap-1 rounded-[20px] pl-4";
   const main = "pressable flex min-h-[52px] min-w-0 flex-1 items-center gap-3 text-left";
 
   if (mode !== "none" && !dismissed.install) {
@@ -50,11 +50,11 @@ export function SetupRow({ className }: { className?: string }) {
           >
             <SquarePlus size={20} className="shrink-0 text-ink-2" aria-hidden />
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-[15px] font-medium text-ink">Add to Home Screen</span>
-              <span className="block truncate text-[13px] text-ink-3">Opens like an app. Needed for reminders on iPhone.</span>
+              <span className="block truncate text-[15px] text-ink">Add to Home Screen</span>
+              <span className="t-caption mt-0.5 block truncate text-ink-2">Opens like an app. Needed for reminders on iPhone.</span>
             </span>
           </button>
-          <button type="button" aria-label="Dismiss" onClick={() => dismiss("install")} className="pressable flex size-11 shrink-0 items-center justify-center text-ink-3">
+          <button type="button" aria-label="Dismiss" onClick={() => dismiss("install")} className="pressable flex size-11 shrink-0 items-center justify-center text-ink-2">
             <X size={18} aria-hidden />
           </button>
         </div>
@@ -71,20 +71,20 @@ export function SetupRow({ className }: { className?: string }) {
         >
           <ol className="flex flex-col gap-4 pb-2">
             <li className="flex items-center gap-3.5">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-2 text-ink-2">
+              <span className="tile flex size-10 shrink-0 items-center justify-center rounded-full text-ink-2">
                 <Share size={18} aria-hidden />
               </span>
-              <span className="text-[16px]">Tap the Share button in the toolbar.</span>
+              <span className="text-[15px]">Tap the Share button in the toolbar.</span>
             </li>
             <li className="flex items-center gap-3.5">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-2 text-ink-2">
+              <span className="tile flex size-10 shrink-0 items-center justify-center rounded-full text-ink-2">
                 <SquarePlus size={18} aria-hidden />
               </span>
-              <span className="text-[16px]">Scroll down and tap Add to Home Screen.</span>
+              <span className="text-[15px]">Scroll down and tap Add to Home Screen.</span>
             </li>
             <li className="flex items-center gap-3.5">
-              <span className="tnum flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-2 text-[15px] font-semibold text-ink-2">3</span>
-              <span className="text-[16px]">Tap Add, then open Lock In from the new icon.</span>
+              <span className="tile tnum flex size-10 shrink-0 items-center justify-center rounded-full text-[15px] text-ink-2">3</span>
+              <span className="text-[15px]">Tap Add, then open Lock In from the new icon.</span>
             </li>
           </ol>
         </Sheet>
@@ -99,12 +99,12 @@ export function SetupRow({ className }: { className?: string }) {
           <Link href="/reminders" className={main}>
             <BellRing size={20} className="shrink-0 text-ink-2" aria-hidden />
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-[15px] font-medium text-ink">Turn on reminders</span>
-              <span className="block truncate text-[13px] text-ink-3">Wake, workout, delivery, check-in</span>
+              <span className="block truncate text-[15px] text-ink">Turn on reminders</span>
+              <span className="t-caption mt-0.5 block truncate text-ink-2">Wake, workout, delivery, check-in</span>
             </span>
             <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
           </Link>
-          <button type="button" aria-label="Dismiss" onClick={() => dismiss("remind")} className="pressable flex size-11 shrink-0 items-center justify-center text-ink-3">
+          <button type="button" aria-label="Dismiss" onClick={() => dismiss("remind")} className="pressable flex size-11 shrink-0 items-center justify-center text-ink-2">
             <X size={18} aria-hidden />
           </button>
         </div>

@@ -110,7 +110,8 @@ export function Sheet({ open, onClose, title, subtitle, footer, children, classN
         aria-labelledby={title ? titleId : undefined}
         tabIndex={-1}
         className={cn(
-          "animate-sheet-up relative flex max-h-[92%] w-full max-w-[480px] flex-col rounded-t-[28px] border border-b-0 border-line bg-surface outline-none",
+          // Solid, not glass: a sheet covers the page, so there is nothing worth blurring and its text gets a known ground.
+          "animate-sheet-up relative flex max-h-[92%] w-full max-w-[480px] flex-col rounded-t-[30px] border border-b-0 border-glass-line bg-surface shadow-float outline-none",
           className,
         )}
       >
@@ -121,10 +122,10 @@ export function Sheet({ open, onClose, title, subtitle, footer, children, classN
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
         >
-          <span className="h-1 w-9 rounded-full bg-line-strong" />
+          <span className="h-1 w-9 rounded-full bg-hair" />
         </div>
         {title ? (
-          <div className="shrink-0 px-5 pt-1.5 pb-3">
+          <div className="shrink-0 px-5 pt-2 pb-4">
             <h2 id={titleId} className="t-h2">
               {title}
             </h2>
@@ -133,7 +134,7 @@ export function Sheet({ open, onClose, title, subtitle, footer, children, classN
         ) : null}
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5">{children}</div>
         {footer ? (
-          <div className="shrink-0 border-t border-line px-5 pt-3 pb-[calc(12px+var(--safe-b))]">{footer}</div>
+          <div className="shrink-0 border-t border-hair px-5 pt-3 pb-[calc(12px+var(--safe-b))]">{footer}</div>
         ) : (
           <div className="shrink-0 pb-[var(--safe-b)]" />
         )}

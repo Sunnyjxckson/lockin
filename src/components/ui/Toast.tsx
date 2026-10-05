@@ -2,7 +2,6 @@
 
 import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from "react";
 import { Check, CircleAlert } from "lucide-react";
-import { cn } from "./cn";
 
 export type ToastKind = "info" | "done" | "error";
 
@@ -49,23 +48,21 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
       <div
         aria-live="polite"
-        className="pointer-events-none fixed inset-x-0 bottom-[calc(var(--tabbar-h)+var(--safe-b)+16px)] z-[60] flex justify-center px-5"
+        className="pointer-events-none fixed inset-x-0 bottom-[calc(var(--tabbar-h)+var(--safe-b)+12px)] z-[60] flex justify-center px-5"
       >
         {item ? (
+          // Solid, not see-through: a toast lands over anything, and its text has to read on all of it.
           <div
             key={item.id}
             role="status"
-            className={cn(
-              "animate-toast-in pointer-events-auto flex max-w-full items-center gap-2.5 rounded-full border px-4 py-3 text-[15px] font-medium shadow-[0_8px_30px_var(--shadow)]",
-              item.kind === "error" ? "border-danger/40 bg-surface-2 text-ink" : "border-line-strong bg-surface-2 text-ink",
-            )}
+            className="animate-toast-in pointer-events-auto flex max-w-full items-center gap-2.5 rounded-full border border-glass-line bg-surface-2 py-3 pr-5 pl-4 text-[14px] text-ink shadow-float"
           >
             {item.kind === "done" ? (
-              <span className="flex size-5 items-center justify-center rounded-full bg-accent text-accent-ink">
-                <Check size={13} strokeWidth={3.5} aria-hidden />
+              <span className="grad flex size-5 shrink-0 items-center justify-center rounded-full">
+                <Check size={13} strokeWidth={3} aria-hidden />
               </span>
             ) : item.kind === "error" ? (
-              <CircleAlert size={18} className="text-danger" aria-hidden />
+              <CircleAlert size={18} className="shrink-0 text-danger" aria-hidden />
             ) : null}
             <span className="truncate">{item.message}</span>
           </div>

@@ -10,11 +10,12 @@ import { STAPLES } from "../logic/mealsFoods";
 import { modeOn } from "../logic/challenge";
 import { summarizeDay } from "../logic/day";
 import { allStreaks } from "../logic/streaks";
+import { trackOf } from "../logic/tracks";
 import { ensureSeeded } from "../seed";
 import { TABLE_NAMES, type TableName } from "../types";
 
 const CHALLENGE_V2 = ["name", "status", "ended_on", "rules", "restart_of"];
-const SETTINGS_V2 = ["history_start", "daily_floor", "weekly_food_budget", "food_likes", "food_dislikes", "focus_goal_minutes", "business_goal", "preferred_store"];
+const SETTINGS_V2 = ["history_start", "daily_floor", "weekly_food_budget", "food_likes", "food_dislikes", "focus_goal_minutes", "business_goal", "preferred_store", "display_name"];
 const NEW_TABLES: TableName[] = ["mood_log", "motivation", "board", "board_item", "theme", "recipe", "meal_plan", "grocery_item", "pantry_item", "receipt_price", "expense", "focus_session"];
 
 let store: KeyValueStore;
@@ -83,6 +84,7 @@ async function v1Store(): Promise<Record<string, Record<string, unknown>[]>> {
   // Back to the version 1 shapes.
   write("challenge", read("challenge").map((r) => strip(r, CHALLENGE_V2)));
   write("app_settings", read("app_settings").map((r) => strip(r, SETTINGS_V2)));
+  write("checklist_item", read("checklist_item").map((r) => strip(r, ["track"])));
   for (const t of NEW_TABLES) store.removeItem(STORAGE_PREFIX + t);
 
   const before: Record<string, Record<string, unknown>[]> = {};
@@ -134,6 +136,19 @@ describe("upgrading a version 1 device store", () => {
   it("opens the ongoing history on the first day there is anything for", async () => {
     await upgradeLocalData();
     expect(await getSettings()).toMatchObject({ history_start: "2026-10-05", daily_floor: 100, weekly_food_budget: null, food_likes: [], food_dislikes: [], focus_goal_minutes: 60 });
+  });
+
+  it("leaves items without a track field on their default track, and gives the settings a name to greet", async () => {
+    expect(before.checklist_item.every((r) => !("track" in r))).toBe(true);
+    await upgradeLocalData();
+    const items = await db.list("checklist_item");
+    expect(trackOf(items.find((i) => i.key === "earned")!)).toBe("money");
+    expect(trackOf(items.find((i) => i.key === "vice_smoking")!)).toBe("clean");
+    expect((await getSettings())?.display_name).toBe("Sunny");
+    // A name the user set, or cleared, is left alone on the next load.
+    await db.update("app_settings", "app", { display_name: null });
+    await upgradeLocalData();
+    expect((await getSettings())?.display_name).toBeNull();
   });
 
   it("loses nothing: every row that was there is still there, field for field", async () => {

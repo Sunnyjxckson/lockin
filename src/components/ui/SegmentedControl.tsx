@@ -20,7 +20,7 @@ export interface SegmentedControlProps<T extends string | number> {
   className?: string;
 }
 
-/** A row of mutually exclusive choices. Always full width, equal segments. */
+/** A row of mutually exclusive choices. Always full width, equal segments. The chosen one is a cream pill, like the tab bar. */
 export function SegmentedControl<T extends string | number>({
   options,
   value,
@@ -31,11 +31,7 @@ export function SegmentedControl<T extends string | number>({
   className,
 }: SegmentedControlProps<T>) {
   return (
-    <div
-      role="radiogroup"
-      aria-label={label}
-      className={cn("flex w-full gap-1 rounded-[14px] border border-line bg-surface p-1", disabled && "opacity-50", className)}
-    >
+    <div role="radiogroup" aria-label={label} className={cn("tile flex w-full gap-1 rounded-full p-1", disabled && "opacity-50", className)}>
       {options.map((o) => {
         const on = o.value === value;
         return (
@@ -51,7 +47,7 @@ export function SegmentedControl<T extends string | number>({
               onChange(o.value);
             }}
             className={cn(
-              "min-w-0 flex-1 truncate rounded-[10px] px-1 text-[14px] font-semibold transition-colors duration-150",
+              "min-w-0 flex-1 truncate rounded-full px-1 text-[14px] font-medium transition-colors duration-150",
               size === "md" ? "h-11" : "h-9",
               on ? "bg-ink text-bg" : "text-ink-2",
             )}

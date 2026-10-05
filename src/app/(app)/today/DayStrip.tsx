@@ -23,10 +23,11 @@ export interface DayStripProps {
   statusByDate: Record<DateStr, DayStatus>;
   onSelect: (date: DateStr) => void;
   label?: string;
+  id?: string;
 }
 
 /** Horizontal strip of days. Tap an earlier day to open it and backfill it. */
-export function DayStrip({ days, today, selected, statusByDate, onSelect, label = "Days" }: DayStripProps) {
+export function DayStrip({ days, today, selected, statusByDate, onSelect, label = "Days", id }: DayStripProps) {
   const current = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export function DayStrip({ days, today, selected, statusByDate, onSelect, label 
   }, [selected]);
 
   return (
-    <div className="no-scrollbar -mx-5 flex gap-1.5 overflow-x-auto px-5 py-1" role="tablist" aria-label={label}>
+    <div id={id} className="no-scrollbar animate-fade-in -mx-5 flex gap-1.5 overflow-x-auto px-5 py-1" role="tablist" aria-label={label}>
       {days.map(({ date, label: text, name }) => {
         const future = date > today;
         const on = date === selected;
@@ -53,23 +54,20 @@ export function DayStrip({ days, today, selected, statusByDate, onSelect, label 
               onSelect(date);
             }}
             className={cn(
-              "pressable flex h-[62px] w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-[14px] border",
-              on ? "border-ink bg-ink text-bg" : "border-line bg-surface text-ink",
+              "pressable flex h-[62px] w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-[16px]",
+              on ? "border border-ink bg-ink text-bg" : "tile text-ink",
               future && "opacity-35",
             )}
           >
-            {/* Full strength on the selected chip: faded, this 10px label fell under 7 to 1 on the high contrast base with a palette. */}
-            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg" : "text-ink-3")}>
-              {WEEKDAY_SHORT[weekdayOf(date)].slice(0, 2)}
-            </span>
-            <span className="tnum text-[17px] leading-none font-semibold">{text}</span>
+            {/* Full strength on the selected chip: faded, this small label fell under 7 to 1 on the high contrast base with a palette. */}
+            <span className={cn("text-[10px] font-medium tracking-[0.08em] uppercase", on ? "text-bg" : "text-ink-2")}>{WEEKDAY_SHORT[weekdayOf(date)].slice(0, 2)}</span>
+            <span className="tnum text-[16px] leading-none font-medium">{text}</span>
             <span
               className={cn(
                 "mt-1 size-1.5 rounded-full",
-                status === "full" && "bg-accent",
+                status === "full" && (on ? "bg-bg" : "grad-line"),
                 status === "partial" && (on ? "bg-bg/40" : "bg-ink-3"),
                 (status === "missed" || status === null || status === undefined) && "bg-transparent",
-                status === "full" && on && "ring-1 ring-bg/30",
               )}
             />
           </button>

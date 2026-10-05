@@ -23,7 +23,7 @@ const BoardView = dynamic(() => import("./BoardView").then((m) => m.BoardView), 
 function Thumb({ item, className }: { item: BoardItem; className?: string }) {
   const url = usePhoto(item.image_url);
   return (
-    <span className={cn("block overflow-hidden rounded-[3px] bg-surface-2", className)} style={{ backgroundColor: item.kind === "color" ? (item.color ?? undefined) : item.palette?.[0] }}>
+    <span className={cn("block overflow-hidden rounded-[6px] bg-surface-2", className)} style={{ backgroundColor: item.kind === "color" ? (item.color ?? undefined) : item.palette?.[0] }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {url ? <img src={url} alt="" draggable={false} className="size-full object-cover" /> : null}
     </span>
@@ -53,9 +53,9 @@ export function BoardEntry({ className, label = "What this is for" }: BoardEntry
           haptics.tap();
           setOpen(true);
         }}
-        className={cn("pressable block w-full overflow-hidden rounded-[20px] border border-line bg-surface text-left", className)}
+        className={cn("pressable glass block w-full overflow-hidden rounded-[24px] text-left", className)}
       >
-        <span className="flex items-center gap-3 p-3">
+        <span className="flex items-center gap-3.5 p-3.5">
           {shown.length > 0 ? (
             <span className="flex shrink-0 gap-[3px]">
               {shown.map((i, n) => (
@@ -65,7 +65,7 @@ export function BoardEntry({ className, label = "What this is for" }: BoardEntry
           ) : null}
           <span className="min-w-0 flex-1">
             <span className="t-label block">{label}</span>
-            <span className="mt-1 block truncate text-[17px] font-semibold tracking-[-0.02em]">{main.board.name}</span>
+            <span className="t-h2 mt-1.5 block truncate">{main.board.name}</span>
           </span>
           <ChevronRight size={20} aria-hidden className="shrink-0 text-ink-3" />
         </span>

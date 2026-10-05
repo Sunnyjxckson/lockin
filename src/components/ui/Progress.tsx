@@ -1,9 +1,13 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useId, type ReactNode } from "react";
 import { cn } from "./cn";
 
 function clamp01(n: number): number {
   return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 0;
 }
+
+type Tone = "accent" | "ink" | "warn";
 
 export interface ProgressRingProps {
   /** 0 to 1. */
@@ -14,24 +18,20 @@ export interface ProgressRingProps {
   stroke?: number;
   /** Drawn in the middle: a percent, a number, an icon. */
   children?: ReactNode;
-  /** accent (default) for primary progress, ink for neutral, warn for over a limit. */
-  tone?: "accent" | "ink" | "warn";
+  /** accent (default) is the gradient, for primary progress. ink for neutral, warn for over a limit. */
+  tone?: Tone;
   /** Read by screen readers, for example "Checklist". */
   label?: string;
   className?: string;
 }
 
-const TONE: Record<NonNullable<ProgressRingProps["tone"]>, string> = {
-  accent: "var(--accent)",
-  ink: "var(--ink)",
-  warn: "var(--warn)",
-};
-
 export function ProgressRing({ value, size = 88, stroke, children, tone = "accent", label, className }: ProgressRingProps) {
+  const id = useId();
   const v = clamp01(value);
-  const w = stroke ?? Math.max(4, Math.round(size * 0.1));
+  const w = stroke ?? Math.max(3, Math.round(size * 0.07));
   const r = (size - w) / 2;
   const c = 2 * Math.PI * r;
+  const paint = tone === "accent" ? `url(#${id})` : tone === "ink" ? "var(--ink)" : "var(--warn)";
   return (
     <div
       role="progressbar"
@@ -43,13 +43,19 @@ export function ProgressRing({ value, size = 88, stroke, children, tone = "accen
       style={{ width: size, height: size }}
     >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90" aria-hidden>
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--surface-3)" strokeWidth={w} />
+        <defs>
+          <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="var(--accent)" />
+            <stop offset="1" stopColor="var(--accent-2)" />
+          </linearGradient>
+        </defs>
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--hair)" strokeWidth={w} />
         <circle
           cx={size / 2}
           cy={size / 2}
           r={r}
           fill="none"
-          stroke={TONE[tone]}
+          stroke={paint}
           strokeWidth={w}
           strokeLinecap="round"
           strokeDasharray={c}
@@ -65,16 +71,18 @@ export function ProgressRing({ value, size = 88, stroke, children, tone = "accen
 export interface ProgressBarProps {
   /** 0 to 1. */
   value: number;
-  /** Bar height in px. Default 8. */
+  /** Bar height in px. Default 3, the hairline. Use 6 to 8 only where the bar is the main thing in a card. */
   height?: number;
-  tone?: "accent" | "ink" | "warn";
+  /** accent (default) is the gradient. ink for neutral, warn for over a limit. */
+  tone?: Tone;
   /** A faint tick at this position (0 to 1), for example a daily floor. */
   marker?: number;
   label?: string;
   className?: string;
 }
 
-export function ProgressBar({ value, height = 8, tone = "accent", marker, label, className }: ProgressBarProps) {
+/** A progress line. Thin by default: the look uses hairlines, not thick bars. */
+export function ProgressBar({ value, height = 3, tone = "accent", marker, label, className }: ProgressBarProps) {
   const v = clamp01(value);
   return (
     <div
@@ -83,15 +91,14 @@ export function ProgressBar({ value, height = 8, tone = "accent", marker, label,
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(v * 100)}
-      className={cn("relative w-full overflow-hidden rounded-full bg-surface-3", className)}
+      className={cn("relative w-full overflow-hidden rounded-full bg-hair", className)}
       style={{ height }}
     >
       <div
-        className="h-full rounded-full"
+        className={cn("h-full rounded-full", tone === "accent" ? "grad-line" : tone === "ink" ? "bg-ink" : "bg-warn")}
         style={{
           width: `${v * 100}%`,
           minWidth: v > 0 ? height : 0,
-          background: TONE[tone],
           transition: "width 600ms var(--ease-out)",
         }}
       />

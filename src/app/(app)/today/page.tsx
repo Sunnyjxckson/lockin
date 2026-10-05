@@ -3,16 +3,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ChevronRight, Ellipsis, Flag, Lock, MessageSquareText, ShieldBan } from "lucide-react";
-import { Button, Card, EmptyState, ProgressRing, Screen, Section, cn, useToast } from "@/components/ui";
+import { ChevronDown, ChevronRight, Flag, Lock, MessageSquareText, ShieldBan } from "lucide-react";
+import { Button, Card, EmptyState, GlassCard, IconLink, ProgressBar, Screen, Section, SectionLabel, TopBar, TrackStat, cn, useToast } from "@/components/ui";
 import { finishChallenge, logWeight, setChecked, setText, setValue, workoutsFor } from "@/lib/db/helpers";
-import { useChecklist, useDay, useDayBlocks, useInstalledOn, useList, useLogs, useMode, useNow, useWorkouts } from "@/lib/db/hooks";
+import { useChecklist, useDay, useDayBlocks, useInstalledOn, useList, useLogs, useMode, useNow, useSettings, useWorkouts } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { challengeDay, challengeRecord, consistency, consistencyLabel, plannedEnd, ranOn } from "@/lib/logic/challenge";
 import {
   addDays,
   dateRange,
   dayNumber,
+  formatDateFull,
   formatDateLong,
   formatDateShort,
   formatTime,
@@ -24,7 +25,8 @@ import {
 } from "@/lib/logic/dates";
 import { summarizeDay, type DayStatus, type ItemResult, type WeeklyResult } from "@/lib/logic/day";
 import { allStreaks, fullDayStreak } from "@/lib/logic/streaks";
-import { WEEKDAY_NAMES, type Challenge, type ChecklistItem, type DateStr } from "@/lib/types";
+import { TRACK_LABEL, greetingLines, orderByTrack, shortName, shortTarget, summarizeTracks, trackOf } from "@/lib/logic/tracks";
+import type { Challenge, DateStr, Track } from "@/lib/types";
 import { SetupRow } from "@/components/app/SetupRow";
 import BodyTodaySlot from "@/features/body/TodaySlot";
 import { BoardEntry } from "@/features/boards/TodayEntry";
@@ -33,11 +35,11 @@ import { FocusAction } from "@/features/focus/TodaySlot";
 import { EarnedAction } from "@/features/money/TodaySlot";
 import ScheduleTodaySlot from "@/features/schedule/TodaySlot";
 import VicesTodaySlot from "@/features/vices/TodaySlot";
-import { ChecklistRow } from "./ChecklistRows";
+import { ChecklistTile, LinkedNumberTile } from "./ChecklistTiles";
 import { DayComplete } from "./DayComplete";
 import { DayStrip, type StripDay } from "./DayStrip";
 import { NowNext } from "./NowNext";
-import { WorkoutCard } from "./WorkoutCard";
+import { KIND_LABEL, WorkoutCard } from "./WorkoutCard";
 
 // Opens from the header. Loaded on first use so it costs Today nothing.
 const MoreSheet = dynamic(() => import("@/components/app/MoreSheet").then((m) => m.MoreSheet), { ssr: false });
@@ -48,26 +50,18 @@ const HISTORY_WINDOW = 400;
 /** Days on the strip in ongoing mode. */
 const STRIP_DAYS = 14;
 
-function HeaderLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      aria-label={label}
-      title={label}
-      className="pressable inline-flex size-11 items-center justify-center rounded-full text-ink-2"
-    >
-      {children}
-    </Link>
-  );
-}
-
 export default function TodayPage() {
   const toast = useToast();
   const now = useNow(20_000);
   const mode = useMode();
   const today = mode.today;
   const installedOn = useInstalledOn();
+  const settings = useSettings();
   const [moreOpen, setMoreOpen] = useState(false);
+  // The four tracks are also a filter: tap one and the grid shows only its tiles.
+  const [only, setOnly] = useState<Track | null>(null);
+  // The strip of earlier days stays folded away until it is asked for, or a day other than today is open.
+  const [stripOpen, setStripOpen] = useState(false);
   const [finished, setFinished] = useState<{ challenge: Challenge; full: number } | null>(null);
   const [finishing, setFinishing] = useState(false);
 
@@ -140,7 +134,6 @@ export default function TodayPage() {
   );
 
   // The bigger moment when the last item of a day lands.
-  const [glow, setGlow] = useState(0);
   const [moment, setMoment] = useState<DateStr | null>(null);
   const endMoment = useCallback(() => setMoment(null), []);
   const seen = useRef<{ date: DateStr; status: DayStatus } | null>(null);
@@ -151,7 +144,6 @@ export default function TodayPage() {
     seen.current = { date, status };
     if (prev && prev.date === date && prev.status !== "full" && status === "full") {
       haptics.celebrate();
-      setGlow((n) => n + 1);
       setMoment(date);
     }
   }, [date, status]);
@@ -159,36 +151,43 @@ export default function TodayPage() {
   // First paint: wait until everything above the fold has been read, then
   // show the whole screen at once, so nothing jumps as parts arrive. After
   // that (changing day, edits) parts update in place.
-  const loaded = !mode.loading && !day.loading && !blocks.loading && !workouts.loading && !history.loading;
+  const loaded = !mode.loading && !day.loading && !blocks.loading && !workouts.loading && !history.loading && !settings.loading;
   const [shown, setShown] = useState(false);
   if (loaded && !shown) setShown(true);
   if (!shown) return <Screen aria-busy="true">{null}</Screen>;
 
+  const initial = (settings.data?.display_name ?? "").trim().charAt(0).toUpperCase();
   const topBar = (
-    <div className="-mx-2.5 flex h-12 items-center justify-between pt-1">
-      <span className="t-label pl-2.5 text-ink-2">Lock In</span>
-      <div className="flex items-center">
-        <HeaderLink href="/coach" label="Coach">
-          <MessageSquareText size={22} aria-hidden />
-        </HeaderLink>
-        <HeaderLink href="/vices" label="Vices">
-          <ShieldBan size={22} aria-hidden />
-        </HeaderLink>
-        <button
-          type="button"
-          aria-label="More"
-          title="More"
-          aria-haspopup="dialog"
-          onClick={() => {
-            haptics.tap();
-            setMoreOpen(true);
-          }}
-          className="pressable inline-flex size-11 items-center justify-center rounded-full text-ink-2"
-        >
-          <Ellipsis size={24} aria-hidden />
-        </button>
-      </div>
-    </div>
+    <TopBar
+      as="p"
+      title="Lock In"
+      right={
+        <>
+          <IconLink href="/coach" label="Coach">
+            <MessageSquareText size={20} strokeWidth={1.75} aria-hidden />
+          </IconLink>
+          <IconLink href="/vices" label="Vices">
+            <ShieldBan size={20} strokeWidth={1.75} aria-hidden />
+          </IconLink>
+          {/* The round gradient mark, as on the approved mockup, opens everything that is not a tab. */}
+          <button
+            type="button"
+            aria-label="More"
+            title="More"
+            aria-haspopup="dialog"
+            onClick={() => {
+              haptics.tap();
+              setMoreOpen(true);
+            }}
+            className="pressable inline-flex size-11 items-center justify-center rounded-full"
+          >
+            <span className="grad flex size-[30px] items-center justify-center rounded-full text-[12px] font-medium tracking-normal normal-case" aria-hidden>
+              {initial || "L"}
+            </span>
+          </button>
+        </>
+      }
+    />
   );
 
   // Day X of N only while the day on screen is one of the running challenge's
@@ -230,76 +229,58 @@ export default function TodayPage() {
     toast("This day is locked", { kind: "error" });
   };
 
-  const subFor = (item: ChecklistItem): string | undefined => {
-    if (item.key === "workout" && w.main) return w.main.detail ? `${w.main.name}, ${w.main.detail.toLowerCase()}` : w.main.name;
-    if (item.key === "core" && w.core) return w.core.name.replace(/^Core:\s*/i, "").replace(/^./, (ch) => ch.toUpperCase()) + (w.core.detail ? `, ${w.core.detail.toLowerCase()}` : "");
-    return undefined;
+  // What a workout tile says: the kind of session as the big line, its name under it.
+  const workoutLines = (key: string | null): { value?: string; sub?: string } => {
+    if (key === "workout" && w.main) return { value: KIND_LABEL[w.main.kind], sub: w.main.name };
+    if (key === "core" && w.core) return { sub: w.core.detail ?? w.core.name.replace(/^Core:\s*/i, "").replace(/^./, (ch) => ch.toUpperCase()) };
+    return {};
   };
 
   // Earnings go in through quick add, so the earning table stays the source
   // of the day's total. Calories and protein take a typed number until a meal
   // is logged that day. After that the totals come from the meals.
-  const actionFor = (r: ItemResult) => {
-    // The focus timer feeds the study item: a way in while idle, the clock while it runs.
-    if (r.item.key === "study" && r.item.type === "yesno") return isToday ? <FocusAction runningOnly={!editable} /> : undefined;
-    if (r.item.key === "earned") return <EarnedAction date={date} value={r.log?.value ?? null} done={r.done} disabled={!editable} />;
-    if ((r.item.key === "calories" || r.item.key === "protein") && meals.data.length > 0) {
-      return (
-        <Link
-          href="/body"
-          aria-label={`${r.item.name}: ${(r.log?.value ?? 0).toLocaleString("en-US")}${r.item.unit ?? ""} from meals. Open Body`}
-          className={cn(
-            "pressable tnum flex h-11 shrink-0 items-center gap-1 rounded-[12px] border pr-1.5 pl-3 text-[19px] font-semibold tracking-[-0.02em]",
-            r.done ? "border-accent-line bg-accent-soft text-accent" : "border-line bg-surface-2 text-ink",
-          )}
-        >
-          {(r.log?.value ?? 0).toLocaleString("en-US")}
-          {r.item.unit ? <span className="text-[13px] font-medium text-ink-3">{r.item.unit}</span> : null}
-          <ChevronRight size={16} className="text-ink-3" aria-hidden />
-        </Link>
-      );
+  const dailyTile = (r: ItemResult) => {
+    if (r.item.key === "earned" && !(r.log && (r.log.slips ?? 0) > 0)) {
+      return <EarnedAction key={r.item.id} date={date} value={r.log?.value ?? null} done={r.done} label={shortTarget(r.target, r.item.unit)} disabled={!editable} />;
     }
-    return undefined;
+    const props = {
+      item: r.item,
+      target: r.target,
+      log: r.log,
+      state: r.state,
+      streak: streaks[r.item.id]?.current,
+      disabled: !editable,
+      onCheck: (v: boolean) => {
+        if (!editable) return refuse();
+        void setChecked(r.item.id, date, v);
+        // The wake check only counts before its cutoff on the day itself. Say so when a tick lands late.
+        if (v && isToday && r.target.kind === "check_by" && nyParts(now).time > r.target.by) toast("Checked after the cutoff. Does not count.");
+      },
+      onValue: (v: number | null) => (editable ? void setValue(r.item.id, date, v) : refuse()),
+      onText: (t: string) => (editable ? void setText(r.item.id, date, t) : refuse()),
+      ...workoutLines(r.item.key),
+    };
+    if ((r.item.key === "calories" || r.item.key === "protein") && meals.data.length > 0) return <LinkedNumberTile key={r.item.id} {...props} href="/body" from="meals" />;
+    // The focus timer feeds the study item: a way in while idle, the clock while it runs.
+    const corner = r.item.key === "study" && r.item.type === "yesno" && isToday ? <FocusAction runningOnly={!editable} /> : undefined;
+    return <ChecklistTile key={r.item.id} {...props} corner={corner} />;
   };
-
-  const dailyRow = (r: ItemResult) => (
-    <ChecklistRow
-      action={actionFor(r)}
-      key={r.item.id}
-      item={r.item}
-      target={r.target}
-      log={r.log}
-      state={r.state}
-      streak={streaks[r.item.id]?.current}
-      sub={subFor(r.item)}
-      disabled={!editable}
-      onCheck={(v) => (editable ? void setChecked(r.item.id, date, v) : refuse())}
-      onValue={(v) => (editable ? void setValue(r.item.id, date, v) : refuse())}
-      onText={(t) => (editable ? void setText(r.item.id, date, t) : refuse())}
-      onNeedText={() => toast("Write what you did first")}
-    />
-  );
 
   // Weekly items: done on any day of the week counts. A change goes to the
   // day it was logged on, or to the day on screen when it is new.
-  const weeklyRow = (r: WeeklyResult) => {
+  const weeklyTile = (r: WeeklyResult) => {
     const target = r.doneOn ?? r.log?.date ?? date;
     const canEdit = isDayEditable(target, now, installedOn);
     const elsewhere = r.done && r.doneOn !== date;
-    const sub = r.done
-      ? elsewhere
-        ? `Done ${formatDateShort(r.doneOn as DateStr)}`
-        : "Done this week"
-      : (r.item.hint ?? undefined);
     return (
-      <ChecklistRow
+      <ChecklistTile
         key={r.item.id}
         item={r.item}
         target={r.target}
         log={r.log}
         state={r.done ? "done" : r.log && (r.log.checked || r.log.value !== null) ? "off" : "open"}
         streak={streaks[r.item.id]?.current}
-        sub={sub}
+        sub={r.done ? (elsewhere ? `Done ${formatDateShort(r.doneOn as DateStr)}` : "Done this week") : r.item.type === "number" ? shortName(r.item) : undefined}
         disabled={!canEdit}
         onCheck={(v) => (canEdit ? void setChecked(r.item.id, target, v) : refuse())}
         onValue={(v) => {
@@ -308,92 +289,109 @@ export default function TodayPage() {
           else void setValue(r.item.id, target, v);
         }}
         onText={(t) => (canEdit ? void setText(r.item.id, target, t) : refuse())}
-        onNeedText={() => toast("Write what you did first")}
       />
     );
   };
+
+  const tracks = summary ? summarizeTracks(summary.items, streaks) : [];
+  const filter = only && tracks.some((t) => t.track === only) ? only : null;
+  const ordered = summary ? orderByTrack(summary.items) : [];
+  const visible = filter ? ordered.filter((r) => trackOf(r.item) === filter) : ordered;
+  const visibleDone = visible.filter((r) => r.done).length;
+
+  // The opening lines: a greeting on today, the date itself on any other day.
+  const dateFull = formatDateFull(date);
+  const lines = isToday ? greetingLines(nyParts(now).hour, settings.data?.display_name) : [`${dateFull.split(", ")[0]},`, `${dateFull.split(", ")[1]}.`];
+  const stripShown = stripOpen || !isToday;
 
   return (
     <Screen>
       {topBar}
 
-      <header className="flex items-end justify-between gap-4 pt-3 pb-5">
-        <div className="min-w-0">
-          {n !== null && c ? (
-            <>
-              <h1 className="flex items-baseline gap-2.5">
-                <span className="t-display">Day {n}</span>
-                <span className="text-[22px] font-medium tracking-[-0.02em] text-ink-3">of {c.length_days}</span>
-              </h1>
-              <p className="mt-2.5 text-[15px] text-ink-2">
-                {formatDateLong(date)}
-                {scoped ? ` · ${c.name}: ${scoped.done} of ${scoped.total}` : ""}
-              </p>
-            </>
-          ) : (
-            <>
-              <h1 className="flex items-baseline gap-2.5">
-                <span className="t-display">{formatDateShort(date)}</span>
-                <span className="text-[22px] font-medium tracking-[-0.02em] text-ink-3">{WEEKDAY_NAMES[weekdayOf(date)].slice(0, 3)}</span>
-              </h1>
-              <p className="mt-2.5 text-[15px] text-ink-2" data-consistency>
-                {steady.days === 0 ? "First day. Keep it going." : `${consistencyLabel(steady)} locked in`}
-              </p>
-            </>
-          )}
-        </div>
-        <div key={glow} className={cn("shrink-0", glow > 0 && "animate-ring-glow")}>
-          <ProgressRing value={percent / 100} size={84} stroke={8} label="Checklist done">
-            <span className="tnum text-[22px] font-semibold tracking-[-0.03em]">
-              {percent}
-              <span className="text-[13px] font-medium text-ink-3">%</span>
+      <header className="pt-4" data-today={date}>
+        <h1 className="t-greeting">
+          {lines.map((line, i) => (
+            <span key={i} className="block">
+              {line}
             </span>
-          </ProgressRing>
-        </div>
+          ))}
+        </h1>
+        <button
+          type="button"
+          aria-expanded={stripShown}
+          aria-controls="day-strip"
+          onClick={() => {
+            haptics.tap();
+            setStripOpen((v) => !v);
+          }}
+          className="t-sub pressable -mb-1 mt-1 flex min-h-11 w-full items-center gap-1.5 text-left"
+        >
+          <span data-day-line>
+            {isToday ? `${dateFull}. ` : ""}
+            {n !== null && c ? (
+              `Day ${n} of ${c.length_days}.`
+            ) : (
+              <>
+                <span data-consistency>{steady.days === 0 ? "First day. Keep it going" : `${consistencyLabel(steady)} locked in`}</span>.
+              </>
+            )}
+          </span>
+          <ChevronDown size={15} className={cn("shrink-0 transition-transform duration-200", stripShown && "rotate-180")} aria-hidden />
+          <span className="sr-only">{stripShown ? "Hide earlier days" : "Show earlier days"}</span>
+        </button>
+        {scoped && c ? (
+          <p className="t-sub tnum">
+            {c.name}: {scoped.done} of {scoped.total}
+          </p>
+        ) : null}
       </header>
 
-      <DayStrip days={strip} today={today} selected={date} statusByDate={statusByDate} onSelect={setPicked} label={c ? "Challenge days" : "Recent days"} />
+      {stripShown ? (
+        <div className="mt-2">
+          <DayStrip id="day-strip" days={strip} today={today} selected={date} statusByDate={statusByDate} onSelect={setPicked} label={c ? "Challenge days" : "Recent days"} />
+        </div>
+      ) : null}
 
       {closing && closingRecord && isToday ? (
-        <Card className="mt-4 border-accent-line">
+        <GlassCard className="mt-4">
           <p className="t-label text-accent">Challenge done</p>
-          <p className="t-h2 mt-1.5">
+          <p className="t-h2 mt-2">
             {closing.name}: all {closing.length_days} {closing.length_days === 1 ? "day" : "days"} are behind you.
           </p>
-          <p className="t-sub mt-1.5">
-            {closingRecord.full} full, {closingRecord.partial} partial, {closingRecord.missed} missed. Closing it keeps every day you logged. You carry on in ongoing mode.
+          <p className="t-sub mt-2">
+            {closingRecord.full} full, {closingRecord.partial} partial, {closingRecord.missed} missed. Closing it keeps every day you logged.
           </p>
           <div className="mt-4 flex gap-2.5">
-            <Button full loading={finishing} icon={<Flag size={18} aria-hidden />} onClick={() => void finish()}>
+            <Button full loading={finishing} icon={<Flag size={17} aria-hidden />} onClick={() => void finish()}>
               Finish challenge
             </Button>
-            <Link href="/progress" className="pressable flex h-12 shrink-0 items-center rounded-[14px] border border-line-strong px-4 text-[16px] font-semibold text-ink">
+            <Link href="/progress" className="pressable glass flex h-12 shrink-0 items-center rounded-full px-5 text-[15px] font-medium text-ink">
               Review
             </Link>
           </div>
-        </Card>
+        </GlassCard>
       ) : null}
 
       {mode.upcoming && isToday ? (
-        <Link href="/settings/challenge" className="pressable mt-4 flex items-center justify-between gap-3 rounded-[14px] border border-line bg-surface px-3.5 py-3 text-[14px] text-ink-2">
+        <Link href="/settings/challenge" className="pressable tile t-sub mt-4 flex min-h-11 items-center justify-between gap-3 rounded-[20px] px-4 py-3">
           <span>
             {mode.upcoming.name} starts {formatDateLong(mode.upcoming.start_date)}
           </span>
-          <ChevronRight size={16} className="shrink-0 text-ink-3" aria-hidden />
+          <ChevronRight size={16} className="shrink-0" aria-hidden />
         </Link>
       ) : null}
 
       {!editable ? (
-        <div className="mt-4 flex items-center gap-2.5 rounded-[14px] border border-line bg-surface px-3.5 py-3 text-[14px] text-ink-2">
-          <Lock size={16} className="shrink-0" aria-hidden />
+        <div className="tile t-sub mt-4 flex min-h-11 items-center gap-2.5 rounded-[20px] px-4 py-3">
+          <Lock size={15} className="shrink-0" aria-hidden />
           Locked. Days close at noon the next day.
         </div>
       ) : !isToday ? (
-        <div className="mt-4 flex items-center justify-between gap-3 rounded-[14px] border border-line bg-surface px-3.5 py-3 text-[14px] text-ink-2">
+        <div className="tile t-sub mt-4 flex min-h-11 items-center justify-between gap-3 rounded-[20px] py-1 pr-1.5 pl-4">
           <span>
             Open until {formatDateShort(lockAt.date)}, {formatTime(lockAt.time)}
           </span>
-          <button type="button" onClick={() => setPicked(null)} className="font-semibold text-ink">
+          <button type="button" onClick={() => setPicked(null)} className="pressable min-h-11 shrink-0 rounded-full px-3 font-medium text-ink">
             Back to today
           </button>
         </div>
@@ -401,43 +399,86 @@ export default function TodayPage() {
 
       {isToday ? (
         <div className="mt-4 flex flex-col gap-3">
-          <SetupRow />
           <CoachTodaySlot />
           <NowNext blocks={blocks.data} now={now} loading={blocks.loading} />
           <ScheduleTodaySlot date={date} />
         </div>
       ) : null}
 
-      <Section
-        title="Checklist"
-        right={summary ? <span className="tnum">{summary.done} of {summary.total}</span> : null}
-      >
-        {!summary ? (
-          <Card className="h-[420px]" aria-busy="true" />
-        ) : summary.items.length === 0 ? (
-          <Card padded={false}>
-            <EmptyState
-              compact
-              title="Nothing on the checklist"
-              body="Add the items you want to hold yourself to."
-              action={<Link href="/settings/checklist" className="font-semibold text-ink underline underline-offset-4">Edit checklist</Link>}
+      {tracks.length > 0 ? (
+        <div role="group" aria-label="The day in four tracks" className="mt-6 grid gap-3.5 px-1" style={{ gridTemplateColumns: `repeat(${tracks.length}, minmax(0, 1fr))` }}>
+          {tracks.map((t) => (
+            <TrackStat
+              key={t.track}
+              value={t.value}
+              label={t.label}
+              progress={t.progress}
+              attention={t.attention}
+              pressed={filter === t.track}
+              aria-label={`${t.label}: ${t.done} of ${t.total} done${t.attention ? ", needs a look" : ""}. ${filter === t.track ? "Show everything" : "Show only these"}`}
+              onClick={() => {
+                haptics.tap();
+                setOnly(filter === t.track ? null : t.track);
+              }}
             />
-          </Card>
-        ) : (
-          <Card padded={false} key={date} className="overflow-hidden">
-            <div className="divide-y divide-line">{summary.items.map(dailyRow)}</div>
-          </Card>
-        )}
-        {isToday && editable ? <VicesTodaySlot /> : null}
-      </Section>
+          ))}
+        </div>
+      ) : null}
+
+      <section className="mt-6" aria-label="Checklist">
+        <SectionLabel
+          right={
+            summary ? (
+              <span className="tnum" data-count>
+                {filter ? `${visibleDone} of ${visible.length}` : `${summary.done} of ${summary.total}`}
+              </span>
+            ) : null
+          }
+        >
+          {filter ? TRACK_LABEL[filter] : isToday ? "Today" : "That day"}
+        </SectionLabel>
+        <ProgressBar value={percent / 100} height={2} label="Checklist done" className="mt-2.5" />
+        <div className="mt-3">
+          {!summary ? (
+            <Card className="h-[350px]" aria-busy="true" />
+          ) : summary.items.length === 0 ? (
+            <Card padded={false}>
+              <EmptyState
+                compact
+                title="Nothing on the checklist"
+                body="Add the items you want to hold yourself to."
+                action={
+                  <Link href="/settings/checklist" className="text-[14px] text-ink underline decoration-hair underline-offset-4">
+                    Edit checklist
+                  </Link>
+                }
+              />
+            </Card>
+          ) : (
+            <div key={date} className="grid grid-cols-3 gap-2.5">
+              {visible.map(dailyTile)}
+            </div>
+          )}
+        </div>
+        <div className="mt-1 flex min-h-11 items-center justify-between">
+          {isToday && editable ? <VicesTodaySlot /> : <span />}
+          {filter ? (
+            <button type="button" onClick={() => setOnly(null)} className="pressable min-h-11 px-1 text-[13px] text-ink-2 underline decoration-hair underline-offset-4">
+              Show all {summary?.total ?? ""}
+            </button>
+          ) : null}
+        </div>
+      </section>
 
       {week && week.items.length > 0 ? (
-        <Section title="This week" right={<span className="tnum">{week.done} of {week.total}</span>}>
-          <Card padded={false} key={date} className="overflow-hidden">
-            <div className="divide-y divide-line">{week.items.map(weeklyRow)}</div>
-          </Card>
+        <Section title="This week" right={<span className="tnum">{week.done} of {week.total}</span>} className="!mt-3">
+          <div key={date} className="grid grid-cols-3 gap-2.5">
+            {week.items.map(weeklyTile)}
+          </div>
         </Section>
       ) : null}
+
+      {isToday ? <SetupRow className="mt-7" /> : null}
 
       <Section title={isToday ? "Today's workout" : "Workout"} right={isToday ? <BodyTodaySlot /> : null}>
         {workouts.loading ? (
@@ -455,7 +496,7 @@ export default function TodayPage() {
       </Section>
 
       {/* The why, under everything that gets checked off, so it never sits between the user and the list. */}
-      {isToday ? <BoardEntry className="mt-8" /> : null}
+      {isToday ? <BoardEntry className="mt-7" /> : null}
 
       {moment === date && summary ? (
         <DayComplete title={dayTitle} total={summary.total} streak={fullDayStreak(statusByDate, today, start)} isToday={isToday} onDone={endMoment} />

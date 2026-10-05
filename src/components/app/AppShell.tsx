@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { TabBar } from "@/components/ui";
+import { Button, TabBar } from "@/components/ui";
 import { checkLocalPasscode, createLocalPasscode, hasLocalPasscode, isLocallyUnlocked } from "@/lib/auth/local";
 import { subscribe } from "@/lib/db";
 import { getSettings } from "@/lib/db/helpers";
@@ -135,7 +135,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 function Splash() {
   return (
     <div className="flex min-h-dvh items-center justify-center" aria-busy="true" aria-label="Loading">
-      <span className="size-6 animate-spin rounded-full border-2 border-line-strong border-t-ink" />
+      <span className="size-6 animate-spin rounded-full border-2 border-hair border-t-accent" />
     </div>
   );
 }
@@ -146,9 +146,9 @@ function Problem({ message, onRetry }: { message: string; onRetry: () => void })
       <p className="t-label">Setup needed</p>
       <h1 className="t-title mt-2">The app cannot reach its data.</h1>
       <p className="t-sub mt-3">{message}</p>
-      <button type="button" onClick={onRetry} className="pressable mt-7 h-12 rounded-[14px] bg-ink px-5 font-semibold text-bg">
+      <Button onClick={onRetry} className="mt-7">
         Try again
-      </button>
+      </Button>
     </main>
   );
 }

@@ -32,12 +32,12 @@ export function TodaySlot({ date, className }: TodaySlotProps) {
     <Link
       href={`/schedule?date=${day}`}
       aria-label={`Schedule conflict: ${describeConflict(first)}. Open schedule`}
-      className={`pressable animate-fade-in flex items-center gap-3 rounded-[16px] border border-warn/40 bg-warn-soft px-3.5 py-3 ${className ?? ""}`}
+      className={`pressable animate-fade-in flex items-center gap-3 rounded-[20px] border border-warn-line bg-warn-soft px-4 py-3 ${className ?? ""}`}
     >
-      <TriangleAlert size={20} className="shrink-0 text-warn" aria-hidden />
+      <TriangleAlert size={18} className="shrink-0 text-warn" aria-hidden />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[15px] font-semibold text-ink">{describeConflict(first)}</p>
-        <p className="tnum truncate text-[13px] text-ink-2">
+        <p className="truncate text-[15px] text-ink">{describeConflict(first)}</p>
+        <p className="tnum t-caption mt-0.5 truncate text-ink-2">
           {formatTime(first.start)} to {formatTime(first.end)}, {formatDuration(first.minutes)}
           {more > 0 ? `, and ${more} more` : ""}
         </p>

@@ -22,8 +22,14 @@ export interface LockScreenProps {
 function Mark() {
   return (
     <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden>
-      <circle cx="24" cy="24" r="19" stroke="var(--surface-3)" strokeWidth="5" />
-      <path d="M24 5a19 19 0 1 1-16.45 9.5" stroke="var(--accent)" strokeWidth="5" strokeLinecap="round" />
+      <defs>
+        <linearGradient id="lock-mark" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="var(--accent)" />
+          <stop offset="1" stopColor="var(--accent-2)" />
+        </linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="20" stroke="var(--hair)" strokeWidth="3" />
+      <path d="M24 4a20 20 0 1 1-17.3 10" stroke="url(#lock-mark)" strokeWidth="3" strokeLinecap="round" />
     </svg>
   );
 }
@@ -103,7 +109,7 @@ export function LockScreen({ mode, onSubmit }: LockScreenProps) {
       <div className="flex flex-col items-center text-center">
         <Mark />
         <h1 className="t-title mt-7">{title}</h1>
-        <p className={cn("mt-2 min-h-5 text-[15px]", error ? "text-danger" : "text-ink-2")} role={error ? "alert" : undefined}>
+        <p className={cn("mt-2.5 min-h-5 text-[14px]", error ? "text-danger" : "text-ink-2")} role={error ? "alert" : undefined}>
           {error ?? sub}
         </p>
         <div key={shake} className={cn("mt-9 flex h-4 items-center gap-4", shake > 0 && "animate-shake")} aria-label={`${code.length} digits entered`}>
@@ -111,7 +117,7 @@ export function LockScreen({ mode, onSubmit }: LockScreenProps) {
             <span
               key={i}
               className={cn(
-                "size-3.5 rounded-full border-2 transition-all duration-150",
+                "size-3 rounded-full border-[1.5px] transition-all duration-150",
                 i < code.length ? "scale-110 border-ink bg-ink" : "border-line-strong",
               )}
             />

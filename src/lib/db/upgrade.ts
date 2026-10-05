@@ -38,6 +38,7 @@ export async function upgradeLocalData(): Promise<void> {
     } else if (item.typical_spend === undefined || item.spend_period === undefined) {
       await db.update("checklist_item", item.id, { typical_spend: item.typical_spend ?? null, spend_period: item.spend_period ?? null });
     }
+    // 0013: the track needs no step here. A row without the field counts toward its default (trackOf in logic/tracks).
   }
 
   // 0004: day_log carries the slip count.
@@ -87,7 +88,8 @@ export async function upgradeLocalData(): Promise<void> {
       const floor = challenges[0]?.daily_floor ?? (earned?.target.kind === "min" ? earned.target.min : 100);
       patch = missing<AppSettings>(settings, { history_start: oldest, daily_floor: floor });
     }
-    const rest = missing<AppSettings>(settings, { weekly_food_budget: null, food_likes: [], food_dislikes: [], focus_goal_minutes: 60, business_goal: null });
+    // 0013: the name Today greets, the same default the SQL migration and the seed give.
+    const rest = missing<AppSettings>(settings, { weekly_food_budget: null, food_likes: [], food_dislikes: [], focus_goal_minutes: 60, business_goal: null, display_name: "Sunny" });
     if (patch || rest) await db.update("app_settings", "app", { ...patch, ...rest });
   }
 

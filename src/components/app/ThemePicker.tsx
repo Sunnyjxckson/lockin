@@ -3,7 +3,7 @@
 import { Check } from "lucide-react";
 import { Button, Card, cn, useToast } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
-import { BASE_THEMES, THEME_BASES, buildTheme } from "@/lib/logic/theme";
+import { BASE_THEMES, THEME_BASES, buildTheme, themeVars } from "@/lib/logic/theme";
 import { useTheme } from "@/lib/theme";
 
 /**
@@ -20,8 +20,10 @@ export function ThemePicker({ className }: { className?: string }) {
       <div role="radiogroup" aria-label="Base theme" className="grid grid-cols-2 gap-3">
         {THEME_BASES.map((id) => {
           const b = BASE_THEMES[id];
-          // Each tile previews its base with the current palette on top, in that theme's own tokens.
-          const t = buildTheme(id, palette).tokens;
+          // Each tile previews its base with the current palette on top, in that theme's own colors and strengths.
+          const built = buildTheme(id, palette);
+          const t = built.tokens;
+          const v = themeVars(built);
           const on = id === base;
           return (
             <button
@@ -35,29 +37,31 @@ export function ThemePicker({ className }: { className?: string }) {
                 haptics.tap();
                 void setBase(id).then(() => toast(`${b.name} is on`, { kind: "done" }));
               }}
-              className={cn("pressable overflow-hidden rounded-[20px] border-2 text-left", on ? "border-ink" : "border-line")}
-              style={{ background: t.bg, color: t.ink }}
+              className={cn("pressable relative overflow-hidden rounded-[22px] border text-left", on ? "border-ink" : "border-glass-line")}
+              style={{ background: `radial-gradient(90% 70% at 90% 0%, ${v["--glow-1"]} 0%, transparent 70%), radial-gradient(80% 60% at 0% 100%, ${v["--glow-3"]} 0%, transparent 70%), ${t.bg}`, color: t.ink }}
             >
-              <span className="block px-3.5 pt-3.5">
+              <span className="block px-4 pt-4">
                 <span className="flex items-center justify-between gap-2">
-                  <span className="text-[15px] font-semibold">{b.name}</span>
+                  <span className="text-[15px] font-medium tracking-[-0.01em]">{b.name}</span>
                   {on ? (
                     <span className="flex size-5 items-center justify-center rounded-full" style={{ background: t.ink, color: t.bg }}>
-                      <Check size={13} strokeWidth={3.5} aria-hidden />
+                      <Check size={13} strokeWidth={3} aria-hidden />
                     </span>
                   ) : null}
                 </span>
-                <span className="mt-1 block text-[12px] leading-snug" style={{ color: t["ink-2"] }}>
+                <span className="t-caption mt-1 block leading-snug" style={{ color: t["ink-2"] }}>
                   {b.blurb}
                 </span>
               </span>
-              <span className="mt-3 block px-3.5 pb-3.5" aria-hidden>
-                <span className="flex items-center gap-2 rounded-[12px] border px-2.5 py-2" style={{ background: t.surface, borderColor: t.line }}>
-                  <span className="size-4 rounded-full" style={{ background: t.accent }} />
-                  <span className="h-1.5 flex-1 rounded-full" style={{ background: t["surface-3"] }}>
-                    <span className="block h-full w-2/3 rounded-full" style={{ background: t.accent }} />
+              <span className="mt-3 block px-4 pb-4" aria-hidden>
+                <span className="flex items-stretch gap-1.5">
+                  <span className="flex h-9 flex-1 items-end rounded-[10px] px-2 pb-1.5 text-[11px] font-medium" style={{ background: `linear-gradient(145deg, ${t.accent}, ${t["accent-2"]})`, color: t["accent-ink"] }}>
+                    Done
                   </span>
-                  <span className="tnum text-[12px] font-semibold" style={{ color: t["ink-2"] }}>
+                  <span
+                    className="tnum flex h-9 flex-1 items-end rounded-[10px] border px-2 pb-1.5 text-[11px]"
+                    style={{ background: `linear-gradient(160deg, ${v["--glass-hi"]}, ${v["--glass-lo"]})`, borderColor: v["--glass-line"], color: t["ink-2"] }}
+                  >
                     26/30
                   </span>
                 </span>
@@ -70,8 +74,8 @@ export function ThemePicker({ className }: { className?: string }) {
       {palette ? (
         <Card className="mt-3 flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[15px] font-medium">Your palette is on top</p>
-            <p className="mt-0.5 text-[13px] text-ink-3">
+            <p className="text-[15px]">Your palette is on top</p>
+            <p className="t-caption mt-0.5 text-ink-2">
               {theme.adjusted.length > 0 ? "Some colors were adjusted so everything stays readable." : "Pulled from a board."}
             </p>
           </div>

@@ -12,7 +12,7 @@ export interface ToggleProps {
   className?: string;
 }
 
-/** An on/off switch. On is ink, not the accent: on is not the same as done. */
+/** An on/off switch. On is cream (ink), not the gradient: on is not the same as done. */
 export function Toggle({ checked, onChange, label, disabled, className }: ToggleProps) {
   return (
     <button
@@ -27,12 +27,7 @@ export function Toggle({ checked, onChange, label, disabled, className }: Toggle
       }}
       className={cn("relative inline-flex h-11 w-[52px] shrink-0 items-center disabled:opacity-40", className)}
     >
-      <span
-        className={cn(
-          "h-[30px] w-[52px] rounded-full transition-colors duration-200 ease-out",
-          checked ? "bg-ink" : "bg-surface-3",
-        )}
-      />
+      <span className={cn("h-[30px] w-[52px] rounded-full border transition-colors duration-200 ease-out", checked ? "border-ink bg-ink" : "border-tile-line bg-hair")} />
       <span
         className={cn(
           "absolute left-[3px] size-6 rounded-full transition-transform duration-200 ease-out",

@@ -23,7 +23,8 @@ import { addItem, removeItem, reorderItems, saveItem, setDailyFloor } from "@/li
 import { useChecklist, useMode } from "@/lib/db/hooks";
 import { ruleTarget } from "@/lib/logic/challenge";
 import { describeTarget } from "@/lib/logic/targets";
-import type { Cadence, ChecklistItem, ItemType, Target } from "@/lib/types";
+import { TRACKS, TRACK_LABEL, defaultTrack, trackOf } from "@/lib/logic/tracks";
+import type { Cadence, ChecklistItem, ItemType, Target, Track } from "@/lib/types";
 
 type NumberMode = "min" | "max" | "range";
 
@@ -40,6 +41,8 @@ interface Draft {
   mode: NumberMode;
   min: number | null;
   max: number | null;
+  /** Null follows the default for what the item measures. */
+  track: Track | null;
 }
 
 const TYPES: { value: ItemType; label: string }[] = [
@@ -72,6 +75,7 @@ function toDraft(item: ChecklistItem | null): Draft {
     mode: t.kind === "max" ? "max" : t.kind === "range" ? "range" : "min",
     min: t.kind === "min" || t.kind === "range" ? t.min : null,
     max: t.kind === "max" || t.kind === "range" ? t.max : null,
+    track: item ? trackOf(item) : null,
   };
 }
 
@@ -97,7 +101,10 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
     if (!target) return;
     setBusy(true);
     try {
-      const fields = { name: d.name.trim(), cadence: d.cadence, hint: d.hint.trim() || null, unit: d.type === "number" ? d.unit.trim() || null : null, target };
+      const unit = d.type === "number" ? d.unit.trim() || null : null;
+      // Saved only when it differs from the default, so an untouched item keeps following the default.
+      const fallback = defaultTrack({ key: d.key, category: item?.category ?? "habit", unit, tracks_money: item?.tracks_money ?? false });
+      const fields = { name: d.name.trim(), cadence: d.cadence, hint: d.hint.trim() || null, unit, target, track: d.track === null || (d.track === fallback && !item?.track) ? null : d.track };
       if (d.id) await saveItem(d.id, fields);
       else await addItem({ ...fields, type: d.type });
       // "Earned today" and the daily floor are the same number.
@@ -185,6 +192,11 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
             ) : null}
           </div>
         ) : null}
+
+        <div>
+          <p className="mb-1.5 text-[13px] text-ink-2">Track on Today</p>
+          <SegmentedControl label="Track" options={TRACKS.map((t) => ({ value: t, label: TRACK_LABEL[t] }))} value={d.track ?? defaultTrack({ key: d.key, category: item?.category ?? "habit", unit: d.type === "number" ? d.unit.trim() || null : null, tracks_money: item?.tracks_money ?? false })} onChange={(v) => set({ track: v })} />
+        </div>
 
         <TextField label="Note under the name" value={d.hint} onChange={(v) => set({ hint: v })} placeholder="Optional" maxLength={60} />
       </div>

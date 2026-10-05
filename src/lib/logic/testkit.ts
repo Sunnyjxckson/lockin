@@ -26,6 +26,7 @@ export function makeItem(p: Partial<ChecklistItem> = {}): ChecklistItem {
     tracks_money: false,
     typical_spend: null,
     spend_period: null,
+    track: null,
     ...p,
   };
 }
