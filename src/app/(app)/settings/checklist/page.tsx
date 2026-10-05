@@ -130,15 +130,15 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
       open
       onClose={onClose}
       title={d.id ? "Edit item" : "New item"}
-      subtitle={d.id ? "Changes apply from today. Earlier days keep their scoring." : "Counts from today, not on earlier days."}
+      subtitle={d.id ? "Applies from today." : "Counts from today."}
       footer={
         <div className="flex gap-3">
           {d.id ? (
-            <Button variant="danger" onClick={() => void remove()}>
+            <Button variant="danger" size="lg" onClick={() => void remove()}>
               Remove
             </Button>
           ) : null}
-          <Button full disabled={!valid} loading={busy} onClick={() => void save()}>
+          <Button full size="lg" disabled={!valid} loading={busy} onClick={() => void save()}>
             Save
           </Button>
         </div>
@@ -149,13 +149,13 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
 
         {!d.id ? (
           <div>
-            <p className="mb-1.5 text-[13px] font-medium text-ink-2">Kind</p>
+            <p className="t-label mb-2.5">Kind</p>
             <SegmentedControl label="Kind" options={TYPES} value={d.type} onChange={(v) => set({ type: v })} />
           </div>
         ) : null}
 
         <div>
-          <p className="mb-1.5 text-[13px] font-medium text-ink-2">How often</p>
+          <p className="t-label mb-2.5">How often</p>
           <SegmentedControl label="How often" options={CADENCES} value={d.cadence} onChange={(v) => set({ cadence: v })} />
         </div>
 
@@ -163,8 +163,8 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-[16px] font-medium">Only counts before a time</p>
-                <p className="text-[13px] text-ink-3">Checked later than this, it does not count</p>
+                <p className="text-[15px] text-ink">Only counts before a time</p>
+                <p className="t-caption mt-0.5 text-ink-2">Later than this does not count</p>
               </div>
               <Toggle label="Only counts before a time" checked={d.gated} onChange={(v) => set({ gated: v })} />
             </div>
@@ -175,7 +175,7 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
         {d.type === "number" ? (
           <div className="flex flex-col gap-3">
             <div>
-              <p className="mb-1.5 text-[13px] font-medium text-ink-2">Done when the number is</p>
+              <p className="t-label mb-2.5">Done when the number is</p>
               <SegmentedControl label="Target kind" options={MODES} value={d.mode} onChange={(v) => set({ mode: v })} />
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -188,13 +188,13 @@ function ItemSheet({ item, onClose }: { item: ChecklistItem | null; onClose: () 
               <TextField label="Unit" value={d.unit} onChange={(v) => set({ unit: v })} placeholder="g, $, min" maxLength={8} />
             </div>
             {d.mode === "range" && d.min !== null && d.max !== null && d.max < d.min ? (
-              <p className="text-[13px] text-danger">The second number has to be the larger one.</p>
+              <p className="t-caption text-danger">The second number has to be the larger one.</p>
             ) : null}
           </div>
         ) : null}
 
         <div>
-          <p className="mb-1.5 text-[13px] text-ink-2">Track on Today</p>
+          <p className="t-label mb-2.5">Track on Today</p>
           <SegmentedControl label="Track" options={TRACKS.map((t) => ({ value: t, label: TRACK_LABEL[t] }))} value={d.track ?? defaultTrack({ key: d.key, category: item?.category ?? "habit", unit: d.type === "number" ? d.unit.trim() || null : null, tracks_money: item?.tracks_money ?? false })} onChange={(v) => set({ track: v })} />
         </div>
 
@@ -231,39 +231,39 @@ export default function ChecklistSettingsPage() {
 
   return (
     <Screen>
-      <PageHeader title="Checklist" back="/settings" subtitle="Tap an item to rename it or change its target. Use the arrows to reorder." />
+      <PageHeader title="Checklist" back="/settings" subtitle="Tap to edit. Arrows reorder." />
 
-      <Section title="Items" right={<span className="tnum">{items.length}</span>}>
+      <Section title="Items" right={<span>{items.length}</span>}>
         {checklist.loading ? null : items.length === 0 ? (
           <Card padded={false}>
-            <EmptyState compact icon={<ListChecks size={24} aria-hidden />} title="No items" body="Add the first thing you want to hold yourself to." />
+            <EmptyState compact icon={<ListChecks size={22} strokeWidth={1.75} aria-hidden />} title="No items" body="Add the first thing to hold yourself to." />
           </Card>
         ) : (
           <Card padded={false} className="overflow-hidden">
-            <ul className="divide-y divide-line">
+            <ul className="divide-y divide-hair">
               {items.map((item, i) => (
                 <li key={item.id} className="flex min-h-[60px] items-center gap-1 pr-1.5 pl-4">
                   <button type="button" onClick={() => setEditing(item)} className="min-h-[60px] min-w-0 flex-1 py-2.5 text-left">
-                    <span className="block truncate text-[16px] font-medium">{item.name}</span>
-                    <span className="mt-0.5 block truncate text-[13px] text-ink-3">{summary(item, challenge ? ruleTarget(challenge, item.id) : null)}</span>
+                    <span className="block truncate text-[15px] text-ink">{item.name}</span>
+                    <span className="t-caption mt-0.5 block truncate text-ink-2">{summary(item, challenge ? ruleTarget(challenge, item.id) : null)}</span>
                   </button>
                   <IconButton label={`Move ${item.name} up`} disabled={i === 0} onClick={() => move(i, -1)}>
-                    <ArrowUp size={18} aria-hidden />
+                    <ArrowUp size={18} strokeWidth={1.75} aria-hidden />
                   </IconButton>
                   <IconButton label={`Move ${item.name} down`} disabled={i === items.length - 1} onClick={() => move(i, 1)}>
-                    <ArrowDown size={18} aria-hidden />
+                    <ArrowDown size={18} strokeWidth={1.75} aria-hidden />
                   </IconButton>
                 </li>
               ))}
             </ul>
           </Card>
         )}
-        <Button variant="secondary" full className="mt-3" icon={<Plus size={18} aria-hidden />} onClick={() => setEditing("new")}>
+        <Button variant="secondary" full className="mt-3" icon={<Plus size={18} strokeWidth={1.75} aria-hidden />} onClick={() => setEditing("new")}>
           Add item
         </Button>
         <p className="t-sub mt-4 px-1">
           More vices to quit or cap are in the{" "}
-          <Link href="/vices" className="text-ink underline underline-offset-4">
+          <Link href="/vices" className="text-ink underline decoration-hair underline-offset-4">
             vice library
           </Link>
           .

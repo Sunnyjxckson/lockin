@@ -66,14 +66,14 @@ export function ItemView({ board, items, item, onClose, onLook }: ItemViewProps)
             {board.name} <span className="tnum ml-1.5">{index + 1} of {items.length}</span>
           </p>
           <IconButton label="Close" onClick={onClose} className="-mr-2.5">
-            <X size={24} aria-hidden />
+            <X size={22} strokeWidth={1.75} aria-hidden />
           </IconButton>
         </div>
 
         {item.kind === "image" ? <ImagePart key={item.id} item={item} kept={kept} onToggle={toggleKeep} /> : null}
         {item.kind === "color" ? <ColorPart item={item} /> : null}
 
-        <div className="mt-5 space-y-3">
+        <div className="mt-6 space-y-4">
           <Editor key={item.id} item={item} />
           {item.source_url ? (
             <a href={item.source_url} target="_blank" rel="noreferrer noopener" className="pressable flex min-h-11 items-center gap-1.5 text-[14px] text-ink-2">
@@ -83,7 +83,7 @@ export function ItemView({ board, items, item, onClose, onLook }: ItemViewProps)
           ) : null}
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-2.5">
+        <div className="mt-6 grid grid-cols-2 gap-2.5">
           <Button variant="secondary" size="sm" full icon={<ArrowUp size={16} aria-hidden />} disabled={index <= 0} onClick={() => move(-1)}>
             Earlier
           </Button>
@@ -163,9 +163,9 @@ function Editor({ item }: { item: BoardItem }) {
 function ColorPart({ item }: { item: BoardItem }) {
   const color = item.color ?? "#808080";
   return (
-    <div className="flex aspect-[4/3] w-full flex-col justify-end rounded-[4px] p-4" style={{ backgroundColor: color, color: inkOnColor(color) }}>
-      {item.note ? <p className="text-[28px] leading-[1.05] font-semibold tracking-[-0.03em]">{item.note}</p> : null}
-      <p className="tnum mt-1 text-[13px] font-medium tracking-[0.14em] uppercase">{color.replace("#", "")}</p>
+    <div className="flex aspect-[4/3] w-full flex-col justify-end rounded-[26px] p-5" style={{ backgroundColor: color, color: inkOnColor(color) }}>
+      {item.note ? <p className="t-title">{item.note}</p> : null}
+      <p className="mt-1.5 text-[11px] font-medium tracking-[0.18em] uppercase">{color.replace("#", "")}</p>
     </div>
   );
 }
@@ -205,7 +205,7 @@ function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: stri
         type="button"
         onClick={onTap}
         aria-label="Image. Tap a spot to pick its color"
-        className="relative mx-auto block cursor-crosshair overflow-hidden rounded-[4px] bg-surface-2"
+        className="relative mx-auto block cursor-crosshair overflow-hidden rounded-[20px] bg-surface-2"
         style={{ aspectRatio: String(aspect), width: `min(100%, calc(58dvh * ${aspect}))`, backgroundColor: palette[0] }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -213,7 +213,7 @@ function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: stri
         {pick ? (
           <span
             aria-hidden
-            className="pointer-events-none absolute size-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-on-scrim shadow-[0_2px_10px_var(--shadow)]"
+            className="pointer-events-none absolute size-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-on-scrim shadow-float"
             style={{ left: `${pick.x * 100}%`, top: `${pick.y * 100}%`, backgroundColor: pick.hex }}
           />
         ) : null}
@@ -222,10 +222,10 @@ function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: stri
       <div className="mt-3 flex min-h-12 items-center gap-3">
         {pick ? (
           <>
-            <span className="size-12 shrink-0 rounded-[4px] border border-line" style={{ backgroundColor: pick.hex }} aria-hidden />
+            <span className="size-12 shrink-0 rounded-full border border-hair" style={{ backgroundColor: pick.hex }} aria-hidden />
             <div className="min-w-0 flex-1">
-              <p className="tnum text-[16px] font-semibold tracking-[0.06em] uppercase">{pick.hex.replace("#", "")}</p>
-              <p className="t-sub text-[12px]">The exact color at that spot</p>
+              <p className="t-value uppercase">{pick.hex.replace("#", "")}</p>
+              <p className="t-caption mt-0.5 text-ink-2">The color at that spot</p>
             </div>
             <Button size="sm" variant={pickedKept ? "secondary" : "primary"} onClick={() => void onToggle(pick.hex)}>
               {pickedKept ? "Kept" : "Keep"}
@@ -234,14 +234,14 @@ function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: stri
         ) : (
           <p className="t-sub flex items-center gap-2">
             <Pipette size={16} aria-hidden className="shrink-0" />
-            {pixels || !url ? "Tap anywhere on the image to pick that exact color." : "Reading the image."}
+            {pixels || !url ? "Tap the image to pick a color." : "Reading the image."}
           </p>
         )}
       </div>
 
       {palette.length > 0 ? (
         <div className="mt-4">
-          <p className="t-label mb-2">Palette. Tap to keep on the board</p>
+          <p className="t-label mb-3">Palette, tap to keep</p>
           <div className="flex gap-1.5">
             {palette.map((c) => {
               const on = !!kept(c);
@@ -252,10 +252,10 @@ function ImagePart({ item, kept, onToggle }: { item: BoardItem; kept: (hex: stri
                   aria-pressed={on}
                   aria-label={`${c}${on ? ", kept on the board" : ""}`}
                   onClick={() => void onToggle(c)}
-                  className={cn("pressable relative h-16 min-w-0 flex-1 rounded-[4px] border", on ? "border-ink" : "border-line")}
+                  className={cn("pressable relative h-16 min-w-0 flex-1 rounded-[14px] border", on ? "border-ink" : "border-hair")}
                   style={{ backgroundColor: c, color: inkOnColor(c) }}
                 >
-                  {on ? <Check size={18} strokeWidth={3} aria-hidden className="absolute top-1.5 right-1.5" /> : null}
+                  {on ? <Check size={16} strokeWidth={2} aria-hidden className="absolute top-1.5 right-1.5" /> : null}
                   <span className="tnum absolute bottom-1.5 left-1.5 text-[9px] font-medium tracking-[0.08em] uppercase">{c.replace("#", "")}</span>
                 </button>
               );

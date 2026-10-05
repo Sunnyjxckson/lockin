@@ -40,22 +40,22 @@ export function BoardView({ board, items, onClose }: BoardViewProps) {
             onClose();
           }}
           className={cn(
-            "fixed top-[calc(var(--safe-t)+12px)] right-3 z-30 flex size-11 items-center justify-center rounded-full bg-scrim text-on-scrim backdrop-blur-md transition-opacity duration-500 focus-visible:opacity-100",
+            "fixed top-[calc(var(--safe-t)+12px)] right-3 z-30 flex size-11 items-center justify-center rounded-full bg-scrim text-on-scrim transition-opacity duration-500 focus-visible:opacity-100",
             chrome ? "opacity-100" : "pointer-events-none opacity-0",
           )}
         >
-          <X size={22} aria-hidden />
+          <X size={20} strokeWidth={1.75} aria-hidden />
         </button>
 
-        <header className="px-4 pt-[calc(var(--safe-t)+56px)] pb-6">
+        <header className="px-5 pt-[calc(var(--safe-t)+56px)] pb-7">
           <p className="t-label">{BOARD_KIND_LABEL[board.kind]}</p>
-          <h2 className="mt-2 text-[52px] leading-[0.92] font-bold tracking-[-0.05em] break-words">{board.name}</h2>
+          <h2 className="t-display mt-3 break-words">{board.name}</h2>
         </header>
 
         {items.length > 0 ? (
           <Collage items={items} gap={3} bare />
         ) : (
-          <p className="t-sub px-4">Nothing on this board yet.</p>
+          <p className="t-sub px-5">Nothing on this board yet.</p>
         )}
 
         <PaletteStrip colors={palette} height={44} className="mt-[3px]" />

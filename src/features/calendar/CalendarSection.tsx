@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CalendarCheck2, CalendarOff, RefreshCw } from "lucide-react";
-import { Button, Card, Select, useToast } from "@/components/ui";
+import { Button, Card, IconButton, Select, cn, useToast } from "@/components/ui";
 import { nyParts } from "@/lib/logic/dates";
 import { formatDateShort, formatTime } from "@/lib/logic/dates";
 import { chooseCalendar, EXPORT_DAYS, fetchCalendars, type CalendarChoice, type CalendarSync } from "./client";
@@ -44,13 +44,12 @@ export function CalendarSection({ calendar }: { calendar: CalendarSync }) {
     };
   }, [connected]);
 
-  if (loading) return <Card className="h-[120px]" aria-busy="true" />;
+  if (loading) return <Card className="h-[76px]" aria-busy="true" />;
 
   if (!status) {
     return (
       <Card>
-        <Head on={false} label="Not connected" />
-        <p className="t-sub mt-3">Could not check the calendar connection. The schedule works without it.</p>
+        <Head on={false} label="Could not check" />
         <Button variant="secondary" size="sm" className="mt-4" onClick={() => void calendar.refresh()}>
           Try again
         </Button>
@@ -60,24 +59,21 @@ export function CalendarSection({ calendar }: { calendar: CalendarSync }) {
 
   if (!status.configured) {
     return (
-      <Card>
-        <Head on={false} label="Not connected" />
-        <p className="t-sub mt-3">
-          Class times come in from Google Calendar and your blocks go out to a calendar named Lock In. To turn it on, set these on the
-          server and restart:
-        </p>
-        <ul className="mt-3 flex flex-col gap-1.5">
+      <Card padded={false} className="overflow-hidden">
+        <div className="p-4">
+          <Head on={false} label="Needs server keys" />
+        </div>
+        <div className="divide-y divide-hair border-t border-hair">
           {status.missing.map((name) => (
-            <li key={name} className="rounded-[10px] bg-surface-2 px-3 py-2 font-mono text-[13px] text-ink">
+            <p key={name} className="flex min-h-11 items-center px-4 font-mono text-[12px] break-all text-ink">
               {name}
-            </li>
+            </p>
           ))}
-        </ul>
-        <p className="mt-3 text-[13px] text-ink-3">
-          Add this redirect URI to the Google OAuth client, or set GOOGLE_REDIRECT_URI to your own:
-        </p>
-        <p className="mt-1.5 rounded-[10px] bg-surface-2 px-3 py-2 font-mono text-[12px] break-all text-ink-2">{status.redirectUri}</p>
-        <p className="mt-3 text-[13px] text-ink-3">Everything else on this screen works without it.</p>
+          <div className="px-4 py-3">
+            <p className="t-label">Redirect URI</p>
+            <p className="mt-1.5 font-mono text-[12px] break-all text-ink-2">{status.redirectUri}</p>
+          </div>
+        </div>
       </Card>
     );
   }
@@ -85,23 +81,12 @@ export function CalendarSection({ calendar }: { calendar: CalendarSync }) {
   if (!connected) {
     return (
       <Card>
-        <Head on={false} label="Not connected" />
-        <p className="t-sub mt-3">
-          Connect once and class times come in as fixed blocks. Your blocks go out to a calendar named Lock In, and a move on either side
-          shows up on the other.
-        </p>
+        <Head on={false} label="Class times in, your blocks out" />
         {/* An API route that answers with a redirect to Google, so a plain link. */}
-        <a
-          href="/api/calendar/start"
-          className="pressable mt-4 flex h-12 w-full items-center justify-center rounded-[14px] bg-ink px-5 text-[16px] font-semibold tracking-[-0.01em] text-bg select-none"
-        >
+        <a href="/api/calendar/start" className="pressable mt-4 flex h-12 w-full items-center justify-center rounded-full bg-ink px-5 text-[15px] font-medium tracking-[-0.01em] text-bg select-none">
           Connect Google Calendar
         </a>
-        <p className="mt-3 text-[13px] text-ink-3">
-          {status.storage === "cookie"
-            ? "Data is on this device, so the Google sign in is kept here too, in an encrypted cookie the page cannot read. Connect once on each device. With Supabase on, it is stored in the database instead."
-            : "The Google sign in is stored in the database, on the server only."}
-        </p>
+        <p className="t-caption mt-3 text-ink-2">{status.storage === "cookie" ? "The sign in stays on this device. Connect once on each one." : "The sign in is stored on the server."}</p>
       </Card>
     );
   }
@@ -115,16 +100,34 @@ export function CalendarSection({ calendar }: { calendar: CalendarSync }) {
   if (status.calendarId && !options.some((o) => o.value === status.calendarId)) {
     options.push({ value: status.calendarId, label: status.calendarName ?? "Chosen calendar" });
   }
+  const line = error ?? (last && !last.skipped ? summary(last.stats.pulled, last.stats.pushed, last.stats.removed) : `Next ${EXPORT_DAYS} days go out to the Lock In calendar`);
 
   return (
     <Card>
-      <Head on label="Connected" />
+      <div className="flex items-center justify-between gap-3">
+        <Head on label={syncing ? "Syncing" : when(status.lastSyncAt, today)} />
+        <IconButton
+          label="Sync now"
+          filled
+          disabled={syncing}
+          onClick={() => {
+            void calendar.sync().then((out) => {
+              if (out?.ok) toast(out.skipped ? "Nothing to sync" : summary(out.stats.pulled, out.stats.pushed, out.stats.removed), { kind: "done" });
+              else if (out) toast("Some changes did not go through. They will be tried again.", { kind: "error" });
+            });
+          }}
+        >
+          <RefreshCw size={18} strokeWidth={1.75} className={syncing ? "animate-spin motion-reduce:animate-none" : undefined} aria-hidden />
+        </IconButton>
+      </div>
+      <p className={cn("t-caption mt-3 truncate", error ? "text-danger" : "text-ink-2")}>{line}</p>
       <div className="mt-4">
         <Select
           label="Class times come from"
           value={status.calendarId ?? NONE}
           options={options}
           disabled={busy || syncing}
+          hint={status.calendarId && status.importWritable === false ? "Read only. Its events cannot be moved from here." : undefined}
           onChange={(value) => {
             const id = value === NONE ? null : value;
             setBusy(true);
@@ -138,76 +141,36 @@ export function CalendarSection({ calendar }: { calendar: CalendarSync }) {
           }}
         />
       </div>
-      {status.calendarId && status.importWritable === false ? (
-        <p className="mt-2 text-[13px] text-ink-3">This calendar is read only. Its events can be seen here but not moved from here.</p>
-      ) : null}
-      <p className="mt-3 text-[13px] text-ink-3">
-        Blocks for the next {EXPORT_DAYS} days, and any day you have edited, go out to the Lock In calendar.
-      </p>
-
-      <div className="mt-4 flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <p className="tnum text-[15px] font-medium text-ink">{syncing ? "Syncing" : when(status.lastSyncAt, today)}</p>
-          <p className={error ? "mt-0.5 truncate text-[13px] text-danger" : "mt-0.5 truncate text-[13px] text-ink-3"}>
-            {error ?? (last && !last.skipped ? summary(last.stats.pulled, last.stats.pushed, last.stats.removed) : "Syncs when you open this screen and after each change")}
-          </p>
-        </div>
-        <Button
-          variant="secondary"
-          size="sm"
-          loading={syncing}
-          icon={<RefreshCw size={16} aria-hidden />}
-          onClick={() => {
-            void calendar.sync().then((out) => {
-              if (out?.ok) toast(out.skipped ? "Nothing to sync" : summary(out.stats.pulled, out.stats.pushed, out.stats.removed), { kind: "done" });
-              else if (out) toast("Some changes did not go through. They will be tried again.", { kind: "error" });
-            });
-          }}
-        >
-          Sync now
-        </Button>
-      </div>
-
-      <div className="mt-3 border-t border-line pt-1">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="-ml-4"
-          disabled={busy || syncing}
-          onClick={() => {
-            setBusy(true);
-            calendar
-              .disconnect()
-              .then(() => toast("Google Calendar disconnected"))
-              .catch(() => toast("Could not disconnect", { kind: "error" }))
-              .finally(() => setBusy(false));
-          }}
-        >
-          Disconnect
-        </Button>
-      </div>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="mt-2 -mb-2 -ml-4"
+        disabled={busy || syncing}
+        onClick={() => {
+          setBusy(true);
+          calendar
+            .disconnect()
+            .then(() => toast("Google Calendar disconnected"))
+            .catch(() => toast("Could not disconnect", { kind: "error" }))
+            .finally(() => setBusy(false));
+        }}
+      >
+        Disconnect
+      </Button>
     </Card>
   );
 }
 
 function Head({ on, label }: { on: boolean; label: string }) {
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="flex min-w-0 items-center gap-3">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-[12px] bg-surface-2 text-ink-2">
-          {on ? <CalendarCheck2 size={20} aria-hidden /> : <CalendarOff size={20} aria-hidden />}
-        </span>
-        <p className="truncate text-[17px] font-semibold tracking-[-0.01em]">Google Calendar</p>
-      </div>
-      <span
-        className={
-          on
-            ? "shrink-0 rounded-full border border-accent-line bg-accent-soft px-2.5 py-1 text-[12px] font-semibold text-accent"
-            : "shrink-0 rounded-full border border-line bg-surface-2 px-2.5 py-1 text-[12px] font-semibold text-ink-2"
-        }
-      >
-        {label}
+    <div className="flex min-w-0 items-center gap-3">
+      <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-full", on ? "grad shadow-glow" : "tile text-ink-2")}>
+        {on ? <CalendarCheck2 size={20} strokeWidth={1.75} aria-hidden /> : <CalendarOff size={20} strokeWidth={1.75} aria-hidden />}
       </span>
+      <div className="min-w-0">
+        <p className="truncate text-[15px] text-ink">Google Calendar</p>
+        <p className="t-caption mt-0.5 truncate text-ink-2">{label}</p>
+      </div>
     </div>
   );
 }

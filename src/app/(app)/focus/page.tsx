@@ -7,7 +7,7 @@
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { Briefcase, Pencil, Plus, Timer } from "lucide-react";
-import { Button, Card, EmptyState, IconButton, ListRow, NumberField, PageHeader, ProgressBar, Screen, Section, Sheet, useToast } from "@/components/ui";
+import { Button, Card, EmptyState, GlassCard, IconButton, List, ListRow, NumberField, PageHeader, ProgressBar, Screen, Section, Sheet, cn, useToast } from "@/components/ui";
 import { FocusModeCard } from "@/features/focus/FocusModeCard";
 import { RunningTimer, StartPanel } from "@/features/focus/TimerPanel";
 import { WeekChart } from "@/features/focus/WeekChart";
@@ -97,37 +97,34 @@ export default function FocusPage() {
         back="/schedule"
         right={
           <IconButton label="Log focus time by hand" onClick={() => setSheet({ session: null })}>
-            <Plus size={22} aria-hidden />
+            <Plus size={22} strokeWidth={1.75} aria-hidden />
           </IconButton>
         }
       />
 
       <div className="space-y-3">
         {notice ? (
-          <Card className="border-warn bg-warn-soft" role="status" data-notice>
-            <p className="t-label text-warn">Strict mode</p>
-            <p className="mt-1.5 text-[15px]">{notice}</p>
-            <Button className="mt-3" size="sm" variant="secondary" onClick={() => setNotice(null)}>
+          <div className="flex items-center gap-3 rounded-[20px] border border-warn-line bg-warn-soft py-2 pr-2 pl-4" role="status" data-notice>
+            <p className="min-w-0 flex-1 py-1 text-[14px]">{notice}</p>
+            <Button size="sm" variant="ghost" className="px-3 text-ink" onClick={() => setNotice(null)}>
               Got it
             </Button>
-          </Card>
+          </div>
         ) : null}
 
         {live && stale ? (
-          <Card className="border-warn bg-warn-soft" role="alert" data-stale>
+          <div className="rounded-[26px] border border-warn-line bg-warn-soft px-5 py-[18px]" role="alert" data-stale>
             <p className="t-label text-warn">Timer left running</p>
             <p className="t-h2 mt-2">
               {live.label} has been on the clock for {formatDuration(stale.clockMinutes)}
             </p>
-            <p className="mt-1 text-[14px] text-ink-2">
-              {stale.reason === "away"
-                ? `You left the app after ${formatDuration(stale.suggestedMinutes)} and did not come back. How long did you really work?`
-                : "That is longer than one sitting. How long did you really work?"}
+            <p className="t-sub mt-2">
+              {stale.reason === "away" ? `You left the app after ${formatDuration(stale.suggestedMinutes)} and did not come back.` : "That is longer than one sitting."}
             </p>
-            <div className="mt-3">
+            <div className="mt-4">
               <NumberField label="Minutes that count" value={realMinutes ?? stale.suggestedMinutes} onChange={setRealMinutes} live unit="min" decimal={false} max={Math.max(stale.suggestedMinutes, 360)} />
             </div>
-            <div className="mt-3 flex gap-2">
+            <div className="mt-4 flex gap-2">
               <Button full loading={busy} onClick={() => settleStale(realMinutes ?? stale.suggestedMinutes)}>
                 Log {formatDuration(realMinutes ?? stale.suggestedMinutes)}
               </Button>
@@ -135,53 +132,53 @@ export default function FocusPage() {
                 Throw it out
               </Button>
             </div>
-          </Card>
+          </div>
         ) : null}
 
         {away ? (
-          <Card className="border-warn bg-warn-soft" role="alert" data-away>
-            <p className="t-label text-warn">You left the app</p>
-            <p className="t-h2 tnum mt-2">Gone for {formatAway(((away.to ?? now) - away.from) / 1000)}</p>
-            <p className="mt-1 text-[14px] text-ink-2">That time is off the clock. If you were still working, on paper or a laptop, take it back.</p>
-            <div className="mt-3 flex gap-2">
-              <Button full onClick={() => changeLive((l) => reviewAways(l, false))}>
+          <div className="rounded-[20px] border border-warn-line bg-warn-soft p-4" role="alert" data-away>
+            <div className="flex items-baseline justify-between gap-3">
+              <p className="t-h2 min-w-0">Gone for {formatAway(((away.to ?? now) - away.from) / 1000)}</p>
+              <p className="t-label shrink-0 text-warn">Off the clock</p>
+            </div>
+            <div className="mt-3.5 flex gap-2">
+              <Button full variant="solid" size="sm" onClick={() => changeLive((l) => reviewAways(l, false))}>
                 Leave it off
               </Button>
-              <Button full variant="secondary" onClick={() => changeLive((l) => reviewAways(l, true))}>
+              <Button full variant="secondary" size="sm" onClick={() => changeLive((l) => reviewAways(l, true))}>
                 I was working
               </Button>
             </div>
-          </Card>
+          </div>
         ) : null}
 
         {live && clock && !stale ? (
-          <Card>
+          <GlassCard>
             <RunningTimer live={live} clock={clock} now={now} onExpand={() => setViewId(live.id)} />
-          </Card>
+          </GlassCard>
         ) : null}
 
         {!live && !timer.loading ? (
           <>
             {study ? (
-              <Card className="flex items-center gap-3" data-study-block>
+              <div className="tile flex min-h-[60px] items-center gap-3 rounded-[20px] py-2 pr-2 pl-4" data-study-block>
+                <span className="animate-pulse-dot size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
                 <div className="min-w-0 flex-1">
-                  <p className="t-label flex items-center gap-2">
-                    <span className="animate-pulse-dot size-1.5 rounded-full bg-ink" aria-hidden />
-                    On your schedule now
-                  </p>
-                  <p className="mt-1 truncate text-[16px] font-semibold">{study.block.block_name}</p>
-                  <p className="tnum text-[13px] text-ink-2">
-                    Until {formatTime(study.block.end)}, {formatDuration(Math.floor(study.remainingSeconds / 60))} left
+                  <p className="truncate text-[15px]">{study.block.block_name}</p>
+                  <p className="t-caption mt-0.5 truncate text-ink-2">
+                    On now until {formatTime(study.block.end)}, {formatDuration(Math.floor(study.remainingSeconds / 60))} left
                   </p>
                 </div>
-                <Button size="sm" onClick={startForBlock}>
+                <Button size="sm" variant="solid" onClick={startForBlock}>
                   Start it
                 </Button>
-              </Card>
+              </div>
             ) : null}
             <StartPanel fullScreen={fullScreen} onStarted={(l) => (fullScreen ? setViewId(l.id) : undefined)} />
           </>
         ) : null}
+
+        {timer.loading ? <GlassCard className="h-[300px]" aria-busy="true" /> : null}
       </div>
 
       <Section
@@ -189,67 +186,57 @@ export default function FocusPage() {
         right={
           <button
             type="button"
-            className="pressable -my-2 flex h-11 items-center gap-1.5 text-[13px] font-semibold text-ink-2"
+            className="pressable t-label -my-3 -mr-1 flex h-11 items-center gap-1.5 pl-3"
             onClick={() => {
               setGoalDraft(goal);
               setGoalOpen(true);
             }}
           >
-            <Pencil size={14} aria-hidden />
-            Goal
+            {goal > 0 ? `Goal ${formatDuration(goal)}` : "Set a goal"}
+            <Pencil size={12} strokeWidth={1.75} aria-hidden />
           </button>
         }
       >
-        <Card data-today-total>
-          <div className="flex items-end justify-between gap-3">
-            <p className={met ? "t-num text-accent" : "t-num"}>{formatDuration(todayMinutes)}</p>
-            <p className="tnum pb-1.5 text-[14px] text-ink-2">{goal > 0 ? `of ${formatDuration(goal)}` : "No goal set"}</p>
-          </div>
-          <ProgressBar value={goalProgress(todayMinutes, goal)} tone={met ? "accent" : "ink"} className="mt-3" label="Today against the focus goal" />
-          <p className="mt-3 text-[13px] text-ink-3">
-            {met ? "Goal reached. Study is ticked on today's checklist." : goal > 0 ? `${formatDuration(Math.max(0, goal - todayMinutes))} to go. Reaching it ticks Study on the checklist.` : "Set a goal and reaching it ticks Study on the checklist."}
+        <div className="px-1" data-today-total>
+          <p className={cn("t-num", met && "text-accent")}>{formatDuration(todayMinutes)}</p>
+          <ProgressBar value={goalProgress(todayMinutes, goal)} className="mt-3.5" label="Today against the focus goal" />
+          <p className="t-sub mt-3">
+            {met ? "Goal reached. Study is ticked on today's checklist." : goal > 0 ? `${formatDuration(Math.max(0, goal - todayMinutes))} to go.` : "No goal set."}
           </p>
-        </Card>
+        </div>
       </Section>
 
-      <Section title="This week" right={<span className="tnum text-[13px] text-ink-2">{formatDuration(weekTotal)}</span>}>
-        <Card>
+      <Section title="This week" right={`${week.filter((d) => d.met).length} of 7 at goal`}>
+        <p className="t-stat px-1">{formatDuration(weekTotal)}</p>
+        <div className="mt-2">
           <WeekChart days={week} goal={goal} />
-        </Card>
+        </div>
       </Section>
 
-      <Section title="Sessions">
+      <Section title="Sessions" right={done.length > 0 ? String(done.length) : undefined}>
         {done.length === 0 ? (
-          <EmptyState
-            compact
-            icon={<Timer size={24} aria-hidden />}
-            title="No focus sessions yet"
-            body="Start the timer, or log time you already put in."
-            action={
-              <Button variant="secondary" size="sm" onClick={() => setSheet({ session: null })}>
-                Log time by hand
-              </Button>
-            }
-          />
-        ) : (
-          <Card padded={false} className="overflow-hidden">
-            <div className="divide-y divide-line">
-              {done.slice(0, 30).map((s) => {
-                const bits = [s.date === today ? "Today" : formatDateShort(s.date), s.source === "manual" ? "by hand" : formatTime(s.start)];
-                if (s.away_count > 0) bits.push(`left the app ${s.away_count} ${s.away_count === 1 ? "time" : "times"}${s.away_minutes > 0 ? `, ${formatDuration(s.away_minutes)} away` : ""}`);
-                if (s.completed && s.block_id) bits.push("block done");
-                return (
-                  <ListRow
-                    key={s.id}
-                    title={s.label ?? "Study"}
-                    sub={bits.join(", ")}
-                    right={<span className="tnum text-[17px] font-semibold">{formatDuration(s.minutes)}</span>}
-                    onClick={() => setSheet({ session: s })}
-                  />
-                );
-              })}
-            </div>
+          <Card padded={false}>
+            <EmptyState
+              compact
+              icon={<Timer size={22} strokeWidth={1.75} aria-hidden />}
+              title="No sessions yet"
+              body="Start the timer, or log time you already put in."
+              action={
+                <Button variant="secondary" size="sm" onClick={() => setSheet({ session: null })}>
+                  Log time by hand
+                </Button>
+              }
+            />
           </Card>
+        ) : (
+          <List label="Sessions">
+            {done.slice(0, 30).map((s) => {
+              const bits = [s.date === today ? "Today" : formatDateShort(s.date), s.source === "manual" ? "by hand" : formatTime(s.start)];
+              if (s.away_count > 0) bits.push(`left the app ${s.away_count} ${s.away_count === 1 ? "time" : "times"}${s.away_minutes > 0 ? `, ${formatDuration(s.away_minutes)} away` : ""}`);
+              if (s.completed && s.block_id) bits.push("block done");
+              return <ListRow key={s.id} title={s.label ?? "Study"} sub={bits.join(", ")} value={formatDuration(s.minutes)} onClick={() => setSheet({ session: s })} />;
+            })}
+          </List>
         )}
       </Section>
 
@@ -259,12 +246,7 @@ export default function FocusPage() {
 
       <Section title="Business">
         <Card padded={false} className="overflow-hidden">
-          <ListRow
-            href="/focus/business"
-            left={<Briefcase size={20} className="text-ink-2" aria-hidden />}
-            title="Business log"
-            sub="Your goal and the moves made toward it"
-          />
+          <ListRow href="/focus/business" left={<Briefcase size={20} strokeWidth={1.75} aria-hidden />} title="Business log" sub="The goal and the moves toward it" />
         </Card>
       </Section>
 
@@ -274,7 +256,7 @@ export default function FocusPage() {
         open={goalOpen}
         onClose={() => setGoalOpen(false)}
         title="Daily focus goal"
-        subtitle="Reaching it ticks Study on the checklist."
+        subtitle="Reaching it ticks Study."
         footer={
           <Button
             full
@@ -288,7 +270,7 @@ export default function FocusPage() {
           </Button>
         }
       >
-        <NumberField label="Minutes a day" value={goalDraft} onChange={setGoalDraft} live unit="min" decimal={false} max={720} autoFocus />
+        <NumberField variant="hero" label="Minutes a day" value={goalDraft} onChange={setGoalDraft} live unit="min" decimal={false} max={720} autoFocus />
       </Sheet>
 
       {view && live && clock ? <FocusView live={live} clock={clock} now={now} onClose={() => setViewId(null)} /> : null}

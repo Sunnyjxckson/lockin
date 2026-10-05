@@ -2,31 +2,34 @@
 
 import Link from "next/link";
 import { ChevronRight, Plus, ShieldBan } from "lucide-react";
-import { Button, Card, EmptyState, IconButton, ListRow, PageHeader, Screen, Section, Toggle, cn, useToast } from "@/components/ui";
+import { Button, Card, EmptyState, IconButton, ListRow, PageHeader, Screen, SectionLabel, Toggle, cn, useToast } from "@/components/ui";
 import { formatDollars } from "@/lib/logic/vices";
 import { turnOff, turnOn, useVices, type ViceView } from "@/features/vices/data";
 import { ViceToday, useViceSheets } from "@/features/vices/ViceToday";
 
-function ViceCard({ view, today, onSlip, onAdd }: { view: ViceView; today: string; onSlip: () => void; onAdd: () => void }) {
+/** One vice: the streak as the number, its name, and today's control under it. No card. */
+function ViceBlock({ view, today, onSlip, onAdd }: { view: ViceView; today: string; onSlip: () => void; onAdd: () => void }) {
   const { item, streak, rule, kept, state } = view;
   return (
-    <Card padded={false} className="overflow-hidden">
-      <Link href={`/vices/${item.id}`} className="pressable flex items-center gap-4 px-4 py-4 active:bg-surface-2">
-        <span className="flex w-[72px] shrink-0 flex-col items-center">
-          <span className={cn("t-num tnum", state === "clean" && "text-accent")}>{streak.current}</span>
-          <span className="mt-1 text-[11px] font-medium tracking-wide text-ink-3 uppercase">{streak.current === 1 ? "day clean" : "days clean"}</span>
+    <li className="py-5">
+      <Link href={`/vices/${item.id}`} className="pressable flex min-h-11 items-center gap-4 px-1">
+        <span className="flex w-[68px] shrink-0 items-baseline gap-1">
+          <span className={cn("t-num", state === "clean" ? "text-accent" : "text-ink")}>{streak.current}</span>
+          <span className="t-caption text-ink-2">{streak.current === 1 ? "day" : "days"}</span>
         </span>
         <span className="min-w-0 flex-1">
-          <span className="line-clamp-2 text-[17px] leading-snug font-semibold tracking-[-0.01em]">{item.name}</span>
-          <span className="mt-0.5 block truncate text-[13px] text-ink-3">{rule}</span>
-          {kept ? <span className="tnum mt-0.5 block truncate text-[13px] text-ink-2">{formatDollars(kept.kept)} kept</span> : null}
+          <span className="block truncate text-[17px] font-medium tracking-[-0.01em] text-ink">{item.name}</span>
+          <span className="t-caption mt-1 block truncate text-ink-2">
+            {rule}
+            {kept ? `, ${formatDollars(kept.kept)} kept` : ""}
+          </span>
         </span>
         <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
       </Link>
-      <div className="border-t border-line">
+      <div className="mt-3.5 px-1">
         <ViceToday view={view} today={today} onSlip={onSlip} onAdd={onAdd} />
       </div>
-    </Card>
+    </li>
   );
 }
 
@@ -46,6 +49,8 @@ export default function VicesPage() {
     else await turnOn(view.item, data.today);
   };
 
+  const cleanToday = data.active.filter((v) => v.state === "clean").length;
+
   return (
     <Screen>
       <PageHeader
@@ -53,48 +58,42 @@ export default function VicesPage() {
         back="/today"
         right={
           <IconButton label="Add your own" onClick={() => sheets.editVice()}>
-            <Plus size={22} aria-hidden />
+            <Plus size={22} strokeWidth={1.75} aria-hidden />
           </IconButton>
         }
       />
 
       {data.loading ? null : (
-        <>
-          <div className="mt-3 flex flex-col gap-3">
-            {data.active.length === 0 ? (
-              <Card>
-                <EmptyState
-                  compact
-                  icon={<ShieldBan size={24} aria-hidden />}
-                  title="Nothing on yet"
-                  body="Turn one on from the library below, or add your own. Each gets its own clean streak."
-                />
-              </Card>
-            ) : (
-              data.active.map((v) => (
-                <ViceCard key={v.item.id} view={v} today={data.today} onSlip={() => sheets.logSlip(v.item.id)} onAdd={() => sheets.addAmount(v.item.id)} />
-              ))
-            )}
-          </div>
+        <div className="animate-fade-in">
+          {data.active.length === 0 ? (
+            <EmptyState icon={<ShieldBan size={22} strokeWidth={1.75} aria-hidden />} title="Nothing on yet" body="Turn one on below, or add your own. Each keeps its own streak." className="!py-10" />
+          ) : (
+            <section aria-label="Clean streaks">
+              <SectionLabel right={`${cleanToday} of ${data.active.length} clean`}>Today</SectionLabel>
+              <ul className="mt-1 divide-y divide-hair border-b border-hair">
+                {data.active.map((v) => (
+                  <ViceBlock key={v.item.id} view={v} today={data.today} onSlip={() => sheets.logSlip(v.item.id)} onAdd={() => sheets.addAmount(v.item.id)} />
+                ))}
+              </ul>
+            </section>
+          )}
 
-          <Section title="Library" right={`${data.active.length} on`}>
+          <section className="mt-7" aria-label="Library">
+            <SectionLabel right={`${data.active.length} on`} className="mb-3">
+              Library
+            </SectionLabel>
             <Card padded={false} className="overflow-hidden">
-              <div className="divide-y divide-line">
+              <div className="divide-y divide-hair">
                 {data.library.map((v) => (
-                  <ListRow
-                    key={v.item.id}
-                    title={v.item.name}
-                    sub={v.item.active ? v.rule : undefined}
-                    right={<Toggle checked={v.item.active} onChange={(on) => void toggle(v, on)} label={v.item.name} />}
-                  />
+                  <ListRow key={v.item.id} title={v.item.name} sub={v.item.active ? v.rule : undefined} right={<Toggle checked={v.item.active} onChange={(on) => void toggle(v, on)} label={v.item.name} />} />
                 ))}
               </div>
             </Card>
-            <Button variant="secondary" full className="mt-3" icon={<Plus size={18} aria-hidden />} onClick={() => sheets.editVice()}>
+            <Button variant="secondary" full className="mt-3" icon={<Plus size={18} strokeWidth={1.75} aria-hidden />} onClick={() => sheets.editVice()}>
               Add your own
             </Button>
-          </Section>
-        </>
+          </section>
+        </div>
       )}
       {sheets.node}
     </Screen>

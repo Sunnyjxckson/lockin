@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, Minus, X } from "lucide-react";
-import { CheckMark, Sheet, cn } from "@/components/ui";
+import { CheckMark, ProgressBar, Sheet, cn } from "@/components/ui";
 import { formatDateLong } from "@/lib/logic/dates";
 import type { ItemResult } from "@/lib/logic/day";
 import type { GridCell } from "@/lib/logic/progress";
@@ -18,30 +18,25 @@ const STATUS_LINE: Record<string, string> = {
 function Row({ r, pending }: { r: ItemResult; pending: boolean }) {
   const detail = resultDetail(r);
   return (
-    <li className="flex min-h-[56px] items-center gap-3 px-4 py-2.5">
+    <li className="flex min-h-[56px] items-center gap-3 py-2.5">
       {r.done ? (
-        <CheckMark checked size={26} />
+        <CheckMark checked size={22} />
       ) : (
         <span
           aria-hidden
           className={cn(
-            "inline-flex size-[26px] shrink-0 items-center justify-center rounded-full border-2",
+            "inline-flex size-[22px] shrink-0 items-center justify-center rounded-full border-[1.5px]",
             r.state === "off" ? "border-warn text-warn" : pending ? "border-line-strong text-ink-3" : "border-danger text-danger",
           )}
         >
-          {r.state === "off" ? <Minus size={14} strokeWidth={3} /> : pending ? null : <X size={14} strokeWidth={3} />}
+          {r.state === "off" ? <Minus size={12} strokeWidth={2} /> : pending ? null : <X size={12} strokeWidth={2} />}
         </span>
       )}
       <span className="min-w-0 flex-1">
-        <span className={cn("block truncate text-[16px] font-medium", r.done ? "text-ink" : "text-ink")}>{r.item.name}</span>
-        {detail ? <span className="mt-0.5 block text-[13px] leading-snug text-ink-3">{detail}</span> : null}
+        <span className="block truncate text-[15px] text-ink">{r.item.name}</span>
+        {detail ? <span className="t-caption mt-0.5 block text-ink-2">{detail}</span> : null}
       </span>
-      <span
-        className={cn(
-          "shrink-0 text-[13px] font-medium",
-          r.done ? "text-accent" : r.state === "off" ? "text-warn" : pending ? "text-ink-3" : "text-danger",
-        )}
-      >
+      <span className={cn("t-caption shrink-0", r.done ? "text-accent" : r.state === "off" ? "text-warn" : pending ? "text-ink-2" : "text-danger")}>
         {r.done ? "Done" : r.state === "off" ? "Off target" : pending ? "Open" : "Missed"}
       </span>
     </li>
@@ -51,12 +46,12 @@ function Row({ r, pending }: { r: ItemResult; pending: boolean }) {
 function Group({ title, rows, pending }: { title: string; rows: ItemResult[]; pending: boolean }) {
   if (rows.length === 0) return null;
   return (
-    <div className="mt-5 first:mt-1">
-      <div className="mb-2 flex items-center justify-between px-1">
+    <div className="mt-6">
+      <div className="flex items-center justify-between">
         <h3 className="t-label">{title}</h3>
-        <span className="tnum text-[13px] text-ink-3">{rows.length}</span>
+        <span className="t-label">{rows.length}</span>
       </div>
-      <ul className="divide-y divide-line overflow-hidden rounded-[20px] border border-line bg-surface-2">
+      <ul className="mt-1 divide-y divide-hair">
         {rows.map((r) => (
           <Row key={r.item.id} r={r} pending={pending} />
         ))}
@@ -79,36 +74,22 @@ export function DaySheet({ cell, title, onClose }: { cell: GridCell | null; /** 
       subtitle={cell ? formatDateLong(cell.date) : undefined}
       footer={
         cell && s ? (
-          <Link
-            href={`/today?date=${cell.date}`}
-            className="pressable flex h-[52px] w-full items-center justify-center gap-2 rounded-[14px] bg-ink text-[16px] font-semibold text-bg"
-          >
+          <Link href={`/today?date=${cell.date}`} className="pressable grad shadow-glow flex h-14 w-full items-center justify-center gap-2 rounded-full text-[16px] font-medium tracking-[-0.01em]">
             {pending ? "Open Today" : "Open this day on Today"}
-            <ArrowRight size={18} aria-hidden />
+            <ArrowRight size={18} strokeWidth={1.75} aria-hidden />
           </Link>
         ) : undefined
       }
     >
       {cell && s ? (
         <div className="pb-2">
-          <div className="flex items-end justify-between rounded-[20px] border border-line bg-surface-2 px-4 py-3.5">
-            <div>
-              <div className="t-label">{pending ? "Today so far" : "Result"}</div>
-              <div
-                className={cn(
-                  "mt-1 text-[20px] font-semibold",
-                  cell.kind === "full" ? "text-accent" : cell.kind === "missed" ? "text-danger" : "text-ink",
-                )}
-              >
-                {STATUS_LINE[cell.kind]}
-              </div>
-            </div>
-            <div className="text-right">
-              <span className="t-num-sm">{s.done}</span>
-              <span className="ml-1 text-[15px] font-medium text-ink-3">of {s.total}</span>
-            </div>
-          </div>
-          {s.total === 0 ? <p className="t-sub mt-4 px-1">No daily items were in the checklist on this day.</p> : null}
+          <p className="t-label">{pending ? "Today so far" : STATUS_LINE[cell.kind]}</p>
+          <p className="mt-2 flex items-baseline gap-2">
+            <span className="t-display text-ink">{s.done}</span>
+            <span className="text-[18px] text-ink-2">of {s.total}</span>
+          </p>
+          <ProgressBar className="mt-4" value={s.total > 0 ? s.done / s.total : 0} label="Done on this day" />
+          {s.total === 0 ? <p className="t-sub mt-4">No daily items were in the checklist on this day.</p> : null}
           <Group title={pending ? "Still open" : "Not done"} rows={notDone} pending={pending} />
           <Group title="Done" rows={done} pending={pending} />
         </div>

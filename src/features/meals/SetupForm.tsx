@@ -42,21 +42,20 @@ export function SetupForm({
 
   return (
     <div className="flex flex-col gap-5">
-      <NumberField label="Weekly food budget" prefix="$" value={budget} onChange={setBudget} live placeholder="60" max={2000} hint="What you want to spend at the store for the week." />
+      <NumberField label="Weekly food budget" prefix="$" value={budget} onChange={setBudget} live placeholder="60" max={2000} />
       <Select
         label="Where you shop"
         value={store}
         onChange={setStore}
         options={STORES.map((s) => ({ value: s, label: s }))}
-        hint="The week is priced with estimates for this store. You can compare the others on the grocery list."
+        hint="Priced with estimates for this store."
       />
-      <div className="rounded-[14px] border border-line bg-surface-2 px-4 py-3">
-        <p className="t-label">Daily targets</p>
-        <p className="mt-1 text-[15px] text-ink">{describeTargets(targets)}</p>
-        <p className="mt-0.5 text-[13px] text-ink-3">{challengeName ? `From your challenge, ${challengeName}.` : "From your checklist. Change them in Settings, Checklist."}</p>
+      <div className="px-1">
+        <p className="t-label">Each day{challengeName ? `, from ${challengeName}` : ""}</p>
+        <p className="mt-2 text-[15px] text-ink">{describeTargets(targets)}</p>
       </div>
-      <TermChips label="Foods you like" terms={likes} onChange={setLikes} suggestions={LIKE_IDEAS} placeholder="Add a food" hint="The plan leans toward these." />
-      <TermChips label="Foods to leave out" terms={dislikes} onChange={setDislikes} suggestions={DISLIKE_IDEAS} placeholder="Add a food" hint="Any recipe with one of these is never planned." />
+      <TermChips label="Foods you like" terms={likes} onChange={setLikes} suggestions={LIKE_IDEAS} placeholder="Add a food" />
+      <TermChips label="Foods to leave out" terms={dislikes} onChange={setDislikes} suggestions={DISLIKE_IDEAS} placeholder="Add a food" />
       {showAsk ? (
         <TextField
           label="Anything else, in your words"
@@ -65,7 +64,7 @@ export function SetupForm({
           rows={2}
           maxLength={300}
           placeholder="More chicken, no fish, cheaper breakfasts"
-          hint="Optional. It changes what the planner is asked for. The numbers still come from the recipes."
+          hint="Optional."
         />
       ) : null}
       <Button full size="lg" loading={busy} disabled={!ok} onClick={() => (ok ? onSubmit({ budget: budget!, store, likes, dislikes, ask: ask.trim() }) : undefined)}>

@@ -79,20 +79,16 @@ export function FocusView({ live, clock, now, onClose }: { live: LiveTimer; cloc
       data-focus-view
       className="animate-fade-in fixed inset-0 z-50 flex flex-col bg-bg px-5 pt-[calc(var(--safe-t)+12px)] pb-[calc(var(--safe-b)+20px)]"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex h-11 items-center justify-between">
         <p className="t-label">Focus mode</p>
-        <button type="button" onClick={onClose} className="pressable -mr-2 flex h-11 items-center gap-1.5 px-2 text-[13px] font-semibold text-ink-2">
-          <Minimize2 size={16} aria-hidden />
-          Exit
+        <button type="button" onClick={onClose} aria-label="Exit" title="Exit" className="pressable glass -mr-1 flex size-11 items-center justify-center rounded-full text-ink">
+          <Minimize2 size={18} strokeWidth={1.75} aria-hidden />
         </button>
       </div>
       <div className="flex flex-1 items-center justify-center">
         <RunningTimer live={live} clock={clock} now={now} big />
       </div>
-      <p className="mx-auto max-w-[300px] text-center text-[13px] text-ink-3">
-        {awake ? "Screen stays on. " : ""}
-        Leave this app and the time away is recorded. Turn on your phone&apos;s own Focus to block the rest.
-      </p>
+      <p className="t-caption mx-auto max-w-[300px] text-center text-ink-2">{awake ? "Screen stays on. " : ""}Leaving is recorded.</p>
     </div>
   );
 }

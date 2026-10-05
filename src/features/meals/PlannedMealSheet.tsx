@@ -10,7 +10,7 @@ import { displayName } from "@/lib/logic/mealsGrocery";
 import { applySwap, summarizePlan, swapOptions, type SwapOption, type SwapScope } from "@/lib/logic/mealsPlanner";
 import type { DateStr, MealSlot, Recipe } from "@/lib/types";
 import { logCooked, savePlan, type Planned } from "./data";
-import { Est, fmt, macroLine } from "./parts";
+import { Est, IngredientList, MacroRow, StepList, fmt, macroLine } from "./parts";
 import type { MealsState } from "./useMeals";
 
 function signedMoney(n: number): string {
@@ -127,20 +127,18 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
         open
         onClose={onClose}
         title={`Swap ${SLOT_LABEL[slot].toLowerCase()}`}
-        subtitle={`Instead of ${recipe.name}. Best fit first.`}
+        subtitle={`For ${recipe.name}. Best fit first.`}
         footer={
           <div className="flex flex-col gap-2.5">
             {choice ? (
-              <div className="rounded-[14px] bg-surface-2 px-4 py-3 text-[14px] leading-snug" role="status" data-swap-effect>
-                <p className="text-ink">
-                  <span className="text-ink-3">Day: </span>
-                  <span className={cn("tnum", !choice.day.ok && "text-warn")}>{macroLine(choice.day.calories, choice.day.protein)}</span>
+              <div className="t-sub flex flex-col gap-0.5 px-1" role="status" data-swap-effect>
+                <p>
+                  Day: <span className={choice.day.ok ? "text-ink" : "text-warn"}>{macroLine(choice.day.calories, choice.day.protein)}</span>
                   {choice.day.ok ? null : <span className="text-warn"> (off target)</span>}
                 </p>
-                <p className="mt-0.5 text-ink">
-                  <span className="text-ink-3">Week: </span>
-                  <Est>{dollars(choice.weekCost)}</Est>
-                  <span className={cn("tnum", choice.overBudget ? "text-warn" : "text-ink-2")}>
+                <p>
+                  Week: <Est className="text-ink">{dollars(choice.weekCost)}</Est>
+                  <span className={choice.overBudget ? "text-warn" : undefined}>
                     {" "}
                     ({signedMoney(choice.costDelta)}
                     {choice.overBudget ? ", over budget" : ""})
@@ -149,10 +147,10 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
               </div>
             ) : null}
             <div className="flex gap-2.5">
-              <Button variant="secondary" onClick={() => setView("cook")} disabled={busy}>
+              <Button variant="secondary" size="lg" onClick={() => setView("cook")} disabled={busy}>
                 Back
               </Button>
-              <Button full onClick={confirmSwap} disabled={!choice} loading={busy}>
+              <Button full size="lg" onClick={confirmSwap} disabled={!choice} loading={busy}>
                 {choice ? "Confirm swap" : "Pick a meal"}
               </Button>
             </div>
@@ -162,7 +160,6 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
         {repeats.length > 1 ? (
           <SegmentedControl
             label="How much to swap"
-            size="sm"
             value={scope}
             onChange={(v) => {
               setScope(v);
@@ -186,27 +183,27 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
                     haptics.tap();
                     setPicked(o.recipe.id);
                   }}
-                  className={cn("pressable flex w-full items-center gap-3 rounded-[14px] border px-4 py-3 text-left", on ? "border-ink bg-surface-2" : "border-line")}
+                  className={cn("pressable flex min-h-[60px] w-full items-center gap-3 rounded-[20px] border px-4 py-3 text-left", on ? "border-ink bg-surface-3" : "border-line bg-surface-2")}
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[16px] font-medium text-ink">{o.recipe.name}</span>
-                    <span className="mt-0.5 block text-[13px] text-ink-3">
+                    <span className="block truncate text-[15px] text-ink">{o.recipe.name}</span>
+                    <span className="t-caption mt-1 block text-ink-2">
                       {servingsLabel(o.servings)}, day {macroLine(o.day.calories, o.day.protein)}
                     </span>
-                    <span className="mt-0.5 flex flex-wrap gap-x-2 text-[13px]">
-                      {o.liked ? <span className="text-ink-2">You like this</span> : null}
+                    <span className="t-caption mt-0.5 flex flex-wrap gap-x-2 empty:hidden">
+                      {o.liked ? <span className="text-accent">You like this</span> : null}
                       {!o.day.ok ? <span className="text-warn">Day off target</span> : null}
                       {o.overBudget ? <span className="text-warn">Over budget</span> : null}
                     </span>
                   </span>
-                  <span className={cn("tnum shrink-0 text-[14px]", o.costDelta > 0.004 ? "text-ink-2" : "text-ink")}>{signedMoney(o.costDelta)}</span>
+                  <span className="shrink-0 text-[14px] text-ink">{signedMoney(o.costDelta)}</span>
                 </button>
               </li>
             );
           })}
         </ul>
         {options.length === 0 ? <p className="t-sub mt-4">No other {SLOT_LABEL[slot].toLowerCase()} recipes fit your dislikes. Add one in Recipes.</p> : null}
-        <p className="mt-3 text-[13px] text-ink-3">Dollar changes are estimates for the week&apos;s grocery list.</p>
+        <p className="t-caption mt-3 px-1 text-ink-2">Dollar changes are estimates.</p>
       </Sheet>
     );
   }
@@ -220,88 +217,62 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
       footer={
         changed ? (
           <div className="flex gap-2.5">
-            <Button variant="secondary" onClick={() => setDraft(null)} disabled={busy}>
+            <Button variant="secondary" size="lg" onClick={() => setDraft(null)} disabled={busy}>
               Put back
             </Button>
-            <Button full onClick={savePortion} loading={busy} icon={<Check size={18} aria-hidden />}>
+            <Button full size="lg" onClick={savePortion} loading={busy} icon={<Check size={18} aria-hidden />}>
               Save portion
             </Button>
           </div>
         ) : (
           <div className="flex gap-2.5">
-            <Button variant="secondary" onClick={() => setView("swap")} disabled={busy || logged} icon={<ArrowLeftRight size={18} aria-hidden />}>
+            <Button variant="secondary" size="lg" onClick={() => setView("swap")} disabled={busy || logged} icon={<ArrowLeftRight size={18} strokeWidth={1.75} aria-hidden />}>
               Swap
             </Button>
-            <Button full onClick={log} disabled={!canLog} loading={busy} icon={logged ? <Check size={18} aria-hidden /> : <ChefHat size={18} aria-hidden />}>
+            <Button full size="lg" onClick={log} disabled={!canLog} loading={busy} icon={logged ? <Check size={18} aria-hidden /> : <ChefHat size={18} aria-hidden />}>
               {logged ? "Logged" : date > m.today ? "Log it on the day" : "Cooked, log it"}
             </Button>
           </div>
         )
       }
     >
-      <div className="grid grid-cols-4 gap-2 rounded-[14px] bg-surface-2 px-3 py-3 text-center">
-        {(
-          [
-            ["kcal", fmt(recipe.calories * portion)],
-            ["protein", `${fmt(recipe.protein * portion)}g`],
-            ["carbs", `${fmt(recipe.carbs * portion)}g`],
-            ["fat", `${fmt(recipe.fat * portion)}g`],
-          ] as const
-        ).map(([k, v]) => (
-          <div key={k}>
-            <p className="t-num-sm tnum">{v}</p>
-            <p className="t-label mt-0.5">{k}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-3 flex items-center gap-3" data-portion>
+      <MacroRow calories={recipe.calories * portion} protein={recipe.protein * portion} carbs={recipe.carbs * portion} fat={recipe.fat * portion} />
+      <div className="mt-5 flex items-center gap-3 rounded-[20px] border border-line bg-surface-2 py-2.5 pr-2.5 pl-4" data-portion>
         <div className="min-w-0 flex-1">
           <p className="t-label">Your portion</p>
-          <p className="mt-0.5 text-[17px] font-semibold tracking-[-0.01em] text-ink" data-portion-value>
+          <p className="mt-1.5 text-[16px] font-medium tracking-[-0.01em] text-ink" data-portion-value>
             {servingsLabel(portion)}
-            <span className="font-normal text-ink-2">
+            <span className="text-[14px] font-normal tracking-normal text-ink-2">
               , <Est>{dollars(round(recipe.est_cost * portion, 2))}</Est>
             </span>
           </p>
         </div>
         {logged ? null : (
           <div className="flex shrink-0 gap-2">
-            <button
-              type="button"
-              aria-label="Smaller portion"
-              disabled={busy || portion <= PORTION_MIN}
-              onClick={() => step(-PORTION_STEP)}
-              className="pressable flex size-11 items-center justify-center rounded-[12px] border border-line bg-surface-2 text-ink disabled:opacity-40"
-            >
-              <Minus size={18} aria-hidden />
+            <button type="button" aria-label="Smaller portion" disabled={busy || portion <= PORTION_MIN} onClick={() => step(-PORTION_STEP)} className="pressable flex size-11 items-center justify-center rounded-full border border-line bg-surface-3 text-ink disabled:text-ink-3">
+              <Minus size={18} strokeWidth={1.75} aria-hidden />
             </button>
-            <button
-              type="button"
-              aria-label="Larger portion"
-              disabled={busy || portion >= PORTION_MAX}
-              onClick={() => step(PORTION_STEP)}
-              className="pressable flex size-11 items-center justify-center rounded-[12px] border border-line bg-surface-2 text-ink disabled:opacity-40"
-            >
-              <Plus size={18} aria-hidden />
+            <button type="button" aria-label="Larger portion" disabled={busy || portion >= PORTION_MAX} onClick={() => step(PORTION_STEP)} className="pressable flex size-11 items-center justify-center rounded-full border border-line bg-surface-3 text-ink disabled:text-ink-3">
+              <Plus size={18} strokeWidth={1.75} aria-hidden />
             </button>
           </div>
         )}
       </div>
       {day && preview ? (
-        <div className="mt-3 rounded-[14px] bg-surface-2 px-4 py-3 text-[14px] leading-snug" role="status" data-portion-effect>
-          <p className="text-ink">
-            <span className="text-ink-3">Day: </span>
-            <span className={cn("tnum", !day.ok && "text-warn")} data-portion-day>
+        <div className="t-sub mt-3 flex flex-col gap-0.5 px-1" role="status" data-portion-effect>
+          <p>
+            Day:{" "}
+            <span className={day.ok ? "text-ink" : "text-warn"} data-portion-day>
               {macroLine(day.calories, day.protein)}
             </span>
             {day.ok ? null : <span className="text-warn"> (off target)</span>}
           </p>
-          <p className="mt-0.5 text-ink">
-            <span className="text-ink-3">Week: </span>
-            <span data-portion-week>
+          <p>
+            Week:{" "}
+            <span className="text-ink" data-portion-week>
               <Est>{dollars(preview.cost)}</Est>
             </span>
-            <span className={cn("tnum", preview.cost > preview.budget + 0.004 ? "text-warn" : "text-ink-2")}>
+            <span className={preview.cost > preview.budget + 0.004 ? "text-warn" : undefined}>
               {" "}
               of {dollars(preview.budget)}
               {changed && m.summary ? ` (${signedMoney(preview.cost - m.summary.cost)})` : ""}
@@ -314,7 +285,6 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
         <div className="mt-4">
           <SegmentedControl
             label="Amounts for"
-            size="sm"
             value={amount}
             onChange={setAmount}
             options={[
@@ -325,30 +295,12 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
         </div>
       ) : null}
 
-      <h3 className="t-label mt-5 mb-2">Ingredients{amount === "batch" ? `, ${servingsLabel(weekServings)}` : ""}</h3>
-      <ul className="divide-y divide-line rounded-[14px] border border-line">
-        {recipe.ingredients.map((i) => (
-          <li key={`${i.name}-${i.unit}`} className="flex items-baseline justify-between gap-3 px-4 py-2.5">
-            <span className="min-w-0 text-[15px] text-ink">{displayName(i.name)}</span>
-            <span className="tnum shrink-0 text-[15px] text-ink-2">{amountLabel(i.quantity * scale, i.unit)}</span>
-          </li>
-        ))}
-      </ul>
+      <h3 className="t-label mt-6 mb-2.5">Ingredients{amount === "batch" ? `, ${servingsLabel(weekServings)}` : ""}</h3>
+      <IngredientList rows={recipe.ingredients.map((i) => ({ key: `${i.name}-${i.unit}`, name: displayName(i.name), amount: amountLabel(i.quantity * scale, i.unit) }))} />
 
-      <h3 className="t-label mt-5 mb-2">Steps</h3>
-      <ol className="flex flex-col gap-3">
-        {recipe.steps.map((s, i) => (
-          <li key={i} className="flex gap-3 text-[15px] leading-snug text-ink">
-            <span className="tnum flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-3 text-[12px] font-semibold text-ink-2">{i + 1}</span>
-            <span>{s}</span>
-          </li>
-        ))}
-      </ol>
-      {recipe.servings > 1 ? (
-        <p className="mt-4 text-[13px] text-ink-3">
-          The recipe as written makes {recipe.servings} servings. Steps describe the full batch, amounts above are scaled.
-        </p>
-      ) : null}
+      <h3 className="t-label mt-6 mb-3">Steps</h3>
+      <StepList steps={recipe.steps} />
+      {recipe.servings > 1 ? <p className="t-caption mt-4 text-ink-2">Steps describe the full batch of {recipe.servings} servings. Amounts above are scaled.</p> : null}
     </Sheet>
   );
 }

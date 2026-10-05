@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { Dumbbell } from "lucide-react";
-import { Card, ListRow, Section, cn } from "@/components/ui";
+import { SectionLabel, cn } from "@/components/ui";
 import { useList, useToday, useWorkouts } from "@/lib/db/hooks";
 import { workoutsFor } from "@/lib/db/helpers";
 import { weekdayOf } from "@/lib/logic/dates";
@@ -38,17 +37,26 @@ export function WorkoutRow() {
   const loggable = isLoggable(main) && !!main;
   const p = loggable && main ? workoutProgress(main, sets, today) : null;
   return (
-    <Section title="Workout">
-      <Card padded={false} className="overflow-hidden">
-        <ListRow
-          href="/body/workout"
-          left={<Dumbbell size={20} aria-hidden />}
-          title="Log workout"
-          sub={main ? (loggable ? main.name : `${main.name} today, nothing to log`) : "No workout set for today"}
-          right={p ? <span className={cn("tnum", p.complete && "text-accent")}>{p.logged} of {p.total} sets</span> : undefined}
-        />
-      </Card>
-    </Section>
+    <section className="mt-7" aria-label="Workout">
+      <SectionLabel className="mb-3">Workout</SectionLabel>
+      <Link href="/body/workout" className="pressable tile flex min-h-[64px] items-center justify-between gap-3 rounded-[20px] px-4 py-3">
+        <span className="min-w-0">
+          <span className="block text-[15px] text-ink">Log workout</span>
+          <span className="t-caption mt-0.5 block truncate text-ink-2">{main ? (loggable ? main.name : `${main.name} today, nothing to log`) : "No workout set for today"}</span>
+        </span>
+        <span className="flex shrink-0 items-center gap-1.5">
+          {p ? (
+            <span className="flex items-baseline gap-1.5">
+              <span className={cn("t-value", p.complete && "text-accent")}>
+                {p.logged}/{p.total}
+              </span>
+              <span className="t-caption text-ink-2">sets</span>
+            </span>
+          ) : null}
+          <ChevronRight size={16} className="text-ink-3" aria-hidden />
+        </span>
+      </Link>
+    </section>
   );
 }
 

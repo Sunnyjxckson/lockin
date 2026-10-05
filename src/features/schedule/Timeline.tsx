@@ -13,7 +13,7 @@
 // While a block is being resized the preview already shows the flexible
 // blocks after it shifting, using the same pure function the save uses.
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { Lock } from "lucide-react";
 import { cn } from "@/components/ui";
 import type { DayBlock } from "@/lib/blocks";
@@ -287,16 +287,22 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
       >
         {hours.map((m) => (
           <div key={m} className="absolute right-0 left-0" style={{ top: y(m) }}>
-            <span className="tnum absolute top-[-7px] left-0 w-[42px] text-right text-[11px] leading-none font-medium text-ink-3">
-              {m === DAY_END ? "12 AM" : hourLabel(m)}
-            </span>
-            <span className="absolute right-0 block h-px bg-line" style={{ left: GUTTER }} />
+            <span className="t-caption absolute top-[-7px] left-0 w-[42px] text-right leading-none text-ink-2">{m === DAY_END ? "12 AM" : hourLabel(m)}</span>
+            <span className="absolute right-0 block h-px bg-hair" style={{ left: GUTTER }} />
           </div>
         ))}
       </div>
 
+      {/* now, in the gaps: it sits under the blocks, and a live block draws its own line */}
+      {nowInView && nowMin !== null ? (
+        <div className="pointer-events-none absolute right-0 left-0 z-[5]" style={{ top: y(nowMin) }} data-now-line>
+          <span className="absolute right-0 block h-[2px] -translate-y-px rounded-full bg-accent" style={{ left: GUTTER - 2 }} />
+        </div>
+      ) : null}
+
       {/* blocks */}
-      <div className="absolute top-0 right-0 bottom-0" style={{ left: GUTTER + 4 }}>
+      {/* the layer lets taps through to the gaps. Only the blocks take them. */}
+      <div className="pointer-events-none absolute top-0 right-0 bottom-0" style={{ left: GUTTER + 4 }}>
         {shown.map((b) => {
           const span = spanOf(b);
           const dragging = draft?.id === b.id;
@@ -306,21 +312,49 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
           const was = original.get(b.id);
           const shifted = !!draft && !dragging && !!was && (was.start !== b.start || was.end !== b.end);
           const timer = nowSeconds !== null ? timerState(b, nowSeconds) : null;
-          const live = timer?.phase === "live";
+          const live = timer?.phase === "live" && !dragging;
           const past = timer?.phase === "over";
           const alert = b.kind === "free" && past && !cleared.has(b.id) && (timer?.overBy ?? 0) <= 30 * 60;
           const Icon = b.source === "calendar" ? CALENDAR_ICON : KIND_ICON[b.kind];
           const tall = h >= 46;
           const tiny = h < 30;
+          // Under about 45 minutes there is one line of text, and under 35 no room for a grip that is not also the tap target.
+          const line = h < 62;
+          const grip = h >= 44 && !disabled;
           const warn = flagged.has(b.id);
+          // One look per state. Live is the gradient. Fixed blocks are solid tiles with a rail
+          // and a lock, flexible ones are glass. A block that is over is only an outline.
+          const look = dragging
+            ? "z-30 cursor-grabbing border border-ink bg-surface-3 shadow-float transition-none"
+            : live
+              ? "grad shadow-glow z-10 cursor-pointer border border-transparent"
+              : alert
+                ? "z-10 cursor-pointer border border-warn-line bg-warn-soft"
+                : past
+                  ? "z-10 cursor-pointer border border-tile-line"
+                  : b.flexible
+                    ? "glass z-10 cursor-pointer"
+                    : "tile z-10 cursor-pointer";
+          const main = live ? "text-accent-ink" : past && !alert && !dragging ? "text-ink-2" : "text-ink";
+          const quiet = live ? "text-accent-ink-2" : "text-ink-2";
+          const box = {
+            top,
+            height: h,
+            left: `calc(${(lane.lane / lane.lanes) * 100}% + ${lane.lane > 0 ? 2 : 0}px)`,
+            width: `calc(${100 / lane.lanes}% - ${lane.lanes > 1 ? 2 : 0}px)`,
+          };
+          const move = "transition-[top,height,left,width,box-shadow,background-color] duration-150 ease-out motion-reduce:transition-none";
           return (
+            <Fragment key={b.id}>
+            {/* glass lets the page through, so a plate of the page color keeps the hour lines out of the block */}
+            {!dragging ? <div className={cn("absolute bg-bg", move, tiny ? "rounded-[10px]" : "rounded-[16px]")} style={box} aria-hidden /> : null}
             <div
-              key={b.id}
               role="button"
               tabIndex={0}
               aria-label={`${b.block_name}, ${formatTime(b.start)} to ${formatTime(b.end)}${b.flexible ? "" : ", fixed"}. Edit`}
               data-block={b.id}
               data-name={b.block_name}
+              data-live={live ? "" : undefined}
               onPointerDown={(e) => onDown(e, b, "move")}
               onPointerMove={onMove}
               onPointerUp={onUp}
@@ -336,47 +370,44 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
                 }
               }}
               className={cn(
-                "absolute overflow-hidden rounded-[12px] border text-left outline-offset-2",
-                "transition-[top,height,left,width,box-shadow,opacity,background-color] duration-150 ease-out motion-reduce:transition-none",
-                dragging
-                  ? "z-30 cursor-grabbing border-ink bg-surface-3 shadow-[0_14px_40px_var(--shadow)] transition-none"
-                  : "z-10 cursor-pointer bg-surface",
-                !dragging && (alert ? "border-warn bg-warn-soft" : warn ? "border-warn/60" : live ? "border-ink-2" : shifted ? "border-ink-3" : "border-line"),
-                past && !alert && !dragging && "opacity-55",
+                "pointer-events-auto absolute overflow-hidden text-left outline-offset-2",
+                tiny ? "rounded-[10px]" : "rounded-[16px]",
+                move,
+                look,
+                !dragging && !live && !alert && (warn ? "border-warn" : shifted ? "border-ink-2" : null),
               )}
-              style={{
-                top,
-                height: h,
-                left: `calc(${(lane.lane / lane.lanes) * 100}% + ${lane.lane > 0 ? 2 : 0}px)`,
-                width: `calc(${100 / lane.lanes}% - ${lane.lanes > 1 ? 2 : 0}px)`,
-              }}
+              style={box}
             >
-              {!b.flexible ? <span className="absolute top-0 bottom-0 left-0 w-[3px] bg-ink-3" aria-hidden /> : null}
-              <div className={cn("flex h-full min-w-0 gap-2.5 pr-2.5", b.flexible ? "pl-3" : "pl-3.5", tiny ? "items-center" : "items-start pt-2")}>
-                {!tiny && lane.lanes === 1 ? <Icon size={16} className="mt-[2px] shrink-0 text-ink-3" aria-hidden /> : null}
-                <div className={cn("min-w-0 flex-1", tiny && "flex items-baseline gap-2")}>
-                  <p className={cn("truncate font-semibold tracking-[-0.01em] text-ink", tiny ? "text-[13px]" : "text-[15px] leading-tight")}>
-                    {b.block_name}
-                  </p>
-                  <p className={cn("tnum truncate text-ink-2", tiny ? "text-[12px]" : "mt-0.5 text-[12.5px]", (dragging || shifted) && "font-semibold text-ink")}>
-                    {formatTime(b.start)} to {formatTime(b.end)}
-                    {tall && lane.lanes === 1 ? <span className="text-ink-3">{`  ${formatDuration(span.e - span.s)}`}</span> : null}
-                  </p>
+              {!b.flexible && !live ? <span className={cn("absolute top-0 bottom-0 left-0 w-[3px]", past ? "bg-ink-3" : "bg-ink-2")} aria-hidden /> : null}
+              {/* where now is inside the block that is live */}
+              {live && timer && !line ? <span className="pointer-events-none absolute right-0 left-0 h-[2px] -translate-y-px bg-accent-ink" style={{ top: `${timer.progress * 100}%` }} aria-hidden /> : null}
+              <div className={cn("relative flex h-full min-w-0 gap-2.5 pr-3", b.flexible || live ? "pl-3.5" : "pl-4", tiny || !grip ? "items-center" : line ? "items-start pt-2" : "items-start pt-2.5")}>
+                {!tiny && lane.lanes === 1 ? <Icon size={16} strokeWidth={1.75} className={cn("shrink-0", !line && "mt-[2px]", quiet)} aria-hidden /> : null}
+                <div className={cn("min-w-0 flex-1", line && "flex items-baseline gap-2")}>
+                  <p className={cn("truncate font-medium tracking-[-0.01em]", main, tiny ? "text-[13px]" : "text-[15px] leading-tight")}>{b.block_name}</p>
+                  {line && (lane.lanes > 1 || (b.kind === "free" && live)) && !dragging ? null : (
+                    <p className={cn("t-caption truncate", line ? "shrink-0" : "mt-1", dragging || shifted ? "text-ink" : quiet)}>
+                      {formatTime(b.start)} to {formatTime(b.end)}
+                      {tall && lane.lanes === 1 ? `, ${formatDuration(span.e - span.s)}` : ""}
+                    </p>
+                  )}
                 </div>
                 {b.kind === "free" && live && timer ? (
-                  <span className="tnum shrink-0 self-center text-[20px] leading-none font-semibold tracking-[-0.03em] text-ink" data-countdown>
+                  <span className="tabular shrink-0 self-center text-[20px] leading-none font-medium tracking-[-0.03em] text-accent-ink" data-countdown>
                     {formatCountdown(timer.remaining)}
                   </span>
                 ) : alert ? (
-                  <span className="shrink-0 self-center text-[12px] font-semibold tracking-[0.04em] text-warn uppercase">Time is up</span>
+                  <span className="t-label shrink-0 self-center text-warn">Time is up</span>
                 ) : live ? (
-                  <span className="animate-pulse-dot mt-1.5 size-2 shrink-0 rounded-full bg-ink" aria-label="Now" />
+                  <span className={cn("t-label shrink-0 text-accent-ink", line && "self-center")} aria-label="Now">
+                    Now
+                  </span>
                 ) : !b.flexible && !tiny ? (
-                  <Lock size={13} className="mt-[3px] shrink-0 text-ink-3" aria-label="Fixed" />
+                  <Lock size={13} strokeWidth={1.75} className={cn("shrink-0", !line && "mt-[3px]", quiet)} aria-label="Fixed" />
                 ) : null}
               </div>
               {/* the resize grip */}
-              {h >= 34 && !disabled ? (
+              {grip ? (
                 <div
                   data-grip={b.id}
                   aria-hidden
@@ -385,36 +416,30 @@ export function Timeline({ blocks, nowSeconds, flagged, cleared, disabled = fals
                   onPointerMove={onMove}
                   onPointerUp={onUp}
                   onPointerCancel={() => end(false)}
-                  className="absolute bottom-0 left-1/2 flex h-[20px] w-[72px] -translate-x-1/2 cursor-ns-resize touch-none items-end justify-center pb-[4px]"
+                  className="absolute bottom-0 left-1/2 flex h-[22px] w-[88px] -translate-x-1/2 cursor-ns-resize touch-none items-end justify-center pb-[5px]"
                 >
-                  <span className={cn("h-[4px] w-8 rounded-full", dragging && draft.mode === "resize" ? "bg-ink" : "bg-line-strong")} />
+                  <span className={cn("h-[3px] w-7 rounded-full", live ? "bg-accent-ink-2" : dragging && draft.mode === "resize" ? "bg-ink" : past ? "bg-ink-3" : "bg-ink-2")} />
                 </div>
               ) : null}
             </div>
+            </Fragment>
           );
         })}
       </div>
 
-      {/* the time being dragged to, in the gutter */}
+      {/* the time in the gutter: now, or the time being dragged to */}
       {draft ? (
         <div
-          className="tnum pointer-events-none absolute left-0 z-40 w-[46px] rounded-[7px] bg-ink py-[3px] text-center text-[11px] leading-none font-bold text-bg"
-          style={{ top: y(draft.mode === "move" ? draft.s : draft.e) - 9 }}
+          className="pointer-events-none absolute left-0 z-40 w-[46px] rounded-full bg-ink py-[4px] text-center text-[11px] leading-none font-medium text-bg"
+          style={{ top: y(draft.mode === "move" ? draft.s : draft.e) - 10 }}
         >
           {formatTime(timeFromMinutes(draft.mode === "move" ? draft.s : draft.e)).replace(" ", "")}
         </div>
-      ) : null}
-
-      {/* now */}
-      {nowInView && nowMin !== null ? (
-        <div className="pointer-events-none absolute right-0 left-0 z-20" style={{ top: y(nowMin) }} data-now-line>
-          {!draft ? (
-            <span className="tnum absolute top-[-9px] left-0 w-[46px] rounded-[7px] bg-ink py-[3px] text-center text-[11px] leading-none font-bold text-bg">
-              {formatTime(timeFromMinutes(Math.floor(nowMin))).replace(" ", "")}
-            </span>
-          ) : null}
-          <span className="absolute right-0 block h-[2px] rounded-full bg-ink" style={{ left: GUTTER - 2 }} />
-          <span className="absolute top-[-3px] size-2 rounded-full bg-ink" style={{ left: GUTTER - 4 }} />
+      ) : nowInView && nowMin !== null ? (
+        <div className="pointer-events-none absolute left-0 z-20" style={{ top: y(nowMin) - 10 }}>
+          <span className="grad block w-[46px] rounded-full py-[4px] text-center text-[11px] leading-none font-medium">
+            {formatTime(timeFromMinutes(Math.floor(nowMin))).replace(" ", "")}
+          </span>
         </div>
       ) : null}
     </div>

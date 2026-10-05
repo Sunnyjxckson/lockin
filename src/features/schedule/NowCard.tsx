@@ -5,10 +5,11 @@
 // stays until it is answered.
 
 import { useEffect, useRef } from "react";
-import { Button, Card, ProgressBar, cn } from "@/components/ui";
+import { Button, GlassCard, ProgressBar, cn } from "@/components/ui";
 import { nowAndNext, type DayBlock } from "@/lib/blocks";
 import { haptics } from "@/lib/haptics";
 import { formatDuration, formatTime, timeFromMinutes } from "@/lib/logic/dates";
+import { ClockText } from "@/features/focus/ClockText";
 import { formatCountdown, freeTimeFocus, timerState } from "@/lib/logic/schedule";
 
 export interface NowCardProps {
@@ -38,19 +39,22 @@ export function NowCard({ blocks, nowSeconds, cleared, busy, onStillGoing, onCle
   if (focus && focus.timer.phase === "over") {
     const b = focus.block;
     return (
-      <Card className="animate-shake border-warn bg-warn-soft" role="alert" data-timer="over">
-        <p className="t-label text-warn">Time is up</p>
-        <p className="t-h2 mt-2">{b.block_name} ended at {formatTime(b.end)}</p>
-        <p className="tnum t-sub mt-1">{focus.timer.overBy < 60 ? "Just now" : `${formatDuration(Math.floor(focus.timer.overBy / 60))} over`}</p>
+      <div className="animate-shake rounded-[26px] border border-warn-line bg-warn-soft px-5 py-[18px]" role="alert" data-timer="over">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="t-label text-warn">Time is up</p>
+          <p className="t-sub shrink-0">{focus.timer.overBy < 60 ? "Just now" : `${formatDuration(Math.floor(focus.timer.overBy / 60))} over`}</p>
+        </div>
+        <p className="t-h1 mt-1.5 truncate">{b.block_name}</p>
+        <p className="t-sub mt-1">Ended at {formatTime(b.end)}</p>
         <div className="mt-4 flex gap-2">
-          <Button full onClick={() => onClear(b)}>
+          <Button full variant="solid" onClick={() => onClear(b)}>
             Done
           </Button>
           <Button full variant="secondary" disabled={busy} onClick={() => onStillGoing(b)}>
             Still going
           </Button>
         </div>
-      </Card>
+      </div>
     );
   }
 
@@ -58,25 +62,20 @@ export function NowCard({ blocks, nowSeconds, cleared, busy, onStillGoing, onCle
     const b = focus.block;
     const low = focus.timer.remaining <= 5 * 60;
     return (
-      <Card data-timer="live">
-        <div className="flex items-center justify-between">
-          <p className="t-label flex items-center gap-2">
-            <span className="animate-pulse-dot size-1.5 rounded-full bg-ink" aria-hidden />
+      <GlassCard data-timer="live">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="t-label flex items-center gap-2 text-accent">
+            <span className="animate-pulse-dot size-1.5 rounded-full bg-accent" aria-hidden />
             Free time
           </p>
-          <p className="tnum text-[13px] text-ink-2">
-            {formatTime(b.start)} to {formatTime(b.end)}
-          </p>
+          <p className="t-sub shrink-0">Until {formatTime(b.end)}</p>
         </div>
-        <div className="mt-2 flex items-end justify-between gap-3">
-          <p className="t-h2 min-w-0 truncate pb-1.5">{b.block_name}</p>
-          <p className={cn("t-display shrink-0", low && "text-warn")} aria-live="off" data-countdown>
-            {formatCountdown(focus.timer.remaining)}
-          </p>
-        </div>
-        <ProgressBar value={focus.timer.progress} height={4} tone={low ? "warn" : "ink"} className="mt-3" label="Time through this block" />
-        <p className="mt-3 text-[13px] text-ink-3">When this hits zero the block is over. Stretch it only if you mean to.</p>
-      </Card>
+        <p className={cn("t-display mt-2", low && "text-warn")} aria-live="off" data-countdown>
+          <ClockText text={formatCountdown(focus.timer.remaining)} />
+        </p>
+        <p className="mt-1 truncate text-[15px] text-ink-2">{b.block_name}</p>
+        <ProgressBar value={focus.timer.progress} tone={low ? "warn" : "accent"} className="mt-3.5" label="Time through this block" />
+      </GlassCard>
     );
   }
 
@@ -86,49 +85,34 @@ export function NowCard({ blocks, nowSeconds, cleared, busy, onStillGoing, onCle
   const progress = now ? timerState(now, nowSeconds).progress : 0;
 
   return (
-    <Card padded={false}>
-      <div className="p-4">
-        <div className="flex items-center justify-between">
-          <p className="t-label flex items-center gap-2">
-            {now ? <span className="animate-pulse-dot size-1.5 rounded-full bg-ink" aria-hidden /> : null}
-            Now
-          </p>
-          {now ? (
-            <p className="tnum text-[13px] text-ink-2">
-              {formatTime(now.start)} to {formatTime(now.end)}
-            </p>
-          ) : null}
-        </div>
+    <GlassCard>
+      <div className="flex items-baseline justify-between gap-3">
+        <p className="t-label flex items-center gap-2 text-accent">
+          {now ? <span className="animate-pulse-dot size-1.5 rounded-full bg-accent" aria-hidden /> : null}
+          Now
+        </p>
+        {now ? <p className="t-sub shrink-0">{formatDuration(minutesLeft ?? 0)} left</p> : null}
+      </div>
+      <div className="mt-1.5 flex items-center justify-between gap-3">
+        <p className="t-h1 min-w-0 truncate">{now ? now.block_name : "Open time"}</p>
         {now ? (
-          <>
-            <div className="mt-2 flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="t-h2 truncate">{now.block_name}</p>
-                <p className="tnum t-sub mt-0.5">{formatDuration(minutesLeft ?? 0)} left</p>
-              </div>
-              <Button variant="secondary" size="sm" disabled={busy} onClick={() => onStillGoing(now)}>
-                Still going
-              </Button>
-            </div>
-            <ProgressBar value={progress} height={4} tone="ink" className="mt-3" label="Time through this block" />
-          </>
+          <Button variant="secondary" size="sm" className="-my-1" disabled={busy} onClick={() => onStillGoing(now)}>
+            Still going
+          </Button>
+        ) : null}
+      </div>
+      <ProgressBar value={progress} className="mt-3.5" label="Time through this block" />
+      <div className="t-sub mt-3 flex items-baseline justify-between gap-3">
+        <span className="shrink-0">Next</span>
+        {next ? (
+          <span className="min-w-0 truncate text-right">
+            {next.block_name} at {formatTime(next.start)}
+            {!now && minutesUntilNext !== null && minutesUntilNext <= 180 ? `, in ${formatDuration(minutesUntilNext)}` : ""}
+          </span>
         ) : (
-          <p className="t-h2 mt-2">Open time</p>
+          <span>Nothing after this</span>
         )}
       </div>
-      {next ? (
-        <div className="flex items-center justify-between gap-3 border-t border-line px-4 py-3">
-          <p className="t-label shrink-0">Next</p>
-          <p className="min-w-0 truncate text-[15px]">
-            <span className="font-medium text-ink">{next.block_name}</span>
-            <span className="tnum text-ink-2">
-              {"  "}
-              {formatTime(next.start)}
-              {minutesUntilNext !== null && minutesUntilNext <= 180 ? `, in ${formatDuration(minutesUntilNext)}` : ""}
-            </span>
-          </p>
-        </div>
-      ) : null}
-    </Card>
+    </GlassCard>
   );
 }

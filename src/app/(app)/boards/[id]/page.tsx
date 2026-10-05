@@ -9,7 +9,7 @@ import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Eye, Images, MoreHorizontal, Plus, SwatchBook } from "lucide-react";
-import { Button, EmptyState, IconButton, PageHeader, Screen, useToast } from "@/components/ui";
+import { ActionButton, Button, EmptyState, IconButton, PageHeader, Screen, useToast } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { BOARD_KIND_LABEL, boardPalette, cleanLink, moveId, sortByLightness } from "@/lib/logic/boards";
 import { useTheme } from "@/lib/theme";
@@ -156,56 +156,56 @@ export default function BoardPage() {
         right={
           <>
             <IconButton label="View full screen" disabled={items.length === 0} onClick={() => setOpen({ kind: "view" })}>
-              <Eye size={22} aria-hidden />
+              <Eye size={20} strokeWidth={1.75} aria-hidden />
             </IconButton>
             <IconButton label="Set the app's look from this board" onClick={() => setOpen({ kind: "look", imageId: null })}>
-              <SwatchBook size={22} aria-hidden />
+              <SwatchBook size={20} strokeWidth={1.75} aria-hidden />
             </IconButton>
             <IconButton label="Board settings" onClick={() => setOpen({ kind: "board" })}>
-              <MoreHorizontal size={22} aria-hidden />
+              <MoreHorizontal size={20} strokeWidth={1.75} aria-hidden />
             </IconButton>
           </>
         }
       />
-      <p className="t-sub" aria-live="polite">
+      <p className="t-sub -mt-1 px-1" aria-live="polite">
         {adding ? `Adding ${Math.min(adding.done + 1, adding.total)} of ${adding.total}` : `${countLabel(items.length)}${wearing ? ". The app is wearing this board" : ""}`}
       </p>
 
       {items.length === 0 ? (
         <EmptyState
-          icon={<Images size={24} aria-hidden />}
+          icon={<Images size={22} strokeWidth={1.75} aria-hidden />}
           title="Nothing here yet"
-          body="Add images from the camera, your photos, the clipboard or the web. Then colors and notes. This is the visual version of the why."
+          body="Images, colors and notes. The why, made visible."
           action={
-            <Button icon={<Plus size={18} aria-hidden />} onClick={() => setOpen({ kind: "add" })}>
+            <Button icon={<Plus size={18} strokeWidth={1.75} aria-hidden />} onClick={() => setOpen({ kind: "add" })}>
               Add the first piece
             </Button>
           }
         />
       ) : (
-        <div className="-mx-3 mt-4">
+        <div className="mt-3">
           {palette.length > 0 ? (
-            <button type="button" aria-label="Set the app's look from this palette" onClick={() => setOpen({ kind: "look", imageId: null })} className="pressable mb-1.5 block w-full">
-              <PaletteStrip colors={palette} height={14} className="rounded-[2px]" />
+            <button type="button" aria-label="Set the app's look from this palette" onClick={() => setOpen({ kind: "look", imageId: null })} className="pressable mb-1 flex min-h-11 w-full items-center">
+              <PaletteStrip colors={palette} height={8} className="rounded-full" />
             </button>
           ) : null}
           <Collage items={items} onOpen={(i) => setOpen({ kind: "item", id: i.id })} onReorder={(next) => void reorderItems(board.id, next)} />
-          <p className="t-sub mt-4 px-3 text-center text-[13px]">Press and hold a piece, then drag, to move it.</p>
+          <p className="t-caption mt-4 text-center text-ink-2">Hold and drag to move a piece.</p>
         </div>
       )}
 
       {items.length > 0 ? (
-        <button
-          type="button"
-          aria-label="Add to board"
+        <ActionButton
+          label="Add to board"
+          size={56}
           onClick={() => {
             haptics.tap();
             setOpen({ kind: "add" });
           }}
-          className="pressable fixed right-5 bottom-[calc(var(--tabbar-h)+var(--safe-b)+16px)] z-30 flex size-14 items-center justify-center rounded-full bg-ink text-bg shadow-[0_8px_30px_var(--shadow)]"
+          className="fixed right-5 bottom-[calc(var(--tabbar-h)+var(--safe-b)+12px)] z-30"
         >
-          <Plus size={26} aria-hidden />
-        </button>
+          <Plus size={24} strokeWidth={1.75} aria-hidden />
+        </ActionButton>
       ) : null}
 
       {open?.kind === "add" ? (

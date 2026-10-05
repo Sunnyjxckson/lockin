@@ -1,7 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { Button, Card, cn, useToast } from "@/components/ui";
+import { Button, cn, useToast } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { BASE_THEMES, THEME_BASES, buildTheme, themeVars } from "@/lib/logic/theme";
 import { useTheme } from "@/lib/theme";
@@ -37,7 +37,7 @@ export function ThemePicker({ className }: { className?: string }) {
                 haptics.tap();
                 void setBase(id).then(() => toast(`${b.name} is on`, { kind: "done" }));
               }}
-              className={cn("pressable relative overflow-hidden rounded-[22px] border text-left", on ? "border-ink" : "border-glass-line")}
+              className={cn("pressable relative overflow-hidden rounded-[24px] border text-left", on ? "border-ink" : "border-glass-line")}
               style={{ background: `radial-gradient(90% 70% at 90% 0%, ${v["--glow-1"]} 0%, transparent 70%), radial-gradient(80% 60% at 0% 100%, ${v["--glow-3"]} 0%, transparent 70%), ${t.bg}`, color: t.ink }}
             >
               <span className="block px-4 pt-4">
@@ -45,7 +45,7 @@ export function ThemePicker({ className }: { className?: string }) {
                   <span className="text-[15px] font-medium tracking-[-0.01em]">{b.name}</span>
                   {on ? (
                     <span className="flex size-5 items-center justify-center rounded-full" style={{ background: t.ink, color: t.bg }}>
-                      <Check size={13} strokeWidth={3} aria-hidden />
+                      <Check size={12} strokeWidth={2} aria-hidden />
                     </span>
                   ) : null}
                 </span>
@@ -73,17 +73,15 @@ export function ThemePicker({ className }: { className?: string }) {
       </div>
 
       {palette ? (
-        <Card className="mt-3 flex items-center justify-between gap-3">
+        <div className="tile mt-3 flex items-center justify-between gap-3 rounded-[20px] py-3 pr-3 pl-4">
           <div className="min-w-0">
-            <p className="text-[15px]">Your palette is on top</p>
-            <p className="t-caption mt-0.5 text-ink-2">
-              {theme.adjusted.length > 0 ? "Some colors were adjusted so everything stays readable." : "Pulled from a board."}
-            </p>
+            <p className="text-[15px] text-ink">Your palette is on top</p>
+            <p className="t-caption mt-0.5 text-ink-2">{theme.adjusted.length > 0 ? "Some colors adjusted to stay readable." : "Pulled from a board."}</p>
           </div>
           <Button variant="secondary" size="sm" onClick={() => void reset().then(() => toast("Back to the base theme", { kind: "done" }))}>
             Reset
           </Button>
-        </Card>
+        </div>
       ) : null}
     </div>
   );

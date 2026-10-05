@@ -1,80 +1,103 @@
 "use client";
 
-// A miniature of the Today screen, drawn with the app's real token classes
-// inside a box that carries its own theme variables. Whatever theme is handed
-// in is what shows, without touching the app around it.
+// A miniature of the Today screen, drawn with the app's real surface
+// utilities (glass, tile, grad) inside a box that carries its own theme
+// variables. Whatever theme is handed in is what shows, lights and gradient
+// included, without touching the app around it.
 
 import type { CSSProperties } from "react";
-import { Check } from "lucide-react";
 import { cn } from "@/components/ui";
 import { themeVars, type Theme } from "@/lib/logic/theme";
 
-function Row({ label, value, done, warn }: { label: string; value?: string; done?: boolean; warn?: boolean }) {
+type TileKind = "off" | "done" | "attention";
+
+function MiniTile({ value, label, kind = "off" }: { value: string; label: string; kind?: TileKind }) {
   return (
-    <div className="flex items-center gap-1.5 px-2 py-[5px]">
-      <span className={cn("flex size-[13px] shrink-0 items-center justify-center rounded-full border", done ? "border-accent bg-accent text-accent-ink" : "border-line-strong")}>
-        {done ? <Check size={8} strokeWidth={4} aria-hidden /> : null}
-      </span>
-      <span className={cn("min-w-0 flex-1 truncate text-[8.5px] font-medium", done ? "text-ink-2" : "text-ink")}>{label}</span>
-      {value ? <span className={cn("tnum rounded-[4px] px-1 py-px text-[7.5px] font-semibold", done ? "bg-accent-soft text-accent" : warn ? "bg-warn-soft text-warn" : "text-ink-3")}>{value}</span> : null}
+    <div
+      className={cn(
+        "flex h-[34px] min-w-0 flex-col justify-between rounded-[8px] px-1.5 pt-1.5 pb-1",
+        kind === "done" ? "grad border border-transparent" : kind === "attention" ? "border border-warn-line bg-warn-soft text-ink" : "tile text-ink",
+      )}
+    >
+      <span className="truncate text-[9px] leading-none font-medium tracking-[-0.02em]">{value}</span>
+      <span className={cn("truncate text-[5.5px] leading-none", kind === "done" ? "text-accent-ink-2" : kind === "attention" ? "text-warn" : "text-ink-2")}>{label}</span>
+    </div>
+  );
+}
+
+function MiniStat({ value, label, fill }: { value: string; label: string; fill: number }) {
+  return (
+    <div className="min-w-0">
+      <p className="text-[10px] leading-none font-medium tracking-[-0.03em] text-ink">{value}</p>
+      <p className="mt-1 text-[4.5px] leading-none tracking-[0.18em] text-ink-2 uppercase">{label}</p>
+      <div className="mt-1 h-px overflow-hidden rounded-full bg-hair">
+        <div className="grad-line h-full" style={{ width: `${fill * 100}%` }} />
+      </div>
     </div>
   );
 }
 
 export function MiniToday({ theme, className }: { theme: Theme; className?: string }) {
-  const r = 17;
-  const c = 2 * Math.PI * r;
   return (
     <div
       aria-hidden
       style={{ ...(themeVars(theme) as CSSProperties), colorScheme: theme.scheme }}
-      className={cn("pointer-events-none flex w-[184px] shrink-0 flex-col overflow-hidden rounded-[20px] border border-line-strong bg-bg text-ink shadow-[0_10px_30px_var(--shadow)] select-none", className)}
+      className={cn("pointer-events-none relative flex w-[184px] shrink-0 flex-col overflow-hidden rounded-[22px] border border-glass-line bg-bg text-ink shadow-float select-none", className)}
     >
-      <div className="flex items-center justify-between px-3 pt-3.5 pb-2">
-        <div>
-          <p className="text-[6.5px] font-semibold tracking-[0.1em] text-ink-3 uppercase">Monday, Oct 5</p>
-          <p className="mt-0.5 text-[17px] leading-none font-bold tracking-[-0.04em]">Day 12</p>
-          <p className="mt-1 text-[7px] text-ink-2">of 30</p>
+      {/* The three lights, as on the page: plum top right, amber at the left edge, indigo under the bottom. */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(70% 38% at 85% 0%, var(--glow-1) 0%, transparent 70%), radial-gradient(60% 30% at 0% 22%, var(--glow-2) 0%, transparent 70%), radial-gradient(80% 40% at 50% 110%, var(--glow-3) 0%, transparent 70%)",
+        }}
+      />
+      <div className="relative flex flex-1 flex-col px-2.5 pt-3 pb-2">
+        <div className="flex items-center justify-between">
+          <p className="text-[5px] font-medium tracking-[0.18em] text-ink-2 uppercase">Lock In</p>
+          <span className="grad size-2.5 rounded-full" />
         </div>
-        <svg width="44" height="44" viewBox="0 0 44 44">
-          <circle cx="22" cy="22" r={r} fill="none" stroke="var(--surface-3)" strokeWidth="4" />
-          <circle cx="22" cy="22" r={r} fill="none" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round" strokeDasharray={`${c * 0.66} ${c}`} transform="rotate(-90 22 22)" />
-          <text x="22" y="25" textAnchor="middle" fontSize="9" fontWeight="700" fill="var(--ink)">
-            66%
-          </text>
-        </svg>
-      </div>
+        <p className="mt-2 text-[16px] leading-[1.06] font-medium tracking-[-0.035em]">
+          Good morning,
+          <br />
+          Sunny.
+        </p>
+        <p className="mt-1.5 text-[6px] text-ink-2">Thursday, October 8. Day 4 of 30.</p>
 
-      <div className="mx-2 rounded-[9px] border border-line bg-surface px-2 py-1.5">
-        <p className="text-[6px] font-semibold tracking-[0.1em] text-ink-3 uppercase">Now</p>
-        <div className="flex items-baseline justify-between">
-          <p className="text-[10px] font-semibold tracking-[-0.01em]">Study block</p>
-          <p className="tnum text-[7px] text-ink-2">42m left</p>
+        <div className="glass mt-2.5 rounded-[11px] px-2 py-2">
+          <div className="flex items-center justify-between">
+            <p className="text-[4.5px] font-medium tracking-[0.18em] text-accent uppercase">Now</p>
+            <p className="text-[5.5px] text-ink-2">1h left</p>
+          </div>
+          <p className="mt-1 text-[11px] leading-none font-medium tracking-[-0.03em]">Study block</p>
+          <div className="mt-2 h-[1.5px] overflow-hidden rounded-full bg-hair">
+            <div className="grad-line h-full w-[58%] rounded-full" />
+          </div>
         </div>
-        <div className="mt-1 h-[3px] overflow-hidden rounded-full bg-surface-3">
-          <div className="h-full w-[58%] rounded-full bg-ink" />
+
+        <div className="mt-2.5 grid grid-cols-4 gap-1.5 px-0.5">
+          <MiniStat value="3/6" label="Body" fill={0.5} />
+          <MiniStat value="$40" label="Money" fill={0.4} />
+          <MiniStat value="0/2" label="Mind" fill={0} />
+          <MiniStat value="4d" label="Clean" fill={1} />
         </div>
-      </div>
 
-      <div className="mx-2 mt-1.5 divide-y divide-line overflow-hidden rounded-[9px] border border-line bg-surface">
-        <Row label="Up by 6:00" done />
-        <Row label="Workout" done />
-        <Row label="Earned" value="$62" />
-        <Row label="Protein" value="190g" done />
-        <Row label="Calories" value="2,340" warn />
-      </div>
+        <div className="mt-2.5 grid grid-cols-3 gap-1">
+          <MiniTile value="5:41" label="Up by 5:45" kind="done" />
+          <MiniTile value="Lift" label="Upper B" kind="done" />
+          <MiniTile value="2,340" label="Calories" kind="attention" />
+          <MiniTile value="112g" label="Protein" />
+          <MiniTile value="$40" label="of $100" />
+          <MiniTile value="Study" label="Block done" />
+        </div>
 
-      <div className="mx-2 mt-1.5 flex gap-1">
-        <div className="flex h-[18px] flex-1 items-center justify-center rounded-[6px] bg-ink text-[7.5px] font-semibold text-bg">Add earnings</div>
-        <div className="flex h-[18px] items-center justify-center rounded-[6px] border border-line bg-surface-2 px-2 text-[7.5px] font-semibold text-ink">Log sets</div>
-      </div>
-
-      <div className="mt-2 flex items-center justify-around border-t border-line px-2 py-1.5">
-        {["Today", "Schedule", "Money", "Body", "Progress"].map((t, i) => (
-          <span key={t} className={cn("text-[6px] font-semibold", i === 0 ? "text-ink" : "text-ink-3")}>
-            {t}
-          </span>
-        ))}
+        <div className="mt-2.5 flex h-[22px] items-center rounded-full border border-glass-line bg-bar px-[3px]">
+          {["Today", "Schedule", "Money", "Body", "Progress"].map((t, i) => (
+            <span key={t} className={cn("flex h-4 flex-1 items-center justify-center rounded-full text-[5px]", i === 0 ? "bg-ink font-medium text-bg" : "text-ink-2")}>
+              {t}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );

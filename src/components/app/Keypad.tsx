@@ -29,59 +29,45 @@ export function Keypad({ onDigit, onDelete, onSubmit, submitLabel = "OK", disabl
     return () => window.removeEventListener("keydown", onKey);
   }, [onDigit, onDelete, onSubmit, disabled]);
 
-  const key =
-    "pressable tile flex h-[72px] w-[72px] items-center justify-center rounded-full text-[28px] font-medium tracking-[-0.03em] text-ink tnum disabled:opacity-40";
+  // Tiles, three across, the same shape as the checklist on Today: the keypad is the first thing touched on every open.
+  const key = "pressable flex h-[66px] w-full items-center justify-center rounded-[20px] text-[26px] font-medium tracking-[-0.03em] text-ink disabled:text-ink-3";
+  const digit = (k: string) => (
+    <button
+      key={k}
+      type="button"
+      disabled={disabled}
+      className={cn(key, "glass")}
+      onClick={() => {
+        haptics.tap();
+        onDigit(k);
+      }}
+    >
+      {k}
+    </button>
+  );
 
   return (
-    <div className="grid grid-cols-3 justify-items-center gap-x-7 gap-y-4">
-      {KEYS.map((k) => (
-        <button
-          key={k}
-          type="button"
-          disabled={disabled}
-          className={key}
-          onClick={() => {
-            haptics.tap();
-            onDigit(k);
-          }}
-        >
-          {k}
-        </button>
-      ))}
+    <div className="grid grid-cols-3 gap-2.5">
+      {KEYS.map(digit)}
       {onSubmit ? (
-        <button
-          type="button"
-          disabled={disabled}
-          className={cn(key, "border-transparent bg-transparent text-[16px] text-ink-2")}
-          onClick={onSubmit}
-        >
+        <button type="button" disabled={disabled} className={cn(key, "text-[16px] tracking-[-0.01em] text-ink-2")} onClick={onSubmit}>
           {submitLabel}
         </button>
       ) : (
         <span />
       )}
-      <button
-        type="button"
-        disabled={disabled}
-        className={key}
-        onClick={() => {
-          haptics.tap();
-          onDigit("0");
-        }}
-      >
-        0
-      </button>
+      {digit("0")}
       <button
         type="button"
         disabled={disabled}
         aria-label="Delete"
-        className={cn(key, "border-transparent bg-transparent text-ink-2")}
+        className={cn(key, "text-ink-2")}
         onClick={() => {
           haptics.tap();
           onDelete();
         }}
       >
-        <Delete size={24} strokeWidth={1.75} aria-hidden />
+        <Delete size={22} strokeWidth={1.75} aria-hidden />
       </button>
     </div>
   );

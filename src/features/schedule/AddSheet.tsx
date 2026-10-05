@@ -57,7 +57,6 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
       open
       onClose={onClose}
       title="Add to the day"
-      subtitle="Name it and say how long. Free time gets a block like everything else."
       footer={
         <Button full size="lg" disabled={startMin === null} onClick={add}>
           {startMin === null ? "No open slot" : `Add at ${formatTime(timeFromMinutes(startMin))}`}
@@ -81,8 +80,8 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
                     setMinutes(p.minutes);
                   }}
                   className={cn(
-                    "pressable h-11 rounded-full border px-4 text-[15px] font-medium",
-                    on ? "border-ink bg-ink text-bg" : "border-line bg-surface-2 text-ink",
+                    "pressable h-11 rounded-full px-4 text-[14px] font-medium",
+                    on ? "border border-ink bg-ink text-bg" : "tile text-ink",
                   )}
                 >
                   {p.name}
@@ -93,7 +92,7 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
         </div>
 
         <div>
-          <p className="mb-1.5 text-[13px] font-medium text-ink-2">How long</p>
+          <p className="mb-1.5 text-[13px] text-ink-2">How long</p>
           <div className="grid grid-cols-6 gap-1.5">
             {LENGTH_CHOICES.map((m) => {
               const on = minutes === m;
@@ -107,8 +106,8 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
                     setMinutes(m);
                   }}
                   className={cn(
-                    "pressable tnum h-11 rounded-[12px] border text-[14px] font-semibold",
-                    on ? "border-ink bg-ink text-bg" : "border-line bg-surface-2 text-ink",
+                    "pressable h-11 rounded-full text-[14px] font-medium",
+                    on ? "border border-ink bg-ink text-bg" : "tile text-ink",
                   )}
                 >
                   {m < 60 ? `${m}m` : formatDuration(m).replace(" ", "")}
@@ -141,34 +140,30 @@ function Form({ onClose, date, blocks, nowMin, startAt, onAdd }: AddSheetProps) 
 
         {mode === "pick" ? <TimeField label="Start" value={time} onChange={setTime} /> : null}
 
-        <div className="rounded-[16px] border border-line bg-surface-2 px-4 py-3.5" aria-live="polite" data-slot>
+        <div className="rounded-[20px] border border-line bg-surface-2 px-4 py-3.5" aria-live="polite" data-slot>
           {startMin !== null && endMin !== null ? (
             <>
               <p className="t-label">{mode === "next" ? (nowMin !== null ? "Next open slot" : "First open slot") : "Goes at"}</p>
-              <p className="t-num mt-1.5">{formatTime(timeFromMinutes(startMin))}</p>
-              <p className="tnum t-sub mt-1">
-                to {formatTime(timeFromMinutes(endMin))}, {formatDuration(endMin - startMin)}
-              </p>
-              {clash.length > 0 ? (
-                <p className="mt-2 text-[13px] font-medium text-warn">
-                  Overlaps {clash.map((b) => b.block_name).join(", ")}. It will be flagged, not moved.
+              <div className="mt-1.5 flex items-baseline justify-between gap-3">
+                <p className="t-num">{formatTime(timeFromMinutes(startMin))}</p>
+                <p className="t-sub shrink-0">
+                  to {formatTime(timeFromMinutes(endMin))}, {formatDuration(endMin - startMin)}
                 </p>
-              ) : null}
+              </div>
+              {clash.length > 0 ? <p className="mt-2 text-[13px] text-warn">Overlaps {clash.map((b) => b.block_name).join(", ")}. Flagged, not moved.</p> : null}
             </>
           ) : (
             <>
               <p className="t-label">No open slot</p>
-              <p className="t-sub mt-1.5">
-                Nothing open for {formatDuration(minutes)} in the rest of the day. Make it shorter, or pick a time and it will be flagged where it overlaps.
-              </p>
+              <p className="t-sub mt-1.5">Nothing open for {formatDuration(minutes)}. Make it shorter or pick a time.</p>
             </>
           )}
         </div>
 
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-[15px] font-medium">Flexible</p>
-            <p className="text-[13px] text-ink-3">Shifts later when something before it runs long</p>
+            <p className="text-[15px]">Flexible</p>
+            <p className="t-caption mt-0.5 text-ink-2">Shifts later when something runs long</p>
           </div>
           <Toggle checked={flexible} onChange={setFlexible} label="Flexible" />
         </div>

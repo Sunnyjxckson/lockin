@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useMemo, useRef, useState } from "react";
-import { Plus, Scale } from "lucide-react";
-import { Button, Card, EmptyState, ListRow, Section, Stat, cn } from "@/components/ui";
+import { Check, Plus } from "lucide-react";
+import { ActionButton, BigNumber, GlassCard, List, ListRow, SectionLabel, cn } from "@/components/ui";
 import { useChecklist, useList, useMode, useSettings } from "@/lib/db/hooks";
 import { weighInDateFor, weightSeries, weightTrend } from "@/lib/logic/body";
 import { dayWindow } from "@/lib/logic/challenge";
@@ -43,87 +43,86 @@ export function WeightTab() {
   const weighDay = weighItem?.weekly_day ?? 5;
   const dueDate = weighInDateFor(weekStart(today), weighDay);
   const doneThisWeek = logs.some((l) => l.weight !== null && l.date >= weekStart(today) && l.date <= today);
-  const dueLine = doneThisWeek
-    ? "This week's weigh-in is done."
-    : dueDate === today
-      ? "Weigh-in is due this morning."
-      : dueDate > today
-        ? `Next weigh-in: ${formatDateLong(dueDate)}.`
-        : `${WEEKDAY_NAMES[weighDay]}'s weigh-in is still open. Log it today.`;
+  const due = doneThisWeek ? "Done" : dueDate === today ? "This morning" : dueDate > today ? WEEKDAY_NAMES[weighDay] : "Still open";
+  const dueLine = doneThisWeek ? "This week's weigh-in is in." : dueDate === today ? "Before you eat." : dueDate > today ? formatDateLong(dueDate) : `${WEEKDAY_NAMES[weighDay]}'s is open. Log it today.`;
 
   return (
-    <>
-      <Card className="animate-fade-in mt-4">
-        {trend ? (
-          <>
-            <div className="flex items-end justify-between gap-3">
-              <Stat label="Latest" value={fmt(trend.latest.weight, 1)} unit={unit} sub={numbered ? `${formatDateShort(trend.latest.date)}, day ${trend.latest.day}` : formatDateShort(trend.latest.date)} />
-              {series.length > 1 ? (
-                <div className="pb-1 text-right">
-                  <p className={cn("t-num-sm tnum", trend.direction === "down" && "text-accent")}>{signed(trend.change)}</p>
-                  <p className="t-sub mt-1">{unit} since {numbered ? `day ${trend.first.day}` : formatDateShort(trend.first.date)}</p>
-                  {trend.perWeek !== null ? <p className="tnum mt-0.5 text-[13px] text-ink-3">{signed(trend.perWeek)} a week</p> : null}
-                </div>
-              ) : null}
-            </div>
-            <div className="mt-4">
-              <WeightChart
-                series={series}
-                lengthDays={length}
-                todayDay={dayNumber(start, today)}
-                unit={unit}
-                label={numbered ? undefined : (d) => formatDateShort(addDays(start, d - 1))}
-              />
-            </div>
-            {series.length === 1 ? <p className="t-sub mt-2">One weigh-in so far. The line starts with the next one.</p> : null}
-          </>
-        ) : loading ? (
-          <div className="h-40" />
-        ) : (
-          <EmptyState compact icon={<Scale size={22} aria-hidden />} title="No weigh-ins yet" body="Step on the scale Friday morning. The line over the 30 days builds from there." />
-        )}
-        <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-4">
-          <p className={cn("min-w-0 flex-1 text-[14px]", doneThisWeek ? "text-accent" : "text-ink-2")}>{dueLine}</p>
-          <Button size="sm" icon={<Plus size={16} aria-hidden />} onClick={() => open(today)}>
-            Log weight
-          </Button>
-        </div>
-      </Card>
+    <div className="animate-fade-in">
+      {trend ? (
+        <section className="pt-5" aria-label="Weight">
+          <BigNumber
+            label={`Latest, ${numbered ? `day ${trend.latest.day}` : formatDateShort(trend.latest.date)}`}
+            value={fmt(trend.latest.weight, 1)}
+            unit={unit}
+            sub={
+              series.length > 1 ? (
+                <>
+                  <span className={trend.direction === "down" ? "text-accent" : "text-ink"}>{signed(trend.change)}</span> {unit} since {numbered ? `day ${trend.first.day}` : formatDateShort(trend.first.date)}
+                  {trend.perWeek !== null ? `. ${signed(trend.perWeek)} a week.` : "."}
+                </>
+              ) : (
+                "One weigh-in so far. The line starts with the next."
+              )
+            }
+          />
+          <div className="mt-3">
+            <WeightChart series={series} lengthDays={length} todayDay={dayNumber(start, today)} unit={unit} label={numbered ? undefined : (d) => formatDateShort(addDays(start, d - 1))} />
+          </div>
+        </section>
+      ) : loading ? (
+        <div className="h-56" />
+      ) : (
+        <section className="pt-6 pb-1" aria-label="Weight">
+          <p className="t-label">Weight</p>
+          <p className="t-greeting mt-2.5 text-ink">No weigh-ins yet</p>
+          <p className="t-sub mt-2.5">Step on the scale {WEEKDAY_NAMES[weighDay]} morning. The line builds from there.</p>
+        </section>
+      )}
 
-      <Section title="Progress photos">
+      <GlassCard className="mt-5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="t-label">Weigh-in</p>
+            <p className={cn("t-h1 mt-1.5 flex items-center gap-2 truncate", doneThisWeek && "text-accent")}>
+              {doneThisWeek ? <Check size={20} strokeWidth={2} aria-hidden /> : null}
+              {due}
+            </p>
+          </div>
+          <ActionButton label="Log weight" onClick={() => open(today)}>
+            <Plus size={24} strokeWidth={1.75} aria-hidden />
+          </ActionButton>
+        </div>
+        <p className="t-sub mt-3">{dueLine}</p>
+      </GlassCard>
+
+      <section className="mt-7" aria-label="Progress photos">
+        <SectionLabel className="mb-3">Progress photos</SectionLabel>
         <PhotoCompare logs={logs} startDate={numbered ? start : null} unit={unit} onAdd={() => open(today)} />
-      </Section>
+      </section>
 
       {history.length > 0 ? (
-        <Section title="Weigh-ins">
-          <Card padded={false} className="overflow-hidden">
-            <div className="divide-y divide-line">
-              {history.map((p, i) => {
-                const prev = history[i + 1];
-                const delta = prev ? Math.round((p.weight - prev.weight) * 10) / 10 : null;
-                return (
-                  <ListRow
-                    key={p.date}
-                    title={formatDateLong(p.date)}
-                    sub={numbered && dayNumber(start, p.date) >= 1 && dayNumber(start, p.date) <= length ? `Day ${dayNumber(start, p.date)}` : undefined}
-                    onClick={() => open(p.date)}
-                    right={
-                      <span className="text-right">
-                        <span className="tnum block text-[17px] font-semibold text-ink">
-                          {fmt(p.weight, 1)} <span className="text-[13px] font-medium text-ink-3">{unit}</span>
-                        </span>
-                        {delta !== null ? <span className={cn("tnum block text-[12px]", delta < 0 ? "text-accent" : "text-ink-3")}>{signed(delta)}</span> : null}
-                      </span>
-                    }
-                  />
-                );
-              })}
-            </div>
-          </Card>
-        </Section>
+        <section className="mt-7" aria-label="Weigh-ins">
+          <SectionLabel right={history.length}>Weigh-ins</SectionLabel>
+          <List className="mt-1.5">
+            {history.map((p, i) => {
+              const prev = history[i + 1];
+              const delta = prev ? Math.round((p.weight - prev.weight) * 10) / 10 : null;
+              const day = numbered && dayNumber(start, p.date) >= 1 && dayNumber(start, p.date) <= length ? `Day ${dayNumber(start, p.date)}` : null;
+              return (
+                <ListRow
+                  key={p.date}
+                  title={formatDateLong(p.date)}
+                  sub={[day, delta !== null ? `${signed(delta)} ${unit}` : null].filter(Boolean).join(", ") || undefined}
+                  value={fmt(p.weight, 1)}
+                  onClick={() => open(p.date)}
+                />
+              );
+            })}
+          </List>
+        </section>
       ) : null}
 
       {sheet ? <WeighInSheet key={sheet.key} logs={logs} initialDate={sheet.date} today={today} unit={unit} onClose={() => setSheet(null)} /> : null}
-    </>
+    </div>
   );
 }

@@ -3,7 +3,7 @@
 // Log a session by hand, or edit or delete one that is already logged.
 
 import { useState } from "react";
-import { Button, DateField, NumberField, SegmentedControl, Sheet, TextField, TimeField, useToast } from "@/components/ui";
+import { Button, DateField, NumberField, SegmentedControl, Sheet, TextField, TimeField, cn, useToast } from "@/components/ui";
 import { addMinutes, timeNY } from "@/lib/logic/dates";
 import { LABELS, manualProblem } from "@/lib/logic/focus";
 import type { DateStr, FocusSession } from "@/lib/types";
@@ -61,7 +61,6 @@ export function SessionSheet({ open, onClose, today, session }: SessionSheetProp
       open={open}
       onClose={onClose}
       title={session ? "Edit session" : "Log focus time"}
-      subtitle={session ? undefined : "For work you did without the timer."}
       footer={
         <Button full size="lg" loading={busy} disabled={!!problem} onClick={save}>
           {session ? "Save" : "Log it"}
@@ -69,13 +68,19 @@ export function SessionSheet({ open, onClose, today, session }: SessionSheetProp
       }
     >
       <div className="space-y-4">
-        <NumberField label="Minutes" value={minutes} onChange={setMinutes} live unit="min" decimal={false} max={960} hint={minutes !== null && problem ? problem : undefined} />
+        <NumberField variant="hero" label="Minutes" value={minutes} onChange={setMinutes} live unit="min" decimal={false} max={960} hint={minutes !== null && problem ? problem : undefined} />
         <SegmentedControl label="Quick lengths" size="sm" options={QUICK} value={minutes ?? 0} onChange={setMinutes} />
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Label">
           {LABELS.map((l) => (
-            <Button key={l} size="sm" variant={label === l ? "primary" : "secondary"} onClick={() => setLabel(l)}>
+            <button
+              key={l}
+              type="button"
+              aria-pressed={label === l}
+              onClick={() => setLabel(l)}
+              className={cn("pressable h-11 rounded-full px-4 text-[14px] font-medium", label === l ? "border border-ink bg-ink text-bg" : "tile text-ink-2")}
+            >
               {l}
-            </Button>
+            </button>
           ))}
         </div>
         <TextField label="Label" value={label} onChange={setLabel} maxLength={40} placeholder="Study" />

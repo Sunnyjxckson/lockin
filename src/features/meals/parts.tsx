@@ -9,9 +9,9 @@ import type { Store } from "@/lib/logic/mealsPricing";
 /** The line that goes wherever a price estimate is shown. */
 export function EstimateNote({ store, receipts = 0, className }: { store?: Store; receipts?: number; className?: string }) {
   return (
-    <p className={cn("text-[13px] leading-snug text-ink-3", className)} data-estimate-note>
+    <p className={cn("t-caption text-ink-2", className)} data-estimate-note>
       {store ? `Estimated prices, not ${store}'s shelf prices.` : "Estimated prices, not any store's shelf prices."}
-      {receipts > 0 ? ` ${receipts} ${receipts === 1 ? "item uses" : "items use"} a price from your receipts.` : " Correct any item from a receipt and it sticks."}
+      {receipts > 0 ? ` ${receipts} from your receipts.` : ""}
     </p>
   );
 }
@@ -19,10 +19,83 @@ export function EstimateNote({ store, receipts = 0, className }: { store?: Store
 /** "est." in front of a dollar amount that is not a real price. */
 export function Est({ children, real = false, className }: { children: ReactNode; real?: boolean; className?: string }) {
   return (
-    <span className={cn("tnum whitespace-nowrap", className)}>
-      {real ? null : <span className="mr-1 text-[11px] font-medium tracking-wide text-ink-3 uppercase">est.</span>}
+    <span className={cn("whitespace-nowrap", className)}>
+      {real ? null : <span className="mr-1 text-[10px] font-medium tracking-[0.12em] text-ink-2 uppercase">est.</span>}
       {children}
     </span>
+  );
+}
+
+/**
+ * The dollar figure a meals screen leads with. `amount` is "$52.30": the sign
+ * is drawn small in the accent, in the same line of text as the number.
+ */
+export function MoneyHero({ label, amount, size = "display" }: { label: ReactNode; amount: string; size?: "hero" | "display" }) {
+  const hero = size === "hero";
+  return (
+    <div>
+      <p className="t-label">{label}</p>
+      <p className={cn(hero ? "t-hero" : "t-display", "mt-2.5 truncate text-ink")}>
+        <span className={cn("mr-0.5 inline-block align-top font-medium tracking-normal text-accent", hero ? "mt-2.5 text-[30px] leading-none" : "mt-2 text-[24px] leading-none")}>{amount.slice(0, 1)}</span>
+        {amount.slice(1)}
+      </p>
+    </div>
+  );
+}
+
+/** One quiet line that needs reading: what the planner said, or a setup prompt. */
+export function Note({ children, warn = false, className, ...rest }: { children: ReactNode; warn?: boolean; className?: string; role?: string; [data: `data-${string}`]: string | boolean | undefined }) {
+  return (
+    <p className={cn("rounded-[20px] px-4 py-3 text-[13px] leading-[1.4]", warn ? "border border-warn-line bg-warn-soft text-ink" : "tile text-ink-2", className)} {...rest}>
+      {children}
+    </p>
+  );
+}
+
+/** Calories and the three macros as one row of numbers, for a sheet. */
+export function MacroRow({ calories, protein, carbs, fat }: { calories: number; protein: number; carbs: number; fat: number }) {
+  const cells: [string, string][] = [
+    ["kcal", fmt(calories)],
+    ["protein", `${fmt(protein)}g`],
+    ["carbs", `${fmt(carbs)}g`],
+    ["fat", `${fmt(fat)}g`],
+  ];
+  return (
+    <div className="grid grid-cols-4 gap-3.5">
+      {cells.map(([k, v]) => (
+        <div key={k} className="min-w-0">
+          <p className="t-stat truncate text-ink">{v}</p>
+          <p className="t-label mt-1.5 truncate text-[10px]">{k}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Ingredients and numbered steps, the same in the planned meal sheet and the recipe sheet. */
+export function IngredientList({ rows }: { rows: { key: string; name: string; amount: string }[] }) {
+  return (
+    <ul className="divide-y divide-line border-y border-line">
+      {rows.map((r) => (
+        <li key={r.key} className="flex items-baseline justify-between gap-3 py-2.5">
+          <span className="min-w-0 text-[15px] text-ink">{r.name}</span>
+          <span className="shrink-0 text-[14px] text-ink-2">{r.amount}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function StepList({ steps }: { steps: readonly string[] }) {
+  return (
+    <ol className="flex flex-col gap-3.5">
+      {steps.map((s, i) => (
+        <li key={i} className="flex gap-3.5 text-[15px] leading-snug text-ink">
+          <span className="w-4 shrink-0 text-[13px] leading-[1.6] text-accent">{i + 1}</span>
+          <span>{s}</span>
+        </li>
+      ))}
+    </ol>
   );
 }
 
@@ -67,7 +140,7 @@ export function TermChips({
   const id = `terms-${label.toLowerCase().replace(/\s+/g, "-")}`;
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-[13px] font-medium text-ink-2">
+      <label htmlFor={id} className="text-[13px] text-ink-2">
         {label}
       </label>
       {terms.length > 0 ? (
@@ -104,7 +177,7 @@ export function TermChips({
           autoCapitalize="none"
           autoCorrect="off"
           enterKeyHint="done"
-          className="h-12 min-w-0 flex-1 rounded-[14px] border border-line bg-surface-2 px-4 text-[16px] text-ink outline-none placeholder:text-ink-3 focus:border-line-strong"
+          className="tile h-[52px] min-w-0 flex-1 rounded-[16px] px-4 text-[16px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-ink-2"
         />
       </div>
       {open.length > 0 ? (
@@ -114,7 +187,7 @@ export function TermChips({
               key={s}
               type="button"
               onClick={() => add(s)}
-              className="pressable inline-flex h-11 shrink-0 items-center gap-1 rounded-full border border-line px-3.5 text-[14px] text-ink-2"
+              className="pressable tile inline-flex h-11 shrink-0 items-center gap-1 rounded-full px-3.5 text-[14px] text-ink"
             >
               <Plus size={14} aria-hidden />
               {s}

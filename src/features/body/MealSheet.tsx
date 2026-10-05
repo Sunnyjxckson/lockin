@@ -146,11 +146,11 @@ export function MealSheet({ state, date, onClose }: { state: MealSheetState; dat
       footer={
         <div className="flex gap-2.5">
           {editing ? (
-            <Button variant="danger" onClick={remove} disabled={busy} icon={<Trash2 size={18} aria-hidden />} aria-label="Delete meal">
+            <Button variant="danger" size="lg" onClick={remove} disabled={busy} icon={<Trash2 size={18} aria-hidden />} aria-label="Delete meal">
               Delete
             </Button>
           ) : null}
-          <Button full onClick={save} disabled={!canSave} loading={busy}>
+          <Button full size="lg" onClick={save} disabled={!canSave} loading={busy}>
             {editing ? "Save" : "Log meal"}
           </Button>
         </div>
@@ -158,11 +158,11 @@ export function MealSheet({ state, date, onClose }: { state: MealSheetState; dat
     >
       <div className="flex flex-col gap-4">
         {image ? (
-          <div className="relative overflow-hidden rounded-[16px] border border-line bg-surface-2">
+          <div className="relative overflow-hidden rounded-[20px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={image} alt="Meal photo" className="h-44 w-full object-cover" />
+            <img src={image} alt="Meal photo" className="h-48 w-full object-cover" />
             {read === "reading" ? (
-              <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-scrim text-[15px] font-medium text-on-scrim">
+              <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-scrim text-[15px] font-medium text-on-scrim" role="status">
                 <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
                 Reading the photo
               </div>
@@ -171,27 +171,27 @@ export function MealSheet({ state, date, onClose }: { state: MealSheetState; dat
         ) : null}
 
         {read === "ai" ? (
-          <p className="flex items-start gap-2 rounded-[14px] bg-surface-2 px-3.5 py-3 text-[14px] text-ink-2">
-            <Sparkles size={16} className="mt-0.5 shrink-0" aria-hidden />
-            <span>Estimated from the photo. Fix anything that looks off. {note}</span>
+          <p className="t-sub flex items-start gap-2 rounded-[20px] border border-line bg-surface-2 px-4 py-3" role="status">
+            <Sparkles size={15} className="mt-0.5 shrink-0 text-accent" aria-hidden />
+            <span>Estimated from the photo. Fix what looks off. {note}</span>
           </p>
         ) : null}
         {read === "fallback" ? (
-          <p className="rounded-[14px] bg-surface-2 px-3.5 py-3 text-[14px] text-ink-2">
-            Photo estimates are off. The photo is attached, fill in the numbers by hand.
+          <p className="t-sub rounded-[20px] border border-line bg-surface-2 px-4 py-3" role="status">
+            Photo estimates are off. The photo is attached. Type the numbers.
           </p>
         ) : null}
 
+        <NumberField variant="hero" label="Calories" unit="kcal" value={calories} onChange={touch(setCalories)} live decimal={false} max={9999} placeholder="0" />
         <TextField label="Name" value={name} onChange={touch(setName)} placeholder="Chicken and rice" maxLength={80} />
-        <NumberField label="Calories" unit="kcal" value={calories} onChange={touch(setCalories)} live decimal={false} max={9999} placeholder="0" />
         <div className="grid grid-cols-3 gap-2.5">
           <NumberField label="Protein" unit="g" value={protein} onChange={touch(setProtein)} live max={999} placeholder="0" />
           <NumberField label="Carbs" unit="g" value={carbs} onChange={touch(setCarbs)} live max={999} placeholder="0" />
           <NumberField label="Fat" unit="g" value={fat} onChange={touch(setFat)} live max={999} placeholder="0" />
         </div>
-        <div className="flex min-h-[52px] items-center justify-between gap-3 rounded-[14px] border border-line px-3.5">
-          <span className="flex items-center gap-2.5 text-[15px] font-medium">
-            <Star size={18} className="text-ink-2" aria-hidden />
+        <div className="flex min-h-[52px] items-center justify-between gap-3 px-1">
+          <span className="flex items-center gap-2.5 text-[15px] text-ink">
+            <Star size={18} strokeWidth={1.75} className="text-ink-2" aria-hidden />
             Save as a favorite
           </span>
           <Toggle checked={favorite} onChange={setFavorite} label="Save as a favorite" />

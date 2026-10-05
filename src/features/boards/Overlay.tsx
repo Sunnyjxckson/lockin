@@ -55,7 +55,7 @@ export function Overlay({ onClose, label, children, className, footer }: Overlay
       className="animate-fade-in fixed inset-0 z-50 flex flex-col bg-bg text-ink outline-none"
     >
       <div className={cn("no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain", className)}>{children}</div>
-      {footer ? <div className="shrink-0 border-t border-line bg-bg px-5 pt-3 pb-[calc(var(--safe-b)+12px)]">{footer}</div> : null}
+      {footer ? <div className="shrink-0 border-t border-hair bg-bg px-5 pt-3 pb-[calc(var(--safe-b)+12px)]">{footer}</div> : null}
     </div>,
     document.body,
   );

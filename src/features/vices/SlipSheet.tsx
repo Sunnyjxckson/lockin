@@ -32,8 +32,8 @@ export function Chip({ on, onClick, children }: { on: boolean; onClick: () => vo
         onClick();
       }}
       className={cn(
-        "pressable h-11 rounded-full border px-4 text-[15px] font-medium transition-colors",
-        on ? "border-ink bg-ink text-bg" : "border-line bg-surface-2 text-ink-2",
+        "pressable h-11 rounded-full border px-4 text-[14px] transition-colors",
+        on ? "border-ink bg-ink font-medium text-bg" : "border-line bg-surface-2 text-ink",
       )}
     >
       {children}
@@ -88,7 +88,7 @@ export function SlipSheet({ vices, itemId, slip, today, note, onClose }: SlipShe
       open
       onClose={onClose}
       title={slip ? "Edit slip" : "Log a slip"}
-      subtitle={note ?? (slip ? formatDateLong(slip.date) : "It only restarts this one streak. Everything else carries on.")}
+      subtitle={note ?? (slip ? formatDateLong(slip.date) : "Restarts this one streak. Nothing else.")}
       footer={
         <div className="flex gap-2.5">
           {slip ? (
@@ -105,7 +105,7 @@ export function SlipSheet({ vices, itemId, slip, today, note, onClose }: SlipShe
       <div className="flex flex-col gap-5 pt-1">
         {vices.length > 1 && !slip ? (
           <div>
-            <p className="mb-2 text-[13px] font-medium text-ink-2">Which one</p>
+            <p className="t-label mb-2.5">Which one</p>
             <div className="flex flex-wrap gap-2">
               {vices.map((v) => (
                 <Chip key={v.id} on={pick === v.id} onClick={() => setPick(v.id)}>
@@ -117,7 +117,7 @@ export function SlipSheet({ vices, itemId, slip, today, note, onClose }: SlipShe
         ) : null}
 
         <div>
-          <p className="mb-2 text-[13px] font-medium text-ink-2">When</p>
+          <p className="t-label mb-2.5">When</p>
           <div className="flex flex-col gap-2.5">
             {canYesterday ? (
               <SegmentedControl
@@ -135,7 +135,7 @@ export function SlipSheet({ vices, itemId, slip, today, note, onClose }: SlipShe
         </div>
 
         <div>
-          <p className="mb-2 text-[13px] font-medium text-ink-2">What set it off</p>
+          <p className="t-label mb-2.5">What set it off</p>
           <div className="flex flex-wrap gap-2">
             {TRIGGER_CHIPS.map((c) => (
               <Chip key={c} on={chips.includes(c)} onClick={() => setChips((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]))}>

@@ -40,16 +40,13 @@ export function WeekStrip({ dates, selected, today, edited, onSelect }: WeekStri
               onSelect(date);
             }}
             className={cn(
-              "pressable flex h-[62px] w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-[14px] border",
-              on ? "border-ink bg-ink text-bg" : isToday ? "border-line-strong bg-surface-2 text-ink" : "border-line bg-surface text-ink",
-              date < today && !on && "opacity-50",
+              "pressable flex h-[62px] w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-[16px]",
+              on ? "border border-ink bg-ink text-bg" : isToday ? "tile border-ink-2 text-ink" : "tile text-ink",
             )}
           >
-            <span className={cn("text-[10px] font-semibold tracking-[0.06em] uppercase", on ? "text-bg" : "text-ink-3")}>
-              {WEEKDAY_SHORT[weekdayOf(date)].slice(0, 2)}
-            </span>
-            <span className="tnum text-[17px] leading-none font-semibold">{Number(date.slice(8))}</span>
-            <span className={cn("mt-1 size-1 rounded-full", edited.has(date) ? (on ? "bg-bg/50" : "bg-ink-3") : "bg-transparent")} />
+            <span className={cn("text-[10px] font-medium tracking-[0.08em] uppercase", on ? "text-bg" : "text-ink-2")}>{WEEKDAY_SHORT[weekdayOf(date)].slice(0, 2)}</span>
+            <span className={cn("text-[16px] leading-none font-medium", !on && date < today && "text-ink-2")}>{Number(date.slice(8))}</span>
+            <span className={cn("mt-1 size-1.5 rounded-full", edited.has(date) ? (on ? "bg-bg" : "bg-ink-3") : "bg-transparent")} />
           </button>
         );
       })}

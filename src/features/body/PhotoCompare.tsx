@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Camera, ChevronDown } from "lucide-react";
-import { Button, Card, EmptyState, Sheet, cn } from "@/components/ui";
+import { Camera } from "lucide-react";
+import { Button, EmptyState, Sheet, cn } from "@/components/ui";
 import { photoEntries, pickComparePhotos, type PhotoEntry } from "@/lib/logic/body";
 import { dayNumber, formatDateShort } from "@/lib/logic/dates";
 import { usePhoto } from "@/lib/storage/hooks";
 import type { BodyLog, DateStr } from "@/lib/types";
-import { fmt } from "./format";
+import { fmt, signed } from "./format";
 
 function dayLabel(date: DateStr, startDate: DateStr | null): string {
   if (!startDate) return formatDateShort(date);
@@ -18,50 +18,49 @@ function dayLabel(date: DateStr, startDate: DateStr | null): string {
 function Frame({ entry, className }: { entry: PhotoEntry | null; className?: string }) {
   const url = usePhoto(entry?.photo_url);
   return (
-    <div className={cn("flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-[16px] border border-line bg-surface-2", className)}>
+    <span className={cn("flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-[20px]", url ? null : "tile", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      {url ? <img src={url} alt="" className="size-full object-cover" /> : <Camera size={22} className="text-ink-3" aria-hidden />}
-    </div>
+      {url ? <img src={url} alt="" className="size-full object-cover" /> : <Camera size={22} strokeWidth={1.75} className="text-ink-3" aria-hidden />}
+    </span>
   );
 }
 
-function Side({
-  title,
-  entry,
-  startDate,
-  unit,
-  onPick,
-  emptyText,
-}: {
-  title: string;
-  entry: PhotoEntry | null;
-  startDate: DateStr | null;
-  unit: string;
-  onPick: () => void;
-  emptyText: string;
-}) {
+function Caption({ title, entry, startDate, unit }: { title: string; entry: PhotoEntry | null; startDate: DateStr | null; unit: string }) {
   return (
-    <div className="min-w-0 flex-1">
-      <p className="t-label mb-2">{title}</p>
-      <Frame entry={entry} />
+    <span className="mt-3 block px-1">
+      <span className="t-label block">{title}</span>
       {entry ? (
-        <button type="button" onClick={onPick} className="pressable mt-1 flex min-h-11 w-full items-center justify-between gap-1 text-left">
-          <span className="min-w-0">
-            <span className="block truncate text-[15px] font-semibold">
-              {dayLabel(entry.date, startDate)}, {formatDateShort(entry.date)}
-            </span>
-            <span className="tnum block text-[13px] text-ink-3">{entry.weight !== null ? `${fmt(entry.weight, 1)} ${unit}` : "No weight"}</span>
+        <>
+          <span className="t-value mt-1.5 block truncate text-ink">{entry.weight !== null ? `${fmt(entry.weight, 1)} ${unit}` : dayLabel(entry.date, startDate)}</span>
+          <span className="t-caption mt-1 block truncate text-ink-2">
+            {entry.weight !== null && startDate ? `${dayLabel(entry.date, startDate)}, ` : ""}
+            {formatDateShort(entry.date)}
           </span>
-          <ChevronDown size={18} className="shrink-0 text-ink-3" aria-hidden />
-        </button>
-      ) : (
-        <p className="mt-2.5 text-[13px] text-ink-3">{emptyText}</p>
-      )}
-    </div>
+        </>
+      ) : null}
+    </span>
   );
 }
 
-/** Day 1 against the latest photo, side by side. Tap a date to pick another. */
+function Side({ title, entry, startDate, unit, onPick, emptyText }: { title: string; entry: PhotoEntry | null; startDate: DateStr | null; unit: string; onPick: () => void; emptyText: string }) {
+  if (!entry) {
+    return (
+      <div className="min-w-0 flex-1">
+        <Frame entry={null} />
+        <Caption title={title} entry={null} startDate={startDate} unit={unit} />
+        {emptyText ? <p className="t-caption mt-1.5 px-1 text-ink-2">{emptyText}</p> : null}
+      </div>
+    );
+  }
+  return (
+    <button type="button" onClick={onPick} className="pressable min-w-0 flex-1 text-left" aria-label={`${title} photo, ${dayLabel(entry.date, startDate)}, ${formatDateShort(entry.date)}. Pick another`}>
+      <Frame entry={entry} />
+      <Caption title={title} entry={entry} startDate={startDate} unit={unit} />
+    </button>
+  );
+}
+
+/** The first photo against the latest, side by side. Tap one to pick another. */
 export function PhotoCompare({ logs, startDate, unit, onAdd }: { logs: BodyLog[]; startDate: DateStr | null; unit: string; onAdd: () => void }) {
   const all = photoEntries(logs);
   const auto = pickComparePhotos(logs, startDate ?? undefined);
@@ -74,33 +73,33 @@ export function PhotoCompare({ logs, startDate, unit, onAdd }: { logs: BodyLog[]
 
   if (all.length === 0) {
     return (
-      <Card padded={false}>
-        <EmptyState
-          compact
-          icon={<Camera size={22} aria-hidden />}
-          title="No progress photos yet"
-          body="Take one now and one each Friday. They show up here side by side."
-          action={
-            <Button variant="secondary" onClick={onAdd}>
-              Add the first photo
-            </Button>
-          }
-        />
-      </Card>
+      <EmptyState
+        compact
+        icon={<Camera size={22} strokeWidth={1.75} aria-hidden />}
+        title="No progress photos yet"
+        body="One now, one each Friday. Same spot, same light."
+        action={
+          <Button variant="secondary" onClick={onAdd}>
+            Add the first photo
+          </Button>
+        }
+      />
     );
   }
 
+  const both = before && after && before.date !== after.date && before.weight !== null && after.weight !== null;
+  const change = both ? Math.round((after.weight! - before.weight!) * 10) / 10 : null;
+
   return (
-    <Card>
-      <div className="flex gap-3">
+    <div>
+      <div className="flex gap-2.5">
         <Side title="Start" entry={before} startDate={startDate} unit={unit} onPick={() => setPicking("before")} emptyText="" />
-        <Side title="Latest" entry={after} startDate={startDate} unit={unit} onPick={() => setPicking("after")} emptyText="Add another photo to compare." />
+        <Side title="Latest" entry={after} startDate={startDate} unit={unit} onPick={() => setPicking("after")} emptyText="Add another to compare." />
       </div>
-      {before && after && before.weight !== null && after.weight !== null ? (
-        <p className="tnum mt-3 border-t border-line pt-3 text-[14px] text-ink-2">
-          {after.weight === before.weight
-            ? "Same weight in both."
-            : `${fmt(Math.abs(after.weight - before.weight), 1)} ${unit} ${after.weight < before.weight ? "down" : "up"} between these two.`}
+      {change !== null ? (
+        <p className="t-sub mt-4 px-1">
+          <span className={cn("t-stat mr-2 align-[-2px]", change < 0 ? "text-accent" : "text-ink")}>{change === 0 ? "0" : signed(change)}</span>
+          {unit} between these two
         </p>
       ) : null}
 
@@ -120,14 +119,14 @@ export function PhotoCompare({ logs, startDate, unit, onAdd }: { logs: BodyLog[]
                   setPicking(null);
                 }}
               >
-                <Frame entry={p} className={selected ? "border-2 border-ink" : undefined} />
-                <span className="mt-1.5 block text-[14px] font-semibold">{dayLabel(p.date, startDate)}</span>
-                <span className="block text-[12px] text-ink-3">{formatDateShort(p.date)}</span>
+                <Frame entry={p} className={cn("rounded-[16px] border-2", selected ? "border-ink" : "border-transparent")} />
+                <span className="mt-2 block text-[14px] font-medium text-ink">{dayLabel(p.date, startDate)}</span>
+                <span className="t-caption block text-ink-2">{formatDateShort(p.date)}</span>
               </button>
             );
           })}
         </div>
       </Sheet>
-    </Card>
+    </div>
   );
 }

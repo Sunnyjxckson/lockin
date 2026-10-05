@@ -3,8 +3,8 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { BookOpen, Check, ChevronRight, Shuffle, ShoppingCart, SlidersHorizontal, UtensilsCrossed } from "lucide-react";
-import { Button, Card, EmptyState, IconLink, PageHeader, ProgressBar, Screen, Section, SegmentedControl, Sheet, cn, useToast } from "@/components/ui";
+import { BookOpen, ChevronRight, Shuffle, SlidersHorizontal } from "lucide-react";
+import { GlassCard, IconButton, IconLink, PageHeader, ProgressBar, Screen, SegmentedControl, Sheet, TrackStat, cn, useToast } from "@/components/ui";
 import { useList } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { diffDays, formatDateShort, weekdayOf } from "@/lib/logic/dates";
@@ -15,7 +15,7 @@ import { cleanRequest, describeRequest, isEmptyRequest, parseRequest, toPrefs, t
 import { getPref, setPref } from "@/lib/prefs";
 import type { DateStr, MealSlot } from "@/lib/types";
 import { saveFoodSettings, savePlan, setPreferredStore, type Planned } from "./data";
-import { Est, EstimateNote, fmt, macroLine } from "./parts";
+import { Est, EstimateNote, MoneyHero, Note, fmt, macroLine } from "./parts";
 import { SetupForm, type SetupValues } from "./SetupForm";
 import { currentWeek, rememberWeek, useKeepInStep, useMeals, type MealsState, type WeekChoice } from "./useMeals";
 
@@ -122,7 +122,7 @@ export default function MealsScreen() {
       back="/body"
       right={
         <IconLink href="/meals/recipes" label="Recipes">
-          <BookOpen size={22} aria-hidden />
+          <BookOpen size={22} strokeWidth={1.75} aria-hidden />
         </IconLink>
       }
     />
@@ -132,10 +132,10 @@ export default function MealsScreen() {
     return (
       <Screen>
         {header}
-        <div className="mt-4 flex flex-col gap-3" aria-busy="true" aria-label="Loading">
-          <div className="h-12 rounded-[14px] bg-surface" />
-          <div className="h-44 rounded-[20px] bg-surface" />
-          <div className="h-64 rounded-[20px] bg-surface" />
+        <div className="flex flex-col gap-3" aria-busy="true" aria-label="Loading">
+          <div className="tile h-[52px] rounded-full" />
+          <div className="tile h-40 rounded-[26px]" />
+          <div className="tile h-64 rounded-[26px]" />
         </div>
       </Screen>
     );
@@ -158,16 +158,16 @@ export default function MealsScreen() {
       <Screen>
         {header}
         {weekPicker}
-        <EmptyState
-          compact
-          icon={<UtensilsCrossed size={24} aria-hidden />}
-          title={`No plan for the week of ${formatDateShort(m.weekStart)}`}
-          body={`Set a budget and it builds 7 days from ${m.recipes.length} recipes that hit your numbers, with one grocery list.`}
-        />
+        <section className="px-1 pt-7" aria-label="No plan">
+          <p className="t-greeting text-ink">No plan for the week of {formatDateShort(m.weekStart)}</p>
+          <p className="t-sub mt-2.5">
+            Set a budget. It builds 7 days from {m.recipes.length} recipes, with one grocery list.
+          </p>
+        </section>
         {note ? <Notice text={note} /> : null}
-        <Card>
+        <GlassCard className="mt-5 overflow-hidden !py-5">
           <SetupForm initial={values} targets={m.targets} challengeName={m.challengeName} busy={busy} submitLabel="Build the week" onSubmit={(v) => build(v)} />
-        </Card>
+        </GlassCard>
       </Screen>
     );
   }
@@ -178,117 +178,118 @@ export default function MealsScreen() {
   const bought = m.rows.filter((r) => r.bought && !m.pantry.has(r.name)).length;
   const toBuy = m.lines.filter((l) => !m.pantry.has(l.name)).length;
   const loggedIds = new Set(loggedMeals.data.map((x) => x.id));
-  const order = week === "this" ? [...m.dates.filter((d) => d >= m.today), ...m.dates.filter((d) => d < m.today)] : m.dates;
-  const firstPast = week === "this" ? order.findIndex((d) => d < m.today) : -1;
+  const slots = SLOTS.filter((slot) => m.meals.some((x) => x.slot === slot));
+  const columns = { gridTemplateColumns: `50px repeat(${slots.length}, minmax(0, 1fr))` };
 
   return (
     <Screen>
       {header}
       {weekPicker}
 
-      <Card className="mt-4" data-plan-cost>
-        <p className="t-label">
-          Week of {formatDateShort(m.weekStart)}, {m.store}
+      <section className="px-1 pt-4" data-plan-cost aria-label="Week cost">
+        <MoneyHero label={`Est. at ${m.store}, week of ${formatDateShort(m.weekStart)}`} amount={dollars(s.cost)} />
+        <ProgressBar className="mt-4" value={budget > 0 ? s.cost / budget : 1} tone={over ? "warn" : "accent"} label="Estimated cost against budget" />
+        <p className="t-sub mt-3">
+          <span className={over ? "text-warn" : "text-ink"}>{over ? `About ${dollars(s.overBy)} over budget` : `About ${dollars(budget - s.cost)} under budget`}</span> of {dollars(budget)}.
+          {m.spent > 0 ? (
+            <>
+              {" "}
+              Spent so far: <span className="text-ink">{dollars(m.spent)}</span>, {m.spent > budget ? `${dollars(m.spent - budget)} over budget` : `${dollars(budget - m.spent)} left`}.
+            </>
+          ) : null}
         </p>
-        <div className="mt-1.5 flex items-baseline gap-2">
-          <Est className="t-num">{dollars(s.cost)}</Est>
-          <span className="text-[15px] text-ink-2">of {dollars(budget)}</span>
+        <EstimateNote store={m.store} className="mt-1.5" />
+      </section>
+
+      {note ? <Notice text={note} /> : !s.allDaysOk ? <Notice text="Some days are off target. Swap a meal or shuffle the week." /> : null}
+
+      <section className="mt-5" aria-label="The week">
+        <div className="grid items-end gap-1.5 pb-2" style={columns} aria-hidden>
+          <span />
+          {slots.map((slot) => (
+            <span key={slot} className="t-caption truncate px-1 text-ink-2">
+              {SLOT_LABEL[slot]}
+            </span>
+          ))}
         </div>
-        <ProgressBar className="mt-3" value={budget > 0 ? s.cost / budget : 1} tone={over ? "warn" : "ink"} label="Estimated cost against budget" />
-        <p className={cn("mt-2.5 text-[15px]", over ? "text-warn" : "text-ink")}>
-          {over ? `About ${dollars(s.overBy)} over budget.` : `About ${dollars(budget - s.cost)} under budget.`}
-          <span className="text-ink-3"> The food you eat is about {dollars(s.foodCost)} of it. The rest is what is left in the packs.</span>
+        <ul className="flex flex-col gap-1">
+          {m.dates.map((date) => {
+            const day = s.days.find((d) => d.date === date)!;
+            const isToday = date === m.today;
+            const name = `${isToday ? "Today, " : ""}${DAY[weekdayOf(date)]} ${formatDateShort(date)}`;
+            return (
+              <li key={date} className="grid items-stretch gap-1.5" style={columns} aria-label={`${name}, ${macroLine(day.calories, day.protein)}`}>
+                <div className="flex min-w-0 flex-col justify-center pl-1">
+                  <span className={cn("text-[13px] font-medium", isToday ? "text-accent" : "text-ink")}>
+                    {DAY[weekdayOf(date)]} {Number(date.slice(8))}
+                  </span>
+                  <span className={cn("t-caption mt-0.5", day.ok ? "text-ink-2" : "text-warn")}>{fmt(day.calories)}</span>
+                </div>
+                {slots.map((slot) => {
+                  const meal = m.meals.find((x) => x.date === date && x.slot === slot);
+                  if (!meal) return <span key={slot} />;
+                  const r = m.recipeById.get(meal.recipe_id);
+                  const done = !!meal.logged && loggedIds.has(meal.logged);
+                  const detail = `${SLOT_LABEL[slot]}${r ? `, ${servingsLabel(meal.servings)}, ${fmt(r.calories * meal.servings)} kcal, ${fmt(r.protein * meal.servings)}g` : ""}${done ? ", logged" : ""}`;
+                  return (
+                    <button
+                      key={slot}
+                      type="button"
+                      data-meal-cell
+                      onClick={() => setOpen({ date, slot })}
+                      aria-label={`${r?.name ?? "Recipe removed"}. ${name}, ${detail}`}
+                      className={cn(
+                        "pressable flex min-h-[50px] min-w-0 items-center overflow-hidden rounded-[14px] border px-1.5 py-1 text-left transition-[background-color,border-color] duration-200",
+                        done ? "grad border-transparent" : cn("tile text-ink", isToday && "border-ink-3"),
+                      )}
+                    >
+                      <span className="line-clamp-3 text-[11.5px] leading-[1.2] tracking-[-0.01em] [overflow-wrap:anywhere]">{r?.name ?? "Recipe removed"}</span>
+                      <span className="sr-only">{detail}</span>
+                    </button>
+                  );
+                })}
+              </li>
+            );
+          })}
+        </ul>
+        <p className="t-caption mt-3 px-1 text-ink-2">
+          Each day: {describeTargets(m.targets)}
+          {m.challengeName ? `, from ${m.challengeName}` : ""}.
         </p>
-        {m.spent > 0 ? (
-          <p className="mt-1.5 text-[15px] text-ink">
-            Spent so far: <span className="tnum font-semibold">{dollars(m.spent)}</span>
-            <span className="text-ink-3">, {m.spent > budget ? `${dollars(m.spent - budget)} over budget` : `${dollars(budget - m.spent)} left`}.</span>
-          </p>
-        ) : null}
-        <EstimateNote store={m.store} className="mt-2" />
-        <Link
-          href="/meals/grocery"
-          className="pressable mt-4 flex h-12 items-center justify-center gap-2 rounded-[14px] bg-ink text-[16px] font-semibold text-bg"
-        >
-          <ShoppingCart size={18} aria-hidden />
-          Grocery list, {toBuy} items{bought > 0 ? `, ${bought} bought` : ""}
-        </Link>
-        <div className="mt-2.5 flex gap-2.5">
-          <Button full variant="secondary" loading={busy} onClick={() => build(values, true)} icon={<Shuffle size={18} aria-hidden />}>
-            Shuffle
-          </Button>
-          <Button full variant="secondary" disabled={busy} onClick={() => setAdjust(true)} icon={<SlidersHorizontal size={18} aria-hidden />}>
-            Adjust
-          </Button>
-        </div>
-      </Card>
+      </section>
 
-      {note ? <Notice text={note} /> : !s.allDaysOk ? <Notice text="Some days are off target after your changes. Swap a meal or shuffle the week." /> : null}
-
-      <p className="mt-4 px-1 text-[13px] text-ink-3">
-        Each day aims for {describeTargets(m.targets)}
-        {m.challengeName ? `, from ${m.challengeName}` : ""}.
-      </p>
-
-      {order.map((date, index) => {
-        const day = s.days.find((d) => d.date === date)!;
-        const meals = SLOTS.map((slot) => m.meals.find((x) => x.date === date && x.slot === slot)).filter((x): x is Planned => !!x);
-        const title = `${date === m.today ? "Today, " : ""}${DAY[weekdayOf(date)]} ${formatDateShort(date)}`;
-        return (
-          <div key={date}>
-            {index === firstPast ? <p className="t-label mt-8 px-1">Earlier this week</p> : null}
-            <Section
-              title={title}
-              right={
-                <span className={cn("tnum text-[13px] tracking-normal normal-case", day.ok ? "text-ink-2" : "text-warn")}>
-                  {macroLine(day.calories, day.protein)}
-                </span>
-              }
-            >
-              <Card padded={false} className="overflow-hidden">
-                <ul className="divide-y divide-line">
-                  {meals.map((meal) => {
-                    const r = m.recipeById.get(meal.recipe_id);
-                    const done = !!meal.logged && loggedIds.has(meal.logged);
-                    return (
-                      <li key={meal.slot}>
-                        <button
-                          type="button"
-                          onClick={() => setOpen({ date, slot: meal.slot })}
-                          className="pressable flex min-h-[64px] w-full items-center gap-3 px-4 py-2.5 text-left active:bg-surface-2"
-                        >
-                          <span
-                            className={cn(
-                              "flex size-7 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold",
-                              done ? "bg-accent text-accent-ink" : "bg-surface-3 text-ink-2",
-                            )}
-                            aria-hidden
-                          >
-                            {done ? <Check size={15} strokeWidth={3} /> : SLOT_LABEL[meal.slot][0]}
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate text-[16px] font-medium text-ink">{r?.name ?? "Recipe removed"}</span>
-                            <span className="mt-0.5 block truncate text-[13px] text-ink-3">
-                              {SLOT_LABEL[meal.slot]}
-                              {r ? `, ${servingsLabel(meal.servings)}, ${fmt(r.calories * meal.servings)} kcal, ${fmt(r.protein * meal.servings)}g` : ""}
-                              {done ? ", logged" : ""}
-                            </span>
-                          </span>
-                          <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </Card>
-            </Section>
+      <GlassCard className="mt-6">
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/meals/grocery" className="pressable -my-1 flex min-h-11 min-w-0 flex-1 flex-col justify-center">
+            <span className="t-label">Grocery list</span>
+            <span className="mt-1.5 flex items-baseline gap-2">
+              <span className="t-h1 text-ink">{toBuy}</span>
+              <span className="truncate text-[14px] text-ink-2">
+                items{bought > 0 ? `, ${bought} bought` : ""}
+              </span>
+              <ChevronRight size={16} className="shrink-0 self-center text-ink-3" aria-hidden />
+            </span>
+          </Link>
+          <div className="flex shrink-0 items-center gap-2">
+            <IconButton filled label="Shuffle" disabled={busy} onClick={() => build(values, true)}>
+              {busy ? <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden /> : <Shuffle size={18} strokeWidth={1.75} aria-hidden />}
+            </IconButton>
+            <IconButton filled label="Adjust" disabled={busy} onClick={() => setAdjust(true)}>
+              <SlidersHorizontal size={18} strokeWidth={1.75} aria-hidden />
+            </IconButton>
           </div>
-        );
-      })}
+        </div>
+      </GlassCard>
+
+      <div className="mt-6 grid grid-cols-3 gap-3.5 px-1">
+        <TrackStat label="Food eaten" value={<Est>{dollars(Math.round(s.foodCost))}</Est>} />
+        <TrackStat label="Left in packs" value={<Est>{dollars(Math.round(Math.max(0, s.cost - s.foodCost)))}</Est>} />
+        <TrackStat label="A day" value={<Est>{dollars(Math.round((s.cost / 7) * 100) / 100)}</Est>} />
+      </div>
 
       {open ? <PlannedMealSheet key={`${open.date}-${open.slot}`} m={m} date={open.date} slot={open.slot} onClose={() => setOpen(null)} /> : null}
 
-      <Sheet open={adjust} onClose={() => (busy ? undefined : setAdjust(false))} title="Adjust the week" subtitle="Rebuilds from today on. Days behind you stay as they were.">
+      <Sheet open={adjust} onClose={() => (busy ? undefined : setAdjust(false))} title="Adjust the week" subtitle="Rebuilds from today on. Past days stay.">
         <SetupForm key={String(adjust)} initial={values} targets={m.targets} challengeName={m.challengeName} busy={busy} submitLabel="Rebuild the week" onSubmit={(v) => build(v)} />
       </Sheet>
     </Screen>
@@ -299,8 +300,8 @@ function Notice({ text }: { text: string }) {
   // "Heard: ..." alone is a confirmation, anything else is a problem to read.
   const plain = text.startsWith("Heard:");
   return (
-    <Card className={cn("mt-3", plain ? "" : "border-warn bg-warn-soft")} role="status" data-plan-notice>
-      <p className="text-[15px] leading-snug text-ink">{text}</p>
-    </Card>
+    <Note className="mt-5" warn={!plain} role="status" data-plan-notice>
+      {text}
+    </Note>
   );
 }

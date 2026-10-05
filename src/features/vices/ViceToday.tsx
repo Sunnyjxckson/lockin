@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { Button, CheckMark, ProgressBar, cn } from "@/components/ui";
+import { Check } from "lucide-react";
+import { Button, ProgressBar, cn } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { formatTime } from "@/lib/logic/dates";
 import { formatAmount } from "@/lib/logic/vices";
@@ -82,17 +83,12 @@ export function ViceToday({ view, today, onSlip, onAdd }: ViceTodayProps) {
     const value = log?.value ?? null;
     const over = value !== null && value > target.max;
     return (
-      <div className="px-4 py-3.5">
-        <div className="flex items-end justify-between gap-3">
-          <div className="min-w-0">
-            <p className="t-label">Today</p>
-            <p className="mt-1 flex items-baseline gap-1.5">
-              <span className={cn("t-num-sm tnum", state === "clean" && "text-accent", over && "text-warn")}>
-                {value === null ? "0" : formatAmount(value, item.unit === "$" ? "$" : null)}
-              </span>
-              <span className="text-[14px] text-ink-3">of {formatAmount(target.max, item.unit)}</span>
-            </p>
-          </div>
+      <div>
+        <div className="flex items-center justify-between gap-3">
+          <p className="flex min-w-0 items-baseline gap-1.5">
+            <span className={cn("t-value", state === "clean" && "text-accent", over && "text-warn")}>{value === null ? "0" : formatAmount(value, item.unit === "$" ? "$" : null)}</span>
+            <span className="truncate text-[14px] text-ink-2">of {formatAmount(target.max, item.unit)} today</span>
+          </p>
           <div className="flex shrink-0 gap-2">
             {value === null ? (
               <Button variant="ghost" size="sm" onClick={() => void setAmount(item, today, 0)}>
@@ -104,13 +100,8 @@ export function ViceToday({ view, today, onSlip, onAdd }: ViceTodayProps) {
             </Button>
           </div>
         </div>
-        <ProgressBar
-          className="mt-3"
-          value={target.max > 0 ? Math.min(1, (value ?? 0) / target.max) : value ? 1 : 0}
-          tone={over ? "warn" : "accent"}
-          label={`${item.name} today`}
-        />
-        {over ? <p className="mt-2 text-[13px] text-ink-3">Over the cap today.</p> : null}
+        <ProgressBar className="mt-2.5" value={target.max > 0 ? Math.min(1, (value ?? 0) / target.max) : value ? 1 : 0} tone={over ? "warn" : "accent"} label={`${item.name} today`} />
+        {over ? <p className="t-caption mt-2 text-ink-2">Over the cap today.</p> : null}
       </div>
     );
   }
@@ -118,11 +109,13 @@ export function ViceToday({ view, today, onSlip, onAdd }: ViceTodayProps) {
   const slipped = slipsToday.length > 0;
   const clean = state === "clean";
   return (
-    <div className="flex min-h-[64px] items-center gap-2 pr-4">
+    <div className="flex items-center gap-2">
       {slipped ? (
-        <p className="min-w-0 flex-1 py-3 pl-4 text-[15px] text-ink-2">
-          Slip logged at {formatTime(slipsToday[0].time)}
-          {slipsToday.length > 1 ? `, ${slipsToday.length} today` : ""}
+        <p className="tile flex h-11 min-w-0 flex-1 items-center rounded-full px-4 text-[14px] text-ink-2">
+          <span className="truncate">
+            Slip logged at {formatTime(slipsToday[0].time)}
+            {slipsToday.length > 1 ? `, ${slipsToday.length} today` : ""}
+          </span>
         </p>
       ) : (
         <button
@@ -135,13 +128,15 @@ export function ViceToday({ view, today, onSlip, onAdd }: ViceTodayProps) {
             else haptics.done();
             void setClean(item, today, !clean);
           }}
-          className="flex min-h-[64px] min-w-0 flex-1 items-center gap-3.5 rounded-bl-[20px] pl-4 text-left active:bg-surface-2"
+          className={cn(
+            "pressable flex h-11 min-w-0 flex-1 items-center gap-2.5 rounded-full border pr-4 pl-1.5 text-left text-[14px] font-medium transition-[background-color,border-color,box-shadow] duration-200",
+            clean ? "grad shadow-glow border-transparent" : "tile text-ink",
+          )}
         >
-          <CheckMark checked={clean} />
-          <span className="min-w-0">
-            <span className={cn("block text-[16px] font-medium", clean ? "text-ink-2" : "text-ink")}>Clean today</span>
-            {!clean ? <span className="block text-[13px] text-ink-3">Check at end of day</span> : null}
+          <span className={cn("flex size-[30px] shrink-0 items-center justify-center rounded-full", clean ? null : "border border-ink-3")} aria-hidden>
+            {clean ? <Check size={18} strokeWidth={2.25} className="animate-check-pop" /> : null}
           </span>
+          <span className="truncate">{clean ? "Clean today" : "Mark clean today"}</span>
         </button>
       )}
       <Button variant="secondary" size="sm" onClick={onSlip} className="shrink-0">

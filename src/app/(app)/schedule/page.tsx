@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CalendarClock, MapPin, Plus, RotateCcw, Timer } from "lucide-react";
-import { Button, Card, EmptyState, IconLink, PageHeader, Screen, Section, Sheet, Toggle, useToast } from "@/components/ui";
+import { Button, Card, EmptyState, IconButton, IconLink, PageHeader, Screen, Section, Sheet, Toggle, useToast } from "@/components/ui";
 import { getBlocksForDate, type DayBlock } from "@/lib/blocks";
 import { useDayBlocks, useList, useMode, useNow } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
@@ -186,27 +186,35 @@ export default function SchedulePage() {
       <PageHeader
         title="Schedule"
         right={
-          <IconLink href="/focus" label="Focus timer">
-            <Timer size={22} aria-hidden />
-          </IconLink>
+          <>
+            {!isToday ? (
+              <Button variant="ghost" size="sm" className="px-3" onClick={() => setPicked(null)}>
+                Today
+              </Button>
+            ) : null}
+            <IconLink href="/focus" label="Focus timer">
+              <Timer size={22} strokeWidth={1.75} aria-hidden />
+            </IconLink>
+            <IconButton
+              label="Add a block"
+              filled
+              className="ml-1"
+              onClick={() => {
+                haptics.tap();
+                setAdding({ at: null });
+              }}
+            >
+              <Plus size={22} strokeWidth={1.75} aria-hidden />
+            </IconButton>
+          </>
         }
       />
 
       <WeekStrip dates={dates} selected={date} today={today} edited={edited} onSelect={setPicked} />
 
-      <div className="mt-4 flex items-end justify-between gap-3">
-        <div className="min-w-0">
-          <p className="t-h2 truncate">{formatDateLong(date)}</p>
-          <p className="t-sub mt-0.5">
-            {inChallenge && challenge ? `Day ${n} of ${challenge.length_days}, ` : ""}
-            {own ? (inChallenge ? "edited for this day" : "Edited for this day") : inChallenge ? "from the weekday template" : "From the weekday template"}
-          </p>
-        </div>
-        {!isToday ? (
-          <Button variant="secondary" size="sm" onClick={() => setPicked(null)}>
-            Today
-          </Button>
-        ) : null}
+      <div className="mt-5 flex items-baseline justify-between gap-3 px-1">
+        <p className="t-h2 min-w-0 truncate">{formatDateLong(date)}</p>
+        <p className="t-label shrink-0">{[inChallenge && challenge ? `Day ${n} of ${challenge.length_days}` : null, own ? "Edited" : null].filter(Boolean).join(", ")}</p>
       </div>
 
       {isToday && nowSeconds !== null && !day.loading && blocks.length > 0 ? (
@@ -231,45 +239,48 @@ export default function SchedulePage() {
         </div>
       ) : null}
 
-      <Card className="mt-3 flex items-center gap-3">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-[12px] bg-surface-2 text-ink-2">
-          <MapPin size={19} aria-hidden />
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-[15px] font-medium">9:00 clock-in errand</p>
-          <p className="tnum truncate text-[13px] text-ink-3">
-            {errand ? `${formatTime(errand.start)} to ${formatTime(errand.end)}. Tap the block to change it` : "Shifts the morning blocks"}
-          </p>
-        </div>
-        <Toggle
-          label="9:00 clock-in errand"
-          checked={!!errand}
-          disabled={busy || day.loading}
-          onChange={(on) => {
-            if (on) {
-              const result = insertErrand(blocks, { id: `new:errand${Date.now().toString(36)}`, date });
-              void commit(result.blocks, result, "Errand added at 9:00 AM");
-            } else {
-              void commit(removeErrand(blocks, template.data), null, "Errand removed");
-            }
-          }}
-        />
-      </Card>
-
       <Section title="Day" right={blocks.length > 0 ? `${blocks.length} blocks` : undefined}>
-        {day.loading ? (
-          <Card className="h-[420px]" aria-busy="true" />
-        ) : blocks.length === 0 ? (
-          <EmptyState
-            icon={<CalendarClock size={24} aria-hidden />}
-            title="Nothing planned"
-            body="This weekday has no template yet. Add a block here, or set the template in Settings."
-            action={
-              <Button onClick={() => setAdding({ at: null })} icon={<Plus size={18} aria-hidden />}>
-                Add a block
-              </Button>
-            }
+        <div className="tile mb-5 flex min-h-[60px] items-center gap-3 rounded-[20px] py-1.5 pr-3 pl-4">
+          <MapPin size={18} strokeWidth={1.75} className="shrink-0 text-ink-2" aria-hidden />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[15px]">9:00 clock-in errand</p>
+            {errand ? (
+              <p className="t-caption mt-0.5 truncate text-ink-2">
+                {formatTime(errand.start)} to {formatTime(errand.end)}
+              </p>
+            ) : null}
+          </div>
+          <Toggle
+            label="9:00 clock-in errand"
+            checked={!!errand}
+            disabled={busy || day.loading}
+            onChange={(on) => {
+              if (on) {
+                const result = insertErrand(blocks, { id: `new:errand${Date.now().toString(36)}`, date });
+                void commit(result.blocks, result, "Errand added at 9:00 AM");
+              } else {
+                void commit(removeErrand(blocks, template.data), null, "Errand removed");
+              }
+            }}
           />
+        </div>
+
+        {day.loading ? (
+          <div className="tile h-[420px] rounded-[20px]" aria-busy="true" />
+        ) : blocks.length === 0 ? (
+          <Card padded={false}>
+            <EmptyState
+              compact
+              icon={<CalendarClock size={22} strokeWidth={1.75} aria-hidden />}
+              title="Nothing planned"
+              body="No template for this weekday yet."
+              action={
+                <Button variant="secondary" onClick={() => setAdding({ at: null })} icon={<Plus size={18} aria-hidden />}>
+                  Add a block
+                </Button>
+              }
+            />
+          </Card>
         ) : (
           <>
             <Timeline
@@ -282,37 +293,21 @@ export default function SchedulePage() {
               onCommit={(after, result) => void commit(after, result)}
               onAddAt={(minute) => setAdding({ at: minute })}
             />
-            <p className="mt-3 px-1 text-[13px] text-ink-3">
-              Tap a block to edit it. Press and hold to drag it, or pull the bar on its bottom edge to make it longer or shorter. Blocks with a
-              stripe are fixed.
-            </p>
-            {own ? (
-              <Button variant="ghost" size="sm" className="mt-1 -ml-3" icon={<RotateCcw size={16} aria-hidden />} onClick={() => setConfirmReset(true)}>
-                Reset this day to the template
-              </Button>
-            ) : null}
+            <div className="mt-2 flex min-h-11 items-center justify-between gap-3 px-1">
+              <p className="t-sub">Hold to drag. Tap a gap to add.</p>
+              {own ? (
+                <Button variant="ghost" size="sm" className="-mr-3 px-3" icon={<RotateCcw size={16} aria-hidden />} onClick={() => setConfirmReset(true)}>
+                  Reset
+                </Button>
+              ) : null}
+            </div>
           </>
         )}
       </Section>
 
-      <Section title="Calendar sync">
+      <Section title="Calendar">
         <CalendarSection calendar={calendar} />
       </Section>
-
-      {/* add button, above the tab bar */}
-      <div className="pointer-events-none fixed inset-x-0 bottom-[calc(var(--tabbar-h)+var(--safe-b)+14px)] z-30 mx-auto flex max-w-[480px] justify-end px-5">
-        <button
-          type="button"
-          aria-label="Add a block"
-          onClick={() => {
-            haptics.tap();
-            setAdding({ at: null });
-          }}
-          className="pressable pointer-events-auto flex size-14 items-center justify-center rounded-full bg-ink text-bg shadow-[0_10px_30px_var(--shadow)]"
-        >
-          <Plus size={26} aria-hidden />
-        </button>
-      </div>
 
       {adding !== null ? (
       <AddSheet
@@ -352,7 +347,7 @@ export default function SchedulePage() {
         open={confirmReset}
         onClose={() => setConfirmReset(false)}
         title="Reset this day?"
-        subtitle={`${formatDateLong(date)} goes back to the weekday template. Blocks you added or moved on this day are removed.`}
+        subtitle={`${formatDateLong(date)} goes back to the template. Changes made on this day are removed.`}
         footer={
           <div className="flex gap-2">
             <Button full variant="secondary" size="lg" onClick={() => setConfirmReset(false)}>

@@ -68,7 +68,7 @@ export function ViceSheet({ item, today, onClose, onSaved }: ViceSheetProps) {
       open
       onClose={onClose}
       title={!item ? "Add your own" : turningOn ? item.name : "Edit"}
-      subtitle={!item ? undefined : turningOn ? "Counts from today." : "Changes apply from today. Past days keep the rule they had."}
+      subtitle={!item ? undefined : turningOn ? "Counts from today." : "Applies from today. Past days keep their rule."}
       footer={
         <div className="flex gap-2.5">
           {item && !seeded && !turningOn ? (
@@ -116,15 +116,15 @@ export function ViceSheet({ item, today, onClose, onSaved }: ViceSheetProps) {
               hint="Clean means at or under this."
               placeholder="30"
             />
-            <SegmentedControl label="Unit" size="sm" value={unit} onChange={setUnit} options={CAP_UNITS.map((u) => ({ value: u.value as string, label: u.label }))} />
+            <SegmentedControl label="Unit" value={unit} onChange={setUnit} options={CAP_UNITS.map((u) => ({ value: u.value as string, label: u.label }))} />
           </div>
         ) : null}
 
         {!seeded ? (
           <label className="flex min-h-11 items-center justify-between gap-3">
             <span>
-              <span className="block text-[16px] font-medium">Costs money</span>
-              <span className="block text-[13px] text-ink-3">Shows dollars kept.</span>
+              <span className="block text-[15px] text-ink">Costs money</span>
+              <span className="t-caption mt-0.5 block text-ink-2">Shows dollars kept.</span>
             </span>
             <Toggle checked={money} onChange={setMoney} label="Costs money" />
           </label>
@@ -138,12 +138,11 @@ export function ViceSheet({ item, today, onClose, onSaved }: ViceSheetProps) {
               onChange={setSpend}
               live
               prefix="$"
-              hint="A rough number is fine. Dollars kept is worked out from clean days."
+              hint="A rough number is fine."
               placeholder="0"
             />
             <SegmentedControl
               label="Per"
-              size="sm"
               value={period}
               onChange={setPeriod}
               options={[

@@ -53,12 +53,12 @@ function Option({ icon, label, sub, onClick }: { icon: React.ReactNode; label: s
         haptics.tap();
         onClick();
       }}
-      className="pressable flex min-h-[92px] flex-col justify-between rounded-[16px] border border-line bg-surface-2 p-3.5 text-left"
+      className="pressable tile flex min-h-[92px] flex-col justify-between rounded-[20px] p-3.5 text-left"
     >
       <span className="text-ink-2">{icon}</span>
       <span>
-        <span className="block text-[16px] font-semibold tracking-[-0.01em]">{label}</span>
-        <span className="t-sub block text-[12px]">{sub}</span>
+        <span className="t-value block">{label}</span>
+        <span className="t-caption mt-1 block text-ink-2">{sub}</span>
       </span>
     </button>
   );
@@ -91,24 +91,24 @@ function Menu({ onFiles, onClose, go }: AddSheetProps & { go: (m: Mode) => void 
         void onFiles(blobs, "screenshot");
         return;
       }
-      setProblem("There is no image on the clipboard. Copy one, then come back.");
+      setProblem("No image on the clipboard.");
     } catch {
-      setProblem("The browser did not hand over the clipboard. Close this and paste straight onto the board instead.");
+      setProblem("The clipboard is blocked here. Paste straight onto the board instead.");
     }
   };
 
   return (
     <div>
       <div className="grid grid-cols-2 gap-2.5">
-        <Option icon={<Camera size={22} aria-hidden />} label="Camera" sub="Shoot it now" onClick={() => camera.current?.click()} />
-        <Option icon={<Images size={22} aria-hidden />} label="Photos" sub="Library and screenshots" onClick={() => library.current?.click()} />
-        <Option icon={<ClipboardPaste size={22} aria-hidden />} label="Paste" sub="An image you copied" onClick={() => void paste()} />
-        <Option icon={<Globe size={22} aria-hidden />} label="Web" sub="An image or page link" onClick={() => go("web")} />
-        <Option icon={<Palette size={22} aria-hidden />} label="Color" sub="A swatch" onClick={() => go("color")} />
-        <Option icon={<Type size={22} aria-hidden />} label="Note" sub="Words or a link" onClick={() => go("note")} />
+        <Option icon={<Camera size={20} strokeWidth={1.75} aria-hidden />} label="Camera" sub="Shoot it now" onClick={() => camera.current?.click()} />
+        <Option icon={<Images size={20} strokeWidth={1.75} aria-hidden />} label="Photos" sub="And screenshots" onClick={() => library.current?.click()} />
+        <Option icon={<ClipboardPaste size={20} strokeWidth={1.75} aria-hidden />} label="Paste" sub="What you copied" onClick={() => void paste()} />
+        <Option icon={<Globe size={20} strokeWidth={1.75} aria-hidden />} label="Web" sub="A link" onClick={() => go("web")} />
+        <Option icon={<Palette size={20} strokeWidth={1.75} aria-hidden />} label="Color" sub="A swatch" onClick={() => go("color")} />
+        <Option icon={<Type size={20} strokeWidth={1.75} aria-hidden />} label="Note" sub="Words or a link" onClick={() => go("note")} />
       </div>
       {problem ? (
-        <p role="alert" className="mt-3 text-[14px] text-warn">
+        <p role="alert" className="t-sub mt-3 text-warn">
           {problem}
         </p>
       ) : null}
@@ -178,7 +178,7 @@ function ColorForm({ onColor, suggestions, done, back }: { onColor: (hex: string
     <div>
       <div className="flex items-stretch gap-3">
         <label
-          className={cn("relative flex h-[104px] w-[104px] shrink-0 cursor-pointer items-end overflow-hidden rounded-[6px] border border-line p-2.5", hex ? "" : "bg-surface-2 text-ink-3")}
+          className={cn("relative flex h-[104px] w-[104px] shrink-0 cursor-pointer items-end overflow-hidden rounded-[20px] p-3", hex ? "" : "tile text-ink-2")}
           style={hex ? { backgroundColor: hex, color: inkOnColor(hex) } : undefined}
         >
           <span className="tnum text-[11px] font-medium tracking-[0.12em] uppercase">{hex ? hex.replace("#", "") : "Pick"}</span>
@@ -193,7 +193,7 @@ function ColorForm({ onColor, suggestions, done, back }: { onColor: (hex: string
       {suggestions.length > 0 ? (
         <div className="mt-4">
           <p className="t-label mb-2">From this board</p>
-          <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
+          <div className="no-scrollbar -mx-5 flex gap-2.5 overflow-x-auto px-5 py-1">
             {suggestions.map((c) => (
               <button
                 key={c}
@@ -203,7 +203,7 @@ function ColorForm({ onColor, suggestions, done, back }: { onColor: (hex: string
                   haptics.tap();
                   setText(c);
                 }}
-                className={cn("pressable size-11 shrink-0 rounded-[4px] border", hex === c ? "border-ink" : "border-line")}
+                className={cn("pressable size-11 shrink-0 rounded-full border", hex === c ? "border-ink outline outline-[1.5px] outline-offset-2 outline-ink" : "border-hair")}
                 style={{ backgroundColor: c }}
               />
             ))}

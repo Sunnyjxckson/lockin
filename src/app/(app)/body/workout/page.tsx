@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Dumbbell } from "lucide-react";
-import { Card, CheckMark, EmptyState, PageHeader, ProgressBar, Screen, cn, useToast } from "@/components/ui";
+import { CheckMark, EmptyState, PageHeader, ProgressBar, Screen, cn, useToast } from "@/components/ui";
 import { useList, useSettings, useToday, useWorkouts } from "@/lib/db/hooks";
 import { workoutsFor } from "@/lib/db/helpers";
 import { haptics } from "@/lib/haptics";
@@ -35,8 +35,8 @@ function SetInput({
   return (
     <label
       className={cn(
-        "flex h-11 min-w-0 flex-1 items-center gap-1 rounded-[12px] border bg-surface-2 px-2.5 transition-colors focus-within:border-ink-3",
-        done ? "border-accent-line" : "border-line",
+        "tile flex h-12 min-w-0 flex-1 items-baseline gap-1 rounded-[16px] px-3 pt-[13px] transition-colors focus-within:border-ink-2",
+        done && "border-accent-line",
       )}
     >
       <input
@@ -58,11 +58,11 @@ function SetInput({
           if (e.key === "Enter") e.currentTarget.blur();
         }}
         className={cn(
-          "tnum w-full min-w-0 bg-transparent text-right text-[18px] font-semibold tracking-[-0.02em] outline-none placeholder:text-ink-3",
+          "w-full min-w-0 bg-transparent text-[18px] leading-none font-medium tracking-[-0.02em] outline-none placeholder:text-ink-3",
           done ? "text-accent" : "text-ink",
         )}
       />
-      <span className="shrink-0 text-[12px] font-medium text-ink-3">{unit}</span>
+      <span className="t-caption shrink-0 text-ink-2">{unit}</span>
     </label>
   );
 }
@@ -81,27 +81,20 @@ function ExerciseCard({ exercise, date, all, unit }: { exercise: Exercise; date:
   };
 
   return (
-    <Card padded={false} className="overflow-hidden">
-      <div className="flex items-start justify-between gap-3 px-4 pt-4 pb-3">
+    <section className="mt-8" aria-label={exercise.name}>
+      <div className="flex items-end justify-between gap-3 px-1">
         <div className="min-w-0">
           <h2 className="t-h2 truncate">{exercise.name}</h2>
-          <p className="t-sub mt-0.5">
+          <p className="t-sub mt-1">
             {exercise.sets} x {exercise.reps}
-            {last.length > 0 ? `, last on ${formatDateShort(last[0].date)}` : ", first time"}
+            {last.length > 0 ? `, last ${formatDateShort(last[0].date)}` : ", first time"}
           </p>
         </div>
-        <span className={cn("tnum mt-1 shrink-0 text-[14px] font-semibold", complete ? "text-accent" : "text-ink-3")}>
+        <span className={cn("t-label shrink-0 pb-0.5", complete ? "text-accent" : null)}>
           {logged} of {exercise.sets}
         </span>
       </div>
-      <div className="flex items-center gap-2 border-t border-line px-4 pt-2.5 pb-1 text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
-        <span className="w-5">Set</span>
-        <span className="flex-1">Weight</span>
-        <span className="flex-1">Reps</span>
-        <span className="w-[68px] text-right">Last</span>
-        <span className="w-11" />
-      </div>
-      <ol className="pb-2">
+      <ol className="mt-3 flex flex-col gap-2">
         {Array.from({ length: exercise.sets }, (_, i) => i + 1).map((n) => {
           const row = today.find((l) => l.set_number === n) ?? null;
           const lastRow = last.find((l) => l.set_number === n) ?? null;
@@ -127,18 +120,20 @@ function ExerciseCard({ exercise, date, all, unit }: { exercise: Exercise; date:
             logSet(date, exercise.name, n, current.weight, current.reps).catch(fail);
           };
           return (
-            <li key={`${n}-${row ? "logged" : "open"}`} className="flex min-h-[52px] items-center gap-2 px-4">
-              <span className="tnum w-5 shrink-0 text-[15px] font-semibold text-ink-3">{n}</span>
+            <li key={`${n}-${row ? "logged" : "open"}`} className="flex items-center gap-2 pl-1">
+              <span className="w-4 shrink-0 text-[14px] text-ink-2" aria-hidden>
+                {n}
+              </span>
               <SetInput label={`${exercise.name} set ${n} weight`} unit={unit} decimal value={current.weight} done={!!row} onChange={(weight) => change({ weight })} />
               <SetInput label={`${exercise.name} set ${n} reps`} unit="reps" decimal={false} value={current.reps} done={!!row} onChange={(reps) => change({ reps })} />
-              <span className="tnum w-[68px] shrink-0 text-right text-[14px] text-ink-3">{formatSet(lastRow) || "new"}</span>
+              <span className="t-caption w-[58px] shrink-0 text-right text-ink-2">{formatSet(lastRow) || "new"}</span>
               <button
                 type="button"
                 role="checkbox"
                 aria-checked={!!row}
                 aria-label={`${exercise.name} set ${n} done`}
                 onClick={toggle}
-                className="pressable flex size-11 shrink-0 items-center justify-center"
+                className="pressable -mr-1.5 flex size-11 shrink-0 items-center justify-center rounded-full"
               >
                 <CheckMark checked={!!row} size={30} />
               </button>
@@ -146,7 +141,7 @@ function ExerciseCard({ exercise, date, all, unit }: { exercise: Exercise; date:
           );
         })}
       </ol>
-    </Card>
+    </section>
   );
 }
 
@@ -171,30 +166,21 @@ export default function WorkoutLogPage() {
       <PageHeader title="Log workout" eyebrow={formatDateLong(today)} back="/body" subtitle={main && isLoggable(main) ? `${main.name}${main.detail ? `, ${main.detail.toLowerCase()}` : ""}` : undefined} />
       {main && isLoggable(main) ? (
         <>
-          <Card className="mt-4">
-            <div className="flex items-baseline justify-between gap-3">
-              <p className="flex items-baseline gap-2">
-                <span className={cn("t-num tnum", progress.complete && "text-accent")}>{progress.logged}</span>
-                <span className="text-[15px] font-medium text-ink-3">of {progress.total} sets</span>
-              </p>
-              {progress.complete ? <span className="text-[14px] font-semibold text-accent">All logged</span> : null}
-            </div>
-            <ProgressBar className="mt-3" value={progress.total > 0 ? progress.logged / progress.total : 0} label="Sets logged" />
-            <p className="t-sub mt-3">
-              {progress.complete
-                ? "Every set is in. Tick Workout on Today yourself when you are done."
-                : "Each set starts with last time's numbers. Tap the circle to log it, or change the numbers first."}
+          <section className="pt-2" aria-label="Sets logged">
+            <p className="flex items-baseline gap-2.5">
+              <span className={cn("t-display", progress.complete ? "text-accent" : "text-ink")}>{progress.logged}</span>
+              <span className="text-[16px] text-ink-2">of {progress.total} sets</span>
             </p>
-          </Card>
-          <div className="mt-4 flex flex-col gap-3">
-            {main.exercises.map((e, i) => (
-              <ExerciseCard key={`${e.name}-${i}`} exercise={e} date={today} all={all} unit={unit} />
-            ))}
-          </div>
+            <ProgressBar className="mt-4" value={progress.total > 0 ? progress.logged / progress.total : 0} label="Sets logged" />
+            <p className="t-sub mt-3">{progress.complete ? "All logged. Tick Workout on Today yourself." : "Last time's numbers are filled in. Tap the circle to log a set."}</p>
+          </section>
+          {main.exercises.map((e, i) => (
+            <ExerciseCard key={`${e.name}-${i}`} exercise={e} date={today} all={all} unit={unit} />
+          ))}
         </>
       ) : loading ? null : (
         <EmptyState
-          icon={<Dumbbell size={24} aria-hidden />}
+          icon={<Dumbbell size={22} strokeWidth={1.75} aria-hidden />}
           title="No lift today"
           body={[
             main ? `Today is ${main.name.toLowerCase()}, nothing to log set by set.` : "Nothing is planned for today.",

@@ -28,7 +28,7 @@ const KIND_OPTIONS = BOARD_KINDS.map((k) => ({ value: k, label: BOARD_KIND_LABEL
 
 export function BoardSheet({ open, onClose, board, taken = [], onSave, onDelete, onMove, pieces = 0 }: BoardSheetProps) {
   return (
-    <Sheet open={open} onClose={onClose} title={board ? "Board" : "New board"} subtitle={board ? undefined : "One board per world: the body, the brand, the life."}>
+    <Sheet open={open} onClose={onClose} title={board ? "Board" : "New board"} subtitle={board ? undefined : "The body, the brand, the life."}>
       {open ? <Form key={board?.id ?? "new"} board={board ?? null} taken={taken} onSave={onSave} onDelete={onDelete} onMove={onMove} onClose={onClose} pieces={pieces} /> : null}
     </Sheet>
   );
@@ -51,17 +51,17 @@ function Form({ board, taken, onSave, onDelete, onMove, onClose, pieces }: Omit<
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <TextField label="Name" value={name} onChange={setName} placeholder={`${BOARD_KIND_LABEL[kind]} board`} maxLength={40} autoFocus={!board} />
       <div>
-        <p className="t-label mb-2">What it is for</p>
+        <p className="t-label mb-3">What it is for</p>
         <SegmentedControl label="What it is for" options={KIND_OPTIONS} value={kind} onChange={setKind} />
         <p className="t-sub mt-2">{BOARD_KIND_HINT[kind]}</p>
       </div>
 
       {board && onMove && (onMove.up || onMove.down) ? (
         <div>
-          <p className="t-label mb-2">Order</p>
+          <p className="t-label mb-3">Order</p>
           <div className="flex gap-2.5">
             <Button variant="secondary" size="sm" full icon={<ArrowUp size={16} aria-hidden />} disabled={!onMove.up} onClick={() => onMove.up?.()}>
               Move up

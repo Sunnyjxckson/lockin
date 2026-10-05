@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Download, Share } from "lucide-react";
-import { Button, Card, Toggle, useToast } from "@/components/ui";
+import { Button, List, ListRow, Section, Toggle, useToast } from "@/components/ui";
 import { useChecklist, useList, useLogs, useMode } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { challengeItems } from "@/lib/logic/challenge";
@@ -158,7 +158,7 @@ export function ShareCard() {
 
   return (
     <div>
-      <div className="mt-3 overflow-hidden rounded-[20px] border border-line bg-surface">
+      <div className="mt-1 overflow-hidden rounded-[26px] border border-glass-line shadow-float">
         <canvas
           ref={canvas}
           width={CARD_W}
@@ -170,42 +170,37 @@ export function ShareCard() {
         />
       </div>
 
-      <div className="mt-4 flex gap-2.5">
+      <div className="mt-5 flex gap-2.5">
         {shareable ? (
           <>
-            <Button full size="lg" onClick={share} loading={busy} disabled={painted === 0} icon={<Share size={18} aria-hidden />}>
+            <Button full size="lg" onClick={share} loading={busy} disabled={painted === 0} icon={<Share size={18} strokeWidth={1.75} aria-hidden />}>
               Share
             </Button>
-            <Button variant="secondary" size="lg" onClick={save} disabled={busy || painted === 0} aria-label="Save image" icon={<Download size={18} aria-hidden />}>
+            <Button variant="secondary" size="lg" onClick={save} disabled={busy || painted === 0} aria-label="Save image" icon={<Download size={18} strokeWidth={1.75} aria-hidden />}>
               Save
             </Button>
           </>
         ) : (
-          <Button full size="lg" onClick={save} loading={busy} disabled={painted === 0} icon={<Download size={18} aria-hidden />}>
+          <Button full size="lg" onClick={save} loading={busy} disabled={painted === 0} icon={<Download size={18} strokeWidth={1.75} aria-hidden />}>
             Save image
           </Button>
         )}
       </div>
 
-      <Card padded={false} className="mt-5 overflow-hidden">
-        <div className="divide-y divide-line">
-          <div className="flex min-h-[64px] items-center gap-3 px-4 py-2.5">
-            <div className="min-w-0 flex-1">
-              <div className="text-[16px] font-medium text-ink">First photo</div>
-              <div className="mt-0.5 text-[13px] text-ink-3">{hasBefore ? data?.before?.label : "No progress photo yet"}</div>
-            </div>
-            <Toggle checked={showBefore && hasBefore} onChange={setShowBefore} label="Show first photo" disabled={!hasBefore} />
-          </div>
-          <div className="flex min-h-[64px] items-center gap-3 px-4 py-2.5">
-            <div className="min-w-0 flex-1">
-              <div className="text-[16px] font-medium text-ink">Latest photo</div>
-              <div className="mt-0.5 text-[13px] text-ink-3">{hasAfter ? data?.after?.label : hasBefore ? "Needs a second photo" : "No progress photo yet"}</div>
-            </div>
-            <Toggle checked={showAfter && hasAfter} onChange={setShowAfter} label="Show latest photo" disabled={!hasAfter} />
-          </div>
-        </div>
-      </Card>
-      <p className="t-sub mt-3 px-1">Photos stay off the card unless you turn them on. Add them on the Body tab.</p>
+      <Section title="Photos" right="Off unless you turn them on">
+        <List>
+          <ListRow
+            title="First photo"
+            sub={hasBefore ? data?.before?.label : "No progress photo yet"}
+            right={<Toggle checked={showBefore && hasBefore} onChange={setShowBefore} label="Show first photo" disabled={!hasBefore} />}
+          />
+          <ListRow
+            title="Latest photo"
+            sub={hasAfter ? data?.after?.label : hasBefore ? "Needs a second photo" : "No progress photo yet"}
+            right={<Toggle checked={showAfter && hasAfter} onChange={setShowAfter} label="Show latest photo" disabled={!hasAfter} />}
+          />
+        </List>
+      </Section>
     </div>
   );
 }

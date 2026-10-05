@@ -23,7 +23,7 @@ const BoardView = dynamic(() => import("./BoardView").then((m) => m.BoardView), 
 function Thumb({ item, className }: { item: BoardItem; className?: string }) {
   const url = usePhoto(item.image_url);
   return (
-    <span className={cn("block overflow-hidden rounded-[6px] bg-surface-2", className)} style={{ backgroundColor: item.kind === "color" ? (item.color ?? undefined) : item.palette?.[0] }}>
+    <span className={cn("block overflow-hidden rounded-[10px] bg-surface-2", className)} style={{ backgroundColor: item.kind === "color" ? (item.color ?? undefined) : item.palette?.[0] }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {url ? <img src={url} alt="" draggable={false} className="size-full object-cover" /> : null}
     </span>

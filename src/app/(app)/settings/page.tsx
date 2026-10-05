@@ -22,10 +22,10 @@ export default function SettingsPage() {
   const challengeLine = mode.challenge
     ? `${mode.challenge.name}, day ${mode.day} of ${mode.length}`
     : mode.finished
-      ? `${mode.finished.name} is done. Close it or restart it`
+      ? `${mode.finished.name} is done`
       : mode.upcoming
         ? `${mode.upcoming.name} starts ${formatDateShort(mode.upcoming.start_date)}`
-        : "Ongoing. Start a challenge when you want a set run";
+        : "Ongoing";
 
   const lock = async () => {
     lockLocally();
@@ -50,21 +50,21 @@ export default function SettingsPage() {
 
   return (
     <Screen>
-      <PageHeader title="Settings" back="/today" subtitle="Changes apply from today forward. Earlier days keep the targets they were scored against." />
+      <PageHeader title="Settings" back="/today" subtitle="Changes apply from today on." />
 
       <Section title="Your days">
         <Card padded={false} className="overflow-hidden">
-          <div className="divide-y divide-line">
-            <ListRow href="/settings/checklist" left={<ListChecks size={20} aria-hidden />} title="Checklist" sub="Items, order and targets" />
-            <ListRow href="/settings/schedule" left={<CalendarClock size={20} aria-hidden />} title="Schedule" sub="The template for each weekday" />
-            <ListRow href="/settings/workouts" left={<Dumbbell size={20} aria-hidden />} title="Workouts" sub="Exercises, sets, reps and lift days" />
+          <div className="divide-y divide-hair">
+            <ListRow href="/settings/checklist" left={<ListChecks size={20} strokeWidth={1.75} aria-hidden />} title="Checklist" sub="Items and targets" />
+            <ListRow href="/settings/schedule" left={<CalendarClock size={20} strokeWidth={1.75} aria-hidden />} title="Schedule" sub="Each weekday" />
+            <ListRow href="/settings/workouts" left={<Dumbbell size={20} strokeWidth={1.75} aria-hidden />} title="Workouts" sub="Exercises and lift days" />
             <ListRow
               href="/settings/challenge"
-              left={<Target size={20} aria-hidden />}
+              left={<Target size={20} strokeWidth={1.75} aria-hidden />}
               title="Challenge"
               sub={challengeLine}
             />
-            <ListRow href="/settings/reminders" left={<BellRing size={20} aria-hidden />} title="Reminders" sub="On or off, and when" />
+            <ListRow href="/settings/reminders" left={<BellRing size={20} strokeWidth={1.75} aria-hidden />} title="Reminders" sub="What and when" />
           </div>
         </Card>
       </Section>
@@ -72,15 +72,15 @@ export default function SettingsPage() {
       <Section title="Look">
         <ThemePicker />
         <Card padded={false} className="mt-3 overflow-hidden">
-          <ListRow href="/boards" left={<Images size={20} aria-hidden />} title="Boards" sub="Pull a palette from a mood board and make it the theme" />
+          <ListRow href="/boards" left={<Images size={20} strokeWidth={1.75} aria-hidden />} title="Boards" sub="Wear a mood board's palette" />
         </Card>
       </Section>
 
       <Section title="More">
         <Card padded={false} className="overflow-hidden">
-          <div className="divide-y divide-line">
-            <ListRow href="/meals" left={<UtensilsCrossed size={20} aria-hidden />} title="Meals" sub="Week plan, recipes and the grocery list" />
-            <ListRow href="/focus" left={<Timer size={20} aria-hidden />} title="Focus" sub="Study timer and hours" />
+          <div className="divide-y divide-hair">
+            <ListRow href="/meals" left={<UtensilsCrossed size={20} strokeWidth={1.75} aria-hidden />} title="Meals" sub="Plan, recipes, groceries" />
+            <ListRow href="/focus" left={<Timer size={20} strokeWidth={1.75} aria-hidden />} title="Focus" sub="Study timer" />
           </div>
         </Card>
       </Section>
@@ -89,7 +89,7 @@ export default function SettingsPage() {
         <TextField
           key={settings.data?.display_name ?? ""}
           label="Name"
-          hint="Today greets you by it. Leave it empty for no name."
+          hint="Today greets you by it."
           value={name ?? settings.data?.display_name ?? ""}
           onChange={setName}
           onCommit={(v) => {
@@ -103,11 +103,11 @@ export default function SettingsPage() {
 
       <Section title="This device">
         <Card padded={false} className="overflow-hidden">
-          <div className="divide-y divide-line">
-            <ListRow href="/reminders" title="Notifications" sub="Turn push on for this device, and see what is set up" />
+          <div className="divide-y divide-hair">
+            <ListRow href="/reminders" title="Notifications" sub="Push on this device" />
             <ListRow
               title="Haptics"
-              sub="A tap when you check something off"
+              sub="A tap on each tick"
               right={
                 <Toggle
                   label="Haptics"
@@ -116,23 +116,21 @@ export default function SettingsPage() {
                 />
               }
             />
-            <ListRow title="Lock now" sub="Ask for the passcode again" onClick={() => void lock()} />
-            <ListRow title="Data" sub={isSupabaseMode() ? "Synced to Supabase" : "Stored on this device only"} />
+            <ListRow title="Lock now" sub="Asks for the passcode" onClick={() => void lock()} />
+            <ListRow title="Data" sub={isSupabaseMode() ? "Synced to Supabase" : "On this device only"} />
           </div>
         </Card>
       </Section>
 
-      <Section title="Danger">
-        <Button variant="danger" full onClick={() => setConfirmReset(true)}>
-          Reset all data
-        </Button>
-      </Section>
+      <Button variant="danger" full className="mt-7" onClick={() => setConfirmReset(true)}>
+        Reset all data
+      </Button>
 
       <Sheet
         open={confirmReset}
         onClose={() => setConfirmReset(false)}
         title="Reset everything?"
-        subtitle="Every log, earning, meal and setting goes back to the starting defaults. This cannot be undone."
+        subtitle="Every log and setting goes back to the defaults. This cannot be undone."
         footer={
           <div className="flex gap-3">
             <Button variant="secondary" full onClick={() => setConfirmReset(false)}>

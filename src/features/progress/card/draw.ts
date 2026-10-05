@@ -9,18 +9,21 @@ export const CARD_H = 1350;
 
 export interface CardTheme {
   bg: string;
-  surface: string;
-  surface2: string;
-  line: string;
-  lineStrong: string;
   ink: string;
   ink2: string;
   ink3: string;
   accent: string;
+  accent2: string;
   accentInk: string;
-  accentSoft: string;
-  accentLine: string;
-  dangerSoft: string;
+  danger: string;
+  hair: string;
+  tile: string;
+  tileLine: string;
+  glow1: string;
+  glow2: string;
+  glow3: string;
+  scrim: string;
+  onScrim: string;
   font: string;
 }
 
@@ -30,18 +33,21 @@ export function readTheme(): CardTheme {
   const v = (name: string) => root.getPropertyValue(name).trim();
   return {
     bg: v("--bg"),
-    surface: v("--surface"),
-    surface2: v("--surface-2"),
-    line: v("--line"),
-    lineStrong: v("--line-strong"),
     ink: v("--ink"),
     ink2: v("--ink-2"),
     ink3: v("--ink-3"),
     accent: v("--accent"),
+    accent2: v("--accent-2"),
     accentInk: v("--accent-ink"),
-    accentSoft: v("--accent-soft"),
-    accentLine: v("--accent-line"),
-    dangerSoft: v("--danger-soft"),
+    danger: v("--danger"),
+    hair: v("--hair"),
+    tile: v("--tile"),
+    tileLine: v("--tile-line"),
+    glow1: v("--glow-1"),
+    glow2: v("--glow-2"),
+    glow3: v("--glow-3"),
+    scrim: v("--scrim"),
+    onScrim: v("--on-scrim"),
     font: getComputedStyle(document.body).fontFamily || "sans-serif",
   };
 }
@@ -53,13 +59,36 @@ export interface CardImages {
 
 type Ctx = CanvasRenderingContext2D;
 
-const PAD = 80;
+const PAD = 88;
 const INNER = CARD_W - PAD * 2;
 
-function font(ctx: Ctx, t: CardTheme, size: number, weight = 600, spacing = 0) {
+/** One family, medium for numbers and headings, regular for the rest. Never heavier. */
+function font(ctx: Ctx, t: CardTheme, size: number, weight: 400 | 500 = 500, spacing = 0) {
   ctx.font = `${weight} ${size}px ${t.font}`;
   // Not in every browser. Without it the labels are just a little tighter.
   (ctx as unknown as { letterSpacing: string }).letterSpacing = `${spacing}px`;
+}
+
+/** The app's gradient, champagne to rose, across a box. */
+function gradient(ctx: Ctx, t: CardTheme, x: number, y: number, w: number, h: number): CanvasGradient {
+  const g = ctx.createLinearGradient(x, y, x + w, y + h);
+  g.addColorStop(0, t.accent);
+  g.addColorStop(1, t.accent2);
+  return g;
+}
+
+/** One soft light: an ellipse of color fading to nothing, like the page's own. */
+function light(ctx: Ctx, color: string, cx: number, cy: number, rx: number, ry: number) {
+  if (!color) return;
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.scale(rx, ry);
+  const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+  g.addColorStop(0, color);
+  g.addColorStop(0.7, "transparent");
+  ctx.fillStyle = g;
+  ctx.fillRect(-1, -1, 2, 2);
+  ctx.restore();
 }
 
 function text(ctx: Ctx, s: string, x: number, y: number, color: string, align: CanvasTextAlign = "left") {
@@ -106,35 +135,42 @@ function cover(ctx: Ctx, img: CanvasImageSource, x: number, y: number, w: number
 }
 
 function cell(ctx: Ctx, t: CardTheme, kind: CellKind, isToday: boolean, x: number, y: number, s: number) {
-  const r = Math.max(3, s * 0.24);
-  const lw = Math.max(2, s * 0.045);
+  const r = Math.max(3, s * 0.3);
+  const lw = Math.max(1.5, s * 0.03);
+  const outline = () => {
+    ctx.lineWidth = lw;
+    ctx.strokeStyle = t.tileLine;
+    rounded(ctx, x + lw / 2, y + lw / 2, s - lw, s - lw, r);
+    ctx.stroke();
+  };
   rounded(ctx, x, y, s, s, r);
   if (kind === "full") {
-    ctx.fillStyle = t.accent;
+    ctx.fillStyle = gradient(ctx, t, x, y, s, s);
     ctx.fill();
-  } else if (kind === "partial") {
-    ctx.fillStyle = t.accentSoft;
+  } else if (kind === "partial" || kind === "missed" || kind === "open") {
+    ctx.fillStyle = t.tile;
     ctx.fill();
-    ctx.lineWidth = lw;
-    ctx.strokeStyle = t.accentLine;
-    rounded(ctx, x + lw / 2, y + lw / 2, s - lw, s - lw, r);
-    ctx.stroke();
-  } else if (kind === "missed") {
-    ctx.fillStyle = t.dangerSoft;
-    ctx.fill();
-  } else if (kind === "open") {
-    ctx.fillStyle = t.surface2;
-    ctx.fill();
+    outline();
+    if (kind === "partial") {
+      const bw = s * 0.36;
+      const bh = Math.max(2, s * 0.05);
+      ctx.fillStyle = gradient(ctx, t, x + (s - bw) / 2, 0, bw, 0);
+      rounded(ctx, x + (s - bw) / 2, y + s * 0.72, bw, bh, bh / 2);
+      ctx.fill();
+    } else if (kind === "missed") {
+      ctx.fillStyle = t.danger;
+      ctx.beginPath();
+      ctx.arc(x + s / 2, y + s * 0.74, Math.max(1.5, s * 0.045), 0, Math.PI * 2);
+      ctx.fill();
+    }
   } else {
-    ctx.lineWidth = lw;
-    ctx.strokeStyle = t.line;
-    rounded(ctx, x + lw / 2, y + lw / 2, s - lw, s - lw, r);
-    ctx.stroke();
+    outline();
   }
   if (isToday) {
-    ctx.lineWidth = lw * 1.4;
+    ctx.lineWidth = lw * 1.5;
     ctx.strokeStyle = t.ink;
-    rounded(ctx, x - lw * 2, y - lw * 2, s + lw * 4, s + lw * 4, r + lw * 2);
+    const o = lw * 2.5;
+    rounded(ctx, x - o, y - o, s + o * 2, s + o * 2, r + o);
     ctx.stroke();
   }
 }
@@ -151,63 +187,73 @@ function grid(ctx: Ctx, t: CardTheme, cells: CardData["cells"], x: number, y: nu
   return rows * s + (rows - 1) * gap;
 }
 
-function label(ctx: Ctx, t: CardTheme, s: string, x: number, y: number, align: CanvasTextAlign = "left", size = 26) {
-  font(ctx, t, size, 600, size * 0.1);
-  text(ctx, s.toUpperCase(), x, y, t.ink3, align);
+function label(ctx: Ctx, t: CardTheme, s: string, x: number, y: number, align: CanvasTextAlign = "left", size = 24) {
+  font(ctx, t, size, 500, size * 0.18);
+  text(ctx, s.toUpperCase(), x, y, t.ink2, align);
 }
 
 function photo(ctx: Ctx, t: CardTheme, img: CanvasImageSource, tag: string, x: number, y: number, w: number, h: number) {
-  cover(ctx, img, x, y, w, h, 32);
-  // A dark fade at the bottom so the tag reads on any photo. Black and white
-  // on purpose: it sits on a photo, not on a themed surface.
+  const r = 44;
+  cover(ctx, img, x, y, w, h, r);
+  // A fade at the bottom so the tag reads on any photo.
   ctx.save();
-  rounded(ctx, x, y, w, h, 32);
+  rounded(ctx, x, y, w, h, r);
   ctx.clip();
-  const fade = ctx.createLinearGradient(0, y + h - 180, 0, y + h);
-  fade.addColorStop(0, "rgba(0,0,0,0)");
-  fade.addColorStop(1, "rgba(0,0,0,0.72)");
+  const fade = ctx.createLinearGradient(0, y + h - 200, 0, y + h);
+  fade.addColorStop(0, "transparent");
+  fade.addColorStop(1, t.scrim);
   ctx.fillStyle = fade;
-  ctx.fillRect(x, y + h - 180, w, 180);
+  ctx.fillRect(x, y + h - 200, w, 200);
   ctx.restore();
-  font(ctx, t, 30, 700, 3);
-  text(ctx, tag.toUpperCase(), x + 28, y + h - 30, "#ffffff");
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = t.line;
-  rounded(ctx, x + 1, y + 1, w - 2, h - 2, 32);
-  ctx.stroke();
+  font(ctx, t, 24, 500, 24 * 0.18);
+  text(ctx, tag.toUpperCase(), x + 34, y + h - 36, t.onScrim);
 }
 
-function stat(ctx: Ctx, t: CardTheme, value: string, unit: string, name: string, x: number, y: number, size: number, color: string) {
-  font(ctx, t, size, 700, -size * 0.035);
-  text(ctx, value, x, y, color);
+function stat(ctx: Ctx, t: CardTheme, value: string, unit: string, name: string, x: number, y: number, size: number) {
+  font(ctx, t, size, 500, -size * 0.035);
+  text(ctx, value, x, y, t.ink);
   const w = ctx.measureText(value).width;
   if (unit) {
-    font(ctx, t, size * 0.45, 600);
-    text(ctx, unit, x + w + 6, y, t.ink3);
+    font(ctx, t, size * 0.42, 400);
+    text(ctx, unit, x + w + 6, y, t.ink2);
   }
-  label(ctx, t, name, x, y + 46, "left", 24);
+  label(ctx, t, name, x, y + 46, "left", 21);
 }
 
 function streaks(ctx: Ctx, t: CardTheme, data: CardData, y: number, rowH: number) {
   label(ctx, t, "Top streaks", PAD, y);
   if (data.streaks.length === 0) {
-    font(ctx, t, 38, 500);
+    font(ctx, t, 36, 400);
     text(ctx, data.started ? "Streaks start with the first full item." : "Starts soon.", PAD, y + rowH, t.ink2);
     return;
   }
   data.streaks.forEach((s, i) => {
     const base = y + rowH * (i + 1);
     const count = countLabel(s.current, s.unit);
-    font(ctx, t, 44, 700, -1);
+    font(ctx, t, 40, 500, -1);
     const cw = ctx.measureText(count).width;
-    text(ctx, count, CARD_W - PAD, base, t.accent, "right");
-    font(ctx, t, 44, 500, -0.5);
+    text(ctx, count, CARD_W - PAD, base, t.ink, "right");
+    font(ctx, t, 40, 400, -0.5);
     text(ctx, fit(ctx, s.name, INNER - cw - 40), PAD, base, t.ink);
     if (i < data.streaks.length - 1) {
-      ctx.fillStyle = t.line;
+      ctx.fillStyle = t.hair;
       ctx.fillRect(PAD, base + 24, INNER, 2);
     }
   });
+}
+
+/** A hairline that fills with the gradient. */
+function line(ctx: Ctx, t: CardTheme, x: number, y: number, w: number, value: number) {
+  const h = 6;
+  ctx.fillStyle = t.hair;
+  rounded(ctx, x, y, w, h, h / 2);
+  ctx.fill();
+  const v = Math.min(1, Math.max(0, value));
+  if (v <= 0) return;
+  const fw = Math.max(h, w * v);
+  ctx.fillStyle = gradient(ctx, t, x, 0, fw, 0);
+  rounded(ctx, x, y, fw, h, h / 2);
+  ctx.fill();
 }
 
 /** Paint the whole card. The canvas must be CARD_W by CARD_H. */
@@ -222,15 +268,18 @@ export function drawCard(ctx: Ctx, data: CardData, theme: CardTheme, images: Car
   ctx.clearRect(0, 0, CARD_W, CARD_H);
   ctx.fillStyle = t.bg;
   ctx.fillRect(0, 0, CARD_W, CARD_H);
+  // The same three lights the app sits on: plum top right, amber at the left edge, indigo under the bottom.
+  light(ctx, t.glow1, CARD_W * 0.85, 0, CARD_W * 0.7, CARD_H * 0.38);
+  light(ctx, t.glow2, 0, CARD_H * 0.22, CARD_W * 0.6, CARD_H * 0.3);
+  light(ctx, t.glow3, CARD_W * 0.5, CARD_H * 1.1, CARD_W * 0.8, CARD_H * 0.4);
 
-  // Header.
-  ctx.fillStyle = t.accent;
-  rounded(ctx, PAD, 86, 26, 26, 7);
+  // Header: the name small and tracked, the dates opposite, like a top bar in the app.
+  ctx.fillStyle = gradient(ctx, t, PAD, 92, 22, 22);
+  ctx.beginPath();
+  ctx.arc(PAD + 11, 103, 11, 0, Math.PI * 2);
   ctx.fill();
-  font(ctx, t, 30, 700, 4);
-  text(ctx, "LOCK IN", PAD + 42, 110, t.ink);
-  font(ctx, t, 28, 500);
-  text(ctx, data.range, CARD_W - PAD, 110, t.ink3, "right");
+  label(ctx, t, "Lock In", PAD + 40, 112);
+  label(ctx, t, data.range, CARD_W - PAD, 112, "right");
 
   const cols = Math.max(10, Math.ceil(data.cells.length / 4));
   const percent = `${data.percent}`;
@@ -239,37 +288,37 @@ export function drawCard(ctx: Ctx, data: CardData, theme: CardTheme, images: Car
 
   if (shots.length === 0) {
     // The big number (the day count, or full days out of the last 30), the grid, three numbers, streaks.
-    label(ctx, t, data.eyebrow, PAD, 222);
-    font(ctx, t, 260, 700, -12);
-    const dayText = data.big;
-    text(ctx, dayText, PAD - 8, 452, t.ink);
-    const dw = ctx.measureText(dayText).width;
-    font(ctx, t, 72, 600, -2);
-    text(ctx, data.bigSub, PAD + dw + 22, 452, t.ink3);
+    label(ctx, t, data.eyebrow, PAD, 226);
+    font(ctx, t, 280, 500, -280 * 0.045);
+    text(ctx, data.big, PAD - 10, 468, t.ink);
+    const dw = ctx.measureText(data.big).width;
+    font(ctx, t, 64, 400, -1);
+    text(ctx, data.bigSub, PAD + dw + 20, 468, t.ink2);
+    line(ctx, t, PAD, 522, INNER, data.percent / 100);
 
-    const gh = grid(ctx, t, data.cells, PAD, 520, INNER, cols, 14);
-    const sy = 520 + gh + 132;
+    const gh = grid(ctx, t, data.cells, PAD, 576, INNER, cols, 14);
+    const sy = 576 + gh + 128;
     const third = INNER / 3;
-    stat(ctx, t, percent, "%", "Complete", PAD, sy, 92, t.accent);
-    stat(ctx, t, locked, "", "Days locked in", PAD + third, sy, 92, t.ink);
-    stat(ctx, t, left, "", data.extra.label, PAD + third * 2, sy, 92, t.ink);
-    streaks(ctx, t, data, sy + 128, 68);
+    stat(ctx, t, percent, "%", "Complete", PAD, sy, 88);
+    stat(ctx, t, locked, "", "Days locked in", PAD + third, sy, 88);
+    stat(ctx, t, left, "", data.extra.label, PAD + third * 2, sy, 88);
+    const ty = sy + 136;
+    streaks(ctx, t, data, ty, Math.min(68, (CARD_H - 56 - ty) / Math.max(1, data.streaks.length)));
   } else {
     // The big number and the stats on one row, then the photos.
-    label(ctx, t, data.eyebrow, PAD, 208);
-    font(ctx, t, 150, 700, -7);
-    const dayText = data.big;
-    text(ctx, dayText, PAD - 4, 338, t.ink);
-    const dw = ctx.measureText(dayText).width;
-    font(ctx, t, 48, 600, -1);
-    text(ctx, data.bigSub, PAD + dw + 16, 338, t.ink3);
+    label(ctx, t, data.eyebrow, PAD, 212);
+    font(ctx, t, 150, 500, -150 * 0.045);
+    text(ctx, data.big, PAD - 5, 342, t.ink);
+    const dw = ctx.measureText(data.big).width;
+    font(ctx, t, 44, 400, -1);
+    text(ctx, data.bigSub, PAD + dw + 14, 342, t.ink2);
 
-    const top = 392;
+    const top = 396;
     const ph = 520;
     const half = (INNER - 24) / 2;
     if (shots.length === 2) {
-      stat(ctx, t, percent, "%", "Complete", PAD + half + 24, 292, 76, t.accent);
-      stat(ctx, t, locked, "", "Locked in", PAD + half + 24 + half / 2 + 10, 292, 76, t.ink);
+      stat(ctx, t, percent, "%", "Complete", PAD + half + 24, 296, 72);
+      stat(ctx, t, locked, "", "Locked in", PAD + half + 24 + half / 2 + 10, 296, 72);
       photo(ctx, t, shots[0].img, shots[0].tag, PAD, top, half, ph);
       photo(ctx, t, shots[1].img, shots[1].tag, PAD + half + 24, top, half, ph);
       // Every day on the card as one strip under the photos.
@@ -279,11 +328,11 @@ export function drawCard(ctx: Ctx, data: CardData, theme: CardTheme, images: Car
       const rx = PAD + half + 24;
       const gh = grid(ctx, t, data.cells, rx, top + 4, half, cols, 9);
       const sy = top + gh + 130;
-      stat(ctx, t, percent, "%", "Complete", rx, sy, 84, t.accent);
-      stat(ctx, t, locked, "", "Locked in", rx + half / 2 + 10, sy, 84, t.ink);
-      stat(ctx, t, left, "", data.extra.label, rx, sy + 170, 84, t.ink);
+      stat(ctx, t, percent, "%", "Complete", rx, sy, 80);
+      stat(ctx, t, locked, "", "Locked in", rx + half / 2 + 10, sy, 80);
+      stat(ctx, t, left, "", data.extra.label, rx, sy + 170, 80);
     }
-    streaks(ctx, t, data, 1066, 68);
+    streaks(ctx, t, data, 1070, 66);
   }
   ctx.restore();
 }

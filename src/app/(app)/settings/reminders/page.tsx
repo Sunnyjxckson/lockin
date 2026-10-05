@@ -14,14 +14,14 @@ function ReminderRow({ r }: { r: Reminder }) {
     <div className="px-4 py-3.5">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-[17px] font-medium">{r.label}</p>
-          <p className="mt-0.5 truncate text-[13px] text-ink-3">
+          <p className="truncate text-[15px] text-ink">{r.label}</p>
+          <p className="t-caption mt-0.5 truncate text-ink-2">
             {r.time !== null ? (r.body ?? "At a set time") : `Before every block named ${r.block_name ?? "?"}`}
           </p>
         </div>
         <Toggle label={r.label} checked={r.enabled} onChange={(v) => save({ enabled: v })} />
       </div>
-      <div className={r.enabled ? "mt-3" : "mt-3 opacity-40"}>
+      <div className="mt-3">
         {r.time !== null ? (
           <TimeField aria-label={`${r.label} time`} value={r.time} disabled={!r.enabled} onChange={(v) => save({ time: v })} />
         ) : (
@@ -47,16 +47,16 @@ export default function ReminderSettingsPage() {
 
   return (
     <Screen>
-      <PageHeader title="Reminders" back="/settings" subtitle="Turn each one on or off and set its time." />
+      <PageHeader title="Reminders" back="/settings" subtitle="On or off, and when." />
 
-      <Section title="Reminders" right={<Link href="/reminders" className="font-semibold text-ink">Notifications</Link>}>
+      <Section title="Reminders" right={<Link href="/reminders" className="-my-3 inline-flex min-h-11 items-center text-ink">Notifications</Link>}>
         {reminders.loading ? null : reminders.data.length === 0 ? (
           <Card padded={false}>
-            <EmptyState compact icon={<BellOff size={24} aria-hidden />} title="No reminders" body="Reset data to get the defaults back." />
+            <EmptyState compact icon={<BellOff size={22} strokeWidth={1.75} aria-hidden />} title="No reminders" body="Reset data to get the defaults back." />
           </Card>
         ) : (
           <Card padded={false} className="overflow-hidden">
-            <div className="divide-y divide-line">
+            <div className="divide-y divide-hair">
               {reminders.data.map((r) => (
                 <ReminderRow key={r.id} r={r} />
               ))}
@@ -67,13 +67,13 @@ export default function ReminderSettingsPage() {
 
       {s ? (
         <Section title="Quiet hours">
-          <Card>
+          <div>
             <div className="grid grid-cols-2 gap-3">
               <TimeField label="From" value={s.quiet_start} onChange={(v) => void updateSettings({ quiet_start: v })} />
               <TimeField label="Until" value={s.quiet_end} onChange={(v) => void updateSettings({ quiet_end: v })} />
             </div>
-            <p className="t-sub mt-3">Nothing is sent between these times.</p>
-          </Card>
+            <p className="t-sub mt-3 px-1">Nothing is sent between these times.</p>
+          </div>
         </Section>
       ) : null}
     </Screen>

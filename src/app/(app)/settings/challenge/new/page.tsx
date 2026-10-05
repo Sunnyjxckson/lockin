@@ -47,8 +47,8 @@ function RuleRow({
       <button type="button" role="checkbox" aria-checked={on} aria-label={item.name} onClick={onToggle} className="pressable flex min-h-[60px] w-full items-center gap-3 px-4 py-2.5 text-left">
         <CheckMark checked={on} size={26} />
         <span className="min-w-0 flex-1">
-          <span className={cn("block truncate text-[16px] font-medium", on ? "text-ink" : "text-ink-2")}>{item.name}</span>
-          <span className="mt-0.5 block truncate text-[13px] text-ink-3">
+          <span className={cn("block truncate text-[15px]", on ? "text-ink" : "text-ink-2")}>{item.name}</span>
+          <span className="t-caption mt-0.5 block truncate text-ink-2">
             {[item.cadence === "weekly" ? "Weekly" : null, describeTarget(on ? target : item.target, item.unit) || "Yes / no", on && changed ? "for the challenge" : null].filter(Boolean).join(" · ")}
           </span>
         </span>
@@ -153,7 +153,7 @@ export default function NewChallengePage() {
         <PageHeader title="New challenge" back="/settings/challenge" />
         <Card className="mt-3">
           <p className="t-h2">{taken.name} is already active</p>
-          <p className="t-sub mt-2">One challenge at a time. End it or finish it first, then start the next one.</p>
+          <p className="t-sub mt-2">One at a time. End or finish it first.</p>
         </Card>
       </Screen>
     );
@@ -161,14 +161,14 @@ export default function NewChallengePage() {
 
   return (
     <Screen>
-      <PageHeader title="New challenge" back="/settings/challenge" subtitle="A set run on top of your ongoing history. Starting, ending or restarting it never changes what you have logged." />
+      <PageHeader title="New challenge" back="/settings/challenge" subtitle="A set run. It never changes what you logged." />
 
       <Section title="Name and length">
-        <Card className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <TextField label="Name" value={name} onChange={setName} placeholder="30 days of a strict diet" maxLength={40} />
           <DateField label="Starts" value={startDate} min={today} onChange={(v) => setStart((v as DateStr) || null)} />
           <div>
-            <p className="mb-1.5 text-[13px] font-medium text-ink-2">Length</p>
+            <p className="t-label mb-2.5">Length</p>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Length">
               {LENGTHS.map((n) => (
                 <button
@@ -181,8 +181,8 @@ export default function NewChallengePage() {
                     setLength(n);
                   }}
                   className={cn(
-                    "pressable tnum h-11 min-w-[52px] rounded-[12px] border px-3 text-[15px] font-semibold",
-                    length === n ? "border-ink bg-ink text-bg" : "border-line bg-surface-2 text-ink",
+                    "pressable h-11 min-w-[52px] rounded-full px-3 text-[15px] font-medium",
+                    length === n ? "bg-ink text-bg" : "tile text-ink",
                   )}
                 >
                   {n}
@@ -194,19 +194,19 @@ export default function NewChallengePage() {
             </div>
             {length >= 1 ? <p className="t-sub mt-2">Ends {formatDateLong(end)}.</p> : null}
           </div>
-        </Card>
+        </div>
       </Section>
 
       <Section title="Rules">
         <SegmentedControl label="What counts" options={SCOPES} value={scope} onChange={setScope} />
         <p className="t-sub mt-3 px-1">
           {scope === "all"
-            ? "A challenge day is full when every daily item on your checklist is done, as it stands that day."
-            : "A challenge day is full when the items you pick are done. Give a number a tighter target and it holds for the length of the challenge, then goes back."}
+            ? "A day is full when every daily item is done."
+            : "A day is full when the picked items are done. A tighter target holds while it runs."}
         </p>
         {scope === "pick" ? (
           <Card padded={false} className="mt-3 overflow-hidden">
-            <ul className="divide-y divide-line">
+            <ul className="divide-y divide-hair">
               {items.map((item) => (
                 <RuleRow
                   key={item.id}
@@ -226,11 +226,11 @@ export default function NewChallengePage() {
       </Section>
 
       <Section title="Money target">
-        <Card className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[16px] font-medium">Add a money target</p>
-              <p className="text-[13px] text-ink-3">A total to reach by a date. The ${mode.floor} daily floor applies either way.</p>
+              <p className="text-[15px] text-ink">Add a money target</p>
+              <p className="t-caption mt-0.5 text-ink-2">The ${mode.floor} daily floor applies either way</p>
             </div>
             <Toggle label="Add a money target" checked={hasMoney} onChange={setHasMoney} />
           </div>
@@ -240,7 +240,7 @@ export default function NewChallengePage() {
               <DateField label="Deadline" value={deadline ?? end} min={startDate} onChange={(v) => setDeadline((v as DateStr) || null)} />
             </>
           ) : null}
-        </Card>
+        </div>
       </Section>
 
       <div className="mt-7">

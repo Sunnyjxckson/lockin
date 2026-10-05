@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { UtensilsCrossed } from "lucide-react";
-import { IconLink, PageHeader, Screen, SegmentedControl } from "@/components/ui";
+import { IconLink, Screen, SegmentedControl, TopBar } from "@/components/ui";
 import { FoodTab } from "@/features/body/FoodTab";
 import { WorkoutRow } from "@/features/body/TodaySlot";
 import { WeightTab } from "@/features/body/WeightTab";
@@ -18,15 +18,15 @@ export default function BodyPage() {
   const [tab, setTab] = useState<Tab>("food");
   return (
     <Screen>
-      <PageHeader
+      <TopBar
         title="Body"
         right={
           <IconLink href="/meals" label="Meal plan">
-            <UtensilsCrossed size={22} aria-hidden />
+            <UtensilsCrossed size={20} strokeWidth={1.75} aria-hidden />
           </IconLink>
         }
       />
-      <SegmentedControl className="mt-2" label="Section" options={TABS} value={tab} onChange={setTab} />
+      <SegmentedControl className="mt-1" label="Section" options={TABS} value={tab} onChange={setTab} />
       {tab === "food" ? <FoodTab /> : <WeightTab />}
       <WorkoutRow />
     </Screen>

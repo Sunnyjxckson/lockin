@@ -1,7 +1,6 @@
 "use client";
 
 import { TriangleAlert } from "lucide-react";
-import { Card } from "@/components/ui";
 import type { DayBlock } from "@/lib/blocks";
 import { findCalendarConflicts } from "@/lib/logic/calendar";
 import { formatDuration, formatTime } from "@/lib/logic/dates";
@@ -51,24 +50,22 @@ export function dayIssues(blocks: readonly DayBlock[]): DayIssue[] {
 export function ConflictList({ issues, onOpen }: { issues: readonly DayIssue[]; onOpen: (block: DayBlock) => void }) {
   if (issues.length === 0) return null;
   return (
-    <Card padded={false} className="overflow-hidden border-warn/40" data-conflicts>
-      <div className="flex items-center gap-2 px-4 pt-3.5 pb-1">
-        <TriangleAlert size={16} className="text-warn" aria-hidden />
-        <p className="t-label text-warn">
-          {issues.length} {issues.length === 1 ? "conflict" : "conflicts"}
-        </p>
-      </div>
-      <div className="divide-y divide-line">
+    <div className="overflow-hidden rounded-[20px] border border-warn-line bg-warn-soft" data-conflicts>
+      <p className="t-label flex items-center gap-2 px-4 pt-3.5 pb-1 text-warn">
+        <TriangleAlert size={14} strokeWidth={1.75} aria-hidden />
+        {issues.length} {issues.length === 1 ? "conflict" : "conflicts"}
+      </p>
+      <div className="divide-y divide-hair">
         {issues.map((i) => (
           <button key={i.key} type="button" onClick={() => onOpen(i.block)} className="pressable flex min-h-[56px] w-full items-center gap-3 px-4 py-2.5 text-left">
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-[15px] font-medium text-ink">{i.title}</span>
-              <span className="tnum block truncate text-[13px] text-ink-2">{i.detail}</span>
+              <span className="block truncate text-[15px] text-ink">{i.title}</span>
+              <span className="t-caption mt-0.5 block truncate text-ink-2">{i.detail}</span>
             </span>
-            <span className="shrink-0 text-[13px] font-semibold text-ink-2">Fix</span>
+            <span className="shrink-0 text-[13px] font-medium text-warn">Fix</span>
           </button>
         ))}
       </div>
-    </Card>
+    </div>
   );
 }

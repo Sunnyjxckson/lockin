@@ -120,17 +120,16 @@ export function RecipeEditor({ recipe, defaultSlot, onClose }: { recipe: Recipe 
       title={recipe ? "Edit recipe" : "New recipe"}
       footer={
         <div className="flex flex-col gap-2.5">
-          <p className="text-[14px] text-ink-2" role="status" data-recipe-numbers>
-            Per serving: <span className="tnum font-semibold text-ink">{fmt(shown.calories)} kcal</span>, <span className="tnum font-semibold text-ink">{fmt(shown.protein)}g protein</span>,{" "}
-            <span className="tnum">{fmt(shown.carbs)}g carbs</span>, <span className="tnum">{fmt(shown.fat)}g fat</span>, <Est>{dollars(n.est_cost)}</Est>
+          <p className="t-sub px-1" role="status" data-recipe-numbers>
+            Per serving: <span className="text-ink">{fmt(shown.calories)} kcal</span>, <span className="text-ink">{fmt(shown.protein)}g protein</span>, {fmt(shown.carbs)}g carbs, {fmt(shown.fat)}g fat, <Est>{dollars(n.est_cost)}</Est>
           </p>
           <div className="flex gap-2.5">
             {recipe?.source === "user" ? (
-              <Button variant="danger" onClick={remove} disabled={busy} icon={<Trash2 size={18} aria-hidden />} aria-label="Delete recipe">
+              <Button variant="danger" size="lg" onClick={remove} disabled={busy} icon={<Trash2 size={18} aria-hidden />} aria-label="Delete recipe">
                 Delete
               </Button>
             ) : null}
-            <Button full onClick={save} disabled={!canSave} loading={busy}>
+            <Button full size="lg" onClick={save} disabled={!canSave} loading={busy}>
               {recipe ? "Save recipe" : "Add recipe"}
             </Button>
           </div>
@@ -145,13 +144,13 @@ export function RecipeEditor({ recipe, defaultSlot, onClose }: { recipe: Recipe 
         </div>
 
         <div>
-          <p className="text-[13px] font-medium text-ink-2">Ingredients, for the whole batch</p>
-          <ul className="mt-2 flex flex-col gap-3">
+          <p className="t-label">Ingredients, whole batch</p>
+          <ul className="mt-3 flex flex-col gap-2.5">
             {rows.map((r, index) => {
               const food = r.food === OTHER ? null : findFood(FOOD_INDEX, r.food);
               const units = food ? unitsFor(food) : [...UNITS];
               return (
-                <li key={r.key} className="rounded-[14px] border border-line p-3">
+                <li key={r.key} className="rounded-[20px] border border-line bg-surface-2 p-2.5">
                   <div className="flex items-center gap-2">
                     <Select
                       className="min-w-0 flex-1"
@@ -166,7 +165,7 @@ export function RecipeEditor({ recipe, defaultSlot, onClose }: { recipe: Recipe 
                       type="button"
                       aria-label={`Remove ingredient ${index + 1}`}
                       onClick={() => setRows((all) => (all.length > 1 ? all.filter((x) => x.key !== r.key) : all))}
-                      className="pressable flex size-11 shrink-0 items-center justify-center rounded-full text-ink-3"
+                      className="pressable flex size-11 shrink-0 items-center justify-center rounded-full text-ink-2"
                     >
                       <X size={18} aria-hidden />
                     </button>
@@ -191,9 +190,9 @@ export function RecipeEditor({ recipe, defaultSlot, onClose }: { recipe: Recipe 
         </div>
 
         {hasOther ? (
-          <div className="rounded-[14px] border border-warn bg-warn-soft p-3">
+          <div className="rounded-[20px] border border-warn-line bg-warn-soft p-3.5">
             <p className="text-[14px] text-ink">
-              {n.unknown.join(", ")} {n.unknown.length === 1 ? "is" : "are"} not in the food table, so the macros cannot be worked out. Type them per serving.
+              {n.unknown.join(", ")} {n.unknown.length === 1 ? "is" : "are"} not in the food table. Type the macros per serving.
             </p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <NumberField label="Calories" unit="kcal" value={manual.calories} onChange={(v) => setManual((m) => ({ ...m, calories: v }))} live decimal={false} />

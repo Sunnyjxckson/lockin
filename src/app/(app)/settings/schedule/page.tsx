@@ -73,6 +73,7 @@ function BlockSheet({ draft, weekday, onClose }: { draft: Draft; weekday: Weekda
           {d.id ? (
             <Button
               variant="danger"
+              size="lg"
               onClick={async () => {
                 await db.remove("schedule_template", d.id as string);
                 onClose();
@@ -81,7 +82,7 @@ function BlockSheet({ draft, weekday, onClose }: { draft: Draft; weekday: Weekda
               Delete
             </Button>
           ) : null}
-          <Button full disabled={!valid} onClick={() => void save()}>
+          <Button full size="lg" disabled={!valid} onClick={() => void save()}>
             Save
           </Button>
         </div>
@@ -96,8 +97,8 @@ function BlockSheet({ draft, weekday, onClose }: { draft: Draft; weekday: Weekda
         <Select label="Kind" value={d.kind} options={KINDS} onChange={(v) => setD({ ...d, kind: v })} />
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-[16px] font-medium">Flexible</p>
-            <p className="text-[13px] text-ink-3">Can shift when an earlier block runs long</p>
+            <p className="text-[15px] text-ink">Flexible</p>
+            <p className="t-caption mt-0.5 text-ink-2">Can shift when a block runs long</p>
           </div>
           <Toggle label="Flexible" checked={d.flexible} onChange={(v) => setD({ ...d, flexible: v })} />
         </div>
@@ -119,29 +120,26 @@ export default function ScheduleSettingsPage() {
 
   return (
     <Screen>
-      <PageHeader title="Schedule" back="/settings" subtitle="The template each weekday starts from. Changing it does not touch a day you already edited." />
+      <PageHeader title="Schedule" back="/settings" subtitle="What each weekday starts from." />
 
-      <div className="mt-4">
+      <div className="mt-2">
         <SegmentedControl label="Weekday" size="sm" options={DAYS} value={weekday} onChange={setPicked} />
       </div>
 
-      <Section title={WEEKDAY_NAMES[weekday]} right={<span className="tnum">{blocks.length} blocks</span>}>
+      <Section title={WEEKDAY_NAMES[weekday]} right={<span>{blocks.length} blocks</span>}>
         {template.loading ? null : blocks.length === 0 ? (
           <Card padded={false}>
-            <EmptyState compact icon={<CalendarClock size={24} aria-hidden />} title="Nothing planned" body="Add the first block for this day." />
+            <EmptyState compact icon={<CalendarClock size={22} strokeWidth={1.75} aria-hidden />} title="Nothing planned" body="Add the first block for this day." />
           </Card>
         ) : (
           <Card padded={false} className="overflow-hidden">
-            <div className="divide-y divide-line">
+            <div className="divide-y divide-hair">
               {blocks.map((b) => (
                 <ListRow
                   key={b.id}
                   title={b.block_name}
-                  sub={
-                    b.kind === "wake" || b.kind === "bed"
-                      ? formatTime(b.start)
-                      : `${formatTime(b.start)} to ${formatTime(b.end)} · ${formatDuration(durationMinutes(b.start, b.end))}${b.flexible ? "" : " · Fixed"}`
-                  }
+                  sub={b.kind === "wake" || b.kind === "bed" ? undefined : `To ${formatTime(b.end)} · ${formatDuration(durationMinutes(b.start, b.end))}${b.flexible ? "" : " · Fixed"}`}
+                  value={formatTime(b.start)}
                   onClick={() => setDraft({ id: b.id, block_name: b.block_name, start: b.start, end: b.end, kind: b.kind, flexible: b.flexible, note: b.note })}
                 />
               ))}
@@ -152,7 +150,7 @@ export default function ScheduleSettingsPage() {
           variant="secondary"
           full
           className="mt-3"
-          icon={<Plus size={18} aria-hidden />}
+          icon={<Plus size={18} strokeWidth={1.75} aria-hidden />}
           onClick={() => setDraft({ id: null, block_name: "", start: lastEnd === "23:59" ? "12:00" : lastEnd, end: "13:00", kind: "other", flexible: true, note: null })}
         >
           Add block

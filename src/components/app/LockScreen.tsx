@@ -19,19 +19,8 @@ export interface LockScreenProps {
   onSubmit: (passcode: string) => Promise<true | string>;
 }
 
-function Mark() {
-  return (
-    <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden>
-      <defs>
-        <linearGradient id="lock-mark" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="var(--accent)" />
-          <stop offset="1" stopColor="var(--accent-2)" />
-        </linearGradient>
-      </defs>
-      <circle cx="24" cy="24" r="20" stroke="var(--hair)" strokeWidth="3" />
-      <path d="M24 4a20 20 0 1 1-17.3 10" stroke="url(#lock-mark)" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
+function greeting(hour: number): string {
+  return hour < 5 ? "Still up" : hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 }
 
 export function LockScreen({ mode, onSubmit }: LockScreenProps) {
@@ -41,6 +30,7 @@ export function LockScreen({ mode, onSubmit }: LockScreenProps) {
   const [busy, setBusy] = useState(false);
   const [shake, setShake] = useState(0);
   const submitting = useRef(false);
+  const [hour] = useState(() => new Date().getHours());
 
   const fixed = mode !== "server";
   const slots = fixed ? PASSCODE_LENGTH : Math.max(PASSCODE_LENGTH, code.length);
@@ -95,33 +85,30 @@ export function LockScreen({ mode, onSubmit }: LockScreenProps) {
     if (code.length >= PASSCODE_LENGTH) void submit(code);
   }, [code, submit]);
 
-  const title =
-    mode === "create" ? (first === null ? "Create a passcode" : "Enter it again") : "Enter passcode";
-  const sub =
-    mode === "create"
-      ? first === null
-        ? "Four digits. It keeps this app closed on this device."
-        : "Confirm your passcode."
-      : "Lock In";
+  const title = mode === "create" ? (first === null ? "Create a passcode" : "Enter it again") : "Enter passcode";
+  const sub = mode === "create" ? (first === null ? "Four digits. It keeps the app closed on this device." : "Confirm your passcode.") : mode === "server" ? "Then OK." : "Four digits.";
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[480px] flex-col items-center justify-between px-6 pt-[calc(var(--safe-t)+56px)] pb-[calc(var(--safe-b)+40px)]">
-      <div className="flex flex-col items-center text-center">
-        <Mark />
-        <h1 className="t-title mt-7">{title}</h1>
-        <p className={cn("mt-2.5 min-h-5 text-[14px]", error ? "text-danger" : "text-ink-2")} role={error ? "alert" : undefined}>
-          {error ?? sub}
-        </p>
-        <div key={shake} className={cn("mt-9 flex h-4 items-center gap-4", shake > 0 && "animate-shake")} aria-label={`${code.length} digits entered`}>
-          {Array.from({ length: slots }, (_, i) => (
-            <span
-              key={i}
-              className={cn(
-                "size-3 rounded-full border-[1.5px] transition-all duration-150",
-                i < code.length ? "scale-110 border-ink bg-ink" : "border-line-strong",
-              )}
-            />
-          ))}
+    <main className="mx-auto flex min-h-dvh w-full max-w-[480px] flex-col justify-between px-5 pt-[var(--safe-t)] pb-[calc(var(--safe-b)+28px)]">
+      <div>
+        {/* The same top row as Today, so the lock reads as the front of the app and not a gate bolted onto it. */}
+        <div className="flex h-12 items-center justify-between pt-1">
+          <p className="t-label">Lock In</p>
+          <span className="grad shadow-glow size-9 rounded-full" aria-hidden />
+        </div>
+        <div className="px-1 pt-10">
+          <p className="t-label" suppressHydrationWarning>
+            {mode === "create" ? "Welcome" : greeting(hour)}
+          </p>
+          <h1 className="t-greeting mt-3">{title}</h1>
+          <p className={cn("t-sub mt-3 min-h-5", error && "text-danger")} role={error ? "alert" : undefined}>
+            {error ?? sub}
+          </p>
+          <div key={shake} className={cn("mt-9 flex h-4 items-center gap-3.5", shake > 0 && "animate-shake")} aria-label={`${code.length} digits entered`}>
+            {Array.from({ length: slots }, (_, i) => (
+              <span key={i} className={cn("size-3.5 rounded-full transition-[background-color,border-color,scale] duration-150", i < code.length ? "scale-110 border border-ink bg-ink" : "tile")} />
+            ))}
+          </div>
         </div>
       </div>
       <div className="mt-10">

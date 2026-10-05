@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { CalendarClock, Flag as FlagIcon, History, RefreshCw, Sunrise } from "lucide-react";
-import { Button, Card, EmptyState, ListRow, PageHeader, Screen, Section, Sheet } from "@/components/ui";
+import { Button, Card, EmptyState, GlassCard, List, ListRow, PageHeader, Screen, Section, Sheet } from "@/components/ui";
 import { FlagCard, FlagDetail, NoteBody, SourceTag, weekLabel } from "@/features/coach/parts";
 import { useCoach } from "@/features/coach/useCoach";
 import { nextReviewDate, parseFlagNote } from "@/lib/logic/coach";
@@ -15,6 +15,20 @@ function historyTitle(n: CoachNote): { title: string; sub: string } {
   const f = parseFlagNote(n.body);
   const state = f?.resolved_on ? `Cleared ${formatDateShort(f.resolved_on)}` : f?.dismissed_on ? `Dismissed ${formatDateShort(f.dismissed_on)}` : "Flag";
   return { title: f?.flag.title ?? "Flag", sub: `${state} · flagged ${formatDateShort(n.date)}` };
+}
+
+/** A quiet row for a group with nothing in it yet. */
+function Quiet({ icon, title, body, action }: { icon: ReactNode; title: string; body: string; action?: ReactNode }) {
+  return (
+    <div className="tile flex items-center gap-3.5 rounded-[20px] px-4 py-3.5">
+      <span className="shrink-0 text-ink-2">{icon}</span>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-[15px] text-ink">{title}</h3>
+        <p className="t-caption mt-0.5 text-ink-2">{body}</p>
+      </div>
+      {action ? <div className="shrink-0">{action}</div> : null}
+    </div>
+  );
 }
 
 export default function CoachPage() {
@@ -36,9 +50,9 @@ export default function CoachPage() {
       <Screen>
         <PageHeader title="Coach" back="/today" />
         <EmptyState
-          icon={<Sunrise size={24} aria-hidden />}
+          icon={<Sunrise size={22} strokeWidth={1.75} aria-hidden />}
           title="Nothing to read yet"
-          body="The first brief lands on your first morning. From then on the coach reads what you log and says what is slipping."
+          body="The first brief lands on your first morning."
         />
       </Screen>
     );
@@ -56,61 +70,48 @@ export default function CoachPage() {
       />
 
       {coach.phase === "active" ? (
-        <Section title="Morning brief">
-          {coach.brief ? (
-            <Card key={coach.brief.body} className="animate-fade-in">
-              <NoteBody body={coach.brief.body} />
-              <div className="mt-4 -mr-2 -mb-2 flex items-center justify-between gap-3 border-t border-line pt-2">
-                <SourceTag source={coach.brief.source} />
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  loading={coach.busy === "morning"}
-                  onClick={coach.regenerate}
-                  icon={<RefreshCw size={16} aria-hidden />}
-                >
-                  Regenerate
-                </Button>
-              </div>
-            </Card>
-          ) : coach.writingBrief ? (
-            <Card aria-busy="true">
-              <div className="flex flex-col gap-3" aria-hidden>
-                <div className="h-4 w-[92%] animate-pulse rounded-full bg-surface-3" />
-                <div className="h-4 w-[78%] animate-pulse rounded-full bg-surface-3" />
-                <div className="h-4 w-[85%] animate-pulse rounded-full bg-surface-3" />
-              </div>
-              <p className="t-sub mt-4">Reading your data and writing today&apos;s brief.</p>
-            </Card>
-          ) : (
-            <Card padded={false}>
-              <EmptyState
-                compact
-                title="No brief yet"
-                body="The brief could not be written just now."
-                action={
-                  <Button variant="secondary" size="sm" loading={coach.busy === "morning"} onClick={coach.regenerate}>
-                    Write it now
-                  </Button>
-                }
-              />
-            </Card>
-          )}
-        </Section>
-      ) : null}
-
-      <Section title="Flags" right={coach.flags.length > 0 ? <span className="tnum">{coach.flags.length} active</span> : null}>
-        {coach.flags.length === 0 ? (
-          <Card padded={false}>
+        coach.brief ? (
+          <GlassCard key={coach.brief.body} className="animate-fade-in mt-2">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h2 className="t-label">Morning brief</h2>
+              <Button variant="ghost" size="sm" className="-my-3 -mr-3" loading={coach.busy === "morning"} onClick={coach.regenerate} icon={<RefreshCw size={15} strokeWidth={1.75} aria-hidden />}>
+                Regenerate
+              </Button>
+            </div>
+            <NoteBody body={coach.brief.body} />
+            <SourceTag source={coach.brief.source} className="mt-4 block" />
+          </GlassCard>
+        ) : coach.writingBrief ? (
+          <GlassCard className="mt-2" aria-busy="true">
+            <h2 className="t-label mb-4">Morning brief</h2>
+            <div className="flex flex-col gap-3" aria-hidden>
+              <div className="h-3.5 w-[92%] animate-pulse rounded-full bg-hair" />
+              <div className="h-3.5 w-[78%] animate-pulse rounded-full bg-hair" />
+              <div className="h-3.5 w-[85%] animate-pulse rounded-full bg-hair" />
+            </div>
+            <p className="t-sub mt-4">Writing today&apos;s brief.</p>
+          </GlassCard>
+        ) : (
+          <GlassCard pad={false} className="mt-2">
             <EmptyState
               compact
-              icon={<FlagIcon size={22} aria-hidden />}
-              title="Nothing flagged"
-              body="Patterns need a few days of data. When one shows up it lands here with the dates and numbers behind it."
+              title="No brief yet"
+              body="It could not be written just now."
+              action={
+                <Button variant="secondary" size="sm" loading={coach.busy === "morning"} onClick={coach.regenerate}>
+                  Write it now
+                </Button>
+              }
             />
-          </Card>
+          </GlassCard>
+        )
+      ) : null}
+
+      <Section title="Flags" right={coach.flags.length > 0 ? `${coach.flags.length} active` : null}>
+        {coach.flags.length === 0 ? (
+          <Quiet icon={<FlagIcon size={20} strokeWidth={1.75} aria-hidden />} title="Nothing flagged" body="A pattern needs a few days of data." />
         ) : (
-          <div className="flex flex-col gap-3">
+          <div className="divide-y divide-hair border-b border-hair">
             {coach.flags.map((f) => (
               <FlagCard key={f.id} flag={f.note.flag} onDismiss={() => coach.dismiss(f.id)} />
             ))}
@@ -120,60 +121,43 @@ export default function CoachPage() {
 
       <Section title="Sunday review" right={coach.weekly ? weekLabel(coach.weekly.date) : null}>
         {coach.weekly ? (
-          <Card key={coach.weekly.body} className="animate-fade-in">
+          <Card key={coach.weekly.body} className="animate-fade-in !px-5 !py-[18px]">
             <NoteBody body={coach.weekly.body} />
-            <div className="mt-4 -mr-2 -mb-2 flex items-center justify-between gap-3 border-t border-line pt-2">
+            <div className="mt-4 flex items-center justify-between gap-3">
               <SourceTag source={coach.weekly.source} />
               {coach.due ? (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  loading={coach.busy === "weekly"}
-                  onClick={coach.writeReview}
-                  icon={<RefreshCw size={16} aria-hidden />}
-                >
+                <Button variant="ghost" size="sm" className="-my-3 -mr-3" loading={coach.busy === "weekly"} onClick={coach.writeReview} icon={<RefreshCw size={15} strokeWidth={1.75} aria-hidden />}>
                   {coach.reviewMissing ? "Write this week" : "Rewrite"}
                 </Button>
               ) : null}
             </div>
           </Card>
         ) : (
-          <Card padded={false}>
-            <EmptyState
-              compact
-              icon={<CalendarClock size={22} aria-hidden />}
-              title={sundayToday ? "This week's review is ready to write" : `First review lands ${formatDateLong(nextReviewDate(coach.today))}`}
-              body={
-                sundayToday
-                  ? "It writes itself at 8:00 PM. Or write it now from the week so far."
-                  : "What held, what slipped, and one change for the week after."
-              }
-              action={
-                coach.due ? (
-                  <Button variant="secondary" size="sm" loading={coach.busy === "weekly"} onClick={coach.writeReview}>
-                    Write it now
-                  </Button>
-                ) : undefined
-              }
-            />
-          </Card>
+          <Quiet
+            icon={<CalendarClock size={20} strokeWidth={1.75} aria-hidden />}
+            title={sundayToday ? "This week's review is ready" : `First review lands ${formatDateLong(nextReviewDate(coach.today))}`}
+            body={sundayToday ? "It writes itself at 8:00 PM." : "What held, what slipped, one change."}
+            action={
+              coach.due ? (
+                <Button variant="secondary" size="sm" loading={coach.busy === "weekly"} onClick={coach.writeReview}>
+                  Write it now
+                </Button>
+              ) : undefined
+            }
+          />
         )}
       </Section>
 
-      <Section title="History" right={coach.history.length > 0 ? <span className="tnum">{coach.history.length}</span> : null}>
+      <Section title="History" right={coach.history.length > 0 ? coach.history.length : null}>
         {coach.history.length === 0 ? (
-          <Card padded={false}>
-            <EmptyState compact icon={<History size={22} aria-hidden />} title="No past notes" body="Earlier briefs, reviews and cleared flags collect here." />
-          </Card>
+          <Quiet icon={<History size={20} strokeWidth={1.75} aria-hidden />} title="No past notes" body="Earlier briefs, reviews and cleared flags collect here." />
         ) : (
-          <Card padded={false} className="overflow-hidden">
-            <div className="divide-y divide-line">
-              {coach.history.slice(0, 40).map((n) => {
-                const t = historyTitle(n);
-                return <ListRow key={n.id} title={t.title} sub={t.sub} onClick={() => setOpenId(n.id)} />;
-              })}
-            </div>
-          </Card>
+          <List>
+            {coach.history.slice(0, 40).map((n) => {
+              const t = historyTitle(n);
+              return <ListRow key={n.id} title={t.title} sub={t.sub} onClick={() => setOpenId(n.id)} />;
+            })}
+          </List>
         )}
       </Section>
 

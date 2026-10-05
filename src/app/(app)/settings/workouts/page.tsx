@@ -137,29 +137,29 @@ function WorkoutEditor({ workout, weekday, slot }: { workout: Workout | null; we
         />
         {slot === "main" ? (
           <div>
-            <p className="mb-1.5 text-[13px] font-medium text-ink-2">Kind of day</p>
+            <p className="t-label mb-2.5">Kind of day</p>
             <SegmentedControl label="Kind of day" size="sm" options={KINDS} value={workout.kind} onChange={(v) => save({ kind: v })} />
           </div>
         ) : null}
       </div>
-      <ol className="divide-y divide-line border-t border-line">
+      <ol className="divide-y divide-hair border-t border-hair">
         {list.map((e, i) => (
           <li key={`${e.name}-${i}`} className="flex min-h-[56px] items-center gap-1 pr-1.5 pl-4">
             <button type="button" onClick={() => setEditing(i)} className="flex min-h-[56px] min-w-0 flex-1 items-center justify-between gap-3 text-left">
-              <span className="min-w-0 truncate text-[16px] font-medium">{e.name}</span>
-              <span className="tnum shrink-0 text-[14px] text-ink-2">{formatSets(e)}</span>
+              <span className="min-w-0 truncate text-[15px] text-ink">{e.name}</span>
+              <span className="shrink-0 text-[15px] font-medium tracking-[-0.01em] text-ink">{formatSets(e)}</span>
             </button>
             <IconButton label={`Move ${e.name} up`} disabled={i === 0} onClick={() => move(i, -1)}>
-              <ArrowUp size={18} aria-hidden />
+              <ArrowUp size={18} strokeWidth={1.75} aria-hidden />
             </IconButton>
             <IconButton label={`Move ${e.name} down`} disabled={i === list.length - 1} onClick={() => move(i, 1)}>
-              <ArrowDown size={18} aria-hidden />
+              <ArrowDown size={18} strokeWidth={1.75} aria-hidden />
             </IconButton>
           </li>
         ))}
       </ol>
-      <div className="border-t border-line p-3">
-        <Button variant="ghost" full icon={<Plus size={18} aria-hidden />} onClick={() => setEditing("new")}>
+      <div className="border-t border-hair p-3">
+        <Button variant="ghost" full icon={<Plus size={18} strokeWidth={1.75} aria-hidden />} onClick={() => setEditing("new")}>
           Add exercise
         </Button>
       </div>
@@ -200,9 +200,9 @@ export default function WorkoutSettingsPage() {
       <PageHeader
         title="Workouts"
         back="/settings"
-        subtitle={liftDays.length > 0 ? `Lift days: ${liftDays.join(", ")}. Set the kind of day to change them.` : "No lift days set."}
+        subtitle={liftDays.length > 0 ? `Lift days: ${liftDays.join(", ")}.` : "No lift days set."}
       />
-      <div className="mt-4">
+      <div className="mt-2">
         <SegmentedControl label="Weekday" size="sm" options={DAYS} value={weekday} onChange={setPicked} />
       </div>
       {workouts.loading ? null : (

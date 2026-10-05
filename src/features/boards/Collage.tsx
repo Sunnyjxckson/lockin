@@ -303,11 +303,11 @@ interface TileProps {
 function Tile({ item, rect, bare, held, onClick, handlers }: TileProps) {
   const shape = cn(
     "relative block size-full overflow-hidden text-left transition-[box-shadow,scale] duration-200 [touch-action:pan-y]",
-    bare ? "rounded-none" : "rounded-[4px]",
-    held ? "scale-[1.04] shadow-[0_18px_44px_var(--shadow)]" : "",
+    bare ? "rounded-none" : "rounded-[16px]",
+    held ? "scale-[1.04] shadow-float" : "",
   );
   const body =
-    item.kind === "image" ? <ImageBody item={item} /> : item.kind === "color" ? <ColorBody item={item} wide={rect.w > 190} bare={bare} /> : <NoteBody item={item} rect={rect} bare={bare} />;
+    item.kind === "image" ? <ImageBody item={item} /> : item.kind === "color" ? <ColorBody item={item} wide={rect.w > 190} /> : <NoteBody item={item} rect={rect} bare={bare} />;
   if (!onClick && Object.keys(handlers).length === 0) return <div className={shape}>{body}</div>;
   return (
     <button type="button" aria-label={describe(item)} onClick={onClick} className={cn(shape, "outline-none focus-visible:ring-2 focus-visible:ring-ink")} {...handlers}>
@@ -341,12 +341,12 @@ function ImageBody({ item }: { item: BoardItem }) {
   );
 }
 
-function ColorBody({ item, wide, bare }: { item: BoardItem; wide: boolean; bare: boolean }) {
+function ColorBody({ item, wide }: { item: BoardItem; wide: boolean }) {
   const color = item.color ?? "#808080";
   const ink = inkOnColor(color);
   return (
-    <span className={cn("flex size-full flex-col justify-end p-3", bare ? "" : "rounded-[4px] border border-line")} style={{ backgroundColor: color, color: ink }}>
-      {item.note ? <span className={cn("line-clamp-2 font-semibold tracking-[-0.02em]", wide ? "text-[17px] leading-[1.15]" : "text-[14px] leading-[1.15]")}>{item.note}</span> : null}
+    <span className="flex size-full flex-col justify-end p-3" style={{ backgroundColor: color, color: ink }}>
+      {item.note ? <span className={cn("line-clamp-2 font-medium tracking-[-0.02em]", wide ? "text-[17px] leading-[1.15]" : "text-[14px] leading-[1.15]")}>{item.note}</span> : null}
       <span className="tnum mt-1 text-[11px] font-medium tracking-[0.12em] uppercase">{color.replace("#", "")}</span>
     </span>
   );
@@ -359,10 +359,10 @@ function NoteBody({ item, rect, bare }: { item: BoardItem; rect: TileRect; bare:
   // A grown tile has room for more lines than the estimate gave it.
   const room = Math.max(1, Math.floor((rect.h - NOTE_PAD * 2 - (host ? 30 : 0)) / m.lineHeight));
   return (
-    <span className={cn("flex size-full flex-col justify-between bg-surface text-ink", bare ? "" : "border border-line")} style={{ padding: NOTE_PAD }}>
+    <span className={cn("flex size-full flex-col justify-between text-ink", bare ? "bg-surface" : "tile rounded-[16px]")} style={{ padding: NOTE_PAD }}>
       {text ? (
         <span
-          className={cn("block overflow-hidden break-words", m.fontSize >= 20 ? "font-semibold tracking-[-0.03em]" : m.fontSize >= 16 ? "font-medium tracking-[-0.015em]" : "text-ink-2")}
+          className={cn("block overflow-hidden break-words", m.fontSize >= 20 ? "font-medium tracking-[-0.03em]" : m.fontSize >= 16 ? "font-medium tracking-[-0.015em]" : "text-ink-2")}
           style={{ fontSize: m.fontSize, lineHeight: `${m.lineHeight}px`, display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: room }}
         >
           {text}

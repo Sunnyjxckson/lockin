@@ -3,56 +3,31 @@
 import dynamic from "next/dynamic";
 import { useMemo, useRef, useState } from "react";
 import { Camera, ChevronLeft, ChevronRight, Lock, Plus, Star, Utensils, X } from "lucide-react";
-import { Button, Card, EmptyState, IconButton, Section, cn, useToast } from "@/components/ui";
+import { ActionButton, EmptyState, GlassCard, IconButton, List, ListRow, ProgressBar, SectionLabel, useToast } from "@/components/ui";
 import { useChecklist, useInstalledOn, useList, useNow, useSettings, useToday } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
-import { budgetGoal, goalFromTarget, mealTotals, NO_GOAL, type Goals } from "@/lib/logic/body";
+import { budgetGoal, goalFromTarget, mealTotals, NO_GOAL, ringFor, type Goals } from "@/lib/logic/body";
 import { addDays, formatDateLong, formatTime, isDayEditable } from "@/lib/logic/dates";
 import { targetOn } from "@/lib/logic/targets";
 import { usePhoto } from "@/lib/storage/hooks";
-import type { DateStr, Meal, SavedMeal } from "@/lib/types";
+import type { DateStr, SavedMeal } from "@/lib/types";
 import { logFavorite, removeFavorite } from "./data";
+import { CaloriesHero, MacroStats } from "./Eating";
 import { fmt } from "./format";
-import { MacroRings } from "./MacroRings";
 import type { MealSheetState } from "./MealSheet";
 
 const MealSheet = dynamic(() => import("./MealSheet").then((m) => m.MealSheet), { ssr: false });
 
-function Thumb({ photo, fallback }: { photo: string | null; fallback: React.ReactNode }) {
+/** A meal's photo, small. Nothing at all when there is no photo. */
+function Thumb({ photo }: { photo: string | null }) {
   const url = usePhoto(photo);
-  return (
-    <span className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-[12px] bg-surface-2 text-ink-3">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      {url ? <img src={url} alt="" className="size-full object-cover" /> : fallback}
-    </span>
-  );
+  if (!url) return null;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={url} alt="" className="size-11 rounded-[14px] object-cover" />;
 }
 
 function macroLine(m: { protein: number; carbs: number; fat: number }): string {
   return `P ${fmt(m.protein)}  C ${fmt(m.carbs)}  F ${fmt(m.fat)}`;
-}
-
-function MealRow({ meal, onOpen, disabled }: { meal: Meal; onOpen: () => void; disabled: boolean }) {
-  return (
-    <button
-      type="button"
-      onClick={onOpen}
-      disabled={disabled}
-      className={cn("flex min-h-[64px] w-full items-center gap-3 px-4 py-2 text-left", !disabled && "pressable active:bg-surface-2")}
-    >
-      <Thumb photo={meal.photo_url} fallback={<Utensils size={18} aria-hidden />} />
-      <span className="min-w-0 flex-1">
-        <span className="block truncate text-[16px] font-medium">{meal.name ?? "Meal"}</span>
-        <span className="tnum mt-0.5 block truncate text-[13px] whitespace-pre text-ink-3">
-          {formatTime(meal.time)}, {macroLine(meal)}
-        </span>
-      </span>
-      <span className="shrink-0 text-right">
-        <span className="tnum block text-[17px] font-semibold">{fmt(meal.calories)}</span>
-        <span className="block text-[12px] text-ink-3">kcal</span>
-      </span>
-    </button>
-  );
 }
 
 export function FoodTab() {
@@ -113,126 +88,140 @@ export function FoodTab() {
     }
   };
 
+  const cal = ringFor(totals.calories, goals.calories);
+
   return (
-    <>
-      <div className="mt-4 flex items-center justify-between">
+    <div className="animate-fade-in">
+      <div className="-mx-2.5 mt-2 flex items-center justify-between">
         <IconButton label="Previous day" onClick={() => setPicked(addDays(date, -1))}>
-          <ChevronLeft size={22} aria-hidden />
+          <ChevronLeft size={20} strokeWidth={1.75} aria-hidden />
         </IconButton>
-        <button type="button" className="pressable min-h-11 px-3 text-center" onClick={() => setPicked(null)} disabled={isToday}>
-          <span className="block text-[16px] font-semibold">{isToday ? "Today" : formatDateLong(date)}</span>
-          {isToday ? <span className="block text-[13px] text-ink-3">{formatDateLong(date)}</span> : <span className="block text-[13px] text-ink-3">Tap for today</span>}
+        <button type="button" className="pressable t-label min-h-11 px-3 text-center text-ink" onClick={() => setPicked(null)} disabled={isToday} aria-label={isToday ? `Today, ${formatDateLong(date)}` : `${formatDateLong(date)}. Back to today`}>
+          {isToday ? "Today" : formatDateLong(date)}
         </button>
         <IconButton label="Next day" disabled={isToday} onClick={() => setPicked(date >= addDays(today, -1) ? null : addDays(date, 1))}>
-          <ChevronRight size={22} aria-hidden />
+          <ChevronRight size={20} strokeWidth={1.75} aria-hidden />
         </IconButton>
       </div>
 
-      <div className="mt-2">
-        <MacroRings totals={totals} goals={goals} />
+      <section className="pt-2" aria-label="Calories">
+        <CaloriesHero totals={totals} goals={goals} />
+      </section>
+
+      <GlassCard className="mt-5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="t-label">Eaten</p>
+            <p className="mt-1.5 flex items-baseline gap-2">
+              <span className="t-h1">{fmt(totals.calories)}</span>
+              <span className="text-[14px] text-ink-2">kcal</span>
+            </p>
+          </div>
+          {editable ? (
+            <div className="flex shrink-0 items-center gap-2">
+              <IconButton filled label="Snap a meal" onClick={() => file.current?.click()}>
+                <Camera size={19} strokeWidth={1.75} aria-hidden />
+              </IconButton>
+              <ActionButton label="Add by hand" onClick={() => open({ mode: "new" })}>
+                <Plus size={24} strokeWidth={1.75} aria-hidden />
+              </ActionButton>
+              <input
+                ref={file}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                aria-label="Meal photo"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  e.target.value = "";
+                  if (f) open({ mode: "new", photo: f });
+                }}
+              />
+            </div>
+          ) : (
+            <span className="t-label flex shrink-0 items-center gap-1.5">
+              <Lock size={13} aria-hidden />
+              Locked
+            </span>
+          )}
+        </div>
+        <ProgressBar className="mt-4" value={cal.fill} tone={cal.state === "over" ? "warn" : "accent"} label="Calories against the target" />
+        {!editable ? <p className="t-sub mt-3">Meals can change until noon the next day.</p> : null}
+      </GlassCard>
+
+      <div className="mt-6">
+        <MacroStats totals={totals} goals={goals} />
       </div>
 
-      {editable ? (
-        <div className="mt-3 grid grid-cols-2 gap-2.5">
-          <Button icon={<Camera size={18} aria-hidden />} onClick={() => file.current?.click()}>
-            Snap a meal
-          </Button>
-          <Button variant="secondary" icon={<Plus size={18} aria-hidden />} onClick={() => open({ mode: "new" })}>
-            Add by hand
-          </Button>
-          <input
-            ref={file}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            aria-label="Meal photo"
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              e.target.value = "";
-              if (f) open({ mode: "new", photo: f });
-            }}
-          />
-        </div>
-      ) : (
-        <p className="mt-3 flex items-center gap-2 rounded-[14px] bg-surface px-3.5 py-3 text-[14px] text-ink-2">
-          <Lock size={16} aria-hidden />
-          This day is locked. Meals can be changed until noon the next day.
-        </p>
-      )}
-
-      <Section title="Meals" right={meals.length > 0 ? <span className="tnum">{meals.length}</span> : undefined}>
+      <section className="mt-7" aria-label="Meals">
+        <SectionLabel right={meals.length > 0 ? meals.length : undefined}>Meals</SectionLabel>
         {meals.length > 0 ? (
-          <Card padded={false} className="overflow-hidden">
-            <div className="divide-y divide-line">
-              {meals.map((m) => (
-                <MealRow key={m.id} meal={m} disabled={!editable} onOpen={() => open({ mode: "edit", meal: m })} />
-              ))}
-            </div>
-          </Card>
+          <List className="mt-1.5">
+            {meals.map((m) => (
+              <ListRow
+                key={m.id}
+                left={m.photo_url ? <Thumb photo={m.photo_url} /> : undefined}
+                title={m.name ?? "Meal"}
+                sub={<span className="whitespace-pre">{`${formatTime(m.time)}, ${macroLine(m)}`}</span>}
+                value={fmt(m.calories)}
+                onClick={editable ? () => open({ mode: "edit", meal: m }) : undefined}
+              />
+            ))}
+          </List>
         ) : loading ? null : (
-          <Card padded={false}>
-            <EmptyState
-              compact
-              icon={<Utensils size={22} aria-hidden />}
-              title={isToday ? "Nothing eaten yet" : "No meals logged"}
-              body={editable ? "Snap a photo or add a meal by hand and the rings start to fill." : undefined}
-            />
-          </Card>
+          <EmptyState
+            compact
+            icon={<Utensils size={22} strokeWidth={1.75} aria-hidden />}
+            title={isToday ? "Nothing eaten yet" : "No meals logged"}
+            body={editable ? "Snap a photo or add a meal by hand." : undefined}
+          />
         )}
-      </Section>
+      </section>
 
-      <Section
-        title="Favorites"
-        right={
-          favorites.length > 0 ? (
-            <button type="button" className="pressable -my-2 min-h-11 pl-3 font-semibold text-ink-2" onClick={() => setManaging((v) => !v)}>
-              {managing ? "Done" : "Edit"}
-            </button>
-          ) : undefined
-        }
-      >
+      <section className="mt-7" aria-label="Favorites">
+        <SectionLabel
+          right={
+            favorites.length > 0 ? (
+              <button type="button" className="pressable t-label -my-3 min-h-11 pl-3 text-ink" onClick={() => setManaging((v) => !v)}>
+                {managing ? "Done" : "Edit"}
+              </button>
+            ) : undefined
+          }
+        >
+          Favorites
+        </SectionLabel>
         {favorites.length > 0 ? (
-          <Card padded={false} className="overflow-hidden">
-            <div className="divide-y divide-line">
-              {favorites.map((s) => (
-                <div key={s.id} className="flex min-h-[64px] items-center gap-3 py-2 pr-2.5 pl-4">
-                  <Thumb photo={s.photo_url} fallback={<Star size={18} aria-hidden />} />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[16px] font-medium">{s.name}</span>
-                    <span className="tnum mt-0.5 block truncate text-[13px] whitespace-pre text-ink-3">
-                      {fmt(s.calories)} kcal, {macroLine(s)}
-                    </span>
-                  </span>
-                  {managing ? (
-                    <IconButton
-                      label={`Remove ${s.name} from favorites`}
-                      className="text-danger"
-                      onClick={() => removeFavorite(s).then(() => toast("Removed from favorites"))}
-                    >
-                      <X size={20} aria-hidden />
+          <List className="mt-1.5">
+            {favorites.map((s) => (
+              <ListRow
+                key={s.id}
+                className="!pr-0"
+                left={s.photo_url ? <Thumb photo={s.photo_url} /> : undefined}
+                title={s.name}
+                sub={<span className="whitespace-pre">{`${fmt(s.calories)} kcal, ${macroLine(s)}`}</span>}
+                right={
+                  managing ? (
+                    <IconButton label={`Remove ${s.name} from favorites`} className="text-danger" onClick={() => removeFavorite(s).then(() => toast("Removed from favorites"))}>
+                      <X size={20} strokeWidth={1.75} aria-hidden />
                     </IconButton>
                   ) : (
                     <IconButton label={`Log ${s.name}`} filled disabled={!editable || logging === s.id} onClick={() => relog(s)}>
-                      <Plus size={20} aria-hidden />
+                      <Plus size={20} strokeWidth={1.75} aria-hidden />
                     </IconButton>
-                  )}
-                </div>
-              ))}
-            </div>
-          </Card>
+                  )
+                }
+              />
+            ))}
+          </List>
         ) : (
-          <Card padded={false}>
-            <EmptyState
-              compact
-              icon={<Star size={22} aria-hidden />}
-              title="No favorites yet"
-              body="Turn on Save as a favorite when you log a meal you eat often. After that it is one tap."
-            />
-          </Card>
+          <p className="tile t-sub mt-3 flex items-center gap-2.5 rounded-[20px] px-4 py-3">
+            <Star size={16} strokeWidth={1.75} className="shrink-0" aria-hidden />
+            No favorites yet. Save a meal as one and it logs in a tap.
+          </p>
         )}
-      </Section>
+      </section>
 
       {sheet ? <MealSheet key={sheet.key} state={sheet} date={date} onClose={() => setSheet(null)} /> : null}
-    </>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button, Select, Sheet, TextField, TimeField, Toggle } from "@/components/ui";
 import type { DayBlock } from "@/lib/blocks";
 import { haptics } from "@/lib/haptics";
@@ -66,7 +66,7 @@ function Form({ block, blocks, live, locked, onClose, onSave, onDelete, onStillG
       open
       onClose={onClose}
       title="Edit block"
-      subtitle={fromCalendar ? "From Google Calendar. Changes here go back to Google." : "Changes apply to this day only. The weekday template stays as it is."}
+      subtitle={fromCalendar ? "From Google Calendar. Changes go back to Google." : "This day only. The template stays as it is."}
       footer={
         <div className="flex gap-2">
           {!fromCalendar ? (
@@ -87,7 +87,7 @@ function Form({ block, blocks, live, locked, onClose, onSave, onDelete, onStillG
             <TimeField label="End" value={end} onChange={setEnd} disabled={locked} />
           </div>
           {locked ? (
-            <p className="mt-2 text-[13px] text-ink-3">This calendar is read only, so the time is set in Google Calendar.</p>
+            <p className="t-sub mt-2">Read only. Change the time in Google Calendar.</p>
           ) : (
             <div className="mt-2.5 grid grid-cols-2 gap-3">
               <Stepper label="Move" value={formatTime(start)} onMinus={() => nudgeStart(-15)} onPlus={() => nudgeStart(15)} minus="Earlier by 15 minutes" plus="Later by 15 minutes" />
@@ -97,13 +97,13 @@ function Form({ block, blocks, live, locked, onClose, onSave, onDelete, onStillG
         </div>
 
         {result.moved.length > 0 || result.conflicts.length > 0 ? (
-          <div className="rounded-[14px] border border-line bg-surface-2 px-3.5 py-3" aria-live="polite" data-preview>
+          <div className="rounded-[20px] border border-line bg-surface-2 px-4 py-3.5" aria-live="polite" data-preview>
             {result.moved.length > 0 ? (
               <>
                 <p className="t-label">Shifts after saving</p>
                 <ul className="mt-1.5 flex flex-col gap-1">
                   {result.moved.map((m) => (
-                    <li key={m.id} className="tnum flex items-baseline justify-between gap-3 text-[14px]">
+                    <li key={m.id} className="flex items-baseline justify-between gap-3 text-[14px]">
                       <span className="min-w-0 truncate text-ink">{m.name}</span>
                       <span className="shrink-0 text-ink-2">
                         {formatTime(m.to.start)} to {formatTime(m.to.end)}
@@ -115,8 +115,8 @@ function Form({ block, blocks, live, locked, onClose, onSave, onDelete, onStillG
               </>
             ) : null}
             {result.conflicts.map((c) => (
-              <p key={`${c.id}-${c.withId}`} className="mt-1.5 text-[13px] font-medium text-warn">
-                {names.get(c.id) ?? "This"} would overlap {names.get(c.withId) ?? "a fixed block"} by {formatDuration(c.minutes)}. Fixed blocks do not move.
+              <p key={`${c.id}-${c.withId}`} className="mt-1.5 text-[13px] text-warn">
+                {names.get(c.id) ?? "This"} would overlap {names.get(c.withId) ?? "a fixed block"} by {formatDuration(c.minutes)}.
               </p>
             ))}
           </div>
@@ -124,13 +124,13 @@ function Form({ block, blocks, live, locked, onClose, onSave, onDelete, onStillG
 
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-[15px] font-medium">Flexible</p>
-            <p className="text-[13px] text-ink-3">{flexible ? "Shifts later when something before it runs long" : "Fixed. Never moves on its own"}</p>
+            <p className="text-[15px]">Flexible</p>
+            <p className="t-caption mt-0.5 text-ink-2">{flexible ? "Shifts later when something runs long" : "Fixed. Never moves on its own"}</p>
           </div>
           <Toggle checked={flexible} onChange={setFlexible} label="Flexible" />
         </div>
 
-        {!fromCalendar ? <Select label="Kind" value={kind} onChange={(v) => setKind(v as BlockKind)} options={KIND_OPTIONS} hint="Free time blocks get a countdown while they are live." /> : null}
+        {!fromCalendar ? <Select label="Kind" value={kind} onChange={(v) => setKind(v as BlockKind)} options={KIND_OPTIONS} hint="Free time gets a countdown." /> : null}
 
         {live && !locked ? (
           <Button variant="secondary" full onClick={() => onStillGoing(block)}>
@@ -144,16 +144,16 @@ function Form({ block, blocks, live, locked, onClose, onSave, onDelete, onStillG
 
 function Stepper(props: { label: string; value: string; onMinus: () => void; onPlus: () => void; minus: string; plus: string }) {
   return (
-    <div className="flex h-12 items-center justify-between rounded-[14px] border border-line bg-surface-2">
-      <button type="button" aria-label={props.minus} onClick={props.onMinus} className="pressable flex size-11 items-center justify-center text-[20px] text-ink-2">
-        -
+    <div className="tile flex h-[52px] items-center justify-between rounded-[16px]">
+      <button type="button" aria-label={props.minus} onClick={props.onMinus} className="pressable flex size-11 items-center justify-center text-ink-2">
+        <Minus size={18} strokeWidth={1.75} aria-hidden />
       </button>
       <span className="min-w-0 text-center">
-        <span className="block text-[10px] leading-none font-semibold tracking-[0.06em] text-ink-3 uppercase">{props.label}</span>
-        <span className="tnum mt-1 block text-[14px] leading-none font-semibold text-ink">{props.value}</span>
+        <span className="t-label block text-[10px] leading-none">{props.label}</span>
+        <span className="mt-1.5 block text-[14px] leading-none font-medium text-ink">{props.value}</span>
       </span>
-      <button type="button" aria-label={props.plus} onClick={props.onPlus} className="pressable flex size-11 items-center justify-center text-[20px] text-ink-2">
-        +
+      <button type="button" aria-label={props.plus} onClick={props.onPlus} className="pressable flex size-11 items-center justify-center text-ink-2">
+        <Plus size={18} strokeWidth={1.75} aria-hidden />
       </button>
     </div>
   );
