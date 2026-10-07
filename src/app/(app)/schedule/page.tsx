@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CalendarClock, MapPin, Plus, RotateCcw, Timer } from "lucide-react";
 import { Button, Card, EmptyState, IconButton, IconLink, Screen, Section, Sheet, Toggle, useToast, TopBar } from "@/components/ui";
+import { CoachLink } from "@/features/coach/CoachLink";
 import { getBlocksForDate, type DayBlock } from "@/lib/blocks";
 import { useDayBlocks, useList, useMode, useNow } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
@@ -192,6 +193,7 @@ export default function SchedulePage() {
                 Today
               </Button>
             ) : null}
+            <CoachLink />
             <IconLink href="/focus" label="Focus timer">
               <Timer size={22} strokeWidth={1.75} aria-hidden />
             </IconLink>

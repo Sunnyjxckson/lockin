@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ChevronDown, ChevronRight, Flag, Lock, MessageSquareText, ShieldBan } from "lucide-react";
+import { ChevronDown, ChevronRight, Flag, Lock, ShieldBan } from "lucide-react";
 import { Button, ButtonLink, Card, EmptyState, GlassCard, IconLink, Notice, ProgressBar, Screen, Section, SectionLabel, TopBar, TrackStat, cn, useToast } from "@/components/ui";
 import { finishChallenge, logWeight, setChecked, setText, setValue, workoutsFor } from "@/lib/db/helpers";
 import { useChecklist, useDay, useDayBlocks, useInstalledOn, useList, useLogs, useMode, useNow, useSettings, useWorkouts } from "@/lib/db/hooks";
+import { CoachLink } from "@/features/coach/CoachLink";
 import { haptics } from "@/lib/haptics";
 import { challengeDay, challengeRecord, consistency, consistencyLabel, plannedEnd, ranOn } from "@/lib/logic/challenge";
 import {
@@ -163,9 +164,7 @@ export default function TodayPage() {
       title="Lock In"
       right={
         <>
-          <IconLink href="/coach" label="Coach">
-            <MessageSquareText size={20} strokeWidth={1.75} aria-hidden />
-          </IconLink>
+          <CoachLink />
           <IconLink href="/vices" label="Vices">
             <ShieldBan size={20} strokeWidth={1.75} aria-hidden />
           </IconLink>

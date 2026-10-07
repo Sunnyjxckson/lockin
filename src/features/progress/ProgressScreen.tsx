@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { Share } from "lucide-react";
 import { BigNumber, Button, Card, CheckMark, EmptyState, IconLink, List, ListRow, PageHeader, ProgressBar, Screen, Section, SegmentedControl, TopBar, TrackStat, cn } from "@/components/ui";
+import { CoachLink } from "@/features/coach/CoachLink";
 import { useChecklist, useLogs, useMode } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { STATUS_LABEL, challengeItems, consistencyLabel, daysRun, lastDay, pastChallenges, plannedEnd } from "@/lib/logic/challenge";
@@ -408,7 +409,7 @@ export function ProgressScreen() {
   if (!ongoing) {
     return (
       <Screen aria-busy="true">
-        <TopBar title="Record" right={share} />
+        <TopBar title="Record" right={<><CoachLink />{share}</>} />
       </Screen>
     );
   }
@@ -495,7 +496,7 @@ export function ProgressScreen() {
 
   return (
     <Screen>
-      <TopBar title="Record" right={<><span>{status}</span>{share}</>} />
+      <TopBar title="Record" right={<><span>{status}</span><CoachLink />{share}</>} />
 
       <div className="animate-fade-in">
         {inChallenge && challengeModel && h && inPlay ? (

@@ -48,7 +48,7 @@ export default function DemoData() {
       await syncCoach(today, { regenerate: true, weekly: true });
       clearQueryCache();
       toast("Demo data loaded", { kind: "done" });
-      router.push("/coach");
+      router.push("/coach/notes");
     } catch (e) {
       toast(e instanceof Error ? e.message : "Could not load demo data", { kind: "error" });
     } finally {

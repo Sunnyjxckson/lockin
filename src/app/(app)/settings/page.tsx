@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BellRing, CalendarClock, Dumbbell, Images, ListChecks, Target, Timer, UtensilsCrossed } from "lucide-react";
+import { BellRing, CalendarClock, Dumbbell, Images, ListChecks, MessageSquareText, Target, Timer, UtensilsCrossed } from "lucide-react";
 import { Button, Card, ListRow, PageHeader, Screen, Section, Sheet, TextField, Toggle, useToast } from "@/components/ui";
 import { ThemePicker } from "@/components/app/ThemePicker";
 import { LOCK_EVENT } from "@/components/app/AppShell";
@@ -65,6 +65,7 @@ export default function SettingsPage() {
               sub={challengeLine}
             />
             <ListRow href="/settings/reminders" left={<BellRing size={20} strokeWidth={1.75} aria-hidden />} title="Reminders" sub="What and when" />
+            <ListRow href="/settings/coach" left={<MessageSquareText size={20} strokeWidth={1.75} aria-hidden />} title="Coach" sub="Voice and check-ins" />
           </div>
         </Card>
       </Section>

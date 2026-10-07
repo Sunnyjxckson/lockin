@@ -187,6 +187,8 @@ describe("upsert", () => {
       business_goal: null,
       preferred_store: null,
       display_name: null,
+      coach_voice: "stoic" as const,
+      coach_checkins: { post_workout: true, slip: true, missed_item: true },
     };
     await db.upsert("app_settings", settings, ["id"]);
     await db.upsert("app_settings", { ...settings, haptics: false }, ["id"]);

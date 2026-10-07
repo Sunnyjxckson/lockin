@@ -7,7 +7,7 @@
 //
 // It is one line so the first screen stays greeting, Now, the four tracks and
 // the tiles. A tap opens the opening paragraph in place, with a link to the
-// coach for the rest. It folds away again on the next visit.
+// coach's notes for the rest. It folds away again on the next visit.
 
 import { useState } from "react";
 import Link from "next/link";
@@ -61,8 +61,8 @@ export function TodaySlot({ className }: { className?: string }) {
             <>
               {/* Open, it shows the first paragraph: what today holds. The rest is one tap away, so Today stays short. */}
               <NoteBody body={first} className="[&_p]:text-[14px] [&_p]:leading-[1.5] [&_p]:text-ink-2 [&_span]:font-medium" />
-              <Link href="/coach" className="mt-0.5 inline-flex min-h-11 items-center text-[13px] text-ink underline decoration-hair underline-offset-4">
-                {flags > 0 ? `Read the rest, ${plural(flags, "flag")}` : parts.length > 1 ? "Read the rest" : "Open coach"}
+              <Link href="/coach/notes" className="mt-0.5 inline-flex min-h-11 items-center text-[13px] text-ink underline decoration-hair underline-offset-4">
+                {flags > 0 ? `Read the rest, ${plural(flags, "flag")}` : parts.length > 1 ? "Read the rest" : "Open notes"}
               </Link>
             </>
           ) : (

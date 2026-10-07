@@ -20,7 +20,7 @@ This is a full build: polished, fast, and good enough to show people, not a thro
 - Track weight, meals, calories, full macros (protein, carbs, fat), and progress photos
 - Show streaks and a 30 day grid so a missed item is visible, not hidden
 - Push reminders at the moments that matter: wake, workout, delivery block, end of day check-in
-- A coach that reads the data and says what is slipping and what to change
+- A coach you can message any time that knows the data, talks you through the hard moments, and says what is slipping and what to change
 - Design that feels like a product: dark, clean, big type, smooth motion
 
 **Out of scope**
@@ -162,9 +162,43 @@ Build note: live store prices are the hard part, so v1 uses estimated prices and
 
 **9. Coach**
 
+The coach is a chat, not a report. You message it any time and it answers like a coach who knows your numbers. The briefs are just one thing it sends.
+
+Messaging it
+
+- Open the chat from any tab and say what is wrong: legs are dead, want to smoke, do not feel like delivering
+- It answers in two or three lines: one idea that reframes the moment, then one thing to do right now
+- It knows the data, so it is specific, for example "You have hit 4 workout days straight. Soreness is the receipt."
+- No lectures, no paragraphs, and it does not use the same quote twice in a week
+- It remembers the conversation, so a check-in tonight can pick up what you said this morning
+
+What it draws from
+
+- Stoics (Marcus Aurelius, Epictetus, Seneca): you do not control the pain, you control your read on it. "We suffer more often in imagination than in reality."
+- The second arrow: the pain is the first arrow, complaining about it is the second one you shoot yourself. "Pain is inevitable. Suffering is optional."
+- Nietzsche and Frankl: "He who has a why to live for can bear almost any how." The coach points back at your own why and your mood boards
+- Athlete mindset (Kobe, Goggins, Ali): when you think you are done you are at about 40 percent. Ali only started counting when it hurt
+- Musashi and samurai discipline: do the thing today whether you feel like it or not
+- It quotes only from its own library of lines, word for word, so a quote on screen is never made up
+
+Tone
+
+- Three voices to pick from: calm stoic (the default), drill sergeant, big brother
+- Hard on excuses, never insulting
+
+When it reaches out on its own
+
 - Morning brief: today's plan, yesterday's misses, where the money total stands
+- A quick "how did it go" after the workout block
+- A check-in after a logged slip, asking what set it off, and after a missed item, asking what got in the way
 - Sunday review written from the week's data: what held, what slipped, one change for next week
 - Flags patterns, for example lifts dropping two weeks in a row or protein under target three days running
+
+Guardrails
+
+- It tells soreness from injury. Sharp, joint, or one sided pain gets "stop and get it checked", not a quote
+- It never says to eat under the calorie target, skip a meal or cut sleep
+- If a message sounds like more than a bad day, it drops the tough talk and says to reach out to a real person
 
 **10. Design**
 
@@ -181,6 +215,7 @@ Nothing is hardcoded. Every number and item in this doc is a starting default.
 - Workouts: swap exercises, sets, and reps, and change which days are lift days
 - Challenge: start date, length, money target and deadline
 - Reminders: turn each one on or off and set its time
+- Coach: pick the voice, and turn each of its check-ins on or off
 - Changes apply from today forward, so past days keep the targets they were scored against
 
 **12. Vices**
@@ -227,6 +262,7 @@ Mobile-first web app installed to the home screen as a PWA. One user, one passco
 | set\_log | date, exercise, set\_number, weight, reps |
 | reminder | block\_name or item\_id, offset\_minutes, enabled |
 | coach\_note | date, kind (morning, weekly, flag), body |
+| coach\_message | date, sent\_at, sender (me, coach), body, trigger (chat, post\_workout, slip, missed\_item), source, quote, check\_key, read |
 | mood\_log | date, time, mood, note |
 | motivation | kind (quote, clip, why), body, url |
 | board | name, kind (body, brand, life) |
@@ -253,7 +289,7 @@ Build it in phases so it is usable from the first one, and each phase adds a lay
 4. Body: weight, meal photos with calorie and macro estimates, progress photos, per set workout logging
 5. Progress: 30 day grid, streaks, shareable card
 6. Reminders: push notifications and the 8:00 pm earnings nudge
-7. Coach: morning brief, Sunday review, pattern flags
+7. Coach: chat with data context, the quote library, voices, check-ins, morning brief, Sunday review, pattern flags
 8. Polish: animations, haptics, empty states, load speed, install prompt
 
 Days 1 and 2 of the challenge get logged on paper or in Notes, then backfilled once Today ships.

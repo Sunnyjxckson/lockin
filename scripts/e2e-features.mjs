@@ -595,7 +595,8 @@ export async function runFeatures(h) {
     ["/body/workout", "Bench press", "workout-log", null],
     ["/progress", "Streaks", "record", "Record"],
     ["/progress/card", "Save image", "share-card", null],
-    ["/coach", "Flags", "coach", "Coach"],
+    ["/coach", "voice", "coach", "Coach"],
+    ["/coach/notes", "Flags", "coach-notes", null],
     ["/vices", "Library", "vices", "Vices"],
     [`/vices/${viceId}`, "Pattern", "vice-detail", null],
     ["/meals", "Spent so far", "meals", "Meals"],
@@ -613,6 +614,7 @@ export async function runFeatures(h) {
     ["/settings/challenge", "Past challenges", "settings-challenge", null],
     ["/settings/challenge/new", "New challenge", "settings-new-challenge", null],
     ["/settings/reminders", "Quiet hours", "settings-reminders", null],
+    ["/settings/coach", "Check-ins", "settings-coach", null],
   ];
   /** Put a theme row in force, as the boards screen and the theme picker do, and load it. */
   const wear = async (theme) => {

@@ -9,6 +9,7 @@ import { setHapticsEnabled } from "@/lib/haptics";
 import { adoptDevicePrefs, upgradeLocalData } from "@/lib/db/upgrade";
 import { ensureSeeded } from "@/lib/seed";
 import { loadTheme } from "@/lib/theme";
+import { CheckinWatcher } from "@/features/coach/CheckinWatcher";
 import { FocusWatcher } from "@/features/focus/FocusWatcher";
 import { LocalScheduler } from "@/features/reminders/LocalScheduler";
 import { LockScreen } from "./LockScreen";
@@ -128,6 +129,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       <LocalScheduler />
       {/* Notices the app being left while a focus timer runs, on every screen. */}
       <FocusWatcher />
+      {/* Lets the coach send its check-ins (after the workout, a slip, a miss) on every screen. */}
+      <CheckinWatcher />
     </>
   );
 }

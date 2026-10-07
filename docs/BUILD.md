@@ -19,7 +19,7 @@ Nobody has provisioned Supabase, Google, VAPID, or Anthropic keys yet. The app m
 
 - Data: every read and write goes through `src/lib/db` (owned by the foundation agent). It exposes one small generic interface (list, get, insert, update, upsert, remove, with equality and date-range filters) and typed helpers on top. Two backends: Supabase when `NEXT_PUBLIC_SUPABASE_URL` is set, browser localStorage otherwise. Feature code never imports Supabase directly and never touches localStorage directly.
 - Photos: `src/lib/storage` with the same split (Supabase Storage, or data URLs in IndexedDB locally).
-- AI: each feature owns its route: `src/app/api/coach` (brief and review wording), `src/app/api/body/meal-estimate` (meal photo), `src/app/api/money/read` (earnings screenshot), `src/app/api/meals/request` (a plain words request to the meal planner, which falls back to its own rules). All of them take the model id, the client and the fallback response from `src/lib/ai/server.ts`. With no `ANTHROPIC_API_KEY` they answer 200 `{ source: "fallback", reason: "no_key" }` (the coach route adds the rule-based `body`), never an error screen.
+- AI: each feature owns its route: `src/app/api/coach` (brief and review wording), `src/app/api/coach/chat` (the coach answering a message), `src/app/api/body/meal-estimate` (meal photo), `src/app/api/money/read` (earnings screenshot), `src/app/api/meals/request` (a plain words request to the meal planner, which falls back to its own rules). All of them take the model id, the client and the fallback response from `src/lib/ai/server.ts`. With no `ANTHROPIC_API_KEY` they answer 200 `{ source: "fallback", reason: "no_key" }` (the coach routes add the rule-based `body`), never an error screen.
 - Instacart: `src/app/api/meals/instacart` needs `INSTACART_API_KEY` (and `INSTACART_API_URL` for a development key). Without it `GET` answers `{ connected: false }`, the grocery list offers copy and share, and store prices stay estimates either way.
 - Boards: `src/app/api/boards/image` fetches a web image for a board on the server (the browser cannot read another site's image). It needs no key and refuses private addresses.
 - Calendar and push: with no keys the UI shows a "not connected" state with what to set, and everything else keeps working.
@@ -56,7 +56,7 @@ Put these in `src/lib/logic/*` with Vitest tests. No React, no db calls inside t
 
 - The look and every rule for building a screen in it are in "Design system" at the end of this file. Read that before touching a screen.
 - A theme is data: a base ("Aubergine", the default, or "High contrast") plus an optional palette, written to CSS variables on the root element. Use the tokens, never a hex color, `white` or `black`: a palette can make the page light.
-- Mobile first at 390px wide. A floating tab bar: Today, Plan, Money, Body, Record (the routes are `/schedule` and `/progress`). Coach and Vices have icons in Today's top bar. The round mark beside them (the More button) opens Focus, Meals, Boards and Settings. Meals also opens from Body's header and Focus from Plan's.
+- Mobile first at 390px wide. A floating tab bar: Today, Plan, Money, Body, Record (the routes are `/schedule` and `/progress`). Coach has an icon in every tab's top bar (`CoachLink`), and Vices has one in Today's. The round mark beside them (the More button) opens Focus, Meals, Boards and Settings. Meals also opens from Body's header and Focus from Plan's.
 - Tap targets 44px minimum. Fewer words, more numbers. Short labels.
 - Motion: short and smooth, respects prefers-reduced-motion. Haptics through `navigator.vibrate` where available.
 - Every screen has a real empty state.
@@ -106,12 +106,13 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 | `set_log` | `SetLog` | `date, exercise, set_number, weight, reps` |
 | `reminder` | `Reminder` | `kind, label, body, time, block_name, item_id, offset_minutes, enabled, sort_order`. Fires at `time`, or when `time` is null at `offset_minutes` from the start of every block whose name starts with `block_name` |
 | `coach_note` | `CoachNote` | `date, kind ("morning" / "weekly" / "flag"), body, source ("ai" / "fallback"), basis`. `basis` is set on morning briefs only: the challenge, money target and floor it was written from (`briefBasis` in `logic/coach`). When that differs later the same day, the brief is written again |
+| `coach_message` | `CoachMessage` | `date, sent_at, sender ("me" / "coach"), body, trigger ("chat" / "post_workout" / "slip" / "missed_item"), source ("ai" / "fallback" / null), quote, check_key, read`. One row per message in the coach chat. `quote` is the key of the library line a coach message used (`logic/coachQuotes`), so a line rests for a week. `check_key` is what a check-in is about (`post_workout:<date>`, `slip:<slip id>`, `missed:<date>`), unique, so one is never sent twice. `read` is false on a check-in until the chat is opened. Write it through `features/coach/chat` |
 | `push_subscription` | `PushSubscriptionRow` | `endpoint, p256dh, auth, user_agent`. Server only in Supabase mode |
 | `calendar_token` | `CalendarToken` | `provider, access_token, refresh_token, expires_at, calendar_id, sync_token`. Server only in Supabase mode |
 | `reminder_sent` | `ReminderSent` | `date, key`. One row per reminder the scheduled job sent, unique on `key`. Server only |
 | `reminder_run` | `ReminderRun` | `last_run_at`. One row, id `"cron"`. Server only |
 | `login_attempt` | `LoginAttempt` | `failures, locked_until`. One row, id `"passcode"`. Server only |
-| `app_settings` | `AppSettings` | One row, id `"app"`. `seeded, timezone, quiet_start, quiet_end, carbs_target, fat_target, weight_unit, haptics, history_start, daily_floor, weekly_food_budget, food_likes: string[], food_dislikes: string[], focus_goal_minutes, business_goal, preferred_store, display_name`. `display_name` is the name Today greets (Settings, You). `history_start` is the first date of the ongoing history. `daily_floor` is the saved earnings floor (change it with `setDailyFloor`). The floor in force is `useMode().floor`: a running challenge that holds "Earned today" to its own minimum sets it while it runs (`floorOn` in `logic/challenge`) |
+| `app_settings` | `AppSettings` | One row, id `"app"`. `seeded, timezone, quiet_start, quiet_end, carbs_target, fat_target, weight_unit, haptics, history_start, daily_floor, weekly_food_budget, food_likes: string[], food_dislikes: string[], focus_goal_minutes, business_goal, preferred_store, display_name, coach_voice ("stoic" / "sergeant" / "brother"), coach_checkins: { post_workout, slip, missed_item }`. `display_name` is the name Today greets (Settings, You). Read the two coach fields with `voiceOf` and `checkinsOf` from `logic/coachChat`, which give the defaults for a row without them. `history_start` is the first date of the ongoing history. `daily_floor` is the saved earnings floor (change it with `setDailyFloor`). The floor in force is `useMode().floor`: a running challenge that holds "Earned today" to its own minimum sets it while it runs (`floorOn` in `logic/challenge`) |
 | `mood_log` | `MoodLog` | `date, time, mood (1 to 5), note` |
 | `motivation` | `Motivation` | `kind ("quote" / "clip" / "why"), body, url, sort_order` |
 | `board` | `Board` | `name, kind ("body" / "brand" / "life"), cover_item_id, sort_order` |
@@ -129,7 +130,7 @@ Also owned by the foundation, beyond the list above: `src/lib/blocks.ts`, `src/l
 
 Seeded item keys, for `getItemByKey`: `wake, workout, core, calories, protein, earned, study, business, bed, talk, weighin`, and the vices `vice_smoking, vice_drinking, vice_masturbation` (on) plus `vice_vaping, vice_weed, vice_gambling, vice_porn, vice_junk_food, vice_fast_food, vice_energy_drinks, vice_doomscrolling, vice_impulse_spending` (off, `active: false`). Vices are checklist items with `category: "vice"`. Carbs and fat targets are `app_settings.carbs_target` and `fat_target`. Calories and protein targets are the `calories` and `protein` items.
 
-Need a new column or table? Add the next numbered file in `supabase/migrations/` (they run in order: `0001_init`, `0002_reminders`, `0003_vice_spend`, `0004_slip_count`, `0005_money_target_start`, `0006_login_attempt`, `0007_challenges`, `0008_boards_meals_focus`, `0009_focus_fields`, `0010_board_item_aspect`, `0011_meal_pantry_prices`, `0012_coach_note_basis`, `0013_tracks_and_name`). Use plain `create table name (` and `alter table name add column col type` so `schema.test.ts` can read it. A new table or column also needs its entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), and a server only table goes in `SERVER_ONLY_TABLES`. Rows already on a device have no migration: add a step to `src/lib/db/upgrade.ts`, which runs on every load in local mode and is tested in `upgrade.test.ts` against a version 1 store. `adoptDevicePrefs` in the same file runs in every mode and moves what an earlier build kept per device (focus session numbers, the business goal, board image shapes) into the tables.
+Need a new column or table? Add the next numbered file in `supabase/migrations/` (they run in order: `0001_init`, `0002_reminders`, `0003_vice_spend`, `0004_slip_count`, `0005_money_target_start`, `0006_login_attempt`, `0007_challenges`, `0008_boards_meals_focus`, `0009_focus_fields`, `0010_board_item_aspect`, `0011_meal_pantry_prices`, `0012_coach_note_basis`, `0013_tracks_and_name`, `0014_coach_chat`). Use plain `create table name (` and `alter table name add column col type` so `schema.test.ts` can read it. A new table or column also needs its entry in `Tables`, `TABLE_NAMES` and `COLUMNS` (`src/lib/db/schema.ts`), and a server only table goes in `SERVER_ONLY_TABLES`. Rows already on a device have no migration: add a step to `src/lib/db/upgrade.ts`, which runs on every load in local mode and is tested in `upgrade.test.ts` against a version 1 store. `adoptDevicePrefs` in the same file runs in every mode and moves what an earlier build kept per device (focus session numbers, the business goal, board image shapes) into the tables.
 
 ### Data: `@/lib/db`
 
@@ -160,7 +161,7 @@ interface Query<K> {
 
 - Everything is typed by table name: `db.list("earning", { from, to })` returns `Earning[]`.
 - Always pass `orderBy` when order matters. Without it local returns insert order and Supabase returns `created_at` order.
-- `upsert` conflict columns need a unique index in Supabase. These exist: `day_log (date, item_id)`, `target_version (item_id, effective_from)`, `body_log (date)`, `workout (weekday, slot)`, `set_log (date, exercise, set_number)`, `push_subscription (endpoint)`, `calendar_token (provider)`, `reminder_sent (key)`, `meal_plan (week_start)`, `pantry_item (name)`, `receipt_price (name, store)`, and `id` on every table. For any other pair, add a unique index in your migration.
+- `upsert` conflict columns need a unique index in Supabase. These exist: `day_log (date, item_id)`, `target_version (item_id, effective_from)`, `body_log (date)`, `workout (weekday, slot)`, `set_log (date, exercise, set_number)`, `push_subscription (endpoint)`, `calendar_token (provider)`, `reminder_sent (key)`, `meal_plan (week_start)`, `pantry_item (name)`, `receipt_price (name, store)`, `coach_message (check_key)`, and `id` on every table. For any other pair, add a unique index in your migration.
 - Every write notifies subscribers of that table. `subscribe(table, fn)` returns an unsubscribe function. The hooks do this for you.
 - Errors are `DbError` with a readable message. `insert` fails when a row with the same unique key exists, on both backends, and `isUniqueViolation(e)` tells that apart from other failures (the reminder job uses it as a lock).
 
@@ -432,7 +433,7 @@ Everything a model wrote goes through one of these before it is stored or shown.
 
 ### AI routes: `@/lib/ai/server`
 
-Server only. The three AI routes use nothing else to reach Claude.
+Server only. The AI routes use nothing else to reach Claude.
 
 ```ts
 DEFAULT_ANTHROPIC_MODEL          // "claude-sonnet-5-5", a current Sonnet with vision
@@ -452,7 +453,7 @@ installMode(): "prompt" | "ios" | "ios-other" | "none"        promptInstall(): P
 isIOS()   isStandalone()   subscribeInstall(fn)
 ```
 
-`prefs` is for things like a dismissed prompt. App data still goes through `db`. What is in prefs today: dismissed setup rows, the closed morning brief, the focus timer's strict mode, grace period, full screen switch, blocker walk through done, strict mode notice, the days Focus ticked Study by itself, a copy of the running timer's state (the row is the shared copy), and per week the meal planner's shuffle seed, last message and last request.
+`prefs` is for things like a dismissed prompt. App data still goes through `db`. What is in prefs today (the coach chat keeps nothing here, its messages and settings are tables): dismissed setup rows, the closed morning brief, the focus timer's strict mode, grace period, full screen switch, blocker walk through done, strict mode notice, the days Focus ticked Study by itself, a copy of the running timer's state (the row is the shared copy), and per week the meal planner's shuffle seed, last message and last request.
 
 ### Auth: `@/lib/auth/server`
 
@@ -502,7 +503,7 @@ export default function MoneyPage() {
 }
 ```
 
-Routes that exist: `/today`, `/schedule`, `/money`, `/body`, `/progress` (tabs), `/body/workout`, `/progress/card`, `/coach`, `/vices`, `/vices/[id]`, `/reminders`, `/settings`, `/settings/{checklist,schedule,workouts,challenge,reminders}`, `/settings/challenge/new`, `/boards` and `/boards/[id]` (back to `/today` and `/boards`), `/meals`, `/meals/grocery` and `/meals/recipes` (back to `/body` and `/meals`), `/focus` and `/focus/business` (back to `/schedule` and `/focus`). API routes: `/api/auth/{login,logout,status}`, `/api/db`, `/api/storage`, `/api/coach`, `/api/body/meal-estimate`, `/api/money/read`, `/api/calendar/*`, `/api/reminders/*`, `/api/boards/image`, `/api/meals/request`, `/api/meals/instacart`. Every sub-screen passes `back`. `/today?date=YYYY-MM-DD` opens Today on that day. `/progress?challenge=<id>` opens a past challenge.
+Routes that exist: `/today`, `/schedule`, `/money`, `/body`, `/progress` (tabs), `/body/workout`, `/progress/card`, `/coach` (the chat), `/coach/notes` (brief, flags, reviews, back to `/coach`), `/vices`, `/vices/[id]`, `/reminders`, `/settings`, `/settings/{checklist,schedule,workouts,challenge,reminders,coach}`, `/settings/challenge/new`, `/boards` and `/boards/[id]` (back to `/today` and `/boards`), `/meals`, `/meals/grocery` and `/meals/recipes` (back to `/body` and `/meals`), `/focus` and `/focus/business` (back to `/schedule` and `/focus`). API routes: `/api/auth/{login,logout,status}`, `/api/db`, `/api/storage`, `/api/coach`, `/api/coach/chat`, `/api/body/meal-estimate`, `/api/money/read`, `/api/calendar/*`, `/api/reminders/*`, `/api/boards/image`, `/api/meals/request`, `/api/meals/instacart`. Every sub-screen passes `back`. `/today?date=YYYY-MM-DD` opens Today on that day. `/progress?challenge=<id>` opens a past challenge.
 
 Ways in to Boards, Meals and Focus: the More sheet on Today, a row each in Settings, the Meals icon in Body's header, the Focus icon in Plan's and the timer button on Today's study row.
 
@@ -526,7 +527,19 @@ One tile per item, picked in `today/ChecklistTiles.tsx`: a tick (`CheckTile`), a
 
 Which track an item counts toward is `trackOf(item)`: its own `track` when set (Settings, Checklist, "Track on Today"), otherwise the default in `logic/tracks`.
 
-`LocalScheduler` (reminders while the app is open) and `FocusWatcher` (notices the app being left while a focus timer runs, and keeps the device's copy of the timer in step with its row) are each mounted once in `AppShell`, so they run on every screen.
+`LocalScheduler` (reminders while the app is open), `FocusWatcher` (notices the app being left while a focus timer runs, and keeps the device's copy of the timer in step with its row) and `CheckinWatcher` (lets the coach send its check-ins) are each mounted once in `AppShell`, so they run on every screen.
+
+### Coach
+
+Two halves. Notes (`coach_note`): the morning brief, flags and the Sunday review, at `/coach/notes`. Chat (`coach_message`): `/coach`, a thread and a message field.
+
+- The way in is `CoachLink` from `features/coach/CoachLink`, in every tab's top bar. It shows a dot while a check-in is unread. It imports `useUnread` only, so the coach stays out of a tab's first load. Keep it that way.
+- `logic/coachQuotes` is the library: every line the coach may quote, by school (Stoics, the second arrow, having a why, athletes, samurai discipline). The coach quotes these word for word and nothing else. Add a line there, with who said it, and check the wording against a source first.
+- `logic/coachChat` is everything else, pure and tested: `classifyMessage` (what a message is about, safety first), `chatFallback` (the rule-based answer: a line, a line from their numbers, one thing to do, in the chosen voice), `chatPrompt` and `replyProblem` (the prompt, and the checks on what the model wrote: numbers must be in the data, a quote must be from the library and not used in the last 7 days), `dueCheckins` (after the workout block, per slip, yesterday's misses).
+- Three things never go through a voice or the model's wording: injury (sharp, joint or one sided pain) and an emergency get a fixed line from the route, with or without a key. A message that sounds like more than a bad day gets the careful prompt (no voice, no quote, no data, a real person and 988), or the fixed `CARE_REPLY` with no key. Do not soften these, and never let the coach say to eat under the calorie target, skip a meal or cut sleep.
+- `features/coach/chat` does the writes: `sendMessage` saves the message, builds the context in the browser (the snapshot from `buildSnapshot`, where today stands, their why from boards and the business goal), asks `/api/coach/chat` and saves the answer. Offline it answers from the same rules. `syncCheckins` sends what is due. Check-ins are written by rule, never by the model.
+- Voice and check-ins are `CoachSettings`, shown in a sheet on the chat and at `/settings/coach`.
+- Check-ins are sent while the app is open. A push for one is not built: it needs the reminder job to read the logs on the server.
 
 The reminder rows (on/off, time, minutes before) and quiet hours are editable at `/settings/reminders`. `/reminders` (Settings, Notifications) is for the push permission and connection state. `public/sw.js` shows a notification for a push with a JSON payload `{ title, body, url, tag }` and opens `url` on tap.
 
@@ -670,6 +683,7 @@ All from `@/components/ui`. Icons from `lucide-react` at size 18 to 22 with `str
 ### Layout
 
 - **A tab screen** (Today, Plan, Money, Body, Record): `TopBar` with the tab's name small on the left, then the hero with `pt-4` or `pt-5` (a `BigNumber`, a greeting, the day on Plan), then a `GlassCard` for what you act on, then a row of `TrackStat`s, then labeled groups. Lead with the one number or line that matters. A control that switches the whole screen (Body's Food and Weight, Plan's week strip) sits between the top bar and the hero.
+- **The chat** (`/coach`) is the one screen with something fixed above the tab bar: the message field, which moves above the keyboard while it is open. Coach messages are `tile`, yours are `bg-ink` with `text-bg`.
 - **Today's first screen** at 390 x 844 is the greeting, the brief as one line, the Now card, the four tracks and two rows of tiles. Nothing else goes above the tiles. The walkthrough checks it.
 - **A sub-screen**: `PageHeader title back="/parent"`, actions in `right` on the back row. Then content.
 - **One feature card, maybe two.** Everything else sits straight on the page under a `SectionLabel`, or in a plain `Card`. A screen that is a stack of five cards is the old look.

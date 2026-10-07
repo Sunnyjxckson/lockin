@@ -313,6 +313,37 @@ export interface CoachNote extends Base {
   basis?: string | null;
 }
 
+export type CoachVoice = "stoic" | "sergeant" | "brother";
+export const COACH_VOICES: readonly CoachVoice[] = ["stoic", "sergeant", "brother"];
+
+/** Why a coach message was written: an answer in the chat, or a check-in it sent by itself. */
+export type CoachTrigger = "chat" | "post_workout" | "slip" | "missed_item";
+
+/** Which check-ins the coach may send by itself. */
+export interface CoachCheckins {
+  post_workout: boolean;
+  slip: boolean;
+  missed_item: boolean;
+}
+
+/** One message in the coach chat, yours or the coach's. */
+export interface CoachMessage extends Base {
+  /** The New York date it was sent on. */
+  date: DateStr;
+  sent_at: IsoStr;
+  sender: "me" | "coach";
+  body: string;
+  trigger: CoachTrigger;
+  /** Coach messages only: written by the model or by the rules. */
+  source: "ai" | "fallback" | null;
+  /** Key of the line from the quote library it used (logic/coachQuotes). */
+  quote: string | null;
+  /** Check-ins only: what it is about, unique, so the same one is never sent twice. */
+  check_key: string | null;
+  /** False on a check-in until the chat has been opened. */
+  read: boolean;
+}
+
 // ---------- device and integration ----------
 
 export interface PushSubscriptionRow extends Base {
@@ -624,6 +655,10 @@ export interface AppSettings extends Base {
   preferred_store: string | null;
   /** The name Today greets. Null or empty greets without one. */
   display_name: string | null;
+  /** The voice the coach answers in. Missing on an old row means "stoic". */
+  coach_voice: CoachVoice;
+  /** Which check-ins the coach may send. Missing on an old row means all of them. */
+  coach_checkins: CoachCheckins;
 }
 
 // ---------- table map ----------
@@ -644,6 +679,7 @@ export interface Tables {
   set_log: SetLog;
   reminder: Reminder;
   coach_note: CoachNote;
+  coach_message: CoachMessage;
   push_subscription: PushSubscriptionRow;
   calendar_token: CalendarToken;
   reminder_sent: ReminderSent;
@@ -688,6 +724,7 @@ export const TABLE_NAMES = [
   "set_log",
   "reminder",
   "coach_note",
+  "coach_message",
   "push_subscription",
   "calendar_token",
   "reminder_sent",

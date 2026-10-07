@@ -19,7 +19,7 @@ Open http://localhost:3000 in a phone-sized window. With an empty `.env` the who
 - Boards (More, Boards): make a board, add images from the camera, your photos, the clipboard or a web link, add colors and notes, and turn a board's palette into the look of the whole app. Text contrast is checked and fixed before a palette is applied, and one tap goes back to the base theme. The first board with anything on it shows as a row at the bottom of Today.
 - Meals (the icon in Body's header): set a weekly budget and it plans seven days from the built in recipe library that hit your calories and protein, with one grocery list priced at five stores. Swap a meal, change a portion, tick off the list, record the shop (it shows on Money as groceries), and log a cooked meal to Body and Today. Every price is an estimate until you type one in from a receipt.
 - Focus (the icon in Plan's header, or the timer button on Today's study row): a count up or countdown timer that survives a reload, records when you leave the app, and ticks the study item when the day's minutes reach the goal. Time can also be logged by hand. The business log is under it.
-- The coach writes its morning brief, Sunday review and flags from rules instead of Claude, and says so on the note.
+- The coach writes its morning brief, Sunday review and flags from rules instead of Claude, and says so on the note. In the chat it answers from rules too: a line from its quote library, a line from your numbers, and one thing to do.
 - Snapping a meal or an earnings screenshot attaches the photo and opens the form empty for you to type the numbers.
 - Reminders show as notifications while the app is open or recently in the background, if you allow notifications. Nothing arrives when the app is closed.
 - Google Calendar shows as not connected.
@@ -48,6 +48,8 @@ Do the steps in order. Every environment variable below goes in Vercel under Pro
    10. `0010_board_item_aspect.sql` (the shape of each board image)
    11. `0011_meal_pantry_prices.sql` (the pantry, receipt prices and the preferred store in their own tables)
    12. `0012_coach_note_basis.sql` (what a morning brief was written from, so it is rewritten when the challenge changes)
+   13. `0013_tracks_and_name.sql` (the track each checklist item counts toward, and the name Today greets)
+   14. `0014_coach_chat.sql` (the coach chat: one row per message, plus the coach's voice and check-ins in settings)
 
    With the Supabase CLI linked to the project, `supabase db push` runs them all in order.
 3. From Project settings, API, copy the project URL and the `service_role` key.

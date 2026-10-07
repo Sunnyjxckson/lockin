@@ -345,7 +345,7 @@ await shot(page, "03-today-start-full", true);
 
 // Open the brief in place: the first paragraph and a way to the coach. Then fold it again.
 await brief(page).click();
-check("a tap opens the brief in place, with a link to the coach", (await brief(page).getAttribute("aria-expanded")) === "true" && (await page.locator("#coach-brief p").count()) === 1 && (await page.locator("#coach-brief").getByRole("link", { name: /Read the rest|Open coach/ }).count()) === 1);
+check("a tap opens the brief in place, with a link to the coach", (await brief(page).getAttribute("aria-expanded")) === "true" && (await page.locator("#coach-brief p").count()) === 1 && (await page.locator("#coach-brief").getByRole("link", { name: /Read the rest|Open notes/ }).count()) === 1);
 await shot(page, "03b-today-brief-open");
 await brief(page).click();
 check("the brief folds back to one line", (await brief(page).getAttribute("aria-expanded")) === "false" && (await page.locator("#coach-brief").count()) === 0);
@@ -748,13 +748,58 @@ check("Today's workout header shows the sets logged", (await page.getByRole("lin
 
 // ---------- Coach ----------
 console.log("Coach");
-await page.getByRole("link", { name: "Coach" }).click();
+await page.getByRole("link", { name: /^Coach/ }).click();
 await page.getByRole("heading", { name: "Coach", level: 1 }).waitFor();
-await page.getByText("Written by rules from your data").first().waitFor();
-check("Coach shows today's brief, written by rules with no key", true);
-check("Coach lights the Today tab and has a way back", (await activeTab(page)) === "Today" && (await page.getByRole("link", { name: "Back" }).count()) === 1);
-await noOverflow(page, "Coach");
-await shot(page, "25-coach", true);
+check("Coach is a chat: a message field and a way back", (await page.getByLabel("Message the coach").count()) === 1 && (await page.getByRole("link", { name: "Back" }).count()) === 1);
+check("Coach lights the Today tab", (await activeTab(page)) === "Today");
+{
+  // Say you are sore. With no key the rules answer: a line from the library, then one thing to do.
+  const coachSays = page.locator('[data-from="coach"][data-trigger="chat"]');
+  const box = page.getByLabel("Message the coach");
+  await box.fill("my legs are dead from that workout");
+  await box.press("Enter");
+  await coachSays.first().waitFor();
+  const first = await coachSays.first().innerText();
+  check("the coach answers soreness with a line from the library and one thing to do", /Pain is inevitable\. Suffering is optional\./.test(first) && /Buddhist saying/.test(first) && /five minutes/.test(first), first);
+  check("the message you sent is in the thread", (await page.locator('[data-from="me"]').first().innerText()) === "my legs are dead from that workout");
+  // The same ask again does not get the same line back.
+  await box.fill("still sore");
+  await box.press("Enter");
+  await coachSays.nth(1).waitFor();
+  const second = await coachSays.nth(1).innerText();
+  check("the same line does not come back twice in a week", !/Pain is inevitable/.test(second) && /second arrow/i.test(second), second);
+  // Injury is not soreness: stop and get it checked, with no quote.
+  await box.fill("sharp pain in my knee when i squat");
+  await box.press("Enter");
+  await coachSays.nth(2).waitFor();
+  const third = await coachSays.nth(2).innerText();
+  check("sharp or joint pain gets stop and get it checked, not a quote", /Stop the session/.test(third) && /get it checked/.test(third) && (await coachSays.nth(2).locator("blockquote").count()) === 0, third);
+  const saved = await rows(page, "coach_message");
+  check("the conversation is saved, with the line each answer used", saved.filter((m) => m.sender === "me").length === 3 && saved.some((m) => m.quote === "pain_optional") && saved.some((m) => m.quote === "second_arrow"), JSON.stringify(saved.map((m) => [m.sender, m.quote])));
+  const dashes = saved.filter((m) => /[\u2012-\u2015\u2212]/.test(m.body));
+  check("no coach message has a dash", dashes.length === 0, JSON.stringify(dashes.map((m) => m.body)));
+  await noOverflow(page, "Coach");
+  await shot(page, "25-coach", true);
+  // The voice changes how it talks.
+  await page.getByRole("button", { name: "Voice and check-ins" }).click();
+  await dialog(page).getByRole("radio", { name: "Sergeant" }).click();
+  await page.waitForFunction(([prefix]) => JSON.parse(localStorage.getItem(prefix + "app_settings") ?? "[]")[0]?.coach_voice === "sergeant", [PREFIX]);
+  await shot(page, "25b-coach-settings");
+  await page.keyboard.press("Escape");
+  await box.fill("dont feel like delivering tonight");
+  await box.press("Enter");
+  await coachSays.nth(3).waitFor();
+  check("the sergeant voice answers like a sergeant", /Nobody asked how you feel/.test(await coachSays.nth(3).innerText()), await coachSays.nth(3).innerText());
+  // The brief, the flags and the reviews are one tap away.
+  await page.getByRole("link", { name: /Brief, flags and reviews/ }).click();
+  await page.getByRole("heading", { name: "Notes", level: 1 }).waitFor();
+  await page.getByText("Written by rules from your data").first().waitFor();
+  check("Notes shows today's brief, written by rules with no key", true);
+  await noOverflow(page, "Coach notes");
+  await shot(page, "25c-coach-notes", true);
+  await page.getByRole("link", { name: "Back" }).click();
+  await page.getByRole("heading", { name: "Coach", level: 1 }).waitFor();
+}
 await page.getByRole("link", { name: "Back" }).click();
 await todayReady(page);
 
@@ -810,6 +855,7 @@ for (const [link, title, file] of [
   [/Workouts/, "Workouts", "29-settings-workouts"],
   [/Challenge/, "Challenge", "30-settings-challenge"],
   [/Reminders/, "Reminders", "31-settings-reminders"],
+  [/Coach/, "Coach", "31b-settings-coach"],
 ]) {
   await page.getByRole("link", { name: link }).first().click();
   await page.getByRole("heading", { name: title, level: 1 }).waitFor();
@@ -1095,8 +1141,8 @@ await s.p.getByRole("button", { name: /Save image/ }).waitFor();
 await s.p.waitForTimeout(600);
 check("the share card speaks of days locked in, not a day count", /1 of 3 days locked in/.test((await s.p.getByRole("img", { name: /Progress card/ }).getAttribute("aria-label")) ?? ""), (await s.p.getByRole("img", { name: /Progress card/ }).getAttribute("aria-label")) ?? "");
 await shot(s.p, "ongoing-share-card", true, "v2-core-");
-await s.p.goto(`${base}/coach`);
-await s.p.getByRole("heading", { name: "Coach", level: 1 }).waitFor();
+await s.p.goto(`${base}/coach/notes`);
+await s.p.getByRole("heading", { name: "Notes", level: 1 }).waitFor();
 await s.p.getByText("Written by rules from your data").first().waitFor();
 text = await main1(s.p);
 check("the coach writes a brief in ongoing mode and has no day count", /Thursday, Oct 8/.test(text) && !/Day \d+ of \d+/i.test(text), text.slice(0, 200));

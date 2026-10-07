@@ -11,6 +11,7 @@ import { floorStatus, formatHours, formatMoney } from "@/lib/logic/money";
 import type { Earning } from "@/lib/types";
 import { ScreenshotPicker } from "@/features/money/ScreenshotPicker";
 import { useMoney } from "@/features/money/useMoney";
+import { CoachLink } from "@/features/coach/CoachLink";
 
 // Sheets load when first opened, not with the screen.
 const QuickAddSheet = dynamic(() => import("@/features/money/QuickAddSheet").then((m) => m.QuickAddSheet), { ssr: false });
@@ -36,7 +37,15 @@ export default function MoneyPage() {
       <ScreenshotPicker onFile={(file) => setSheet({ file })}>
         {(pick) => (
           <>
-            <TopBar title="Money" right={m.loading ? null : <span className={hit ? "text-accent" : undefined}>{status}</span>} />
+            <TopBar
+              title="Money"
+              right={
+                <>
+                  {m.loading ? null : <span className={hit ? "text-accent" : undefined}>{status}</span>}
+                  <CoachLink />
+                </>
+              }
+            />
 
             {m.loading ? null : (
               <div className="animate-fade-in">
