@@ -5,7 +5,10 @@
 // at `now` must send. The cron route and the in-app fallback both use these,
 // so a reminder means the same thing on the server and on the device.
 
-import { addMinutes, minutesOf, nyInstant, nyParts } from "./dates";
+import { addMinutes, isQuiet, minutesOf, nyInstant, nyParts } from "./dates";
+import { dropKey, dropSlotTimes, dropWindow, dropsPerDay, type DropMessage } from "./drops";
+
+export { isQuiet };
 import type { BlockKind, DateStr, Reminder, ReminderKind, TimeStr } from "../types";
 
 /** How late a reminder may still go out. Older than this is dropped, not sent stale. */
@@ -34,7 +37,8 @@ export interface PlannedNotification {
   /** Unique per send. Stored after sending so it never goes twice. Also the notification tag. */
   key: string;
   reminder_id: string;
-  kind: ReminderKind;
+  /** "drop" is a philosophy drop. It has no reminder row: it comes from the settings. */
+  kind: ReminderKind | "drop";
   date: DateStr;
   time: TimeStr;
   /** The instant it fires, as epoch milliseconds. */
@@ -42,21 +46,23 @@ export interface PlannedNotification {
   title: string;
   body: string;
   url: string;
+  /** A philosophy drop: which of the day's drops it is, and how many there were. The job uses it to pick the quote again when it sends. */
+  drop?: { slot: number; perDay: number };
+}
+
+/** Philosophy drops, when they are on. */
+export interface DropsOption {
+  perDay: number;
+  /** The quote for a date and slot, or null when there is none to give. */
+  pick(date: DateStr, slot: number): DropMessage | null;
 }
 
 export interface PlanOptions {
   floor: number;
   quiet_start: TimeStr;
   quiet_end: TimeStr;
-}
-
-/** True when `time` is inside quiet hours. The window may wrap past midnight. Start is quiet, end is not. */
-export function isQuiet(time: TimeStr, quietStart: TimeStr, quietEnd: TimeStr): boolean {
-  const t = minutesOf(time);
-  const s = minutesOf(quietStart);
-  const e = minutesOf(quietEnd);
-  if (s === e) return false;
-  return s < e ? t >= s && t < e : t >= s || t < e;
+  /** Leave out, or null, for no drops. */
+  drops?: DropsOption | null;
 }
 
 /** Where a tap on the notification lands. */
@@ -160,6 +166,28 @@ export function planDay(
     }
 
     push(r, r.id, r.time, r.label, r.body ?? "");
+  }
+
+  // Philosophy drops: spread between wake and bedtime, outside quiet hours.
+  if (opts.drops) {
+    const { wake, bed } = dropWindow(day.blocks, opts.quiet_start, opts.quiet_end);
+    const perDay = dropsPerDay(opts.drops.perDay);
+    dropSlotTimes(perDay, wake, bed, opts.quiet_start, opts.quiet_end).forEach((time, slot) => {
+      const message = opts.drops?.pick(day.date, slot);
+      if (!message) return;
+      out.push({
+        key: dropKey(day.date, slot),
+        reminder_id: "drops",
+        kind: "drop",
+        date: day.date,
+        time,
+        at: nyInstant(day.date, time).getTime(),
+        title: clean(message.title),
+        body: clean(message.body),
+        url: message.url,
+        drop: { slot, perDay },
+      });
+    });
   }
 
   return out.sort((a, b) => a.at - b.at || a.key.localeCompare(b.key));

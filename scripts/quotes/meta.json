@@ -1,0 +1,36 @@
+{
+  "writers": {
+    "seneca": { "bio": "Roman Stoic, born in Spain around 4 BC. One of the richest men in Rome, exiled to Corsica for eight years, then tutor and adviser to the emperor Nero. Nero ordered his death in AD 65." },
+    "marcus-aurelius": { "bio": "Emperor of Rome from 161 to 180. He ruled through plague, flood and nearly constant war on the northern frontier, and buried most of his children. He was a Stoic who never meant anyone to read his notes." },
+    "epictetus": { "bio": "Born a slave around AD 50, lame in one leg, owned by one of Nero's secretaries. Once freed he taught Stoicism, was banished from Rome with the other philosophers, and ran a school in Nicopolis. He wrote nothing down. His student Arrian did." },
+    "schopenhauer": { "bio": "German philosopher, 1788 to 1860. He held that life is mostly want and suffering and that the wise move is to expect less. Ignored for most of his life, he lived alone in Frankfurt with his poodles and became famous in his sixties." },
+    "nietzsche": { "bio": "German philosopher, 1844 to 1900. A professor at 24, he quit at 34 because of his health and spent ten years writing alone in rented rooms in Switzerland and Italy, half blind and mostly unread. He collapsed in 1889 and never wrote again." },
+    "shakespeare": { "bio": "English playwright and poet, 1564 to 1616. A glover's son from Stratford with no university education, he went to London, acted, and wrote about 38 plays for a working theatre company he part owned." }
+  },
+  "works": {
+    "seneca/letters": { "note": "Written in the last three years of his life, after he had pulled back from Nero's court and knew the order to die could come any day. 124 letters to his younger friend Lucilius, meant from the start to be read by others." },
+    "seneca/providence": { "note": "An answer to Lucilius, who had asked why bad things happen to good men if the world is run well. Seneca's reply is that hardship is training." },
+    "seneca/constancy": { "note": "Written to his friend Serenus, arguing that a wise man cannot really be injured or insulted, because nothing that matters to him can be taken." },
+    "seneca/anger": { "note": "Three books written for his brother Novatus around AD 41 to 45, not long after the reign of Caligula showed Rome what rage with power behind it looks like." },
+    "seneca/happy-life": { "note": "Written for his brother Gallio around AD 58, when Seneca was at the height of his wealth and being attacked for preaching simplicity while living rich. Part of it is his answer to that." },
+    "seneca/leisure": { "note": "A fragment on whether a man may step back from public life to think. Written around the time Seneca was trying to leave Nero's court himself." },
+    "seneca/peace-of-mind": { "note": "It opens with his friend Serenus describing a restless, unsettled mind and asking for a cure. The rest is Seneca's answer." },
+    "seneca/shortness-of-life": { "note": "Written around AD 49 for Paulinus, the man in charge of Rome's grain supply, telling him to retire. The argument: life is long enough, we just waste most of it." },
+    "marcus-aurelius/meditations": { "note": "A private notebook written in Greek during the last ten years of his life, much of it in army camps on the Danube. He was talking to himself, not to readers. Words in square brackets are the translator's additions." },
+    "epictetus/discourses": { "note": "Classroom talks at his school in Nicopolis around AD 108, taken down by his student Arrian. Four of the original eight books survive." },
+    "epictetus/enchiridion": { "note": "The Handbook. Arrian boiled the Discourses down to 52 short sections a student could carry and reread." },
+    "schopenhauer/wisdom-of-life": { "note": "From Parerga and Paralipomena, 1851, the book of essays that finally made him famous at 63 after thirty years of being ignored." },
+    "schopenhauer/counsels-and-maxims": { "note": "The second half of his Aphorisms on the Wisdom of Life, 1851: rules for dealing with yourself, with other people and with fate." },
+    "schopenhauer/studies-in-pessimism": { "note": "Essays from Parerga and Paralipomena, 1851, on suffering, the emptiness of existence and thinking for yourself." },
+    "schopenhauer/on-human-nature": { "note": "Essays on character, ethics and free will, taken from Parerga and Paralipomena, 1851." },
+    "schopenhauer/art-of-literature": { "note": "Essays on writing, style, reading and thinking for yourself, from Parerga and Paralipomena, 1851." },
+    "schopenhauer/religion-a-dialogue": { "note": "A dialogue and short essays from Parerga and Paralipomena, 1851." },
+    "schopenhauer/art-of-controversy": { "note": "Found in his papers after his death. Written around 1830, it lists the tricks people use to win an argument when they are wrong." },
+    "nietzsche/zarathustra": { "note": "Written in four bursts between 1883 and 1885 while he was sick, alone and freshly rejected by Lou Salome. The fourth part was printed privately in 40 copies." },
+    "nietzsche/twilight-of-the-idols": { "note": "Written in about a week in the summer of 1888, his last working year, a few months before his collapse." },
+    "nietzsche/antichrist": { "note": "Written in 1888 in his last months of work and held back from print until 1895, after his mind had gone." },
+    "nietzsche/joyful-wisdom": { "note": "Written in 1882 in Genoa during a stretch of recovered health, with a fifth book added in 1887. Also known as The Gay Science." },
+    "shakespeare/plays": { "note": "Written between about 1590 and 1613 for the stage, to be heard, not read. Many lines are spoken by villains and fools, so the speaker is not always the author's view." },
+    "shakespeare/sonnets": { "note": "154 sonnets printed in 1609, most of them probably written in the 1590s. Many are about time, age and what lasts." }
+  }
+}

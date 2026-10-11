@@ -25,6 +25,7 @@ const BY_KEY: Record<string, Track> = {
   study: "mind",
   business: "mind",
   talk: "mind",
+  read_quotes: "mind",
 };
 
 const BODY_UNITS = new Set(["kcal", "cal", "g", "lb", "lbs", "kg", "oz", "steps", "mi", "km", "reps"]);

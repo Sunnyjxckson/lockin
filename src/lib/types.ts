@@ -344,6 +344,32 @@ export interface CoachMessage extends Base {
   read: boolean;
 }
 
+/**
+ * What you did with one quote in the Library: read, saved, your note. One row
+ * per quote, unique on `quote_id`, written the first time you do any of them.
+ * `writer` and `work` are the slugs the quote belongs to, kept here so the
+ * counters per writer and per work need no quote file loaded.
+ */
+export interface QuoteState extends Base {
+  quote_id: string;
+  writer: string;
+  work: string;
+  read_at: IsoStr | null;
+  saved_at: IsoStr | null;
+  note: string | null;
+}
+
+/** Where the Library reader was left, so Continue picks it up. Kept on app_settings. */
+export interface LibraryPosition {
+  /** The reader's query string without the quote, for example "w=seneca", "t=death", "m=angry", "shuffle=482913", "saved=1". */
+  scope: string;
+  /** The last quote on screen. */
+  quote_id: string | null;
+  at: IsoStr;
+  /** The shuffle seed in use, kept so a shuffle does not reshuffle on reload. */
+  seed: number | null;
+}
+
 // ---------- device and integration ----------
 
 export interface PushSubscriptionRow extends Base {
@@ -659,6 +685,12 @@ export interface AppSettings extends Base {
   coach_voice: CoachVoice;
   /** Which check-ins the coach may send. Missing on an old row means all of them. */
   coach_checkins: CoachCheckins;
+  /** Where the Library reader was left. Null until something is read. */
+  library_position: LibraryPosition | null;
+  /** Philosophy drops: a quote through the day as a notification. Off until turned on. */
+  drops_enabled: boolean;
+  /** How many a day, spread between wake and bedtime outside quiet hours. 1 to 6, default 3. */
+  drops_per_day: number;
 }
 
 // ---------- table map ----------
@@ -698,6 +730,7 @@ export interface Tables {
   receipt_price: ReceiptPrice;
   expense: Expense;
   focus_session: FocusSession;
+  quote_state: QuoteState;
 }
 
 export type TableName = keyof Tables;
@@ -743,6 +776,7 @@ export const TABLE_NAMES = [
   "receipt_price",
   "expense",
   "focus_session",
+  "quote_state",
 ] as const satisfies readonly TableName[];
 
 /** Tables only the server may read or write (they hold secrets). */

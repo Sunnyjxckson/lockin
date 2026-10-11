@@ -1,0 +1,617 @@
+[
+ {
+  "file": "01.json",
+  "text_start": "Do you understand now how much easier it is to conquer a who",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "01.json",
+  "text_start": "“Pray be careful, then,” said Crates, “and take good heed; y",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "01.json",
+  "text_start": "Here is a draft on Epicurus; he will pay down the sum: “Ungo",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "01.json",
+  "text_start": "At this point I should like to quote a saying of Maecenas, w",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "01.json",
+  "text_start": "You are perhaps expecting the sect to utter such words as th",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "01.json",
+  "text_start": "Natural desires are limited; but those which spring from fal",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "01.json",
+  "text_start": "Do you ask why such flight does not help you? It is because ",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "01.json",
+  "text_start": "“I am content with few, content with one, content with none ",
+  "action": "fix",
+  "plain": "Be fine with a few people, or none, in your corner.",
+  "reason": "plain misreads the quote"
+ },
+ {
+  "file": "02.json",
+  "text_start": "He conquered with his weapons, but was conquered by his vice",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "02.json",
+  "text_start": "Infinite harm; for such persons do not live, but are prepari",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "02.json",
+  "text_start": "It is that they regard the means for producing happiness as ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "02.json",
+  "text_start": "Be deaf to those who love you most of all; they pray for bad",
+  "action": "fix",
+  "plain": "People who love you can want the wrong things for you. Don't take all their advice.",
+  "reason": "vague plain"
+ },
+ {
+  "file": "03.json",
+  "text_start": "Just because it is not in the power of another to bestow, ne",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "03.json",
+  "text_start": "You are throwing away none of your own time; for what you le",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "03.json",
+  "text_start": "The day whereon he failed of election, he spent in play; the",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "03.json",
+  "text_start": "Let us resist them in their early stages. It is better that ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "03.json",
+  "text_start": "If you cannot be rid of it, you ought at least to postpone i",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "04.json",
+  "text_start": "Unhappy fellow, you are a slave to men, you are a slave to y",
+  "action": "drop",
+  "reason": "self-harm"
+ },
+ {
+  "file": "04.json",
+  "text_start": "That which has been long expected comes more gently.",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "04.json",
+  "text_start": "In order to discover one grateful person, it is worth while ",
+  "action": "fix",
+  "plain": "Most people won't be grateful. Helping a lot of them to find the one who is can still be worth it.",
+  "reason": "plain misreads"
+ },
+ {
+  "file": "04.json",
+  "text_start": "“You must go now, fellow-soldiers, to yonder place, whence t",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "04.json",
+  "text_start": "It takes great weapons to strike down great monsters.",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "04.json",
+  "text_start": "Yes, he has felt pain; for no human virtue can rid itself of",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "04.json",
+  "text_start": "Do you suppose that he is weighed down by evils? He makes us",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "04.json",
+  "text_start": "He is ready for either outcome: if it brings goods, he contr",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Into such a world have we entered, and under such laws do we",
+  "action": "drop",
+  "reason": "self-harm"
+ },
+ {
+  "file": "05.json",
+  "text_start": "We are in the power of nothing when once we have death in ou",
+  "action": "drop",
+  "reason": "self-harm"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Fool that I am, to have been carrying superfluous baggage al",
+  "action": "fix",
+  "plain": "Look at what you carry around and drop whatever you don't need.",
+  "reason": "plain restates context not quote"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Care vexes us in our purple, and routs us from our beds with",
+  "action": "fix",
+  "plain": "Comfort brings worry. People on hard beds slept better.",
+  "reason": "plain garbled"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Remember that pain has this most excellent quality: if prolo",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "05.json",
+  "text_start": "No one withstood their attack; but they themselves could not",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "The gold and silver of all the others has been broken up and",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "We miss much that is set before our very eyes.",
+  "action": "fix",
+  "plain": "A lot of what you need is already in front of you. You just miss it.",
+  "reason": "plain misreads"
+ },
+ {
+  "file": "05.json",
+  "text_start": "That which others think elevated, is to them a sheer precipi",
+  "action": "fix",
+  "plain": "What looks like a high position from below feels like a cliff edge to the person standing on it.",
+  "reason": "plain unclear"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Would you win over the gods? Then be a good man. Whoever imi",
+  "action": "fix",
+  "plain": "Want to honor what is higher than you? Just be a good person.",
+  "reason": "plain weak"
+ },
+ {
+  "file": "06.json",
+  "text_start": "I shall not endure myself on that day when I find anything u",
+  "action": "drop",
+  "reason": "self-harm"
+ },
+ {
+  "file": "06.json",
+  "text_start": "If you would escape your troubles, you need not another plac",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "06.json",
+  "text_start": "Amid all the disturbance of Fortune, he was undisturbed.",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "Second, we must spurn wealth: wealth is the diploma of slave",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "Avoid them you cannot, but despise them you can.",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "Shall we allow other men to quaff the best, and keep the dre",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "A teacher like that can help me no more than a sea-sick pilo",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "It is we ourselves that extend both these limits, lengthenin",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "It will be the proper season to pass judgment on him when he",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "Words like this come from a weak mind, from one that courts ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "Of course I shall do this; for it is the greatest evils that",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "Do you think that these men know how to live, if they do not",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "And I am very much mistaken if he does not desire to climb s",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "I think nothing is baser than to pray for death.",
+  "action": "fix",
+  "plain": "Wishing you were dead is the lowest move there is. Stay and fight it out.",
+  "reason": "plain reads as endorsing suicide"
+ },
+ {
+  "file": "07.json",
+  "text_start": "“No one,” said he, “seems to me more unhappy than the man wh",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "07.json",
+  "text_start": "It is not easy to rid the memory of a catching tune; it stay",
+  "action": "fix",
+  "themes": [
+   "mind"
+  ],
+  "moments": [
+   "tempted"
+  ],
+  "reason": "wrong theme"
+ },
+ {
+  "file": "08.json",
+  "text_start": "He enjoys all other things at the good pleasure of fortune; ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "What was being plundered and carried away hither and thither",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "I do not say that the wise man does not feel these, for we d",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "It is from your own weakness that you form your idea of his ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "She knows that there is no room for her where there is nothi",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "We do not take away from them the feeling of pain, but the n",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "If deservedly, it is not an insult, but a judicial sentence;",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "You ask, what this post is? it is that of being a man.",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "The enemy, I repeat, must be met and driven back at the oute",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "My father will be murdered: then I will defend him: he has b",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "These arms, which Aristotle assigns to virtue, fight of thei",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "It hates to be proved wrong, and thinks it more honourable t",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "He discovered the means of charging them with three crimes, ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "In either case he will look to the future, not to the past: ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "Such dispositions may be terrible, frantic, and destructive,",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "It matters nothing to what heights or lengths these passions",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "Nor is the path to virtue steep and rough, as some think it ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "In fine, the culture of any of the virtues is easy, while vi",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "Yes: but at those times above all others we ought to choke d",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "Say, rather, you do not admit that you have done any wrong.",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "Suppose that it is a dumb animal or as stupid as a dumb anim",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "Afterwards when he was apologizing, Cato replied, “I do not ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "08.json",
+  "text_start": "There are a thousand other instances in which application ha",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "09.json",
+  "text_start": "So does a huge wild beast turn slowly and gaze at yelping cu",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "09.json",
+  "text_start": "No one will postpone his anger: yet delay is the best remedy",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "09.json",
+  "text_start": "Other vices affect our judgment, anger affects our sanity: o",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "09.json",
+  "text_start": "“I am not angry,” said he, “but I am not sure that I ought n",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "09.json",
+  "text_start": "See, on the other hand, how evil and guilty a slavery the ma",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "09.json",
+  "text_start": "Compared with your feet, which are lame, I am a racer.",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "09.json",
+  "text_start": "Will any one care about being thought too rich by men for wh",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "09.json",
+  "text_start": "What, then, is the upshot of all this? it is that I prefer t",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "09.json",
+  "text_start": "Whenever either Nature demands my breath again, or reason bi",
+  "action": "drop",
+  "reason": "self-harm"
+ },
+ {
+  "file": "09.json",
+  "text_start": "Take me away to the wooden bridge and put me down there amon",
+  "action": "drop",
+  "reason": "self-harm"
+ },
+ {
+  "file": "09.json",
+  "text_start": "Bound upon me, rush upon me, I will overcome you by enduring",
+  "action": "drop",
+  "reason": "duplicate"
+ },
+ {
+  "file": "10.json",
+  "text_start": "Hence arises that weariness and dissatisfaction with oneself",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "Take away from these men their witnesses and spectators: the",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "“It is a shame,” he said, “that Manes should be able to live",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "They wander purposelessly seeking for something to do, and d",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "Many men spend their lives in exactly the same fashion, whic",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "“You are able to please yourself,” he answered, “my half pin",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "Here was peace in the very midst of the storm: here was a so",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "It will make no disturbance, it will give you no warning of ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "What follows, then? Why! you are busy, but life is hurrying ",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "They have never looked forward: they have all of a sudden st",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "A very small amount of it, therefore, is abundantly sufficie",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "If any time be past, he recals it by his memory; if it be pr",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "Such men’s very pleasures are restless and disturbed by vari",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "If such men wish to know how short their lives are, let them",
+  "action": "drop",
+  "reason": "standalone"
+ },
+ {
+  "file": "10.json",
+  "text_start": "Life is long enough, if you know how to use it.",
+  "action": "drop",
+  "reason": "duplicate"
+ }
+]

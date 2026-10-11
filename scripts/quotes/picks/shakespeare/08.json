@@ -1,0 +1,569 @@
+[
+  {
+    "text": "I know thee not, old man. Fall to thy prayers.\nHow ill white hairs becomes a fool and jester!",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 5 Scene 5",
+    "plain": "Once you outgrow the people who kept you small, you stop pretending you know them.",
+    "themes": [
+      "change",
+      "friendship",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I have long dreamt of such a kind of man,\nSo surfeit-swell’d, so old, and so profane;\nBut, being awaked, I do despise my dream.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 5 Scene 5",
+    "plain": "The life you drifted through looks ugly once you wake up.",
+    "themes": [
+      "change",
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Presume not that I am the thing I was;\nFor God doth know, so shall the world perceive,\nThat I have turn’d away my former self;\nSo will I those that kept me company.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 5 Scene 5",
+    "plain": "Don't treat me like who I used to be. I dropped that self and the crowd that came with it.",
+    "themes": [
+      "change",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Make less thy body hence, and more thy grace;\nLeave gormandizing; know the grave doth gape\nFor thee thrice wider than for other men.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 5 Scene 5",
+    "plain": "Cut the excess and build some character. Indulgence digs your grave faster.",
+    "themes": [
+      "discipline",
+      "death",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "This new and gorgeous garment, majesty,\nSits not so easy on me as you think.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 5 Scene 2",
+    "plain": "Power looks comfortable from outside and weighs a lot from inside.",
+    "themes": [
+      "power",
+      "pain"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The tide of blood in me\nHath proudly flow’d in vanity till now.\nNow doth it turn and ebb back to the sea,\nWhere it shall mingle with the state of floods,\nAnd flow henceforth in formal majesty.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 5 Scene 2",
+    "plain": "The wild years are over. From here on I run on discipline.",
+    "themes": [
+      "change",
+      "self-mastery",
+      "discipline"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "O God, that right should thus overcome might! Well, of sufferance comes ease.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 5 Scene 4",
+    "plain": "Enduring a thing is how it eventually gets easier.",
+    "themes": [
+      "adversity",
+      "pain"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "O for a Muse of fire, that would ascend\nThe brightest heaven of invention,\nA kingdom for a stage, princes to act,\nAnd monarchs to behold the swelling scene!",
+    "work": "plays",
+    "location": "Henry V, Prologue",
+    "plain": "Give me a fire big enough for the story I'm trying to tell.",
+    "themes": [
+      "desire",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Piece out our imperfections with your thoughts.",
+    "work": "plays",
+    "location": "Henry V, Prologue",
+    "plain": "What you lack in means, your mind can make up.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The strawberry grows underneath the nettle,\nAnd wholesome berries thrive and ripen best\nNeighboured by fruit of baser quality;\nAnd so the Prince obscured his contemplation\nUnder the veil of wildness, which, no doubt,\nGrew like the summer grass, fastest by night,\nUnseen, yet crescive in his faculty.",
+    "work": "plays",
+    "location": "Henry V, Act 1 Scene 1",
+    "plain": "Growth often happens unseen, in bad company, while everyone thinks you're wasting time.",
+    "themes": [
+      "change",
+      "mind",
+      "time"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "As many arrows, loosed several ways,\nCome to one mark; as many ways meet in one town;\nAs many fresh streams meet in one salt sea;\nAs many lines close in the dial’s centre;\nSo many a thousand actions, once afoot,\nEnd in one purpose, and be all well borne\nWithout defeat.",
+    "work": "plays",
+    "location": "Henry V, Act 1 Scene 2",
+    "plain": "Many separate efforts can all land on one target if the aim is clear.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Though patience be a tired mare, yet she will plod.",
+    "work": "plays",
+    "location": "Henry V, Act 2 Scene 1",
+    "plain": "Patience may be worn out, but she keeps walking.",
+    "themes": [
+      "discipline",
+      "adversity"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Trust none;\nFor oaths are straws, men’s faiths are wafer-cakes\nAnd hold-fast is the only dog, my duck;\nTherefore, Caveto be thy counsellor.",
+    "work": "plays",
+    "location": "Henry V, Act 2 Scene 3",
+    "plain": "Promises are cheap and people are flimsy. Be careful who you count on.",
+    "themes": [
+      "friendship",
+      "folly"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "’A parted even just between twelve and one, even at the turning o’ the tide: for after I saw him fumble with the sheets, and play with flowers, and smile upon his fingers’ ends, I knew there was but one way; for his nose was as sharp as a pen, and ’a babbled of green fields.",
+    "work": "plays",
+    "location": "Henry V, Act 2 Scene 3",
+    "plain": "Even the loudest life ends quietly, with a man talking about green fields.",
+    "themes": [
+      "death",
+      "love"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Self-love, my liege, is not so vile a sin\nAs self-neglecting.",
+    "work": "plays",
+    "location": "Henry V, Act 2 Scene 4",
+    "plain": "Thinking well of yourself is better than letting yourself go.",
+    "themes": [
+      "self-mastery",
+      "happiness"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Now he weighs time\nEven to the utmost grain.",
+    "work": "plays",
+    "location": "Henry V, Act 2 Scene 4",
+    "plain": "He treats every grain of time as if it were worth something.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Once more unto the breach, dear friends, once more,\nOr close the wall up with our English dead.",
+    "work": "plays",
+    "location": "Henry V, Act 3 Scene 1",
+    "plain": "Go at it one more time, or watch it all fall in.",
+    "themes": [
+      "courage",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "In peace there’s nothing so becomes a man\nAs modest stillness and humility;\nBut when the blast of war blows in our ears,\nThen imitate the action of the tiger;\nStiffen the sinews, summon up the blood,\nDisguise fair nature with hard-favour’d rage;",
+    "work": "plays",
+    "location": "Henry V, Act 3 Scene 1",
+    "plain": "Be humble when it's calm. When it gets hard, stiffen up and go in like a tiger.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "I see you stand like greyhounds in the slips,\nStraining upon the start. The game’s afoot!\nFollow your spirit, and upon this charge\nCry, “God for Harry! England and Saint George!”",
+    "work": "plays",
+    "location": "Henry V, Act 3 Scene 1",
+    "plain": "You're straining at the start already. Follow that drive.",
+    "themes": [
+      "courage",
+      "desire"
+    ],
+    "moments": [
+      "tired",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Would I were in an alehouse in London! I would give all my fame for a pot of ale and safety.",
+    "work": "plays",
+    "location": "Henry V, Act 3 Scene 2",
+    "plain": "Everyone wants to trade the glory for safety when fear sets in.",
+    "themes": [
+      "fear",
+      "reputation"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Fortune is painted blind, with a muffler afore his eyes, to signify to you that Fortune is blind; and she is painted also with a wheel, to signify to you, which is the moral of it, that she is turning, and inconstant, and mutability, and variation; and her foot, look you, is fixed upon a spherical stone, which rolls, and rolls, and rolls.",
+    "work": "plays",
+    "location": "Henry V, Act 3 Scene 6",
+    "plain": "Luck is blind and always turning, so neither the good nor the bad times last.",
+    "themes": [
+      "fate",
+      "change"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "We would not seek a battle, as we are;\nNor, as we are, we say we will not shun it.",
+    "work": "plays",
+    "location": "Henry V, Act 3 Scene 6",
+    "plain": "Don't go looking for the fight, and don't run from it either.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "angry"
+    ]
+  },
+  {
+    "text": "We are in God’s hands, brother, not in theirs.",
+    "work": "plays",
+    "location": "Henry V, Act 3 Scene 6",
+    "plain": "What happens to you isn't up to them. Stay steady.",
+    "themes": [
+      "fate",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "A largess universal like the sun\nHis liberal eye doth give to everyone,\nThawing cold fear, that mean and gentle all\nBehold, as may unworthiness define,\nA little touch of Harry in the night.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Prologue",
+    "plain": "A leader who stays warm and steady in the dark melts everyone else's fear.",
+    "themes": [
+      "courage",
+      "power",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "alone"
+    ]
+  },
+  {
+    "text": "Upon his royal face there is no note\nHow dread an army hath enrounded him;\nNor doth he dedicate one jot of colour\nUnto the weary and all-watched night,\nBut freshly looks, and over-bears attaint\nWith cheerful semblance and sweet majesty;\nThat every wretch, pining and pale before,\nBeholding him, plucks comfort from his looks.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Prologue",
+    "plain": "Show calm on your face when you're surrounded and the people around you will borrow it.",
+    "themes": [
+      "courage",
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "Gloucester, ’tis true that we are in great danger;\nThe greater therefore should our courage be.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 1",
+    "plain": "The bigger the danger, the bigger your courage has to be.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "There is some soul of goodness in things evil,\nWould men observingly distil it out;",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 1",
+    "plain": "Even bad things hold something useful if you look closely.",
+    "themes": [
+      "adversity",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Thus may we gather honey from the weed,\nAnd make a moral of the devil himself.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 1",
+    "plain": "You can pull something sweet out of whatever's bothering you.",
+    "themes": [
+      "adversity",
+      "mind"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "His ceremonies laid by, in his nakedness he appears but a man; and though his affections are higher mounted than ours, yet, when they stoop, they stoop with the like wing.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 1",
+    "plain": "Strip off the title and a king is just a man with the same fears as you.",
+    "themes": [
+      "power",
+      "fear"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Every subject’s duty is the King’s; but every subject’s soul is his own.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 1",
+    "plain": "You can owe someone your work. You still own your conscience.",
+    "themes": [
+      "self-mastery",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "We see yonder the beginning of the day, but I think we shall never see the end of it.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 1",
+    "plain": "Dread says the day is going to break you before it ends.",
+    "themes": [
+      "fear",
+      "time"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "O God of battles! steel my soldiers’ hearts.\nPossess them not with fear.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 1",
+    "plain": "Make us hard and keep fear out.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "If we are mark’d to die, we are enough\nTo do our country loss; and if to live,\nThe fewer men, the greater share of honour.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 3",
+    "plain": "Small numbers don't matter. If you win, fewer people share the credit.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "afraid",
+      "alone"
+    ]
+  },
+  {
+    "text": "We would not die in that man’s company\nThat fears his fellowship to die with us.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 3",
+    "plain": "Don't take anyone who's afraid to stand with you.",
+    "themes": [
+      "courage",
+      "friendship"
+    ],
+    "moments": [
+      "alone",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Old men forget; yet all shall be forgot,\nBut he’ll remember with advantages\nWhat feats he did that day.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 3",
+    "plain": "Everything gets forgotten in time, and people still polish their best days.",
+    "themes": [
+      "time",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "We few, we happy few, we band of brothers.\nFor he today that sheds his blood with me\nShall be my brother; be he ne’er so vile,\nThis day shall gentle his condition;",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 3",
+    "plain": "Fighting side by side makes you family, whatever you were before.",
+    "themes": [
+      "friendship",
+      "courage"
+    ],
+    "moments": [
+      "alone",
+      "afraid"
+    ]
+  },
+  {
+    "text": "All things are ready, if our minds be so.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 3",
+    "plain": "The only thing left is whether your mind is ready.",
+    "themes": [
+      "mind",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Let me speak proudly: tell the Constable\nWe are but warriors for the working-day.",
+    "work": "plays",
+    "location": "Henry V, Act 4 Scene 3",
+    "plain": "We're not here to look good. We're here to work.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "A good leg will fall; a straight back will stoop; a black beard will turn white; a curl’d pate will grow bald; a fair face will wither; a full eye will wax hollow; but a good heart, Kate, is the sun and the moon; or rather the sun and not the moon; for it shines bright and never changes, but keeps his course truly.",
+    "work": "plays",
+    "location": "Henry V, Act 5 Scene 2",
+    "plain": "Looks and strength fade. A steady heart is the only thing that lasts.",
+    "themes": [
+      "love",
+      "time"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Small time, but in that small most greatly lived\nThis star of England.",
+    "work": "plays",
+    "location": "Henry V, Act 5 Scene 2",
+    "plain": "He had little time and used every bit of it.",
+    "themes": [
+      "time",
+      "work"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Awake, awake, English nobility!\nLet not sloth dim your honours new-begot.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 1 Scene 1",
+    "plain": "Wake up. Laziness will dim what you just earned.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  }
+]

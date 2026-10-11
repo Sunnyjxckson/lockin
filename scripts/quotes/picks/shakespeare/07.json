@@ -1,0 +1,423 @@
+[
+  {
+    "text": "Company, villainous company, hath been the spoil of me.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 3 Scene 3",
+    "plain": "The people you run with are what ruin you.",
+    "themes": [
+      "friendship",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Honour is a mere scutcheon. And so ends my catechism.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 5 Scene 1",
+    "plain": "Reputation is a painted shield. The dead don't feel it and the living won't keep it.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "O gentlemen, the time of life is short!\nTo spend that shortness basely were too long\nIf life did ride upon a dial’s point,\nStill ending at the arrival of an hour.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 5 Scene 2",
+    "plain": "Life is short, so spending it small and cheap is a waste even if you only had an hour.",
+    "themes": [
+      "time",
+      "courage"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I better brook the loss of brittle life\nThan those proud titles thou hast won of me;\nThey wound my thoughts worse than thy sword my flesh.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 5 Scene 4",
+    "plain": "Losing to a rival hurts the pride more than any wound hurts the body.",
+    "themes": [
+      "reputation",
+      "pain"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "But thoughts, the slaves of life, and life, time’s fool,\nAnd time, that takes survey of all the world,\nMust have a stop.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 5 Scene 4",
+    "plain": "Your thoughts serve your life, your life serves time, and time ends for everything.",
+    "themes": [
+      "time",
+      "death"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Ill-weaved ambition, how much art thou shrunk!\nWhen that this body did contain a spirit,\nA kingdom for it was too small a bound;\nBut now two paces of the vilest earth\nIs room enough.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 5 Scene 4",
+    "plain": "The man who thought a kingdom was too small now needs two paces of dirt.",
+    "themes": [
+      "death",
+      "desire",
+      "power"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Two stars keep not their motion in one sphere,\nNor can one England brook a double reign,\nOf Harry Percy and the Prince of Wales.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 5 Scene 4",
+    "plain": "Two people can't both be number one in the same place.",
+    "themes": [
+      "power",
+      "desire"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The better part of valour is discretion, in the which better part I have saved my life.",
+    "work": "plays",
+    "location": "Henry IV, Part 1, Act 5 Scene 4",
+    "plain": "Knowing when to back off is half of courage. Falstaff just uses it as an excuse.",
+    "themes": [
+      "courage",
+      "folly"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "I can get no remedy against this consumption of the purse. Borrowing only lingers and lingers it out, but the disease is incurable.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 2",
+    "plain": "Borrowing doesn't cure being broke. It only drags the sickness out.",
+    "themes": [
+      "wealth"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "A good wit will make use of anything. I will turn diseases to commodity.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 2",
+    "plain": "A sharp mind finds a way to use even its own bad luck.",
+    "themes": [
+      "adversity",
+      "mind"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Care I for the limb, the thews, the stature, bulk, and big assemblance of a man? Give me the spirit, Master Shallow.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 3 Scene 2",
+    "plain": "Size and muscle mean little. Pick the person with spirit.",
+    "themes": [
+      "courage",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "When we mean to build,\nWe first survey the plot, then draw the model,\nAnd when we see the figure of the house,\nThen we must rate the cost of the erection,\nWhich if we find outweighs ability,\nWhat do we then but draw anew the model\nIn fewer offices, or at least desist\nTo build at all?",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 3",
+    "plain": "Count the cost before you build, and shrink the plan if you can't afford it.",
+    "themes": [
+      "work",
+      "folly",
+      "wealth"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "An habitation giddy and unsure\nHath he that buildeth on the vulgar heart.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 3",
+    "plain": "Build on the crowd's love and you're building on sand.",
+    "themes": [
+      "reputation",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "O thoughts of men accursed!\nPast and to come seems best; things present, worst.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 3",
+    "plain": "People always praise the past and the future and complain about right now.",
+    "themes": [
+      "time",
+      "folly",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "We are time’s subjects, and time bids be gone.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 3",
+    "plain": "Time is the boss and it says move.",
+    "themes": [
+      "time",
+      "fate"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Yet the first bringer of unwelcome news\nHath but a losing office, and his tongue\nSounds ever after as a sullen bell,\nRemember’d tolling a departing friend.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 1",
+    "plain": "Whoever brings bad news gets hated for it, like a bell that tolls a death.",
+    "themes": [
+      "pain",
+      "reputation"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "We all that are engaged to this loss\nKnew that we ventured on such dangerous seas\nThat if we wrought out life ’twas ten to one;\nAnd yet we ventured, for the gain proposed\nChoked the respect of likely peril fear’d;\nAnd since we are o’erset, venture again.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 1 Scene 1",
+    "plain": "You knew the odds were bad when you went in. Capsized, you go out again.",
+    "themes": [
+      "courage",
+      "adversity"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Well, thus we play the fools with the time, and the spirits of the wise sit in the clouds and mock us.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 2 Scene 2",
+    "plain": "We waste our days acting the fool while wiser people look down and laugh.",
+    "themes": [
+      "time",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Let the end try the man.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 2 Scene 2",
+    "plain": "Judge me by how it all ends, not by how it looks now.",
+    "themes": [
+      "reputation",
+      "courage"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Is it not strange that desire should so many years outlive performance?",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 2 Scene 4",
+    "plain": "The wanting outlasts the ability to do anything about it.",
+    "themes": [
+      "desire",
+      "time"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Peace, good Doll, do not speak like a death’s-head; do not bid me remember mine end.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 2 Scene 4",
+    "plain": "Nobody wants the reminder that they're going to die, which is why they need it.",
+    "themes": [
+      "death",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "By heaven, Poins, I feel me much to blame,\nSo idly to profane the precious time,\nWhen tempest of commotion, like the south\nBorne with black vapour, doth begin to melt\nAnd drop upon our bare unarmed heads.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 2 Scene 4",
+    "plain": "The storm is about to break and you're out here wasting precious time.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "There is a history in all men’s lives\nFiguring the natures of the times deceased;\nThe which observed, a man may prophesy,\nWith a near aim, of the main chance of things\nAs yet not come to life, who in their seeds\nAnd weak beginning lie intreasured.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 3 Scene 1",
+    "plain": "Study the past and you can predict what's coming, because everything starts as a small seed.",
+    "themes": [
+      "time",
+      "mind",
+      "fate"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Are these things then necessities?\nThen let us meet them like necessities;",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 3 Scene 1",
+    "plain": "If it can't be avoided, face it like something that can't be avoided.",
+    "themes": [
+      "fate",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Certain, ’tis certain, very sure, very sure. Death, as the Psalmist saith, is certain to all, all shall die.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 3 Scene 2",
+    "plain": "Death is certain for everyone, so what are you saving yourself for?",
+    "themes": [
+      "death"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "A man can die but once. We owe God a death.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 3 Scene 2",
+    "plain": "You only die once and it's already owed, so don't live like a coward.",
+    "themes": [
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "We have heard the chimes at midnight, Master Shallow.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 3 Scene 2",
+    "plain": "We have had our wild nights and they are gone.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "A peace is of the nature of a conquest;\nFor then both parties nobly are subdued,\nAnd neither party loser.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 4 Scene 2",
+    "plain": "A real peace is a win for both sides because nobody has to lose.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Will Fortune never come with both hands full,\nBut write her fair words still in foulest letters?\nShe either gives a stomach and no food—\nSuch are the poor, in health; or else a feast\nAnd takes away the stomach—such are the rich,\nThat have abundance and enjoy it not.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 4 Scene 4",
+    "plain": "Luck gives you the appetite or the meal, never both. The poor are hungry, the rich can't enjoy it.",
+    "themes": [
+      "fate",
+      "wealth",
+      "happiness"
+    ],
+    "moments": [
+      "broke",
+      "tired"
+    ]
+  },
+  {
+    "text": "Thou seek’st the greatness that will overwhelm thee.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 4 Scene 5",
+    "plain": "The big thing you chase may be the thing that crushes you.",
+    "themes": [
+      "power",
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Thy wish was father, Harry, to that thought.",
+    "work": "plays",
+    "location": "Henry IV, Part 2, Act 4 Scene 5",
+    "plain": "You believed it because you wanted it to be true.",
+    "themes": [
+      "mind",
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  }
+]

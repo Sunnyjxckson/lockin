@@ -1,0 +1,128 @@
+[
+  {
+    "file": "01.json",
+    "text_start": "The house is smoky, and I quit it. Why dost thou think that ",
+    "action": "drop",
+    "reason": "death as the way out when read alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "Thou art a little soul bearing about a corpse, as Epictetus ",
+    "action": "drop",
+    "reason": "quotes a citation, flat"
+  },
+  {
+    "file": "01.json",
+    "text_start": "Be thou erect, or be made erect (iii. 5).",
+    "action": "drop",
+    "reason": "bare citation fragment, repeats earlier pick"
+  },
+  {
+    "file": "01.json",
+    "text_start": "What then is that which is able to conduct a man? One thing,",
+    "action": "fix",
+    "plain": "Only philosophy can guide you through a life like this.",
+    "reason": "plain misses the point"
+  },
+  {
+    "file": "01.json",
+    "text_start": "It is a shame then that ignorance and conceit should be stro",
+    "action": "fix",
+    "plain": "It is a shame when ignorance and conceit beat wisdom.",
+    "reason": "plain implies your wisdom"
+  },
+  {
+    "file": "01.json",
+    "text_start": "Why then am I angry? Dost thou think that a false opinion ha",
+    "action": "fix",
+    "plain": "A false belief can poison you like venom. Check it before you get angry.",
+    "reason": "plain misreads the point"
+  },
+  {
+    "file": "02.json",
+    "text_start": "About pain: the pain which is intolerable carries us off; bu",
+    "action": "drop",
+    "reason": "pain ends by death, reads as death as relief"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Either thou livest here and hast already accustomed thyself ",
+    "action": "drop",
+    "reason": "leaving by your own will, reads as suicide as the way out"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Sixth, consider when thou art much vexed or grieved, that ma",
+    "action": "drop",
+    "reason": "depends on numbered list and citations"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Eighth, consider how much more pain is brought on us by the ",
+    "action": "drop",
+    "reason": "depends on numbered list and citations"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Ninth, consider that a good disposition is invincible if it ",
+    "action": "drop",
+    "reason": "depends on numbered list and citations"
+  },
+  {
+    "file": "02.json",
+    "text_start": "To look for the fig in winter is a mad-man's act: such is he",
+    "action": "drop",
+    "reason": "citation housekeeping, weak alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "The unripe grape, the ripe bunch, the dried grape, are all c",
+    "action": "drop",
+    "reason": "citation housekeeping, weak alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "No man can rob us of our free will (Epictetus, iii. 22, 105)",
+    "action": "drop",
+    "reason": "citation housekeeping, weak alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "But if thou wilt, receive also a tenth present from the lead",
+    "action": "drop",
+    "reason": "same as earlier pick about bad men"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Constantly consider how all things such as they now are, in ",
+    "action": "drop",
+    "reason": "same as nothing-is-new picks"
+  },
+  {
+    "file": "02.json",
+    "text_start": "So much more respect have we to what our neighbors shall thi",
+    "action": "drop",
+    "reason": "same as previous pick"
+  },
+  {
+    "file": "02.json",
+    "text_start": "From Antisthenes: It is royal to do good and to be abused.",
+    "action": "fix",
+    "plain": "Doing right and getting attacked for it is noble, not a loss.",
+    "reason": "plain gets royal wrong"
+  },
+  {
+    "file": "02.json",
+    "text_start": "When thou art offended at any man's fault, forthwith turn to",
+    "action": "fix",
+    "plain": "When someone's fault bothers you, look at your own, like treating money or reputation as the real good.",
+    "reason": "plain clunky"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Smoke and ash and a tale, or not even a tale.",
+    "action": "fix",
+    "plain": "It all ends as smoke and ash, and maybe a story.",
+    "reason": "plain adds miserable"
+  }
+]

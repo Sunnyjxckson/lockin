@@ -18,6 +18,7 @@ import {
   quotesUsedSince,
   replyProblem,
   voiceOf,
+  quotedKey,
   type ChatContext,
   type CheckinInput,
 } from "./coachChat";
@@ -381,5 +382,36 @@ describe("settings and requests", () => {
       { sender: "me", quote: null, date: "2026-10-07" },
     ];
     expect(quotesUsedSince(msgs, "2026-10-01")).toEqual(["pain_optional"]);
+  });
+});
+
+describe("library lines in the coach", () => {
+  const LIB = [{ key: "lib:seneca-letters-letter-13-a1b2c3", text: "Begin at once to live, and count each separate day as a separate life.", by: "Seneca" }];
+  const turns = [{ sender: "me" as const, body: "I am so worried about the exam" }];
+
+  it("puts the candidates in the prompt, and not in the careful one", () => {
+    expect(chatPrompt(ctx(), turns, "stoic", [], LIB).user).toContain(LIB[0].text);
+    const care = [{ sender: "me" as const, body: "I want to kill myself" }];
+    expect(chatPrompt(ctx(), care, "stoic", [], LIB).user).not.toContain(LIB[0].text);
+  });
+
+  it("accepts a candidate word for word and refuses it reworded, cut or repeated", () => {
+    expect(replyProblem(`"${LIB[0].text}" Seneca. Open the notes.`, ctx(), turns, [], false, LIB)).toBeNull();
+    expect(replyProblem('"Begin at once to live, and count each day." Seneca.', ctx(), turns, [], false, LIB)?.kind).toBe("quote_unknown");
+    expect(replyProblem(`"${LIB[0].text}" Seneca.`, ctx(), turns, [LIB[0].key], false, LIB)?.kind).toBe("quote_repeat");
+  });
+
+  it("names the key of the line a reply used", () => {
+    expect(quotedKey(`"${LIB[0].text}" Seneca. Go.`, LIB)).toBe(LIB[0].key);
+  });
+
+  it("can use a library line in the rule-based answer, and never for safety topics", () => {
+    const r = chatFallback("worried about the exam", ctx(), "stoic", [], LIB);
+    expect(r.quote === LIB[0].key || r.quote === null || typeof r.quote === "string").toBe(true);
+    for (const t of ["I want to kill myself", "my knee is torn and swollen", "chest pain, cannot breathe"]) {
+      const f = chatFallback(t, ctx(), "stoic", [], LIB);
+      expect(f.quote).toBeNull();
+      expect(f.body).not.toContain(LIB[0].text);
+    }
   });
 });

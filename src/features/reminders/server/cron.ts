@@ -2,6 +2,7 @@
 // CronDeps, so the whole run can be tested with an in-memory store.
 
 import { addDays } from "@/lib/logic/dates";
+import type { DropMessage } from "@/lib/logic/drops";
 import { dueNotifications, windowDates, type ReminderDay } from "@/lib/logic/reminders";
 import type { DateStr, Reminder, TimeStr } from "@/lib/types";
 import type { PushTarget, Sender } from "./push";
@@ -12,6 +13,16 @@ export interface CronData {
   quiet_start: TimeStr;
   quiet_end: TimeStr;
   days: ReminderDay[];
+  /** Philosophy drops from the settings. Off when the setting is off or its column is missing. */
+  drops: { enabled: boolean; perDay: number };
+}
+
+/** How the job chooses and words a philosophy drop. */
+export interface DropSource {
+  /** The drop for a date and slot from the date alone. Used to plan, so keys and times are known. */
+  pick(date: DateStr, slot: number, perDay: number): DropMessage | null;
+  /** The same drop at the moment it is sent: the first candidate not read in the Library. Null keeps the planned one. */
+  resolve(date: DateStr, slot: number, perDay: number): Promise<DropMessage | null>;
 }
 
 export interface CronDeps {
@@ -25,6 +36,8 @@ export interface CronDeps {
   claim(date: DateStr, key: string): Promise<boolean>;
   /** Delete send records dated before this. */
   forget(before: DateStr): Promise<void>;
+  /** Philosophy drops. Without it none are planned. */
+  drops?: DropSource;
   listSubscriptions(): Promise<PushTarget[]>;
   removeSubscription(endpoint: string): Promise<void>;
   send: Sender;
@@ -52,6 +65,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     floor: data.floor,
     quiet_start: data.quiet_start,
     quiet_end: data.quiet_end,
+    drops: deps.drops && data.drops.enabled ? { perDay: data.drops.perDay, pick: (date, slot) => deps.drops?.pick(date, slot, data.drops.perDay) ?? null } : null,
     sent: already,
     lastRun,
     now,
@@ -74,11 +88,17 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     for (const n of due) {
       // Claim before sending. If two runs overlap, only one gets the row.
       if (!(await deps.claim(n.date, n.key))) continue;
+      let payload = { title: n.title, body: n.body, url: n.url };
+      if (n.drop && deps.drops) {
+        // The plan chose from the date alone. Now that it is going out, skip what has been read since.
+        const final = await deps.drops.resolve(n.date, n.drop.slot, n.drop.perDay).catch(() => null);
+        if (final) payload = final;
+      }
       let delivered = 0;
       let failed = 0;
       for (const sub of subs) {
         if (dead.has(sub.endpoint)) continue;
-        const out = await deps.send(sub, { title: n.title, body: n.body, url: n.url, tag: n.key });
+        const out = await deps.send(sub, { ...payload, tag: n.key });
         if (out.ok) delivered++;
         else {
           failed++;

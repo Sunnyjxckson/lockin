@@ -1,0 +1,900 @@
+[
+  {
+    "text": "The invulnerable is not that which is never struck, but that which is never wounded.",
+    "work": "constancy",
+    "location": "Section 3",
+    "plain": "Being strong means getting hit and staying unbroken, not never getting hit.",
+    "themes": [
+      "adversity",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Now fortune does not give virtue; therefore she does not take it away.",
+    "work": "constancy",
+    "location": "Section 5",
+    "plain": "Luck can take your stuff but not your character, because luck never gave it to you.",
+    "themes": [
+      "fate",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "broke"
+    ]
+  },
+  {
+    "text": "Demetrius, who was surnamed Poliorcetes, took Megara, and the philosopher Stilbo, when asked by him whether he had lost anything, answered, “No, I carry all my property about me.”",
+    "work": "constancy",
+    "location": "Section 5",
+    "plain": "Lose everything and still own what counts: your mind and your standards.",
+    "themes": [
+      "wealth",
+      "self-mastery"
+    ],
+    "moments": [
+      "broke",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Alone and elderly, and seeing everything around me in the hands of the enemy, still I declare that my property is whole and untouched.",
+    "work": "constancy",
+    "location": "Section 6",
+    "plain": "Even when the world takes everything, what's inside you can stay whole.",
+    "themes": [
+      "adversity",
+      "solitude"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "As for those fleeting possessions which change their owners, I know not where they are; what belongs to myself is with me, and ever will be.",
+    "work": "constancy",
+    "location": "Section 6",
+    "plain": "Stuff changes hands. What you built in yourself stays.",
+    "themes": [
+      "wealth",
+      "change"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "He who strives with a man makes himself that man’s rival, and must be on equal terms with him before he can overcome him.",
+    "work": "constancy",
+    "location": "Section 14",
+    "plain": "Fighting someone drags you down to their level first.",
+    "themes": [
+      "anger",
+      "reputation"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "He does not regard what all men think low or wretched; he does not follow the people’s track, but as the stars move in a path opposite to that of the earth, so he proceeds contrary to the prejudices of all.",
+    "work": "constancy",
+    "location": "Section 14",
+    "plain": "Don't take your values from the crowd. Go your own direction.",
+    "themes": [
+      "reputation",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "O! what laughter is to be got out of such things, with what amusement the mind may be filled when it contrasts the frantic follies of others with its own peace!",
+    "work": "constancy",
+    "location": "Section 14",
+    "plain": "Other people's drama gets funny once you're calm.",
+    "themes": [
+      "mind",
+      "happiness"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The reproach of poverty agonizes some men, and whoever conceals it makes it a reproach to himself; and therefore if you of your own accord are the first to acknowledge it, you cut the ground from under the feet of those who would sneer and politely insult you; no one is laughed at who begins by laughing at himself.",
+    "work": "constancy",
+    "location": "Section 17",
+    "plain": "Own your flaws first and nobody can use them against you.",
+    "themes": [
+      "reputation",
+      "wealth"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The nobler a man is by birth, by reputation, or by inheritance, the more bravely he should bear himself, remembering that the tallest men stand in the front rank in battle.",
+    "work": "constancy",
+    "location": "Section 19",
+    "plain": "The higher you climb, the more you get shot at. Stand up straight anyway.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "Even though you be hard pressed and violently attacked by the enemy, still it is base to give way; hold the post assigned to you by nature.",
+    "work": "constancy",
+    "location": "Section 19",
+    "plain": "Don't quit your post just because it got hard.",
+    "themes": [
+      "courage",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Other vices can be concealed and cherished in secret; anger shows itself openly and appears in the countenance, and the greater it is, the more plainly it boils forth.",
+    "work": "anger",
+    "location": "Book 1, Section 1",
+    "plain": "Anger can't hide. Everyone sees it on your face.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Mankind is born for mutual assistance, anger for mutual ruin: the former loves society, the latter estrangement.",
+    "work": "anger",
+    "location": "Book 1, Section 5",
+    "plain": "People are built to help each other. Anger only wrecks things.",
+    "themes": [
+      "anger",
+      "friendship"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ]
+  },
+  {
+    "text": "There are certain things whose beginnings lie in our own power, but which, when developed, drag us along by their own force and leave us no retreat.",
+    "work": "anger",
+    "location": "Book 1, Section 7",
+    "plain": "You can stop it at the start. Later it runs you.",
+    "themes": [
+      "self-mastery",
+      "anger"
+    ],
+    "moments": [
+      "tempted",
+      "angry"
+    ]
+  },
+  {
+    "text": "In the first place, it is easier to banish dangerous passions than to rule them; it is easier not to admit them than to keep them in order when admitted; for when they have established themselves in possession of the mind they are more powerful than the lawful ruler, and will in no wise permit themselves to be weakened or abridged.",
+    "work": "anger",
+    "location": "Book 1, Section 7",
+    "plain": "Easier to never start the bad habit than to manage it once it's in.",
+    "themes": [
+      "self-mastery",
+      "desire"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Are you not ashamed to put virtues under the patronage of vices?",
+    "work": "anger",
+    "location": "Book 1, Section 10",
+    "plain": "Don't use your worst habits as the fuel for your best work.",
+    "themes": [
+      "self-mastery",
+      "anger"
+    ],
+    "moments": [
+      "tempted",
+      "angry"
+    ]
+  },
+  {
+    "text": "By what did Fabius restore the shattered forces of the state, except by knowing how to delay and spin out time, which angry men know not how to do?",
+    "work": "anger",
+    "location": "Book 1, Section 11",
+    "plain": "Patience wins wars. Angry people can't wait.",
+    "themes": [
+      "time",
+      "anger",
+      "power"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ]
+  },
+  {
+    "text": "Anger, therefore, is not useful even in wars or battles: for it is prone to rashness, and while trying to bring others into danger, does not guard itself against danger.",
+    "work": "anger",
+    "location": "Book 1, Section 11",
+    "plain": "Angry people get sloppy and hurt themselves.",
+    "themes": [
+      "anger",
+      "courage"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The most trustworthy virtue is that which long and carefully considers itself, controls itself, and slowly and deliberately brings itself to the front.",
+    "work": "anger",
+    "location": "Book 1, Section 11",
+    "plain": "Real strength is slow, controlled and deliberate.",
+    "themes": [
+      "self-mastery",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "No man becomes braver through anger, except one who without anger would not have been brave at all: anger does not therefore come to assist courage, but to take its place.",
+    "work": "anger",
+    "location": "Book 1, Section 13",
+    "plain": "Rage is fake courage. Real courage doesn't need it.",
+    "themes": [
+      "courage",
+      "anger"
+    ],
+    "moments": [
+      "afraid",
+      "angry"
+    ]
+  },
+  {
+    "text": "Every weakling is naturally prone to complaint.",
+    "work": "anger",
+    "location": "Book 1, Section 13",
+    "plain": "Complaining is what weak people do.",
+    "themes": [
+      "self-mastery",
+      "folly"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "No one, I affirm, will be found who can acquit himself.",
+    "work": "anger",
+    "location": "Book 1, Section 14",
+    "plain": "Nobody is clean. Remember that before you judge.",
+    "themes": [
+      "folly",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "When a man is wandering about our fields because he has lost his way, it is better to place him on the right path than to drive him away.",
+    "work": "anger",
+    "location": "Book 1, Section 14",
+    "plain": "Someone who's lost needs directions, not a fight.",
+    "themes": [
+      "anger",
+      "friendship"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Who can boast that he has his passions, under control, when Socrates did not dare to trust himself to his anger?",
+    "work": "anger",
+    "location": "Book 1, Section 15",
+    "plain": "If Socrates didn't trust himself angry, you shouldn't either.",
+    "themes": [
+      "self-mastery",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Nothing becomes one who inflicts punishment less than anger, because the punishment has all the more power to work reformation if the sentence be pronounced with deliberate judgment.",
+    "work": "anger",
+    "location": "Book 1, Section 15",
+    "plain": "Correct people calmly and it actually sticks.",
+    "themes": [
+      "anger",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "O, how clever is anger at inventing reasons for its frenzy!",
+    "work": "anger",
+    "location": "Book 1, Section 18",
+    "plain": "Anger always finds a good excuse for itself.",
+    "themes": [
+      "anger",
+      "mind"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The sword of justice is ill-placed in the hands of an angry man.",
+    "work": "anger",
+    "location": "Book 1, Section 19",
+    "plain": "Never make big decisions while furious.",
+    "themes": [
+      "anger",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Virtue alone is lofty and sublime, nor is anything great which is not at the same time tranquil.",
+    "work": "anger",
+    "location": "Book 1, Section 21",
+    "plain": "Real greatness is calm.",
+    "themes": [
+      "self-mastery",
+      "happiness"
+    ],
+    "moments": [
+      "overwhelmed",
+      "angry"
+    ]
+  },
+  {
+    "text": "Among the other misfortunes of humanity is this, that men’s intellects are confused, and they not only cannot help going wrong, but love to go wrong.",
+    "work": "anger",
+    "location": "Book 2, Section 10",
+    "plain": "People mess up and often like it. Expect it.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "To avoid being angry with individuals, you must pardon the whole mass, you must grant forgiveness to the entire human race.",
+    "work": "anger",
+    "location": "Book 2, Section 10",
+    "plain": "Lower your expectations of people and the anger shrinks.",
+    "themes": [
+      "anger",
+      "friendship"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Everything ought either to move us to tears or to laughter.",
+    "work": "anger",
+    "location": "Book 2, Section 10",
+    "plain": "Life is either sad or funny. Pick laughing.",
+    "themes": [
+      "happiness",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "We need a long-breathed struggle against permanent and prolific evils; not, indeed, to quell them, but merely to prevent their overpowering us.",
+    "work": "anger",
+    "location": "Book 2, Section 10",
+    "plain": "Some fights never end. The goal is to not get overrun.",
+    "themes": [
+      "adversity",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "He must fear many, whom so many fear.",
+    "work": "anger",
+    "location": "Book 2, Section 11",
+    "plain": "If you rule by fear, you live in it.",
+    "themes": [
+      "power",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Whatever is a terror to others, fears for itself.",
+    "work": "anger",
+    "location": "Book 2, Section 11",
+    "plain": "Scary things are scared themselves.",
+    "themes": [
+      "fear",
+      "power"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Yet there is nothing so hard and difficult that the mind of man cannot overcome it, and with which unremitting study will not render him familiar, nor are there any passions so fierce and independent that they cannot be tamed by discipline.",
+    "work": "anger",
+    "location": "Book 2, Section 12",
+    "plain": "Nothing is too hard once you train at it. Even your worst temper.",
+    "themes": [
+      "discipline",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "What is more restful than a mind at peace, and what more toilsome than anger?",
+    "work": "anger",
+    "location": "Book 2, Section 13",
+    "plain": "Anger is exhausting. Calm is rest.",
+    "themes": [
+      "anger",
+      "happiness"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ]
+  },
+  {
+    "text": "Modesty keeps holiday while vice is overwhelmed with work.",
+    "work": "anger",
+    "location": "Book 2, Section 13",
+    "plain": "The vice-ridden life is busy and tiring. The calm life rests.",
+    "themes": [
+      "desire",
+      "happiness"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Nor is it difficult to conquer our spirit, seeing that athletes, who devote their whole attention to the basest parts of themselves, nevertheless are able to endure blows and pain, in order to exhaust the strength of the striker, and do not strike when anger bids them, but when opportunity invites them.",
+    "work": "anger",
+    "location": "Book 2, Section 14",
+    "plain": "Fighters wait for the opening instead of swinging mad. You can do the same.",
+    "themes": [
+      "self-mastery",
+      "discipline",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "A man ought to be neither robber nor victim, neither tender-hearted nor cruel.",
+    "work": "anger",
+    "location": "Book 2, Section 17",
+    "plain": "Don't prey on people and don't be prey. Stay balanced.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Let the wise man be moderate, and when things have to be done somewhat briskly, let him call force, not anger, to his aid.",
+    "work": "anger",
+    "location": "Book 2, Section 17",
+    "plain": "Use force when needed. Don't use rage.",
+    "themes": [
+      "anger",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "He to whom nothing is ever denied, will not be able to endure a rebuff, whose anxious mother always wipes away his tears, whose paedagogus is made to pay for his shortcomings.",
+    "work": "anger",
+    "location": "Book 2, Section 21",
+    "plain": "Get everything handed to you and you can't take a single no.",
+    "themes": [
+      "adversity",
+      "folly"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "We should always allow some time to elapse, for time discloses the truth.",
+    "work": "anger",
+    "location": "Book 2, Section 22",
+    "plain": "Wait. The truth shows up with time.",
+    "themes": [
+      "time",
+      "mind"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "We ought, therefore, to plead the cause of the absent against ourselves, and to keep our anger in abeyance: for a punishment which has been postponed may yet be inflicted, but when once inflicted cannot be recalled.",
+    "work": "anger",
+    "location": "Book 2, Section 22",
+    "plain": "You can still hit back tomorrow. You can't un-hit.",
+    "themes": [
+      "anger",
+      "time"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Readiness to believe what we hear causes very great mischief; we ought often not even to listen, because in some cases it is better to be deceived than to suspect deceit.",
+    "work": "anger",
+    "location": "Book 2, Section 24",
+    "plain": "Don't believe every rumor. Sometimes not knowing is better.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Suspicion will never lack grounds: what we want is straightforwardness, and a kindly interpretation of things.",
+    "work": "anger",
+    "location": "Book 2, Section 24",
+    "plain": "You can always find a reason to be suspicious. Choose the kind reading.",
+    "themes": [
+      "mind",
+      "friendship"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Nothing, therefore, nourishes anger more than excessive and dissatisfied luxury: the mind ought to be hardened by rough treatment, so as not to feel any blow that is not severe.",
+    "work": "anger",
+    "location": "Book 2, Section 25",
+    "plain": "Comfort makes you fragile and angry. Hardship toughens you.",
+    "themes": [
+      "adversity",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Suppose that we are being punished; let us think not only of what we suffer, but of what we have done: let us sit in judgement on our past life.",
+    "work": "anger",
+    "location": "Book 2, Section 27",
+    "plain": "When it hurts, ask what you did to cause it.",
+    "themes": [
+      "self-mastery",
+      "adversity"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "A great part of mankind is not angry with sins, but with sinners.",
+    "work": "anger",
+    "location": "Book 2, Section 28",
+    "plain": "People hate the person more than the wrong.",
+    "themes": [
+      "anger",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The greatest remedy for anger is delay: beg anger to grant you this at the first, not in order that it may pardon the offence, but that it may form a right judgment about it: if it delays, it will come to an end.",
+    "work": "anger",
+    "location": "Book 2, Section 29",
+    "plain": "Just wait. Anger fades if you give it time.",
+    "themes": [
+      "anger",
+      "time"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The man who will tell you nothing save in secret hardly tells you anything at all.",
+    "work": "anger",
+    "location": "Book 2, Section 29",
+    "plain": "Be careful with gossip from people who won't stand behind it.",
+    "themes": [
+      "friendship",
+      "mind"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ]
+  },
+  {
+    "text": "What can be more unjust than to believe in secret, and to be angry openly?",
+    "work": "anger",
+    "location": "Book 2, Section 29",
+    "plain": "Don't judge on whispers and then explode in public.",
+    "themes": [
+      "anger",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Is it a good man who has wronged you? do not believe it: is it a bad one? do not be surprised at this; he will pay to some one else the penalty which he owes to you—indeed, by his sin he has already punished himself.",
+    "work": "anger",
+    "location": "Book 2, Section 30",
+    "plain": "Bad people are already paying. You don't need to collect.",
+    "themes": [
+      "anger",
+      "fate"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Fabius was wont to say that the most shameful excuse a general could make was “I did not think.”",
+    "work": "anger",
+    "location": "Book 2, Section 31",
+    "plain": "\"I didn't expect that\" is a weak excuse. Plan for it.",
+    "themes": [
+      "fear",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "When you are especially enjoying yourself, be especially on your guard: when everything seems to you to be peaceful, be sure that mischief is not absent, but only asleep.",
+    "work": "anger",
+    "location": "Book 2, Section 31",
+    "plain": "Calm stretches end. Stay ready when things feel easy.",
+    "themes": [
+      "fate",
+      "fear",
+      "change"
+    ],
+    "moments": [
+      "afraid",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Always believe that something will occur to offend you.",
+    "work": "anger",
+    "location": "Book 2, Section 31",
+    "plain": "Expect it and it won't shock you.",
+    "themes": [
+      "anger",
+      "fate"
+    ],
+    "moments": [
+      "angry",
+      "afraid"
+    ]
+  },
+  {
+    "text": "As all the limbs act in unison, because it is the interest of the whole body to keep each one of them safe, so men should spare one another, because they are born for society.",
+    "work": "anger",
+    "location": "Book 2, Section 31",
+    "plain": "We're one body. Hurting each other hurts everyone.",
+    "themes": [
+      "friendship",
+      "love"
+    ],
+    "moments": [
+      "alone",
+      "angry"
+    ]
+  },
+  {
+    "text": "It is the part of a great mind to despise wrongs done to it; the most contemptuous form of revenge is not to deem one’s adversary worth taking vengeance upon.",
+    "work": "anger",
+    "location": "Book 2, Section 32",
+    "plain": "The best revenge is not caring enough to bother.",
+    "themes": [
+      "anger",
+      "reputation",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Many have taken small injuries much more seriously to heart than they need, by revenging them: that man is great and noble who like a large wild animal hears unmoved the tiny curs that bark at him.",
+    "work": "anger",
+    "location": "Book 2, Section 32",
+    "plain": "Let the small dogs bark. Keep walking.",
+    "themes": [
+      "reputation",
+      "anger"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The wrongs of the powerful must not only be borne, but borne with a cheerful countenance: they will repeat the wrong if they think they have inflicted it.",
+    "work": "anger",
+    "location": "Book 2, Section 33",
+    "plain": "When you can't fight, don't let them see it land.",
+    "themes": [
+      "power",
+      "adversity"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ]
+  },
+  {
+    "text": "Every one knows the saying of the old courtier, who, when some one asked him how he had achieved the rare distinction of living at court till he reached old age, replied, “By receiving wrongs and returning thanks for them.”",
+    "work": "anger",
+    "location": "Book 2, Section 33",
+    "plain": "Survival sometimes means swallowing it and smiling.",
+    "themes": [
+      "power",
+      "adversity"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ]
+  },
+  {
+    "text": "A contest with one’s equal is of uncertain issue, with one’s superior is folly, and with one’s inferior is contemptible.",
+    "work": "anger",
+    "location": "Book 2, Section 34",
+    "plain": "Fights are always bad math: risky, stupid or petty.",
+    "themes": [
+      "anger",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "How can we gain more glory than by turning anger into friendship?",
+    "work": "anger",
+    "location": "Book 2, Section 34",
+    "plain": "Turning an enemy into a friend is the real win.",
+    "themes": [
+      "friendship",
+      "anger"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ]
+  },
+  {
+    "text": "If any one is angry with you, meet his anger by returning benefits for it: a quarrel which is only taken up on one side falls to the ground: it takes two men to fight.",
+    "work": "anger",
+    "location": "Book 2, Section 34",
+    "plain": "No second fighter, no fight.",
+    "themes": [
+      "anger",
+      "friendship"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "But suppose that there is an angry struggle on both sides, even then, he is the better man who first gives way; the winner is the real loser.",
+    "work": "anger",
+    "location": "Book 2, Section 34",
+    "plain": "In a petty fight, stepping back is the winning move.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Does any one wish to strike his enemy so hard, as to leave his own hand in the wound, and not to be able to recover his balance after the blow? yet such a weapon is anger: it is scarcely possible to draw it back.",
+    "work": "anger",
+    "location": "Book 2, Section 35",
+    "plain": "Anger leaves you stuck in the wound with no way to recover.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "No passion bears a more troubled aspect: it befouls the fairest face, makes fierce the expression which before was peaceful.",
+    "work": "anger",
+    "location": "Book 2, Section 35",
+    "plain": "Anger makes you ugly to everyone, including yourself.",
+    "themes": [
+      "anger",
+      "reputation"
+    ],
+    "moments": [
+      "angry"
+    ]
+  }
+]

@@ -1,0 +1,466 @@
+[
+  {
+    "text": "The excuse that thou dost make in this delay\nIs longer than the tale thou dost excuse.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 2 Scene 5",
+    "plain": "Your excuse for putting it off takes longer than the thing itself.",
+    "themes": [
+      "discipline",
+      "folly"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "These violent delights have violent ends,\nAnd in their triumph die; like fire and powder,\nWhich as they kiss consume. The sweetest honey\nIs loathsome in his own deliciousness,\nAnd in the taste confounds the appetite.\nTherefore love moderately: long love doth so;\nToo swift arrives as tardy as too slow.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 2 Scene 6",
+    "plain": "Intense highs burn out. Pace yourself and the good thing lasts.",
+    "themes": [
+      "desire",
+      "discipline",
+      "time"
+    ],
+    "moments": [
+      "tempted",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "They are but beggars that can count their worth;\nBut my true love is grown to such excess,\nI cannot sum up sum of half my wealth.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 2 Scene 6",
+    "plain": "When something is real you can't put a number on it.",
+    "themes": [
+      "love",
+      "wealth"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "No, ’tis not so deep as a well, nor so wide as a church door, but ’tis enough, ’twill serve. Ask for me tomorrow, and you shall find me a grave man.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 1",
+    "plain": "Even dying, he jokes. Wit is the last thing to go.",
+    "themes": [
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "O, I am fortune’s fool!",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 1",
+    "plain": "One bad day and you feel like the plaything of fate.",
+    "themes": [
+      "fate",
+      "adversity"
+    ],
+    "moments": [
+      "overwhelmed",
+      "angry"
+    ]
+  },
+  {
+    "text": "This day’s black fate on mo days doth depend;\nThis but begins the woe others must end.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 1",
+    "plain": "One bad day sets off a chain of more. Be careful what you start.",
+    "themes": [
+      "fate",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Come gentle night, come loving black-brow’d night,\nGive me my Romeo, and when I shall die,\nTake him and cut him out in little stars,\nAnd he will make the face of heaven so fine\nThat all the world will be in love with night,\nAnd pay no worship to the garish sun.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 2",
+    "plain": "Love so strong it would turn a person into the stars.",
+    "themes": [
+      "love",
+      "death"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Was ever book containing such vile matter\nSo fairly bound? O, that deceit should dwell\nIn such a gorgeous palace.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 2",
+    "plain": "A beautiful cover can hide something ugly. Looks prove nothing.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "angry"
+    ]
+  },
+  {
+    "text": "Affliction is enanmour’d of thy parts\nAnd thou art wedded to calamity.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 3",
+    "plain": "When you're deep in hardship, it feels like it picked you on purpose.",
+    "themes": [
+      "adversity",
+      "fate"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Be patient, for the world is broad and wide.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 3",
+    "plain": "Your bad spot is not the whole map. There is somewhere else to go.",
+    "themes": [
+      "adversity",
+      "change"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Thou canst not speak of that thou dost not feel.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 3",
+    "plain": "Advice from someone who hasn't been there doesn't land.",
+    "themes": [
+      "pain",
+      "friendship"
+    ],
+    "moments": [
+      "alone",
+      "angry"
+    ]
+  },
+  {
+    "text": "Fie, fie, thou sham’st thy shape, thy love, thy wit,\nWhich, like a usurer, abound’st in all,\nAnd usest none in that true use indeed\nWhich should bedeck thy shape, thy love, thy wit.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 3",
+    "plain": "You have gifts and you're wasting them while you wallow. Use them.",
+    "themes": [
+      "self-mastery",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Night’s candles are burnt out, and jocund day\nStands tiptoe on the misty mountain tops.\nI must be gone and live, or stay and die.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 5",
+    "plain": "Morning means leave. Staying comfortable has a cost.",
+    "themes": [
+      "time",
+      "courage",
+      "change"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "O Fortune, Fortune! All men call thee fickle,\nIf thou art fickle, what dost thou with him\nThat is renown’d for faith? Be fickle, Fortune;\nFor then, I hope thou wilt not keep him long\nBut send him back.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 3 Scene 5",
+    "plain": "If luck is fickle, let it be fickle in my favor.",
+    "themes": [
+      "fate",
+      "love"
+    ],
+    "moments": [
+      "alone",
+      "afraid"
+    ]
+  },
+  {
+    "text": "What must be shall be.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 4 Scene 1",
+    "plain": "Some things are coming whether you fight them or not.",
+    "themes": [
+      "fate"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Love give me strength, and strength shall help afford.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 4 Scene 1",
+    "plain": "Ask for strength and then act on it.",
+    "themes": [
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I have a faint cold fear thrills through my veins\nThat almost freezes up the heat of life.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 4 Scene 3",
+    "plain": "The moment right before a big step, fear goes cold.",
+    "themes": [
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Death lies on her like an untimely frost\nUpon the sweetest flower of all the field.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 4 Scene 5",
+    "plain": "Death takes the young and good out of season.",
+    "themes": [
+      "death",
+      "pain"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "All things that we ordained festival\nTurn from their office to black funeral:\nOur instruments to melancholy bells,\nOur wedding cheer to a sad burial feast;\nOur solemn hymns to sullen dirges change;\nOur bridal flowers serve for a buried corse,\nAnd all things change them to the contrary.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 4 Scene 5",
+    "plain": "Everything planned for joy can flip overnight. Nothing is guaranteed.",
+    "themes": [
+      "change",
+      "fate",
+      "death"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Ah me, how sweet is love itself possess’d,\nWhen but love’s shadows are so rich in joy.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 5 Scene 1",
+    "plain": "If the dream of it feels this good, the real thing is something else.",
+    "themes": [
+      "love",
+      "happiness"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Is it even so? Then I defy you, stars!",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 5 Scene 1",
+    "plain": "Fate hits, and you throw your fist up at the sky.",
+    "themes": [
+      "fate",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "There is thy gold, worse poison to men’s souls,\nDoing more murder in this loathsome world\nThan these poor compounds that thou mayst not sell.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 5 Scene 1",
+    "plain": "Money kills more people than any drug does.",
+    "themes": [
+      "wealth",
+      "folly"
+    ],
+    "moments": [
+      "broke",
+      "angry"
+    ]
+  },
+  {
+    "text": "See what a scourge is laid upon your hate,\nThat heaven finds means to kill your joys with love!",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 5 Scene 3",
+    "plain": "Feuds end up costing you what you loved most.",
+    "themes": [
+      "anger",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Go hence, to have more talk of these sad things.\nSome shall be pardon’d, and some punished,\nFor never was a story of more woe\nThan this of Juliet and her Romeo.",
+    "work": "plays",
+    "location": "Romeo and Juliet, Act 5 Scene 3",
+    "plain": "The famous last word on a story of love undone by hate.",
+    "themes": [
+      "love",
+      "fate"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Come, madam wife, sit by my side and let the world slip: we shall ne’er be younger.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 0 Scene 2",
+    "plain": "Let the small stuff go. You're never younger than right now.",
+    "themes": [
+      "time",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Only, good master, while we do admire\nThis virtue and this moral discipline,\nLet’s be no stoics nor no stocks, I pray;\nOr so devote to Aristotle’s checks\nAs Ovid be an outcast quite abjur’d.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 1 Scene 1",
+    "plain": "Discipline is good but don't turn into a statue. Leave room for life.",
+    "themes": [
+      "discipline",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "No profit grows where is no pleasure ta’en;\nIn brief, sir, study what you most affect.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 1 Scene 1",
+    "plain": "You get nothing out of work you hate. Chase what pulls you.",
+    "themes": [
+      "work",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Think you a little din can daunt mine ears?\nHave I not in my time heard lions roar?\nHave I not heard the sea, puff’d up with winds,\nRage like an angry boar chafed with sweat?",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 1 Scene 2",
+    "plain": "After real storms, small noise doesn't scare you.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Ay, to the proof, as mountains are for winds,\nThat shake not though they blow perpetually.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 2 Scene 1",
+    "plain": "Be the mountain. Let the wind blow forever.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "angry"
+    ]
+  },
+  {
+    "text": "I see a woman may be made a fool,\nIf she had not a spirit to resist.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 3 Scene 2",
+    "plain": "Anyone gets pushed around if they don't have the spirit to push back.",
+    "themes": [
+      "courage",
+      "power"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Your betters have endur’d me say my mind,\nAnd if you cannot, best you stop your ears.\nMy tongue will tell the anger of my heart,\nOr else my heart, concealing it, will break;\nAnd rather than it shall, I will be free\nEven to the uttermost, as I please, in words.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 4 Scene 3",
+    "plain": "Swallowing your anger eats you. Say what's true.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Our purses shall be proud, our garments poor\nFor ’tis the mind that makes the body rich;\nAnd as the sun breaks through the darkest clouds,\nSo honour peereth in the meanest habit.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 4 Scene 3",
+    "plain": "Wealth is in the mind. Worth shows through even plain clothes.",
+    "themes": [
+      "wealth",
+      "reputation",
+      "mind"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "What, is the jay more precious than the lark\nBecause his feathers are more beautiful?\nOr is the adder better than the eel\nBecause his painted skin contents the eye?",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 4 Scene 3",
+    "plain": "Flashy doesn't mean better.",
+    "themes": [
+      "reputation",
+      "wealth"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Dally not with the gods, but get thee gone.",
+    "work": "plays",
+    "location": "The Taming of the Shrew, Act 4 Scene 4",
+    "plain": "Stop praying about it and go act.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  }
+]

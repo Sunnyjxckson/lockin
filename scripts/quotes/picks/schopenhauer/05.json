@@ -1,0 +1,643 @@
+[
+  {
+    "text": "No man becomes this or that by wishing to be it, however earnestly.",
+    "work": "on-human-nature",
+    "location": "Free-Will and Fatalism",
+    "plain": "Wishing doesn't change who you are. Your actions show it.",
+    "themes": [
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "It amounts to this, that by what we do we know what we are, and by what we suffer we know what we deserve.",
+    "work": "on-human-nature",
+    "location": "Free-Will and Fatalism",
+    "plain": "You learn who you are from what you do, not from what you intend.",
+    "themes": [
+      "self-mastery",
+      "adversity"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The man who has no conscience in small things will be a scoundrel in big things.",
+    "work": "on-human-nature",
+    "location": "Free-Will and Fatalism",
+    "plain": "How you act when it's small is how you'll act when it's big.",
+    "themes": [
+      "self-mastery",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Let it always be our maxim: Better alone than amongst traitors.",
+    "work": "on-human-nature",
+    "location": "Free-Will and Fatalism",
+    "plain": "Cut off bad company early. Being alone beats being betrayed.",
+    "themes": [
+      "friendship",
+      "solitude"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Imitation and custom are the spring of almost all human action.",
+    "work": "on-human-nature",
+    "location": "Free-Will and Fatalism",
+    "plain": "Most people just copy what's around them. Notice when you're doing it.",
+    "themes": [
+      "folly",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Conscience accompanies every act with the comment: You should act differently, although its true sense is: You could be other than you are.",
+    "work": "on-human-nature",
+    "location": "Free-Will and Fatalism",
+    "plain": "Guilt is a signal that you can be a different person.",
+    "themes": [
+      "self-mastery",
+      "change"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "As a man is, so must he act; and praise or blame attaches, not to his separate acts, but to his nature and being.",
+    "work": "on-human-nature",
+    "location": "Free-Will and Fatalism",
+    "plain": "You are judged by what you are, not by one act. Work on the person.",
+    "themes": [
+      "self-mastery",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Men who aspire to a happy, a brilliant and a long life, instead of to a virtuous one, are like foolish actors who want to be always having the great parts,--the parts that are marked by splendour and triumph. They fail to see that the important thing is not what or how much, but how they act.",
+    "work": "on-human-nature",
+    "location": "Character",
+    "plain": "Don't chase the starring role. How you play the part is what counts.",
+    "themes": [
+      "happiness",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Life is the proof sheet, in which the compositors' errors are brought to light.",
+    "work": "on-human-nature",
+    "location": "Character",
+    "plain": "Life exposes your mistakes so you can see them and fix them.",
+    "themes": [
+      "adversity",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Character modifies our life more than we think, and it is to a certain extent true that every man is the architect of his own fortune.",
+    "work": "on-human-nature",
+    "location": "Character",
+    "plain": "Who you are shapes your luck more than you admit.",
+    "themes": [
+      "fate",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "If a man keeps to the exact middle, he is just. But most men go an inch in their regard for others' welfare to twenty yards in regard for their own.",
+    "work": "on-human-nature",
+    "location": "Character",
+    "plain": "Almost everyone weighs themselves far heavier than anyone else.",
+    "themes": [
+      "folly",
+      "desire"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Somebody once remarked to me, with entire justice, that every man had something very good and humane in his disposition, and also something very bad and malignant; and that according as he was moved one or the other of them made its appearance.",
+    "work": "on-human-nature",
+    "location": "Character",
+    "plain": "Everyone has a good side and a cruel side. What stirs them decides which shows.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Innocence is in its very nature stupid.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "Staying untested isn't a virtue. You learn by running into things.",
+    "themes": [
+      "adversity",
+      "folly"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The paltry character of most men compels the few who have any merit or genius to behave as though they did not know their own value, and consequently did not know other people's want of value; for it is only on this condition that the mob acquiesces in tolerating merit.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "Good people play small so the crowd will put up with them.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Insight and knowledge may be attained and lost again; they may be changed, or improved, or destroyed; but will cannot be changed.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "Knowledge comes and goes. Will is who you are, and it doesn't move.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "A man should exercise an almost boundless toleration and placability, because if he is capricious enough to refuse to forgive a single individual for the meanness or evil that lies at his door, it is doing the rest of the world a quite unmerited honour.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "Forgive freely. Holding a grudge against one person isn't worth what it costs you.",
+    "themes": [
+      "anger",
+      "friendship"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "It is only because the will is above and beyond time that the stings of conscience are ineradicable, and do not, like other pains, gradually wear away. No! an evil deed weighs on the conscience years afterwards as heavily as if it had been freshly committed.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "Guilt doesn't fade with time. Don't do what you'll have to carry.",
+    "themes": [
+      "pain",
+      "time"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Many a criminal dies more quietly on the scaffold than many a non-criminal in the arms of his family.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "Facing yourself brings peace. Avoiding yourself doesn't.",
+    "themes": [
+      "death",
+      "mind"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "The practical philosopher transforms ideas into life; he acts, therefore, in a thoroughly reasonable manner; he is consistent, regular, deliberate; he is never hasty or passionate; he never allows himself to be influenced by the impression of the moment.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "The one who lives his ideas is steady, deliberate, and not pushed around by the moment.",
+    "themes": [
+      "self-mastery",
+      "discipline"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Every feeble lad who by little acts of villainy gains a small advantage for himself by putting others to some disadvantage, although it may be equally small, is just as bad as Napoleon.",
+    "work": "on-human-nature",
+    "location": "Ethical Reflections",
+    "plain": "Small cruelty is the same thing as big cruelty, just without the power.",
+    "themes": [
+      "power",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "No one writes anything that is worth writing, unless he writes entirely for the sake of his subject.",
+    "work": "art-of-literature",
+    "location": "On Authorship",
+    "plain": "Do the work for the work. Chasing money ruins the output.",
+    "themes": [
+      "work",
+      "wealth"
+    ],
+    "moments": [
+      "tired",
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "The best works of the greatest men all come from the time when they had to write for nothing or for very little.",
+    "work": "art-of-literature",
+    "location": "On Authorship",
+    "plain": "Great work usually comes before the money does.",
+    "themes": [
+      "work",
+      "wealth",
+      "adversity"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "What an inestimable boon it would be, if in every branch of literature there were only a few books, but those excellent!",
+    "work": "art-of-literature",
+    "location": "On Authorship",
+    "plain": "Less and better beats more and mediocre.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Unless an author takes the material on which he writes out of his own head, that is to say, from his own observation, he is not worth reading.",
+    "work": "art-of-literature",
+    "location": "On Authorship",
+    "plain": "Say what you've seen yourself, not what you've collected.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "How very learned many a man would be if he knew everything that was in his own books!",
+    "work": "art-of-literature",
+    "location": "On Authorship",
+    "plain": "Owning information is not knowing it.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "And, in general, the following rule may be laid down here as elsewhere: if a thing is new, it is seldom good; because if it is good, it is only for a short time new.",
+    "work": "art-of-literature",
+    "location": "On Authorship",
+    "plain": "New is not the same as good. Time sorts it out.",
+    "themes": [
+      "time",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Style is the physiognomy of the mind, and a safer index to character than the face.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "How you write shows who you are.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "An affectation in style is like making grimaces.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Faking a voice looks as silly as pulling faces.",
+    "themes": [
+      "folly",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Simplicity has always been held to be a mark of truth; it is also a mark of genius.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Say it plainly. Plain is how true and brilliant things sound.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Style is nothing but the mere silhouette of thought; and an obscure or bad style means a dull or confused brain.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Muddy writing is muddy thinking.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "The first rule, then, for a good style is that the author should have something to say; nay, this is in itself almost all that is necessary.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Have something to say. Everything else is secondary.",
+    "themes": [
+      "work",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Authors should use common words to say uncommon things.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Think big, speak plainly.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "When a right thought springs up in the mind, it strives after expression and is not long in reaching it; for clear thought easily finds words to fit it.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "If you can't say it clearly, you haven't finished thinking.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "It is always better to omit something good than to add that which is not worth saying at all.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Cut. Leave out the good if it isn't needed.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "To use many words to communicate few thoughts is everywhere the unmistakable sign of mediocrity. To gather much thought into few words stamps the man of genius.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Few words, lots of thought. Padding is a tell.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Truth is most beautiful undraped; and the impression it makes is deep in proportion as its expression has been simple.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "The simpler you say a true thing, the harder it hits.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Every word that can be spared is hurtful if it remains.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "If it can go, cut it.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "He who writes carelessly confesses thereby at the very outset that he does not attach much importance to his own thoughts.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Sloppy work tells people you don't take your own ideas seriously.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "And yet nothing is easier than to write so that no one can understand; just as contrarily, nothing is more difficult than to express deep things in such a way that every one must necessarily grasp them.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Being confusing is easy. Being clear about hard things is the real skill.",
+    "themes": [
+      "work",
+      "mind"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Man that is born of a woman hath but a short time to live and is full of misery. He cometh up, and is cut down, like a flower; he fleeth as it were a shadow, and never continueth in one stay.",
+    "work": "art-of-literature",
+    "location": "On Style",
+    "plain": "Life is short and hard, and plain words say it best.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "There is no better recreation for the mind than the study of the ancient classics. Take any one of them into your hand, be it only for half an hour, and you will feel yourself refreshed, relieved, purified, ennobled, strengthened; just as though you had quenched your thirst at some pure spring.",
+    "work": "art-of-literature",
+    "location": "On the Study of Latin",
+    "plain": "Thirty minutes with an old great book resets your head better than rest.",
+    "themes": [
+      "mind",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Students, and learned persons of all sorts and every age, aim as a rule at acquiring information rather than insight.",
+    "work": "art-of-literature",
+    "location": "On Men of Learning",
+    "plain": "Collecting facts isn't understanding. Aim for insight.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "When I hear of these portents of learning and their imposing erudition, I sometimes say to myself: Ah, how little they must have had to think about, to have been able to read so much!",
+    "work": "art-of-literature",
+    "location": "On Men of Learning",
+    "plain": "Reading nonstop can be a way to avoid thinking.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Every thirty years a new race comes into the world--a youngster that knows nothing about anything, and after summarily devouring in all haste the results of human knowledge as they have been accumulated for thousands of years, aspires to be thought cleverer than the whole of the past.",
+    "work": "art-of-literature",
+    "location": "On Men of Learning",
+    "plain": "Every generation thinks it's smarter than all that came before.",
+    "themes": [
+      "folly",
+      "time"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "With by far the largest number of learned men, knowledge is a means, not an end.",
+    "work": "art-of-literature",
+    "location": "On Men of Learning",
+    "plain": "Most people use what they know to get something. Few love it for itself.",
+    "themes": [
+      "work",
+      "desire"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "He alone will be really in earnest about a matter, who has a direct interest therein, takes to it because he likes it, and pursues it con amore. It is these, and not hirelings, that have always done the greatest work.",
+    "work": "art-of-literature",
+    "location": "On Men of Learning",
+    "plain": "The people who do it for love do the greatest work.",
+    "themes": [
+      "work",
+      "desire"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The only thing in which all agree is in trying to keep down a really eminent man, if he should chance to show himself, as one who would be a common peril.",
+    "work": "art-of-literature",
+    "location": "On Men of Learning",
+    "plain": "Standouts get pushed down. Expect it.",
+    "themes": [
+      "reputation",
+      "adversity"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Human knowledge extends on all sides farther than the eye can reach; and of that which would be generally worth knowing, no one man can possess even the thousandth part.",
+    "work": "art-of-literature",
+    "location": "On Men of Learning",
+    "plain": "No one can know it all. Pick your ground and go deep.",
+    "themes": [
+      "mind",
+      "time"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  }
+]

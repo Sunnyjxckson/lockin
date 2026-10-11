@@ -3,9 +3,12 @@
 // The pieces of the chat screen: the thread, one message, and the composer.
 
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { ActionButton, Chip, cn } from "@/components/ui";
 import { MAX_MESSAGE } from "@/lib/logic/coachChat";
+import { libId } from "@/lib/logic/coachLibrary";
+import { quoteLink } from "@/lib/logic/library";
 import { addDays, formatDateLong } from "@/lib/logic/dates";
 import type { CoachMessage, CoachTrigger, DateStr } from "@/lib/types";
 
@@ -55,6 +58,11 @@ function Bubble({ m }: { m: CoachMessage }) {
       <div className="tile max-w-[88%] rounded-[20px] rounded-bl-[8px] px-4 py-3">
         {m.trigger !== "chat" ? <p className="t-label mb-2">{CHECKIN_LABEL[m.trigger]}</p> : null}
         <CoachBody body={m.body} />
+        {libId(m.quote) ? (
+          <Link href={quoteLink(libId(m.quote) as string)} data-lib-quote className="t-caption mt-2 inline-flex min-h-11 items-center text-accent underline underline-offset-2">
+            Read it in the Library
+          </Link>
+        ) : null}
       </div>
     </li>
   );

@@ -5,6 +5,7 @@
 // Pure. No React, no db. No dashes other than the plain hyphen in any output.
 
 import { cleanCoachText, money, plural, unknownNumbers, wordCount, type CoachBlock, type CoachSnapshot } from "./coach";
+import { candidateLine, libraryQuotesIn, misquotedFrom, type LibCandidate } from "./coachLibrary";
 import { QUOTES, SCHOOL_IDEA, SCHOOL_LABEL, quoteByKey, quoteLine, quotesIn, type QuoteSchool } from "./coachQuotes";
 import { formatTime, minutesOf } from "./dates";
 import type { CoachCheckins, CoachTrigger, CoachVoice, DateStr, TimeStr } from "../types";
@@ -289,7 +290,7 @@ export interface ChatReply {
  * their own numbers, one thing to do now. Runs with no API key, when the
  * model call fails and offline, so it has to be worth reading on its own.
  */
-export function chatFallback(text: string, ctx: ChatContext, voice: CoachVoice, usedQuotes: readonly string[] = []): ChatReply {
+export function chatFallback(text: string, ctx: ChatContext, voice: CoachVoice, usedQuotes: readonly string[] = [], library: readonly LibCandidate[] = []): ChatReply {
   const topic = classifyMessage(text);
   if (topic === "care") return { body: CARE_REPLY, quote: null, topic };
   if (topic === "emergency") return { body: EMERGENCY_REPLY, quote: null, topic };
@@ -297,8 +298,13 @@ export function chatFallback(text: string, ctx: ChatContext, voice: CoachVoice, 
   const used = new Set(usedQuotes);
   const key = PREFER[topic].find((k) => !used.has(k)) ?? null;
   const quote = quoteByKey(key);
-  const lines = [quote ? quoteLine(quote) : "", dataLine(topic, text, ctx), DO_NOW[topic][voice]].filter(Boolean);
-  return { body: cleanCoachText(lines.join("\n")), quote: quote?.key ?? null, topic };
+  // A line from the Library comes first when he saved it, when the topic is open ended (an angry or lonely
+  // message has no line of the coach's own), and when the coach's own lines for it are all used this week.
+  const lib = library.find((c) => !used.has(c.key)) ?? null;
+  const libraryFirst = !!lib && (!!lib.saved || topic === "general" || !quote);
+  const line = libraryFirst && lib ? { text: candidateLine(lib), key: lib.key } : quote ? { text: quoteLine(quote), key: quote.key } : lib ? { text: candidateLine(lib), key: lib.key } : null;
+  const lines = [line?.text ?? "", dataLine(topic, text, ctx), DO_NOW[topic][voice]].filter(Boolean);
+  return { body: cleanCoachText(lines.join("\n")), quote: line?.key ?? null, topic };
 }
 
 // ---------- the prompt ----------
@@ -366,13 +372,17 @@ function transcript(turns: readonly ChatTurn[]): string {
 }
 
 /** What goes to the model. `usedQuotes` are left off the list, so a line cannot come back within the week. */
-export function chatPrompt(ctx: ChatContext, turns: readonly ChatTurn[], voice: CoachVoice, usedQuotes: readonly string[] = []): ChatPrompt {
+export function chatPrompt(ctx: ChatContext, turns: readonly ChatTurn[], voice: CoachVoice, usedQuotes: readonly string[] = [], library: readonly LibCandidate[] = []): ChatPrompt {
   const care = careInPlay(turns.slice(-6));
   if (care) {
     return { system: CARE_SYSTEM, user: `<conversation>\n${transcript(turns)}\n</conversation>\n\nReply to their last message. Reply with the message only.`, maxTokens: 300, care };
   }
   const used = new Set(usedQuotes);
-  const quotes = QUOTES.filter((q) => !used.has(q.key)).map((q) => `${SCHOOL_LABEL[q.school]}: "${q.text}" ${q.by}`);
+  const quotes = [
+    ...QUOTES.filter((q) => !used.has(q.key)).map((q) => `${SCHOOL_LABEL[q.school]}: "${q.text}" ${q.by}`),
+    // Real lines from his own library, picked for what he wrote. The ones he saved are marked: he chose those.
+    ...library.filter((c) => !used.has(c.key)).map((c) => `${c.saved ? "Saved by them" : "The Library"}: "${c.text}" ${c.by}`),
+  ];
   const user = [
     `<data>\n${JSON.stringify(ctx.snapshot)}\n</data>`,
     `<today_so_far>\n${JSON.stringify(ctx.now)}\n</today_so_far>`,
@@ -396,25 +406,40 @@ export type ReplyProblem = { kind: "empty" } | { kind: "too_long" } | { kind: "n
  * library or their messages. A quoted line has to be from the library and not
  * one used this week.
  */
-export function replyProblem(body: string, ctx: ChatContext, turns: readonly ChatTurn[], usedQuotes: readonly string[], care = false): ReplyProblem | null {
+export function replyProblem(body: string, ctx: ChatContext, turns: readonly ChatTurn[], usedQuotes: readonly string[], care = false, library: readonly LibCandidate[] = []): ReplyProblem | null {
   if (!body.trim()) return { kind: "empty" };
   if (wordCount(body) > MAX_REPLY_WORDS) return { kind: "too_long" };
   if (care) return null;
   // 988 and 911 are always allowed: the coach may point at them at any time.
-  const known = { ctx, quotes: QUOTES.map((q) => q.text), said: turns.map((t) => t.body), lines: ["988", "911"] };
+  const known = { ctx, quotes: [...QUOTES.map((q) => q.text), ...library.map((c) => c.text)], said: turns.map((t) => t.body), lines: ["988", "911"] };
   const numbers = unknownNumbers(body, known);
   if (numbers.length > 0) return { kind: "numbers", numbers };
-  const quoted = quotesIn(body);
+  // A line from the Library has to be there whole, word for word. Its opening without the rest is a line that was cut or reworded.
+  const reworded = misquotedFrom(body, library)[0];
+  if (reworded) return { kind: "quote_unknown", text: reworded.text };
+  const quoted = [...quotesIn(body), ...libraryQuotesIn(body, library)];
   const repeat = quoted.filter((k) => usedQuotes.includes(k));
   if (repeat.length > 0) return { kind: "quote_repeat", keys: repeat };
   const theirs = turns.filter((t) => t.sender === "me").map((t) => t.body.toLowerCase());
   for (const m of body.matchAll(/"([^"]{24,})"/g)) {
     const inner = m[1];
-    if (quotesIn(inner).length > 0) continue;
+    if (quotesIn(inner).length > 0 || libraryQuotesIn(inner, library).length > 0) continue;
     if (theirs.some((t) => t.includes(inner.toLowerCase().slice(0, 24)))) continue;
     return { kind: "quote_unknown", text: inner };
   }
   return null;
+}
+
+/** The key of the first line a reply quotes, from the coach's own lines or the candidates, in the order it appears. */
+export function quotedKey(body: string, library: readonly LibCandidate[] = []): string | null {
+  const at = (key: string, text: string): number => {
+    const i = body.toLowerCase().indexOf(text.toLowerCase().slice(0, 24));
+    return i < 0 ? Number.MAX_SAFE_INTEGER : i;
+  };
+  const own = quotesIn(body).map((k) => ({ k, i: at(k, quoteByKey(k)?.text ?? "") }));
+  const lib = libraryQuotesIn(body, library).map((k) => ({ k, i: at(k, library.find((c) => c.key === k)?.text ?? "") }));
+  const all = [...own, ...lib].sort((a, b) => a.i - b.i);
+  return all[0]?.k ?? null;
 }
 
 /** Sent back to the model once. */

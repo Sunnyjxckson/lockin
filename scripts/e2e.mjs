@@ -330,7 +330,7 @@ await brief(page).waitFor();
   const tracksBox = await page.getByRole("group", { name: "The day in four tracks" }).boundingBox();
   check("the first screen holds the greeting, Now, the four tracks and two full rows of tiles above the tab bar", (await nowCard.boundingBox()).y < 320 && tracksBox.y + tracksBox.height < 520 && tiles.filter((y) => y <= bar.y).length >= 6, `now ${(await nowCard.boundingBox()).y}, tracks ${tracksBox.y}, tiles above the bar ${tiles.filter((y) => y <= bar.y).length}`);
 }
-check("the tab bar has five tabs and Today is lit", (await nav(page).getByRole("link").count()) === 5 && (await activeTab(page)) === "Today");
+check("the tab bar has six tabs and Today is lit", (await nav(page).getByRole("link").count()) === 6 && (await activeTab(page)) === "Today");
 check("the day strip is folded away until the date line is tapped", (await page.getByRole("tablist").count()) === 0);
 await openStrip(page);
 check("the day strip shows the 30 challenge days", (await page.getByRole("tablist", { name: "Challenge days" }).getByRole("tab").count()) === 30);
@@ -818,7 +818,7 @@ console.log("More, Boards, Meals, Focus");
 await page.goto(`${base}/today`);
 await todayReady(page);
 await openMore(page);
-check("More lists Focus, Meals, Boards and Settings", (await dialog(page).getByRole("link").allInnerTexts()).map((t) => t.split("\n")[0]).join(",") === "Focus,Meals,Boards,Settings");
+check("More lists Library, Focus, Meals, Boards and Settings", (await dialog(page).getByRole("link").allInnerTexts()).map((t) => t.split("\n")[0]).join(",") === "Library,Focus,Meals,Boards,Settings");
 await shot(page, "26b-more-sheet");
 await closeSheet(page);
 for (const [name, lit, backTo] of [

@@ -1,0 +1,433 @@
+[
+  {
+    "text": "In sooth I know not why I am so sad,\nIt wearies me, you say it wearies you;\nBut how I caught it, found it, or came by it,\nWhat stuff ’tis made of, whereof it is born,\nI am to learn.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 1",
+    "plain": "Sometimes you're down and can't say why. Not knowing the cause is part of it.",
+    "themes": [
+      "mind",
+      "pain"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "My ventures are not in one bottom trusted,\nNor to one place; nor is my whole estate\nUpon the fortune of this present year.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 1",
+    "plain": "Don't bet everything on one ship, one place, one year. Spread the risk.",
+    "themes": [
+      "wealth",
+      "fate"
+    ],
+    "moments": [
+      "broke",
+      "afraid"
+    ]
+  },
+  {
+    "text": "You have too much respect upon the world.\nThey lose it that do buy it with much care.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 1",
+    "plain": "The ones who worry hardest over the world are the ones who lose it. Care less.",
+    "themes": [
+      "mind",
+      "happiness"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "I hold the world but as the world, Gratiano,\nA stage, where every man must play a part,\nAnd mine a sad one.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 1",
+    "plain": "Life is a stage and everyone gets a role. Some get heavy ones.",
+    "themes": [
+      "fate",
+      "pain"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Let me play the fool,\nWith mirth and laughter let old wrinkles come,\nAnd let my liver rather heat with wine\nThan my heart cool with mortifying groans.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 1",
+    "plain": "Better to age laughing than to cool off from constant brooding.",
+    "themes": [
+      "happiness",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "alone"
+    ]
+  },
+  {
+    "text": "O my Antonio, I do know of these\nThat therefore only are reputed wise\nFor saying nothing; when, I am very sure,\nIf they should speak, would almost damn those ears\nWhich, hearing them, would call their brothers fools.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 1",
+    "plain": "Some people only look wise because they stay quiet. Open their mouth and the spell breaks.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Gratiano speaks an infinite deal of nothing, more than any man in all Venice. His reasons are as two grains of wheat hid in two bushels of chaff: you shall seek all day ere you find them, and when you have them they are not worth the search.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 1",
+    "plain": "Lots of talk, almost no substance. Don't be the guy who buries two good points under a pile of noise.",
+    "themes": [
+      "folly",
+      "work"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "It is no mean happiness, therefore, to be seated in the mean. Superfluity come sooner by white hairs, but competency lives longer.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 2",
+    "plain": "Having enough is a real kind of happiness. Excess ages you faster than enough.",
+    "themes": [
+      "wealth",
+      "happiness"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "If to do were as easy as to know what were good to do, chapels had been churches, and poor men’s cottages princes’ palaces. It is a good divine that follows his own instructions; I can easier teach twenty what were good to be done than to be one of the twenty to follow mine own teaching.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 2",
+    "plain": "Knowing what's right is easy. Doing it is the hard part, even for people who give the advice.",
+    "themes": [
+      "discipline",
+      "self-mastery"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "The devil can cite Scripture for his purpose.\nAn evil soul producing holy witness\nIs like a villain with a smiling cheek,\nA goodly apple rotten at the heart.\nO, what a goodly outside falsehood hath!",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 1 Scene 3",
+    "plain": "Bad people can quote good words. A pretty outside tells you nothing about the inside.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "All things that are,\nAre with more spirit chased than enjoy’d.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 2 Scene 6",
+    "plain": "The chase is better than the catch. Wanting beats having, almost every time.",
+    "themes": [
+      "desire",
+      "happiness"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "But love is blind, and lovers cannot see\nThe pretty follies that themselves commit,\nFor if they could, Cupid himself would blush\nTo see me thus transformed to a boy.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 2 Scene 6",
+    "plain": "Love hides your own foolishness from you. If you could see it you'd be embarrassed.",
+    "themes": [
+      "love",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "I will not choose what many men desire,\nBecause I will not jump with common spirits\nAnd rank me with the barbarous multitudes.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 2 Scene 9",
+    "plain": "Just because everyone wants it doesn't make it right for you. Don't follow the crowd.",
+    "themes": [
+      "self-mastery",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "O, these deliberate fools! When they do choose,\nThey have the wisdom by their wit to lose.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 2 Scene 9",
+    "plain": "Overthinkers talk themselves right out of the win.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The ancient saying is no heresy:\nHanging and wiving goes by destiny.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 2 Scene 9",
+    "plain": "Who you end up with and how it ends are partly out of your hands.",
+    "themes": [
+      "fate",
+      "love"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The villainy you teach me I will execute, and it shall go hard but I will better the instruction.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 3 Scene 1",
+    "plain": "People learn from how you treat them, and they'll hand it back with interest.",
+    "themes": [
+      "anger",
+      "fate"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "If you prick us, do we not bleed? If you tickle us, do we not laugh? If you poison us, do we not die?",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 3 Scene 1",
+    "plain": "Everyone feels the same pain and joy. Nobody is lesser, and nobody forgets being treated that way.",
+    "themes": [
+      "pain",
+      "anger"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ]
+  },
+  {
+    "text": "How many cowards, whose hearts are all as false\nAs stairs of sand, wear yet upon their chins\nThe beards of Hercules and frowning Mars,\nWho inward search’d, have livers white as milk,\nAnd these assume but valour’s excrement\nTo render them redoubted.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 3 Scene 2",
+    "plain": "Plenty of tough-looking men are cowards underneath, wearing the costume of courage.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "O love, be moderate; allay thy ecstasy,\nIn measure rain thy joy; scant this excess!\nI feel too much thy blessing, make it less,\nFor fear I surfeit.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 3 Scene 2",
+    "plain": "Even great joy needs a limit, or you choke on it.",
+    "themes": [
+      "love",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "How shalt thou hope for mercy, rend’ring none?",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 4 Scene 1",
+    "plain": "If you show no mercy, don't expect any.",
+    "themes": [
+      "fate",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The quality of mercy is not strain’d,\nIt droppeth as the gentle rain from heaven\nUpon the place beneath. It is twice blest,\nIt blesseth him that gives and him that takes.\n’Tis mightiest in the mightiest; it becomes\nThe throned monarch better than his crown.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 4 Scene 1",
+    "plain": "Mercy can't be forced. It blesses the giver and the taker, and it suits the strong best.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "To do a great right, do a little wrong,\nAnd curb this cruel devil of his will.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 4 Scene 1",
+    "plain": "The tempting excuse for bending a rule. Be careful, because it sets a precedent.",
+    "themes": [
+      "folly",
+      "power"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "You take my house when you do take the prop\nThat doth sustain my house; you take my life\nWhen you do take the means whereby I live.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 4 Scene 1",
+    "plain": "Take someone's means of earning and you've taken their life.",
+    "themes": [
+      "wealth",
+      "work"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "How far that little candle throws his beams!\nSo shines a good deed in a naughty world.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 5 Scene 1",
+    "plain": "One good act shines a long way in a dark world.",
+    "themes": [
+      "courage",
+      "happiness"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "How many things by season season’d are\nTo their right praise and true perfection!",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 5 Scene 1",
+    "plain": "Timing makes the difference. The same thing can be great or wasted depending on when.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "So doth the greater glory dim the less.\nA substitute shines brightly as a king\nUntil a king be by, and then his state\nEmpties itself, as doth an inland brook\nInto the main of waters.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 5 Scene 1",
+    "plain": "Next to someone greater you disappear. Shine where you are, and be honest about the scale.",
+    "themes": [
+      "reputation",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The man that hath no music in himself,\nNor is not mov’d with concord of sweet sounds,\nIs fit for treasons, stratagems, and spoils;\nThe motions of his spirit are dull as night,\nAnd his affections dark as Erebus.\nLet no such man be trusted. Mark the music.",
+    "work": "plays",
+    "location": "The Merchant of Venice, Act 5 Scene 1",
+    "plain": "Be wary of anyone who feels nothing when a song moves everyone else.",
+    "themes": [
+      "mind",
+      "friendship"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Why then, the world’s mine oyster,\nWhich I with sword will open.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 2 Scene 2",
+    "plain": "The world is there to be cracked open by you. Go get it.",
+    "themes": [
+      "courage",
+      "desire"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Money is a good soldier, sir, and will on.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 2 Scene 2",
+    "plain": "Money keeps marching and gets through doors nothing else can.",
+    "themes": [
+      "wealth",
+      "power"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "Love like a shadow flies when substance love pursues, Pursuing that that flies, and flying what pursues.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 2 Scene 2",
+    "plain": "Chase love and it runs. Stop chasing and it follows.",
+    "themes": [
+      "love",
+      "desire"
+    ],
+    "moments": [
+      "alone",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Better three hours too soon than a minute too late.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 2 Scene 2",
+    "plain": "Show up early. Being a minute late can cost the whole thing.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Sheathe thy impatience; throw cold water on thy choler.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 2 Scene 3",
+    "plain": "Put the anger away and cool off before you do something you can't undo.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  }
+]

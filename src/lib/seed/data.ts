@@ -50,6 +50,9 @@ export const SEED_SETTINGS: Omit<AppSettings, "created_at" | "history_start"> = 
   display_name: "Sunny",
   coach_voice: "stoic",
   coach_checkins: { post_workout: true, slip: true, missed_item: true },
+  library_position: null,
+  drops_enabled: false,
+  drops_per_day: 3,
 };
 
 type ItemSeed = Omit<ChecklistItem, "id" | "created_at" | "sort_order" | "archived">;

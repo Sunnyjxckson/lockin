@@ -8,7 +8,7 @@ import { cn } from "./cn";
 export { TABS };
 
 /**
- * The floating tab bar: a frosted glass pill with the five screens as words.
+ * The floating tab bar: a frosted glass pill with the screens as words.
  * The screen you are on is a cream pill inside it. Rendered once by the app
  * layout. Screen leaves room for it, so content never ends up behind it.
  *

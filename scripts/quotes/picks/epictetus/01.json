@@ -1,0 +1,783 @@
+[
+  {
+    "text": "I must die. But must I die groaning?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 1",
+    "plain": "Death is coming either way. Meeting it with whining adds nothing.",
+    "themes": [
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "What say you, fellow? Chain me? My leg you will chain—yes, but my will—no, not even Zeus can conquer that.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 1",
+    "plain": "They can take your body. Nobody can force your mind to give in.",
+    "themes": [
+      "self-mastery",
+      "power"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "We must make the best of those things that are in our power, and take the rest as nature gives it.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 1",
+    "plain": "Work on what you control. Let the rest happen.",
+    "themes": [
+      "fate",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "angry"
+    ]
+  },
+  {
+    "text": "Blows are not by nature intolerable.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 2",
+    "plain": "Hard things only crush you when you decide they can't be borne.",
+    "themes": [
+      "pain",
+      "adversity"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "If you do nothing else, do not sell your will cheap.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 2",
+    "plain": "Everyone has a price. Make yours high.",
+    "themes": [
+      "self-mastery",
+      "wealth"
+    ],
+    "moments": [
+      "tempted",
+      "broke"
+    ]
+  },
+  {
+    "text": "You will do your part, and I mine. It is yours to kill, mine to die without quailing: yours to banish, mine to go into exile without groaning.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 2",
+    "plain": "You can't control what they do to you, only how you take it.",
+    "themes": [
+      "courage",
+      "power"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Like the bull, the man of noble nature does not become noble of a sudden; he must train through the winter, and make ready, and not lightly leap to meet things that concern him not.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 2",
+    "plain": "Strength is built slowly in the off season, when nobody is watching.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Wretched indeed, but you have too something better than your 'rags of flesh'. Why then do you discard the better and cling to your rags?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 3",
+    "plain": "You are more than your body and your circumstances. Act like it.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Have you not received greatness of spirit? Have you not received courage? Have you not received endurance?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 6",
+    "plain": "You already have what it takes to get through this.",
+    "themes": [
+      "courage",
+      "adversity"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "It is for you then, when you realize this, to look to the faculties you possess, and considering them to say, 'Zeus, send me what trial Thou wilt; for I have endowments and resources, given me by Thee, to bring myself honour through what befalls.'",
+    "work": "discourses",
+    "location": "Book 1, Chapter 6",
+    "plain": "Ask for the test. You have what you need to pass it.",
+    "themes": [
+      "courage",
+      "adversity"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Why do you whine? What room is there for tears any more? What occasion for flattery any more?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 9",
+    "plain": "Once you can't be threatened, you stop whining and stop sucking up.",
+    "themes": [
+      "self-mastery",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "broke"
+    ]
+  },
+  {
+    "text": "We will pay no heed to what they have power to do, what we really care for they cannot touch.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 9",
+    "plain": "Care about what can't be taken and the powerful lose their hold on you.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Am I then, who can get from myself the gift of a noble and lofty spirit, to get from you a field or money or office?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 9",
+    "plain": "The best things come from inside. Why beg anyone for the lesser ones?",
+    "themes": [
+      "wealth",
+      "self-mastery"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "And in a word it is not death nor exile nor pain nor any such thing which is the cause of our action or inaction, but thoughts and judgements of the mind.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 11",
+    "plain": "It's never the event that moves you. It's what you tell yourself about it.",
+    "themes": [
+      "mind",
+      "fear"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "What punishment is there, you ask, for those who do not accept things in this spirit? Their punishment is to be as they are.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 12",
+    "plain": "Being discontent is its own punishment. Nobody needs to add one.",
+    "themes": [
+      "happiness",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ]
+  },
+  {
+    "text": "What do you mean by prison? he is in prison already; for a man's prison is the place that he is in against his will, just as, conversely, Socrates was not in prison, for he chose to be there.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 12",
+    "plain": "A cell is wherever you resent being. Choose your place and it stops being one.",
+    "themes": [
+      "mind",
+      "fate"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "Why, when you are alone you ought to call it peace and freedom and consider yourself the equal of the gods; when you are in a large company you should not call it a crowd or a mob or a nuisance, but a high-day and a festival, and so accept all things in a spirit of content.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 12",
+    "plain": "Alone is peace, crowded is a party. You pick the name.",
+    "themes": [
+      "solitude",
+      "happiness"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Rather give thanks to the gods that they set you above those things which they put out of your power, and made you responsible only for what is within your control.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 12",
+    "plain": "Be glad the weight of everything else isn't yours to carry.",
+    "themes": [
+      "fate",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Why then do you insist on dragging in these things for which you are not responsible? That is to make trouble for yourself.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 12",
+    "plain": "Stop picking up burdens that were never yours.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "The soldiers swear to respect no man above Caesar, but we to respect ourselves first of all.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 14",
+    "plain": "Your first loyalty is to your own standard.",
+    "themes": [
+      "self-mastery",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "If you say to me now, 'I want a fig', I shall answer that it needs time. Let it flower first, then put forth its fruit and then ripen.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 15",
+    "plain": "Anything worth having has to grow first. Quit demanding it overnight.",
+    "themes": [
+      "time",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "No, it is not what he threatens you with which compels you, but your decision that it is better to do what you are bidden than to die.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 17",
+    "plain": "Nobody forces you. You choose to obey because you fear the cost.",
+    "themes": [
+      "power",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Ought we then to be angry with them or to pity them? Only show them their error and you will see how they desist from their faults.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 18",
+    "plain": "People do wrong because they're confused. Pity works better than rage.",
+    "themes": [
+      "anger",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Why then are we angry? Because we admire the material things of which they rob us.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 18",
+    "plain": "Anger over stolen stuff comes from caring too much about stuff.",
+    "themes": [
+      "anger",
+      "wealth"
+    ],
+    "moments": [
+      "angry",
+      "broke"
+    ]
+  },
+  {
+    "text": "If you let them alone and count them as nothing you have no one to be angry with any more.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 18",
+    "plain": "Stop valuing what they can take and you have nobody left to hate.",
+    "themes": [
+      "anger",
+      "desire"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The truth is, a man loses only what he has.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 18",
+    "plain": "You can only lose what you were holding. Hold less tightly.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "angry"
+    ]
+  },
+  {
+    "text": "You ought to practise in small things and go on from them to greater.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 18",
+    "plain": "Train your composure on small annoyances before the big tests come.",
+    "themes": [
+      "discipline",
+      "self-mastery"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Do not say, 'Ah me!' And I do not mean that you may not groan, but do not groan in spirit.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 18",
+    "plain": "Feel the pain if you must. Don't let it crack you inside.",
+    "themes": [
+      "pain",
+      "self-mastery"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Who then is the man who is invincible? He whom nothing beyond his will can dismay.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 18",
+    "plain": "Unbeatable means nothing outside your control can rattle you.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "It is impossible for that which is free by nature to be disturbed or hindered by anything but itself. It is a man's own judgements which disturb him.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 19",
+    "plain": "Only your own opinions can knock you off balance.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "angry"
+    ]
+  },
+  {
+    "text": "Zeus gave me my freedom. Or do you think that he was likely to let his own son be enslaved? You are master of my dead body, take it.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 19",
+    "plain": "The tyrant owns a body at best. The person inside stays free.",
+    "themes": [
+      "power",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Write it on a stone and it will remain. But who will remember you outside Nicopolis?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 19",
+    "plain": "Fame is thin and local. Don't spend your life buying a name.",
+    "themes": [
+      "reputation",
+      "time"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "If you desire a crown at all, take a crown of roses and wear that: you will look smarter in that.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 19",
+    "plain": "Titles and trophies are costume jewelry. Pick the cheap one and move on.",
+    "themes": [
+      "reputation",
+      "desire"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Who are these by whom you wish to be admired? Are not these the men whom you generally describe as mad?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 21",
+    "plain": "Look at who you're trying to impress. Do you even respect them?",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Difficulties are what show men's character. Therefore when a difficult crisis meets you, remember that you are as the raw youth with whom God the trainer is wrestling.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 24",
+    "plain": "Hard times are your coach putting you through reps.",
+    "themes": [
+      "adversity",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "That you may win at Olympia: and that cannot be done without sweating for it.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 24",
+    "plain": "The prize costs sweat. There's no version without it.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Then take my poor body, every bit of it. The man to whom I can throw away my body has no fears for me.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 24",
+    "plain": "If you're ready to lose everything, nobody can threaten you.",
+    "themes": [
+      "courage",
+      "power"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Guard what is your own by all means, grasp not at the things of others.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 25",
+    "plain": "Protect your own character. Stop reaching for what's theirs.",
+    "themes": [
+      "desire",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "If I pay regard to my poor body, I have given myself over as a slave: and if I value my wretched property I am a slave, for thereby I show at once what power can master me.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 25",
+    "plain": "Whatever you can't stand to lose is your owner.",
+    "themes": [
+      "wealth",
+      "power"
+    ],
+    "moments": [
+      "broke",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Stand by a stone and slander it: what effect will you produce? If a man then listens like a stone, what advantage has the slanderer?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 25",
+    "plain": "Insults only land if you let them in.",
+    "themes": [
+      "reputation",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "It is easy enough in speculation to examine and refute the ignorant, but in practical life men do not submit themselves to be tested, and we hate the man who examines and exposes us.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 26",
+    "plain": "Talk is easy. Real life tests you, and you resent whoever shows it.",
+    "themes": [
+      "folly",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "I know a man who clung to the knees of Epaphroditus in tears and said he was in distress, for he had nothing left but a million and a half.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 26",
+    "plain": "Poor is relative. Distress comes from what you think you're owed.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "I cannot escape death: am I not to escape the fear of it? Am I to die in tears and trembling?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 27",
+    "plain": "You can't dodge death, but you can drop the dread.",
+    "themes": [
+      "death",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "When did Achilles fail? Was it when Patroclus died? God forbid: it was when he was angry, when he cried for a trumpery maiden, when he forgot that he was there not to win lady-loves, but to make war.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 28",
+    "plain": "The real defeat was losing his head and forgetting the mission.",
+    "themes": [
+      "anger",
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "tempted"
+    ]
+  },
+  {
+    "text": "How do you think then we should describe the man who takes no pains to discipline his impressions? What name do we give to those who follow everything that comes into their mind?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 28",
+    "plain": "If you act on every passing thought, you're not running your own life.",
+    "themes": [
+      "self-mastery",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "The will may conquer itself, but nothing else can conquer it.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 29",
+    "plain": "Only you can beat you.",
+    "themes": [
+      "self-mastery",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "If you did not learn your lesson to display it in action, what did you learn it for?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 29",
+    "plain": "Knowing it is worthless until you do it.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Am I to wear my life out idly in a corner, when I might win a crown at Olympia? When will some one bring me news of a contest like that?",
+    "work": "discourses",
+    "location": "Book 1, Chapter 29",
+    "plain": "Want the big test. Hiding in a corner wastes the training.",
+    "themes": [
+      "courage",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "No, a body is given you of such a kind, parents of such a kind, brothers of such a kind, a country of such a kind, a position in it of such a kind: and yet you come to me and say, 'Change the task set me.'",
+    "work": "discourses",
+    "location": "Book 1, Chapter 29",
+    "plain": "You got this hand. Quit asking for a different one and play it.",
+    "themes": [
+      "fate",
+      "adversity"
+    ],
+    "moments": [
+      "doubting",
+      "angry"
+    ]
+  },
+  {
+    "text": "No man is master of another man; his masters are only death and life, pleasure and pain.",
+    "work": "discourses",
+    "location": "Book 1, Chapter 29",
+    "plain": "What really rules you is fear of dying, craving comfort, and dodging pain.",
+    "themes": [
+      "power",
+      "pain",
+      "death"
+    ],
+    "moments": [
+      "tempted",
+      "afraid"
+    ]
+  },
+  {
+    "text": "For it is not death or pain which is a fearful thing, but the fear of pain or death.",
+    "work": "discourses",
+    "location": "Book 2, Chapter 1",
+    "plain": "The fear is worse than the thing.",
+    "themes": [
+      "fear",
+      "death",
+      "pain"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "What is death? A bogy. Turn it round and see what it is: you see it does not bite.",
+    "work": "discourses",
+    "location": "Book 2, Chapter 1",
+    "plain": "Death is a mask that scares kids. Look at it closely and it's harmless.",
+    "themes": [
+      "death",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "What is pain? A bogy. Turn it round and see what it is.",
+    "work": "discourses",
+    "location": "Book 2, Chapter 1",
+    "plain": "Look straight at the pain and it shrinks to its real size.",
+    "themes": [
+      "pain",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "What else is freedom but power to pass our life as we will?",
+    "work": "discourses",
+    "location": "Book 2, Chapter 1",
+    "plain": "Freedom is living the way you choose.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Have you not a master in money, a girl lover or a boy lover, the tyrant, or a friend of the tyrant? If not, why do you tremble when you go away to face a crisis of this sort?",
+    "work": "discourses",
+    "location": "Book 2, Chapter 1",
+    "plain": "If money, lust, and power don't own you, you have nothing to shake about.",
+    "themes": [
+      "wealth",
+      "desire",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Don't be drawn this way and that, wishing to be a slave one moment and free another, but be this or that simply and with all your mind, free or slave, philosopher or unenlightened, a fighting cock of spirit, or one of no spirit; either bear stroke after stroke patiently till you die, or give way at once.",
+    "work": "discourses",
+    "location": "Book 2, Chapter 2",
+    "plain": "Pick a side and commit. Half-commitment gets you beaten and then you quit anyway.",
+    "themes": [
+      "discipline",
+      "courage",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "And who is your master? He who has authority over any of those things on which you set your heart or which you will to avoid.",
+    "work": "discourses",
+    "location": "Book 2, Chapter 2",
+    "plain": "Whoever controls what you crave or dread controls you.",
+    "themes": [
+      "power",
+      "desire"
+    ],
+    "moments": [
+      "tempted",
+      "afraid"
+    ]
+  }
+]

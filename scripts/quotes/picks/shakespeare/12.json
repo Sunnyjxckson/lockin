@@ -1,0 +1,486 @@
+[
+  {
+    "text": "Well, whiles I am a beggar, I will rail\nAnd say there is no sin but to be rich;\nAnd being rich, my virtue then shall be\nTo say there is no vice but beggary.\nSince kings break faith upon commodity,\nGain, be my lord, for I will worship thee!",
+    "work": "plays",
+    "location": "King John, Act 2 Scene 1",
+    "plain": "If I'm broke I'll sneer at money. If I'm rich I'll sneer at poverty. Self-interest wins out.",
+    "themes": [
+      "wealth",
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Here I and sorrows sit;\nHere is my throne, bid kings come bow to it.",
+    "work": "plays",
+    "location": "King John, Act 3 Scene 1",
+    "plain": "I'll sit with my grief and make it my throne. Let the powerful come to me.",
+    "themes": [
+      "pain",
+      "power",
+      "solitude"
+    ],
+    "moments": [
+      "alone",
+      "angry"
+    ]
+  },
+  {
+    "text": "No, no; when Fortune means to men most good,\nShe looks upon them with a threat’ning eye.",
+    "work": "plays",
+    "location": "King John, Act 3 Scene 4",
+    "plain": "Luck often looks at you with a threatening face right before it favors you.",
+    "themes": [
+      "fate",
+      "adversity"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "A sceptre snatch’d with an unruly hand\nMust be boisterously maintain’d as gain’d.\nAnd he that stands upon a slipp’ry place\nMakes nice of no vile hold to stay him up.",
+    "work": "plays",
+    "location": "King John, Act 3 Scene 4",
+    "plain": "Seize something by force and you must keep using force. Standing on slippery ground, you grab any hold.",
+    "themes": [
+      "power",
+      "folly",
+      "fear"
+    ],
+    "moments": [
+      "tempted",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Life is as tedious as a twice-told tale\nVexing the dull ear of a drowsy man;\nAnd bitter shame hath spoil’d the sweet world’s taste,\nThat it yields nought but shame and bitterness.",
+    "work": "plays",
+    "location": "King John, Act 3 Scene 4",
+    "plain": "When joy is gone, life drags like a story told twice to a sleepy man.",
+    "themes": [
+      "pain",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "alone"
+    ]
+  },
+  {
+    "text": "I am not mad; too well, too well I feel\nThe different plague of each calamity.",
+    "work": "plays",
+    "location": "King John, Act 3 Scene 4",
+    "plain": "I'm not mad. I feel every kind of pain too clearly.",
+    "themes": [
+      "pain",
+      "mind"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Grief fills the room up of my absent child,\nLies in his bed, walks up and down with me,\nPuts on his pretty looks, repeats his words,\nRemembers me of all his gracious parts,\nStuffs out his vacant garments with his form;\nThen have I reason to be fond of grief?",
+    "work": "plays",
+    "location": "King John, Act 3 Scene 4",
+    "plain": "Grief moves in where the person used to be, fills the room, and keeps you company.",
+    "themes": [
+      "pain",
+      "love"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "To gild refined gold, to paint the lily,\nTo throw a perfume on the violet,\nTo smooth the ice, or add another hue\nUnto the rainbow, or with taper-light\nTo seek the beauteous eye of heaven to garnish,\nIs wasteful and ridiculous excess.",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 2",
+    "plain": "Gilding gold and painting lilies is waste. Don't polish what is already fine.",
+    "themes": [
+      "folly",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "When workmen strive to do better than well,\nThey do confound their skill in covetousness;\nAnd oftentimes excusing of a fault\nDoth make the fault the worse by the excuse,\nAs patches set upon a little breach\nDiscredit more in hiding of the fault\nThan did the fault before it was so patch’d.",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 2",
+    "plain": "Overworking something to make it better often ruins it. Excuses and patches make the flaw worse.",
+    "themes": [
+      "folly",
+      "work"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "We cannot hold mortality’s strong hand.",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 2",
+    "plain": "No one can hold back death's hand.",
+    "themes": [
+      "death",
+      "fate"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Think you I bear the shears of destiny?\nHave I commandment on the pulse of life?",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 2",
+    "plain": "Do you think I hold the shears of fate? Do I command the pulse of life?",
+    "themes": [
+      "fate",
+      "power"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "There is no sure foundation set on blood,\nNo certain life achiev’d by others’ death.",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 2",
+    "plain": "Nothing built on blood stands. You can't make a life out of someone else's loss.",
+    "themes": [
+      "power",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "How oft the sight of means to do ill deeds\nMake deeds ill done!",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 2",
+    "plain": "Seeing a chance to do wrong makes the wrong happen. Avoid the opening.",
+    "themes": [
+      "desire",
+      "folly",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Be great in act, as you have been in thought;\nLet not the world see fear and sad distrust\nGovern the motion of a kingly eye.",
+    "work": "plays",
+    "location": "King John, Act 5 Scene 1",
+    "plain": "Act as big as you thought. Don't let anyone see fear steer you.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Be stirring as the time; be fire with fire;\nThreaten the threat’ner, and outface the brow\nOf bragging horror.",
+    "work": "plays",
+    "location": "King John, Act 5 Scene 1",
+    "plain": "Match the moment, answer fire with fire, and stare down whatever is blustering at you.",
+    "themes": [
+      "courage",
+      "adversity"
+    ],
+    "moments": [
+      "afraid",
+      "angry"
+    ]
+  },
+  {
+    "text": "I am amaz’d, methinks, and lose my way\nAmong the thorns and dangers of this world.",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 3",
+    "plain": "I'm dazed and lost among the thorns and dangers of this world.",
+    "themes": [
+      "mind",
+      "adversity"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Now happy he whose cloak and cincture can\nHold out this tempest.",
+    "work": "plays",
+    "location": "King John, Act 4 Scene 3",
+    "plain": "Lucky is whoever can weather this storm.",
+    "themes": [
+      "adversity",
+      "fate"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "Even so must I run on, and even so stop.\nWhat surety of the world, what hope, what stay,\nWhen this was now a king, and now is clay?",
+    "work": "plays",
+    "location": "King John, Act 5 Scene 7",
+    "plain": "I will run on and then stop. What can you rely on, when a king is clay a moment later?",
+    "themes": [
+      "death",
+      "time",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Nought shall make us rue,\nIf England to itself do rest but true.",
+    "work": "plays",
+    "location": "King John, Act 5 Scene 7",
+    "plain": "Nothing breaks us as long as we stay true to ourselves.",
+    "themes": [
+      "self-mastery",
+      "courage"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Men at some time are masters of their fates:\nThe fault, dear Brutus, is not in our stars,\nBut in ourselves, that we are underlings.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 1 Scene 2",
+    "plain": "We make our own fate. The fault is not in our stars but in ourselves.",
+    "themes": [
+      "fate",
+      "self-mastery",
+      "courage"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Why, man, he doth bestride the narrow world\nLike a Colossus, and we petty men\nWalk under his huge legs, and peep about\nTo find ourselves dishonourable graves.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 1 Scene 2",
+    "plain": "One man looks like a giant because the rest of us walk around looking up.",
+    "themes": [
+      "power",
+      "folly",
+      "fear"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "If it be aught toward the general good,\nSet honour in one eye and death i’ the other,\nAnd I will look on both indifferently;\nFor let the gods so speed me as I love\nThe name of honour more than I fear death.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 1 Scene 2",
+    "plain": "Put honor in one eye and death in the other and look at both calmly.",
+    "themes": [
+      "courage",
+      "death",
+      "reputation"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Let me have men about me that are fat,\nSleek-headed men, and such as sleep a-nights:\nYond Cassius has a lean and hungry look;\nHe thinks too much: such men are dangerous.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 1 Scene 2",
+    "plain": "Beware the lean, thoughtful man who sleeps badly. He thinks too much.",
+    "themes": [
+      "mind",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "I rather tell thee what is to be fear’d\nThan what I fear; for always I am Caesar.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 1 Scene 2",
+    "plain": "I tell you what is to be feared rather than what I fear.",
+    "themes": [
+      "fear",
+      "power"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Such men as he be never at heart’s ease\nWhiles they behold a greater than themselves,\nAnd therefore are they very dangerous.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 1 Scene 2",
+    "plain": "Some people are never at ease around someone greater than themselves, and that makes them dangerous.",
+    "themes": [
+      "desire",
+      "power",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Those that with haste will make a mighty fire\nBegin it with weak straws.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 1 Scene 3",
+    "plain": "Big fires start with weak straws.",
+    "themes": [
+      "change",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "It is the bright day that brings forth the adder,\nAnd that craves wary walking.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 1",
+    "plain": "It is the bright day that brings out the snake. Walk carefully.",
+    "themes": [
+      "fear",
+      "power",
+      "mind"
+    ],
+    "moments": [
+      "tempted",
+      "afraid"
+    ]
+  },
+  {
+    "text": "But ’tis a common proof,\nThat lowliness is young ambition’s ladder,\nWhereto the climber-upward turns his face;\nBut when he once attains the upmost round,\nHe then unto the ladder turns his back,\nLooks in the clouds, scorning the base degrees\nBy which he did ascend.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 1",
+    "plain": "The climber is humble on the way up, then turns his back on the ladder once he is on top.",
+    "themes": [
+      "power",
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Good gentlemen, look fresh and merrily;\nLet not our looks put on our purposes,\nBut bear it as our Roman actors do,\nWith untired spirits and formal constancy.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 1",
+    "plain": "Look fresh and merry. Keep your plans off your face and carry on with an untired spirit.",
+    "themes": [
+      "self-mastery",
+      "courage",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Cowards die many times before their deaths;\nThe valiant never taste of death but once.\nOf all the wonders that I yet have heard,\nIt seems to me most strange that men should fear,\nSeeing that death, a necessary end,\nWill come when it will come.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 2",
+    "plain": "Cowards die a thousand times, the brave once. Death comes when it comes, so fearing it is strange.",
+    "themes": [
+      "death",
+      "fear",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "When beggars die, there are no comets seen;\nThe heavens themselves blaze forth the death of princes.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 2",
+    "plain": "The heavens announce the deaths of princes, not the deaths of beggars.",
+    "themes": [
+      "death",
+      "power",
+      "fate"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Cannot, is false; and that I dare not, falser:\nI will not come today. Tell them so, Decius.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 2",
+    "plain": "I can't means I won't. I dare not means I'm afraid. Say which.",
+    "themes": [
+      "self-mastery",
+      "fear",
+      "courage"
+    ],
+    "moments": [
+      "tempted",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Caesar shall forth. The things that threaten’d me\nNe’er look’d but on my back; when they shall see\nThe face of Caesar, they are vanished.",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 2",
+    "plain": "The threats behind me never showed their face once I turned and looked at them.",
+    "themes": [
+      "courage",
+      "fear",
+      "folly"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "What need we any spur but our own cause\nTo prick us to redress?",
+    "work": "plays",
+    "location": "Julius Caesar, Act 2 Scene 1",
+    "plain": "You don't need a speech to move. You already have your cause.",
+    "themes": [
+      "work",
+      "courage",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  }
+]

@@ -50,8 +50,11 @@ Do the steps in order. Every environment variable below goes in Vercel under Pro
    12. `0012_coach_note_basis.sql` (what a morning brief was written from, so it is rewritten when the challenge changes)
    13. `0013_tracks_and_name.sql` (the track each checklist item counts toward, and the name Today greets)
    14. `0014_coach_chat.sql` (the coach chat: one row per message, plus the coach's voice and check-ins in settings)
+   15. `0015_library.sql` (the Library: one row per quote you read or save, where the reader was left, and the philosophy drops setting)
 
    With the Supabase CLI linked to the project, `supabase db push` runs them all in order.
+
+   **Already running the app? Add the Library.** Open the Supabase dashboard, SQL editor, New query, paste the whole of `supabase/migrations/0015_library.sql`, and press Run. It is safe to run once and needs nothing else. Until you do, Today, Settings and everything else work as before, the Library shows one line saying to run the file, and Philosophy drops cannot be switched on (Settings, Reminders says so). After it runs, reopen the app.
 3. From Project settings, API, copy the project URL and the `service_role` key.
 
 | Variable | Value |

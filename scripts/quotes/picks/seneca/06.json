@@ -1,0 +1,990 @@
+[
+  {
+    "text": "If you ask me, I think that for a man there is no misery unless there be something in the universe which he thinks miserable.",
+    "work": "letters",
+    "location": "Letter 96",
+    "plain": "Things only wreck you if you decide they do.",
+    "themes": [
+      "mind",
+      "adversity"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "A long life includes all these troubles, just as a long journey includes dust and mud and rain.",
+    "work": "letters",
+    "location": "Letter 96",
+    "plain": "You asked for a long life, so you asked for the hard parts too.",
+    "themes": [
+      "adversity",
+      "time"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "The road to vice is not only downhill, but steep; and many men are rendered incorrigible by the fact that, while in all other crafts errors bring shame to good craftsmen and cause vexation to those who go astray, the errors of life are a positive source of pleasure.",
+    "work": "letters",
+    "location": "Letter 97",
+    "plain": "Bad habits feel good while you do them, which is why they are so hard to quit.",
+    "themes": [
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "A good conscience, however, wishes to come forth and be seen of men; wickedness fears the very shadows.",
+    "work": "letters",
+    "location": "Letter 97",
+    "plain": "If you are proud of what you do, you have nothing to hide.",
+    "themes": [
+      "mind",
+      "reputation"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Good luck frees many men from punishment, but no man from fear.",
+    "work": "letters",
+    "location": "Letter 97",
+    "plain": "You can get away with it and still never relax.",
+    "themes": [
+      "fear",
+      "mind"
+    ],
+    "moments": [
+      "tempted",
+      "afraid"
+    ]
+  },
+  {
+    "text": "You need never believe that anyone who depends upon happiness is happy!",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "If your joy depends on things outside you, it is not really yours.",
+    "themes": [
+      "happiness",
+      "fate"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "It is tragic for the soul to be apprehensive of the future and wretched in anticipation of wretchedness, consumed with an anxious desire that the objects which give pleasure may remain in its possession to the very end.",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "Dreading the loss of what you have wrecks the enjoyment of having it.",
+    "themes": [
+      "fear",
+      "desire"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "And there is no difference between grief for something lost and the fear of losing it.",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "Fearing a loss already hurts like the loss.",
+    "themes": [
+      "fear",
+      "pain"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "And there is nothing more wretched or foolish than premature fear. What madness it is to anticipate one’s troubles!",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "Stop suffering in advance for things that may never happen.",
+    "themes": [
+      "fear",
+      "folly"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "He who can bear Fortune, can also beware of Fortune.",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "If you can take a hit, you are better at dodging one.",
+    "themes": [
+      "courage",
+      "fate"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "To have may be taken from us, to have had, never.",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "What you had and enjoyed cannot be undone.",
+    "themes": [
+      "time",
+      "pain"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "We must lose our lives as surely as we lose our property, and this, if we understand the truth, is itself a consolation. Lose it with equanimity; for you must lose your life also.",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "You will lose everything anyway, so lose things calmly.",
+    "themes": [
+      "death",
+      "wealth"
+    ],
+    "moments": [
+      "broke",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Chance robs us of the thing, but leaves us its use and its enjoyment—and we have lost this if we are so unfair as to regret.",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "Luck takes the thing but not the good you got from it, unless you waste that on regret.",
+    "themes": [
+      "fate",
+      "pain"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Pain he endures, death he awaits.",
+    "work": "letters",
+    "location": "Letter 98",
+    "plain": "Take pain head on and meet death calmly.",
+    "themes": [
+      "pain",
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "The past is ours, and there is nothing more secure for us than that which has been.",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "Nobody can take back what already happened to you.",
+    "themes": [
+      "time",
+      "pain"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Periods of time separate us, but death levels us.",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "Age and rank separate us for now, death makes us equal.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Whoever complains about the death of anyone, is complaining that he was a man.",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "Griefing that people die is arguing with being human.",
+    "themes": [
+      "death",
+      "pain"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Life is neither a Good nor an Evil; it is simply the place where good and evil exist.",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "Life is the arena, not the verdict. What you do in it decides.",
+    "themes": [
+      "mind",
+      "adversity"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Yours is not pain; it is a mere sting—and it is you yourself who are turning it into pain.",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "A lot of what you call suffering is you inflating a small hit.",
+    "themes": [
+      "pain",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "And yet all men complain about the one thing wherein none of them is deceived.",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "Death is the one promise life keeps, and we still complain.",
+    "themes": [
+      "death",
+      "folly"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "The display of grief makes more demands than grief itself: how few men are sad in their own company!",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "Much of our show of pain is for the audience.",
+    "themes": [
+      "pain",
+      "reputation"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Everything is slippery, treacherous, and more shifting than any weather.",
+    "work": "letters",
+    "location": "Letter 99",
+    "plain": "Nothing stays put, so do not build on it staying the same.",
+    "themes": [
+      "change",
+      "fate"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "O what madness it is to plot out far-reaching hopes!",
+    "work": "letters",
+    "location": "Letter 101",
+    "plain": "Do not stake your whole life on a future you do not own.",
+    "themes": [
+      "time",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "No one has any right to draw for himself upon the future.",
+    "work": "letters",
+    "location": "Letter 101",
+    "plain": "Tomorrow is not yours to spend yet.",
+    "themes": [
+      "time",
+      "death"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Time does indeed roll along by fixed law, but as in darkness; and what is it to me whether Nature’s course is sure, when my own is unsure?",
+    "work": "letters",
+    "location": "Letter 101",
+    "plain": "Time keeps its schedule, but you do not know yours.",
+    "themes": [
+      "time",
+      "death"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Let us postpone nothing. Let us balance life’s account every day.",
+    "work": "letters",
+    "location": "Letter 101",
+    "plain": "Close out each day as if it could be the last.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The greatest flaw in life is that it is always imperfect, and that a certain part of it is postponed.",
+    "work": "letters",
+    "location": "Letter 101",
+    "plain": "The thing that ruins a life is putting parts of it off.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "We must get rid of this craving for life, and learn that it makes no difference when your suffering comes, because at some time you are bound to suffer.",
+    "work": "letters",
+    "location": "Letter 101",
+    "plain": "Suffering is coming either way, so stop bargaining for more time.",
+    "themes": [
+      "death",
+      "pain"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "The point is, not how long you live, but how nobly you live.",
+    "work": "letters",
+    "location": "Letter 101",
+    "plain": "Length of life matters less than how you live it.",
+    "themes": [
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "That day, which you fear as being the end of all things, is the birthday of your eternity.",
+    "work": "letters",
+    "location": "Letter 102",
+    "plain": "The day you dread may be a beginning.",
+    "themes": [
+      "death",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Survey everything that lies about you, as if it were luggage in a guest-chamber: you must travel on.",
+    "work": "letters",
+    "location": "Letter 102",
+    "plain": "You are a guest here. Hold your stuff loosely.",
+    "themes": [
+      "wealth",
+      "death"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "Nature strips you as bare at your departure as at your entrance.",
+    "work": "letters",
+    "location": "Letter 102",
+    "plain": "You leave with nothing, same as you came.",
+    "themes": [
+      "death",
+      "wealth"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "Nothing has corrupted oratory and all other studies that depend on hearing so much as popular approval.",
+    "work": "letters",
+    "location": "Letter 102",
+    "plain": "Chasing applause ruins the work.",
+    "themes": [
+      "reputation",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Why are you looking about for troubles which may perhaps come your way, but which may indeed not come your way at all?",
+    "work": "letters",
+    "location": "Letter 103",
+    "plain": "You are scanning for disasters that probably will not arrive.",
+    "themes": [
+      "fear",
+      "mind"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "A man may be wise without parade and without arousing enmity.",
+    "work": "letters",
+    "location": "Letter 103",
+    "plain": "Be good at what you do quietly.",
+    "themes": [
+      "reputation",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "That from which you are running, is within you.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "What you are running from travels with you.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Your ambition will be so frenzied that you will regard yourself last in the race if there is anyone in front of you.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "Comparison makes you feel poor and behind no matter how far you have come.",
+    "themes": [
+      "desire",
+      "wealth"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "If you are wise, mingle these two elements: do not hope without despair, or despair without hope.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "Expect the worst while hoping for the best, and never fully either one.",
+    "themes": [
+      "mind",
+      "fate"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Others are snatched from sight; we ourselves are being stealthily filched away from ourselves.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "You are changing and losing time every day too, you just do not see it.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Regard everything that pleases you as if it were a flourishing plant; make the most of it while it is in leaf, for different plants at different seasons must fall and die.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "Enjoy what you have while it is green.",
+    "themes": [
+      "change",
+      "time"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "It is medicine, not scenery, for which the sick man must go a-searching.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "A change of scenery will not heal what is wrong with you.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "The only harbour safe from the seething storms of this life is scorn of the future, a firm stand, a readiness to receive Fortune’s missiles full in the breast, neither skulking nor turning the back.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "Safety is stopping fearing what comes and standing your ground.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Many a sight that is held a terror in the night-time, is turned to ridicule by day.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "Fears shrink once you look at them in daylight.",
+    "themes": [
+      "fear",
+      "mind"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Our lack of confidence is not the result of difficulty; the difficulty comes from our lack of confidence.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "It is not hard, you just doubt yourself.",
+    "themes": [
+      "courage",
+      "mind"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "If you set a high value on liberty, you must set a low value on everything else.",
+    "work": "letters",
+    "location": "Letter 104",
+    "plain": "Freedom costs you the need for stuff.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "tempted",
+      "broke"
+    ]
+  },
+  {
+    "text": "Nothing, however, will help you so much as keeping still—talking very little with others, and as much as may be with yourself.",
+    "work": "letters",
+    "location": "Letter 105",
+    "plain": "Talk less, and spend time with your own thoughts.",
+    "themes": [
+      "solitude",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "alone"
+    ]
+  },
+  {
+    "text": "You will escape envy if you do not force yourself upon the public view, if you do not boast your possessions, if you understand how to enjoy things privately.",
+    "work": "letters",
+    "location": "Letter 105",
+    "plain": "Do not flaunt it and people will leave you alone.",
+    "themes": [
+      "reputation",
+      "wealth"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The most important contribution to peace of mind is never to do wrong.",
+    "work": "letters",
+    "location": "Letter 105",
+    "plain": "A clean conscience is the first step to calm.",
+    "themes": [
+      "mind",
+      "happiness"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Whoever expects punishment, receives it, but whoever deserves it, expects it.",
+    "work": "letters",
+    "location": "Letter 105",
+    "plain": "If you did wrong, you will spend your days waiting for the hit.",
+    "themes": [
+      "mind",
+      "fear"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "No man is at the mercy of affairs. He gets entangled in them of his own accord, and then flatters himself that being busy is a proof of happiness.",
+    "work": "letters",
+    "location": "Letter 106",
+    "plain": "Being busy is a choice, and it is not the same as being happy.",
+    "themes": [
+      "work",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "Just as we suffer from excess in all things, so we suffer from excess in literature; thus we learn our lessons, not for life, but for the lecture-room.",
+    "work": "letters",
+    "location": "Letter 106",
+    "plain": "Do not study to sound smart. Learn to live.",
+    "themes": [
+      "work",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Life is not a dainty business.",
+    "work": "letters",
+    "location": "Letter 107",
+    "plain": "Life is rough, so expect that.",
+    "themes": [
+      "adversity"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Everyone approaches courageously a danger which he has prepared himself to meet long before, and withstands even hardships if he has previously practised how to meet them.",
+    "work": "letters",
+    "location": "Letter 107",
+    "plain": "Rehearse the hard thing ahead of time and it loses its power.",
+    "themes": [
+      "discipline",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "Whatever happens, assume that it was bound to happen, and do not be willing to rail at Nature.",
+    "work": "letters",
+    "location": "Letter 107",
+    "plain": "It was always going to happen, so stop fighting reality.",
+    "themes": [
+      "fate",
+      "anger"
+    ],
+    "moments": [
+      "angry",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Let us live thus, and speak thus; let Fate find us ready and alert.",
+    "work": "letters",
+    "location": "Letter 107",
+    "plain": "Be ready when it hits.",
+    "themes": [
+      "fate",
+      "discipline"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "You have started on a long journey; you are bound to slip, collide, fall, become weary, and cry out: “O for Death!”—or in other words, tell lies.",
+    "work": "letters",
+    "location": "Letter 107",
+    "plain": "You will fall and want to quit. Expect it and do not mean it.",
+    "themes": [
+      "adversity",
+      "courage"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Absorb not all that you wish, but all that you can hold.",
+    "work": "letters",
+    "location": "Letter 108",
+    "plain": "Take on only what you can carry.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Let every day, as soon as it comes, be welcome as being the choicest, and let it be made our own possession. We must catch that which flees.",
+    "work": "letters",
+    "location": "Letter 108",
+    "plain": "Grab each day, because it is leaving.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "We should so learn them that words may become deeds.",
+    "work": "letters",
+    "location": "Letter 108",
+    "plain": "Only learning that turns into action counts.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "One must steer, not talk.",
+    "work": "letters",
+    "location": "Letter 108",
+    "plain": "Do the work, do not talk about it.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "I shall show you how men can prove their words to be their own: it is by doing what they have been talking about.",
+    "work": "letters",
+    "location": "Letter 108",
+    "plain": "Your words are yours only when you act on them.",
+    "themes": [
+      "work",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The poor lack much; the greedy man lacks all.",
+    "work": "letters",
+    "location": "Letter 108",
+    "plain": "Greed leaves you with nothing, no matter how much you have.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "None of us has sifted out the truth; we have passed fear on to one another; none has dared to approach the object which caused his dread, and to understand the nature of his fear—aye, the good behind it.",
+    "work": "letters",
+    "location": "Letter 110",
+    "plain": "Most fear is inherited and never examined.",
+    "themes": [
+      "fear",
+      "mind"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "What is necessary will meet you everywhere; what is superfluous has always to be hunted out—and with great endeavour.",
+    "work": "letters",
+    "location": "Letter 110",
+    "plain": "What you need is easy to find. Wants take a long chase.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "The time to admire your own conduct is when you have come to despise the necessities.",
+    "work": "letters",
+    "location": "Letter 110",
+    "plain": "Giving up luxuries is easy. Mastery is not needing the basics.",
+    "themes": [
+      "self-mastery",
+      "wealth"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Why wonder? Why gape in astonishment? It is all show; such things are displayed, not possessed; while they please they pass away.",
+    "work": "letters",
+    "location": "Letter 110",
+    "plain": "Flashy wealth is for show and it fades.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "I came to despise riches, not because of their uselessness, but because of their pettiness.",
+    "work": "letters",
+    "location": "Letter 110",
+    "plain": "Wealth is not evil, it is small.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "If you are willing to think often of these things, you will strive not to seem happy, but to be happy, and, in addition, to seem happy to yourself rather than to others.",
+    "work": "letters",
+    "location": "Letter 110",
+    "plain": "Be happy for real, not for show.",
+    "themes": [
+      "happiness",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Men love and hate their vices at the same time.",
+    "work": "letters",
+    "location": "Letter 112",
+    "plain": "You can hate a habit and still want it.",
+    "themes": [
+      "desire",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Self-Command is the greatest command of all.",
+    "work": "letters",
+    "location": "Letter 113",
+    "plain": "Ruling yourself is the biggest power there is.",
+    "themes": [
+      "self-mastery",
+      "power"
+    ],
+    "moments": [
+      "angry",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Those who wish their virtue to be advertised are not striving for virtue but for renown.",
+    "work": "letters",
+    "location": "Letter 113",
+    "plain": "Doing good for applause is chasing fame, not goodness.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "You need not look about for the reward of a just deed; a just deed in itself offers a still greater return.",
+    "work": "letters",
+    "location": "Letter 113",
+    "plain": "Doing right is its own payment.",
+    "themes": [
+      "work",
+      "happiness"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "There are never any occasions when you need think yourself safe because you wield the weapons of Fortune; fight with your own!",
+    "work": "letters",
+    "location": "Letter 113",
+    "plain": "Do not rely on luck or borrowed advantages. Build your own.",
+    "themes": [
+      "self-mastery",
+      "fate"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "And what is Bravery? It is the impregnable fortress for our mortal weakness; when a man has surrounded himself therewith, he can hold out free from anxiety during life’s siege; for he is using his own strength and his own weapons.",
+    "work": "letters",
+    "location": "Letter 113",
+    "plain": "Courage is the fort that protects you from everything else.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  }
+]

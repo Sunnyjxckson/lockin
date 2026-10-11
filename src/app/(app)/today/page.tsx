@@ -33,6 +33,7 @@ import BodyTodaySlot from "@/features/body/TodaySlot";
 import { BoardEntry } from "@/features/boards/TodayEntry";
 import CoachTodaySlot from "@/features/coach/TodaySlot";
 import { FocusAction } from "@/features/focus/TodaySlot";
+import RoughDayEntry from "@/features/library/RoughDay";
 import { EarnedAction } from "@/features/money/TodaySlot";
 import ScheduleTodaySlot from "@/features/schedule/TodaySlot";
 import VicesTodaySlot from "@/features/vices/TodaySlot";
@@ -260,6 +261,8 @@ export default function TodayPage() {
       ...workoutLines(r.item.key),
     };
     if ((r.item.key === "calories" || r.item.key === "protein") && meals.data.length > 0) return <LinkedNumberTile key={r.item.id} {...props} href="/body" from="meals" />;
+    // The reading habit counts quotes read; the tile opens the reader.
+    if (r.item.key === "read_quotes") return <LinkedNumberTile key={r.item.id} {...props} href="/library/read" from="the Library" opens="the Library" />;
     // The focus timer feeds the study item: a way in while idle, the clock while it runs.
     const corner = r.item.key === "study" && r.item.type === "yesno" && isToday ? <FocusAction runningOnly={!editable} /> : undefined;
     return <ChecklistTile key={r.item.id} {...props} corner={corner} />;
@@ -460,7 +463,10 @@ export default function TodayPage() {
           )}
         </div>
         <div className="mt-1 flex min-h-11 items-center justify-between">
-          {isToday && editable ? <VicesTodaySlot /> : <span />}
+          <div className="flex items-center gap-4">
+            {isToday && editable ? <VicesTodaySlot /> : null}
+            {isToday ? <RoughDayEntry /> : null}
+          </div>
           {filter ? (
             <button type="button" onClick={() => setOnly(null)} className="pressable min-h-11 px-1 text-[13px] text-ink-2 underline decoration-hair underline-offset-4">
               Show all {summary?.total ?? ""}

@@ -92,7 +92,9 @@ export async function upgradeLocalData(): Promise<void> {
     const rest = missing<AppSettings>(settings, { weekly_food_budget: null, food_likes: [], food_dislikes: [], focus_goal_minutes: 60, business_goal: null, display_name: "Sunny" });
     // 0014: the coach's voice and its check-ins, the same defaults the SQL migration and the seed give.
     const coach = missing<AppSettings>(settings, { coach_voice: "stoic", coach_checkins: { post_workout: true, slip: true, missed_item: true } });
-    if (patch || rest || coach) await db.update("app_settings", "app", { ...patch, ...rest, ...coach });
+    // 0015: where the Library reader was left, and the philosophy drops (off, three a day).
+    const library = missing<AppSettings>(settings, { library_position: null, drops_enabled: false, drops_per_day: 3 });
+    if (patch || rest || coach || library) await db.update("app_settings", "app", { ...patch, ...rest, ...coach, ...library });
   }
 
   // 0009: focus sessions carry their away numbers and the running state.

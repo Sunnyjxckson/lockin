@@ -1,0 +1,298 @@
+[
+ {
+  "file": "01.json",
+  "text_start": "Many die too late, and some die too early. Yet strange sound",
+  "action": "drop",
+  "reason": "chosen death"
+ },
+ {
+  "file": "01.json",
+  "text_start": "Life is a well of delight; but where the rabble also drink, ",
+  "action": "drop",
+  "reason": "contempt group"
+ },
+ {
+  "file": "01.json",
+  "text_start": "The body is a big sagacity, a plurality with one sense, a wa",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "02.json",
+  "text_start": "The earth, said he, hath a skin; and this skin hath diseases",
+  "action": "drop",
+  "reason": "contempt group"
+ },
+ {
+  "file": "02.json",
+  "text_start": "Ye shall only have foes to be hated; but not foes to be desp",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "02.json",
+  "text_start": "Ah, where in the world have there been greater follies than ",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "02.json",
+  "text_start": "It is difficult to live amongst men, because silence is so d",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "02.json",
+  "text_start": "God is dead: of his pity for man hath God died.",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "03.json",
+  "text_start": "The formula of my happiness: a Yea, a Nay, a straight line, ",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "03.json",
+  "text_start": "‘Was THAT—life?’ will I say unto death.",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "03.json",
+  "text_start": "Only degenerates find radical methods indispensable: weaknes",
+  "action": "drop",
+  "reason": "contempt group"
+ },
+ {
+  "file": "03.json",
+  "text_start": "“This is true,” he said, “but I overcame them all.”",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "03.json",
+  "text_start": "One thing however do I know,—from thyself did I learn it onc",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "04.json",
+  "text_start": "One should die proudly when it is no longer possible to live",
+  "action": "drop",
+  "reason": "chosen death"
+ },
+ {
+  "file": "04.json",
+  "text_start": "After all, it is courage in the face of reality that disting",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "04.json",
+  "text_start": "The saying of Yea to life, including even its most strange a",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "04.json",
+  "text_start": "Almost everything that coarse popular language characterises",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "05.json",
+  "text_start": "They rule, not because they will, but because they are; they",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "What is bad? But I have already replied to this: Everything ",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "05.json",
+  "text_start": "“And when a man goeth through fire for his teaching—what doe",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "05.json",
+  "text_start": "What I mean here by the word philology is, in a general sens",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Everybody knows this, and nevertheless everything remains as",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "If ye decide for the former, if ye therefore want to depress",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Living—that is to continually eliminate from ourselves what ",
+  "action": "drop",
+  "reason": "contempt group"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Since then mountains and torrents, and whatever separates an",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "When, however, you now remember that small plank, you have n",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "05.json",
+  "text_start": "Such happiness could only have been devised by a chronic suf",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "What is really feared there? Isolation! as the argument whic",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "Hitherto, therefore, it has been the rare in man, and the un",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "If these distress-seekers felt the power to benefit themselv",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "\"Ah! mon ami,\" he said to Sieyès, \"je m'en vais enfin de ce ",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "But times will come when thou wilt feel that it is infinite,",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "Is not the magnitude of this deed too great for us? Shall we",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "He is now poor, but not because everything has been taken fr",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "He is wholly without envy, but there is no merit therein: fo",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "06.json",
+  "text_start": "The others must first acquire the belief for themselves: eve",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "He wishes to succour, and does not reflect that there is a p",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "If that thought acquired power over thee, as thou art, it wo",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "07.json",
+  "text_start": "The most important of more recent events—that \"God is dead,\"",
+  "action": "drop",
+  "reason": "dup"
+ },
+ {
+  "file": "07.json",
+  "text_start": "Reversely, one could imagine a delight and a power of self-d",
+  "action": "drop",
+  "reason": "no standalone"
+ },
+ {
+  "file": "02.json",
+  "text_start": "And such is always the nature of weak men: they lose themsel",
+  "action": "fix",
+  "plain": "People who go soft lose the thread, then call the whole trip pointless.",
+  "reason": "plain line"
+ },
+ {
+  "file": "02.json",
+  "text_start": "Why so soft, so submissive and yielding? Why is there so muc",
+  "action": "fix",
+  "plain": "You have gone too soft to want anything big. Get some destiny back in your eyes.",
+  "reason": "plain line"
+ },
+ {
+  "file": "02.json",
+  "text_start": "This new table, O my brethren, put I up over you: BECOME HAR",
+  "action": "fix",
+  "plain": "Stop going easy on yourself. Toughen up where it counts.",
+  "reason": "plain line"
+ },
+ {
+  "file": "02.json",
+  "text_start": "O thou, my Will! Thou change of every need, MY needfulness! ",
+  "action": "fix",
+  "plain": "Don't let a small win make you stop short of the big thing.",
+  "reason": "plain line"
+ },
+ {
+  "file": "03.json",
+  "text_start": "O Zarathustra, everything is a lie in me; but that I collaps",
+  "action": "fix",
+  "plain": "Even when you feel like a fraud, the way you break is real.",
+  "reason": "plain line"
+ },
+ {
+  "file": "03.json",
+  "text_start": "What still remaineth to me? A heart weary and flippant; an u",
+  "action": "fix",
+  "plain": "At your lowest you can name exactly what is left, and start from that.",
+  "reason": "plain line"
+ },
+ {
+  "file": "03.json",
+  "text_start": "Without music life would be a mistake.",
+  "action": "fix",
+  "plain": "Keep something in your day that moves you. Without it everything goes flat.",
+  "reason": "plain line"
+ },
+ {
+  "file": "03.json",
+  "text_start": "They were but rungs in my ladder, on them I made my ascent:—",
+  "action": "fix",
+  "plain": "Use things to climb, then leave them behind without apology.",
+  "reason": "plain line"
+ }
+]

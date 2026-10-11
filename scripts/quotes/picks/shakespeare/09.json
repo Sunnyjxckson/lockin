@@ -1,0 +1,372 @@
+[
+  {
+    "text": "Glory is like a circle in the water,\nWhich never ceaseth to enlarge itself\nTill by broad spreading it disperse to nought.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 1 Scene 2",
+    "plain": "Glory spreads out like a ripple and then disappears. Nothing you win stays big on its own.",
+    "themes": [
+      "time",
+      "change",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Believe me, lords, my tender years can tell\nCivil dissension is a viperous worm\nThat gnaws the bowels of the commonwealth.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 3 Scene 1",
+    "plain": "Infighting is a worm that eats a group from the inside.",
+    "themes": [
+      "folly",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "And here I prophesy: this brawl today,\nGrown to this faction in the Temple Garden,\nShall send between the Red Rose and the White\nA thousand souls to death and deadly night.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 2 Scene 4",
+    "plain": "One petty argument today turns into a war that kills thousands. Small grudges grow.",
+    "themes": [
+      "anger",
+      "folly",
+      "fate"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Defer no time, delays have dangerous ends;",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 3 Scene 2",
+    "plain": "Delay is dangerous. Move now.",
+    "themes": [
+      "time",
+      "courage"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Care is no cure, but rather corrosive,\nFor things that are not to be remedied.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 3 Scene 3",
+    "plain": "Worrying fixes nothing and eats at you. Don't brood over what can't be changed.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Good Lord, what madness rules in brainsick men,\nWhen for so slight and frivolous a cause\nSuch factious emulations shall arise!",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 1",
+    "plain": "People tear things apart over trivial causes, and it is madness.",
+    "themes": [
+      "folly",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "’Tis much when scepters are in children’s hands;\nBut more when envy breeds unkind division:\nThere comes the ruin, there begins confusion.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 1",
+    "plain": "When the weak hold power it is bad, and when envy splits the people it is worse. That is where ruin starts.",
+    "themes": [
+      "power",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "If we be English deer, be then in blood;\nNot rascal-like, to fall down with a pinch,\nBut rather, moody-mad and desperate stags,\nTurn on the bloody hounds with heads of steel\nAnd make the cowards stand aloof at bay.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 2",
+    "plain": "If you are going to be hunted, turn on the hounds. Don't fall down at the first pinch.",
+    "themes": [
+      "courage",
+      "adversity"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Sell every man his life as dear as mine,\nAnd they shall find dear deer of us, my friends.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 2",
+    "plain": "If you have to go down, make them pay full price.",
+    "themes": [
+      "courage",
+      "death"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "There is no hope that ever I will stay\nIf the first hour I shrink and run away.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 5",
+    "plain": "If I run the first time I'm scared, I'll never stop running.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "tempted"
+    ]
+  },
+  {
+    "text": "If I today die not with Frenchmen’s rage,\nTomorrow I shall die with mickle age.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 6",
+    "plain": "If I don't die today, I die tomorrow anyway. One more day is a small thing to risk.",
+    "themes": [
+      "death",
+      "courage",
+      "time"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Triumphant Death, smear’d with captivity,\nYoung Talbot’s valour makes me smile at thee.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 7",
+    "plain": "Death does not scare a man who has seen his son's courage. He can smile at it.",
+    "themes": [
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Thou antic Death, which laugh’st us here to scorn,\nAnon, from thy insulting tyranny,\nCoupled in bonds of perpetuity,\nTwo Talbots, winged through the lither sky,\nIn thy despite shall scape mortality.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 7",
+    "plain": "Death mocks us now, but what we do can outlast it.",
+    "themes": [
+      "death",
+      "fate"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "His fame lives in the world, his shame in you.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 4 Scene 4",
+    "plain": "Your reputation outlives you, and so does your shame.",
+    "themes": [
+      "reputation",
+      "death"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Of all base passions, fear is most accursed.",
+    "work": "plays",
+    "location": "Henry VI, Part 1, Act 5 Scene 2",
+    "plain": "Of all the base feelings, fear is the worst.",
+    "themes": [
+      "fear",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "A day will come when York shall claim his own;",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 1 Scene 1",
+    "plain": "A day will come when I take what is mine.",
+    "themes": [
+      "power",
+      "time"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Then, York, be still awhile till time do serve.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 1 Scene 1",
+    "plain": "Stay quiet and wait until the time is right.",
+    "themes": [
+      "self-mastery",
+      "time"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Pride went before; Ambition follows him.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 1 Scene 1",
+    "plain": "Pride clears the road and ambition walks in behind it.",
+    "themes": [
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "My lord, ’tis but a base ignoble mind\nThat mounts no higher than a bird can soar.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 2 Scene 1",
+    "plain": "It is a small mind that never reaches higher than a bird can fly.",
+    "themes": [
+      "desire",
+      "courage"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Thus sometimes hath the brightest day a cloud,\nAnd after summer evermore succeeds\nBarren winter, with his wrathful nipping cold;\nSo cares and joys abound, as seasons fleet.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 2 Scene 4",
+    "plain": "Even the brightest day gets a cloud, and winter follows summer. Cares and joys come and go like seasons.",
+    "themes": [
+      "change",
+      "time",
+      "adversity"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "Smooth runs the water where the brook is deep,\nAnd in his simple show he harbours treason.\nThe fox barks not when he would steal the lamb.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 1",
+    "plain": "The quiet ones with the smooth surface may be the ones plotting. Watch the still water.",
+    "themes": [
+      "folly",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "A heart unspotted is not easily daunted.\nThe purest spring is not so free from mud\nAs I am clear from treason to my sovereign.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 1",
+    "plain": "A clean conscience is not easily scared. I am as free of guilt as the purest spring is of mud.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Virtue is choked with foul ambition,\nAnd charity chased hence by rancour’s hand;",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 1",
+    "plain": "Ambition chokes virtue, and bitterness chases away kindness.",
+    "themes": [
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "angry"
+    ]
+  },
+  {
+    "text": "Now ’tis the spring, and weeds are shallow-rooted;\nSuffer them now, and they’ll o’ergrow the garden\nAnd choke the herbs for want of husbandry.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 1",
+    "plain": "Pull weeds while they're shallow. Let them grow and they choke the garden.",
+    "themes": [
+      "discipline",
+      "change"
+    ],
+    "moments": [
+      "tempted",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Thus are my blossoms blasted in the bud,\nAnd caterpillars eat my leaves away;\nBut I will remedy this gear ere long,\nOr sell my title for a glorious grave.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 1",
+    "plain": "My hopes were killed in the bud, but I'll fix it soon or die trying.",
+    "themes": [
+      "adversity",
+      "courage"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Show me one scar charactered on thy skin;\nMen’s flesh preserved so whole do seldom win.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 1",
+    "plain": "If you haven't been scarred, you haven't won anything.",
+    "themes": [
+      "adversity",
+      "courage",
+      "pain"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Now, York, or never, steel thy fearful thoughts,\nAnd change misdoubt to resolution.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 1",
+    "plain": "Now or never. Steel your nerve and turn doubt into resolve.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  }
+]

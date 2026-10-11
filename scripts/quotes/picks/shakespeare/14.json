@@ -1,0 +1,624 @@
+[
+  {
+    "text": "Where I could not be honest,\nI never yet was valiant.",
+    "work": "plays",
+    "location": "King Lear, Act 5 Scene 1",
+    "plain": "I won't be brave about anything I can't be honest about.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Men must endure\nTheir going hence, even as their coming hither;\nRipeness is all.",
+    "work": "plays",
+    "location": "King Lear, Act 5 Scene 2",
+    "plain": "You do not choose when you arrive or when you leave. What counts is being ready.",
+    "themes": [
+      "death",
+      "fate",
+      "time"
+    ],
+    "moments": [
+      "afraid",
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "We are not the first\nWho with best meaning have incurr’d the worst.",
+    "work": "plays",
+    "location": "King Lear, Act 5 Scene 3",
+    "plain": "Meaning well does not protect you from the worst. Plenty of good people have been hit hard.",
+    "themes": [
+      "adversity",
+      "fate"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "The gods are just, and of our pleasant vices\nMake instruments to plague us:",
+    "work": "plays",
+    "location": "King Lear, Act 5 Scene 3",
+    "plain": "Your own indulgences become the tools that bring you down. Pleasure has a bill.",
+    "themes": [
+      "desire",
+      "fate",
+      "discipline"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Thou hast spoken right, ’tis true;\nThe wheel is come full circle; I am here.",
+    "work": "plays",
+    "location": "King Lear, Act 5 Scene 3",
+    "plain": "What you do comes around. The wheel always makes a full turn.",
+    "themes": [
+      "fate",
+      "time",
+      "change"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Why should a dog, a horse, a rat have life,\nAnd thou no breath at all? Thou’lt come no more,\nNever, never, never, never, never!",
+    "work": "plays",
+    "location": "King Lear, Act 5 Scene 3",
+    "plain": "Why do a dog and a rat get to live and she does not. Grief doesn't come with an answer.",
+    "themes": [
+      "death",
+      "pain",
+      "love"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "The weight of this sad time we must obey;\nSpeak what we feel, not what we ought to say.\nThe oldest hath borne most; we that are young\nShall never see so much, nor live so long.",
+    "work": "plays",
+    "location": "King Lear, Act 5 Scene 3",
+    "plain": "In hard times, say what you actually feel, not what you are supposed to say.",
+    "themes": [
+      "pain",
+      "time",
+      "courage"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Let fame, that all hunt after in their lives,\nLive registered upon our brazen tombs,\nAnd then grace us in the disgrace of death;\nWhen, spite of cormorant devouring time,\nTh’ endeavour of this present breath may buy\nThat honour which shall bate his scythe’s keen edge,\nAnd make us heirs of all eternity.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 1 Scene 1",
+    "plain": "Everyone chases fame. Make your effort count now, so that time cannot cut it down later.",
+    "themes": [
+      "time",
+      "work",
+      "reputation"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The mind shall banquet, though the body pine.\nFat paunches have lean pates, and dainty bits\nMake rich the ribs, but bankrupt quite the wits.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 1 Scene 1",
+    "plain": "Let the body go hungry if it feeds the mind. Overindulged people end up with thin brains.",
+    "themes": [
+      "discipline",
+      "mind",
+      "desire"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Why, all delights are vain, but that most vain\nWhich, with pain purchased, doth inherit pain:",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 1 Scene 1",
+    "plain": "All pleasures are empty, but the emptiest are the ones you pay for in pain.",
+    "themes": [
+      "desire",
+      "pain",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Too much to know is to know naught but fame,\nAnd every godfather can give a name.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 1 Scene 1",
+    "plain": "Knowing the names of things is not knowing things. Collecting facts is not understanding.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "So study evermore is overshot.\nWhile it doth study to have what it would,\nIt doth forget to do the thing it should;\nAnd when it hath the thing it hunteth most,\n’Tis won as towns with fire: so won, so lost.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 1 Scene 1",
+    "plain": "We chase what we want so hard we forget what we should do, and then it burns down as soon as we get it.",
+    "themes": [
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Necessity will make us all forsworn\nThree thousand times within this three years’ space;\nFor every man with his affects is born,\nNot by might mastered, but by special grace.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 1 Scene 1",
+    "plain": "Everyone is born with urges that willpower alone does not beat. Expect to fail some, and plan for it.",
+    "themes": [
+      "self-mastery",
+      "desire"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "And therefore welcome the sour cup of prosperity! Affliction may one day smile again, and till then, sit thee down, sorrow.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 1 Scene 1",
+    "plain": "Take the bitter days with a straight face. Hard times do turn, so let sorrow sit for now.",
+    "themes": [
+      "adversity",
+      "happiness"
+    ],
+    "moments": [
+      "broke",
+      "tired"
+    ]
+  },
+  {
+    "text": "Why, will shall break it; will, and nothing else.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 2 Scene 1",
+    "plain": "A vow only holds as long as your will does. Willpower is the only thing that keeps it.",
+    "themes": [
+      "self-mastery",
+      "discipline"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Imitari is nothing: so doth the hound his master, the ape his keeper, the tired horse his rider.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 4 Scene 2",
+    "plain": "Copying is nothing. The hound copies the master, the ape copies the keeper, the tired horse copies the rider.",
+    "themes": [
+      "work",
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Sowed cockle reaped no corn,\nAnd justice always whirls in equal measure.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 4 Scene 3",
+    "plain": "Plant weeds and you get no corn. What you put in is what you get out.",
+    "themes": [
+      "work",
+      "fate",
+      "discipline"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "That is the way to make an offence gracious, though few have the grace to do it.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 5 Scene 1",
+    "plain": "The way to make a mistake look fine is to own it with confidence, but few have the nerve.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Great reason, for past cure is still past care.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 5 Scene 2",
+    "plain": "What cannot be fixed should not be carried. Past cure, past care.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "angry"
+    ]
+  },
+  {
+    "text": "And so may you, for a light heart lives long.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 5 Scene 2",
+    "plain": "A light heart lives long. Do not carry more weight than the day requires.",
+    "themes": [
+      "happiness",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "The blood of youth burns not with such excess\nAs gravity’s revolt to wantonness.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 5 Scene 2",
+    "plain": "Nothing burns hotter than a serious, disciplined person who suddenly cuts loose. Watch for it in yourself.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Henceforth my wooing mind shall be expressed\nIn russet yeas and honest kersey noes.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 5 Scene 2",
+    "plain": "From now on I speak in plain yeses and honest noes. No fancy phrases.",
+    "themes": [
+      "self-mastery",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "A heavy heart bears not a nimble tongue.",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 5 Scene 2",
+    "plain": "When you are weighed down, you do not have clever words. Do not push for them.",
+    "themes": [
+      "pain",
+      "mind"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Honest plain words best pierce the ear of grief;",
+    "work": "plays",
+    "location": "Love's Labour's Lost, Act 5 Scene 2",
+    "plain": "When someone is hurting, plain honest words get through where fancy ones do not.",
+    "themes": [
+      "pain",
+      "friendship"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Fair is foul, and foul is fair:\nHover through the fog and filthy air.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 1",
+    "plain": "Nothing is what it looks like. Good and bad trade places in the fog.",
+    "themes": [
+      "fate",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Nothing in his life\nBecame him like the leaving it; he died\nAs one that had been studied in his death,\nTo throw away the dearest thing he ow’d\nAs ’twere a careless trifle.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 4",
+    "plain": "He faced his end like he had rehearsed it, as if his life were a small thing to give. How you leave says a lot.",
+    "themes": [
+      "death",
+      "reputation",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "There’s no art\nTo find the mind’s construction in the face:",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 4",
+    "plain": "You cannot read a person's real mind from their face. Trust is a bet.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "And oftentimes to win us to our harm,\nThe instruments of darkness tell us truths;\nWin us with honest trifles, to betray’s\nIn deepest consequence.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 3",
+    "plain": "Dark forces will tell you something true to lure you into something terrible. A small win can be bait.",
+    "themes": [
+      "desire",
+      "fate",
+      "power"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Present fears\nAre less than horrible imaginings.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 3",
+    "plain": "What you imagine is almost always worse than what is really in front of you.",
+    "themes": [
+      "fear",
+      "mind"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Come what come may,\nTime and the hour runs through the roughest day.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 3",
+    "plain": "Whatever comes, the day ends. Time moves through even the worst ones.",
+    "themes": [
+      "time",
+      "fear",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "To beguile the time,\nLook like the time; bear welcome in your eye,\nYour hand, your tongue: look like the innocent flower,\nBut be the serpent under’t.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 5",
+    "plain": "Your face is a book anyone can read. Control it, because people read you before you speak.",
+    "themes": [
+      "reputation",
+      "mind",
+      "power"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "If it were done when ’tis done, then ’twere well\nIt were done quickly.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 7",
+    "plain": "If you are going to do something, do it fast. Dragging it out only makes it worse.",
+    "themes": [
+      "courage",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "afraid"
+    ]
+  },
+  {
+    "text": "We still have judgement here; that we but teach\nBloody instructions, which being taught, return\nTo plague th’ inventor.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 7",
+    "plain": "Whatever harm you teach, you teach it to the one who comes back for you. The same hand takes the poison.",
+    "themes": [
+      "fate",
+      "power"
+    ],
+    "moments": [
+      "angry",
+      "tempted"
+    ]
+  },
+  {
+    "text": "We will proceed no further in this business:\nHe hath honour’d me of late; and I have bought\nGolden opinions from all sorts of people,\nWhich would be worn now in their newest gloss,\nNot cast aside so soon.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 7",
+    "plain": "You earn a good name by effort, and it is worth wearing while it is fresh. Do not throw it away.",
+    "themes": [
+      "reputation"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I dare do all that may become a man;\nWho dares do more is none.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 7",
+    "plain": "There is a line to what makes you a man. Go past it and you are something else.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "But screw your courage to the sticking-place,\nAnd we’ll not fail.",
+    "work": "plays",
+    "location": "Macbeth, Act 1 Scene 7",
+    "plain": "Tighten your nerve all the way and you will not fail. Commit fully.",
+    "themes": [
+      "courage",
+      "discipline"
+    ],
+    "moments": [
+      "afraid",
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Merciful powers,\nRestrain in me the cursed thoughts that nature\nGives way to in repose!",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 1",
+    "plain": "Even good people have dark thoughts when they are tired or alone. Ask for help holding them off.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Sleep that knits up the ravell’d sleave of care,\nThe death of each day’s life, sore labour’s bath,\nBalm of hurt minds, great nature’s second course,\nChief nourisher in life’s feast.",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 2",
+    "plain": "Sleep repairs what the day wears down. Do not treat it as optional.",
+    "themes": [
+      "mind",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "The sleeping and the dead\nAre but as pictures. ’Tis the eye of childhood\nThat fears a painted devil.",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 2",
+    "plain": "Your fear is often a child scared of a painted devil. Look at it plainly.",
+    "themes": [
+      "fear",
+      "mind",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "The labour we delight in physics pain.",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 3",
+    "plain": "Work you love takes the sting out of pain.",
+    "themes": [
+      "work",
+      "pain",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "There’s nothing serious in mortality.\nAll is but toys: renown and grace is dead;\nThe wine of life is drawn, and the mere lees\nIs left this vault to brag of.",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 3",
+    "plain": "Once the thing that gave life its weight is gone, everything else is a toy.",
+    "themes": [
+      "death",
+      "pain",
+      "time"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Th’ expedition of my violent love\nOutrun the pauser, reason.",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 3",
+    "plain": "When emotion runs hot, it outpaces the part of you that says wait.",
+    "themes": [
+      "anger",
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "To show an unfelt sorrow is an office\nWhich the false man does easy.",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 3",
+    "plain": "Anyone who is faking can fake sorrow easily. Real feeling does not need a show.",
+    "themes": [
+      "reputation",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "There’s daggers in men’s smiles: the near in blood,\nThe nearer bloody.",
+    "work": "plays",
+    "location": "Macbeth, Act 2 Scene 3",
+    "plain": "The closer someone is to you, the more harm they can do. Watch who smiles.",
+    "themes": [
+      "friendship",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "alone"
+    ]
+  }
+]

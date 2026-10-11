@@ -7,6 +7,8 @@
 // clock pinned to the first challenge's dates, and any console error fails
 // the run. Set PLAN=1 to print the planned week as text.
 
+import { readFileSync } from "node:fs";
+
 const NOON_DAY_1 = "2026-10-05T16:00:00Z"; // Monday Oct 5, 12:00 PM New York
 
 /** The app going to the background and coming back, as the page sees it. */
@@ -583,6 +585,109 @@ export async function runFeatures(h) {
     },
     [PREFIX, today],
   );
+  // The Library, against the real quotes. A quote counts as read only after a moment, save and note go
+  // to the db, a milestone fires when a writer is finished. Thirty five of the thirty six laws are read
+  // up front, so reading the last one finishes that writer.
+  console.log("Library");
+  {
+    const LAWS = JSON.parse(readFileSync(new URL("../src/data/quotes/laws.json", import.meta.url), "utf8")).quotes;
+    const LAST = "laws-tanstaafl";
+    await page.goto(`${base}/library`);
+    await page.getByText("Rough day").first().waitFor();
+    await page.evaluate(
+      ([prefix, ids]) => {
+        const at = "2026-10-04T15:00:00.000Z";
+        const old = JSON.parse(localStorage.getItem(prefix + "quote_state") ?? "[]");
+        const rowsNew = ids.map((id, n) => ({ id: `seed-${n}`, created_at: at, quote_id: id, writer: "laws", work: "laws", read_at: at, saved_at: null, note: null }));
+        localStorage.setItem(prefix + "quote_state", JSON.stringify([...old, ...rowsNew]));
+      },
+      [PREFIX, LAWS.filter((q) => q.id !== LAST).map((q) => q.id)],
+    );
+    await page.goto(`${base}/library/read?w=laws`);
+    await page.getByRole("button", { name: "Go deeper" }).waitFor();
+    check("Library: a law shows its name, who is credited and a source link", (await page.getByText("TANSTAAFL").count()) >= 1 && (await page.getByText(/Heinlein, 1966/).count()) >= 1 && (await page.getByRole("link", { name: /Source/ }).count()) === 1);
+    check("Library: the source link is external and safe", /^https:\/\//.test((await page.getByRole("link", { name: /Source/ }).getAttribute("href")) ?? "") && /noopener/.test((await page.getByRole("link", { name: /Source/ }).getAttribute("rel")) ?? ""));
+    const before = (await rows(page, "quote_state")).filter((r) => r.read_at).length;
+    await page.clock.fastForward(500);
+    check("Library: half a second on a quote is not a read", (await rows(page, "quote_state")).filter((r) => r.read_at).length === before);
+    await page.clock.fastForward(8000);
+    await page.waitForTimeout(300);
+    check("Library: staying on a quote counts it as read", (await rows(page, "quote_state")).filter((r) => r.read_at).length === before + 1);
+    check("Library: finishing a writer is a moment", (await page.getByText("Finished").count()) >= 1);
+
+    await page.goto(`${base}/library/read?w=seneca`);
+    await page.getByRole("button", { name: "Go deeper" }).waitFor();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+    await page.getByRole("button", { name: "Add a note" }).click();
+    await page.getByLabel("Your note").fill("For a bad Tuesday");
+    await page.getByRole("button", { name: "Save note" }).click();
+    await page.waitForTimeout(200);
+    const noted = (await rows(page, "quote_state")).filter((r) => r.note === "For a bad Tuesday");
+    check("Library: save and a note are kept on one row", noted.length === 1 && !!noted[0].saved_at && /^seneca-/.test(noted[0].quote_id), JSON.stringify(noted));
+    await page.getByRole("button", { name: "Go deeper" }).click();
+    await page.locator("mark").first().waitFor({ timeout: 8000 }).catch(() => null);
+    check("Library: Go deeper picks the quote out of its passage", (await page.locator("mark").count()) >= 1);
+    await page.keyboard.press("Escape");
+
+    await page.goto(`${base}/library`);
+    await page.getByText("Rough day").first().waitFor();
+    const libraryTotal = JSON.parse(readFileSync(new URL("../src/data/quotes/index.json", import.meta.url), "utf8")).total.toLocaleString("en-US");
+    check(`Library: the counter shows what was read, of all ${libraryTotal}`, (await page.getByText(`of ${libraryTotal}`).count()) >= 1);
+    await page.goto(`${base}/library/saved`);
+    await page.getByText("For a bad Tuesday").waitFor();
+
+    // Rough day on Today: eight moments, and the reader opens on that moment.
+    await page.goto(`${base}/today`);
+    await page.getByRole("button", { name: "Rough day" }).waitFor();
+    await page.getByRole("button", { name: "Rough day" }).click();
+    await page.getByRole("dialog").getByRole("button", { name: "Tired" }).waitFor();
+    const moments = await page.getByRole("group", { name: "How it is going" }).getByRole("button").count();
+    check("Rough day: the sheet offers the eight moments", moments === 8, String(moments));
+    await page.getByRole("dialog").getByRole("button", { name: "Tired" }).click();
+    await page.waitForURL(/\/library\/read\?.*moment=tired|\/library\/read\?.*m=tired/);
+    await page.getByRole("button", { name: "Go deeper" }).waitFor();
+    check("Rough day: lands in the reader on a quote for that moment", (await page.getByRole("button", { name: "Go deeper" }).count()) === 1, `${page.url()} ${(await page.locator("main").innerText()).slice(0, 200)}`);
+
+    // The reading habit: absent until turned on, then a tile that counts reads and completes at N.
+    await page.goto(`${base}/today`);
+    await page.getByText("Today's workout").waitFor();
+    check("Habit: no reading tile until it is turned on", (await page.getByText(/Read \d+ quotes/).count()) === 0 && !(await rows(page, "checklist_item")).some((i) => i.key === "read_quotes"));
+    await page.goto(`${base}/settings/checklist`);
+    await page.getByRole("switch", { name: "Read quotes every day" }).click();
+    await page.getByLabel("Quotes a day").fill("1");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+    await page.waitForTimeout(300);
+    const habit = (await rows(page, "checklist_item")).find((i) => i.key === "read_quotes");
+    check("Habit: turned on it is a number item, minimum 1, on the mind track", !!habit && habit.active && habit.target.min === 1 && habit.name === "Read 1 quotes", JSON.stringify(habit));
+    await page.goto(`${base}/today`);
+    const tile = page.getByRole("link", { name: /Read 1 quotes/ });
+    await tile.waitFor();
+    check("Habit: the Today tile links into the reader", /\/library\/read/.test((await tile.getAttribute("href")) ?? ""));
+    await page.goto(`${base}/library/read?w=marcus-aurelius`);
+    await page.getByRole("button", { name: "Go deeper" }).waitFor();
+    await page.clock.fastForward(9000);
+    await page.waitForTimeout(400);
+    const log = (await rows(page, "day_log")).find((l) => l.item_id === habit.id && l.date === today);
+    check("Habit: reading a quote writes today's count", log?.value >= 1, JSON.stringify(log));
+
+    // Philosophy drops: off until turned on, then in the day's list with a link that opens the quote.
+    await page.goto(`${base}/reminders`);
+    await page.getByText("Still to come today").waitFor();
+    check("Drops: none while off", (await page.locator("[data-drop]").count()) === 0);
+    await page.goto(`${base}/settings/reminders`);
+    await page.getByRole("switch", { name: /A quote through the day/ }).click();
+    await page.waitForTimeout(300);
+    check("Drops: turning them on is kept, three a day", (await rows(page, "app_settings"))[0].drops_enabled === true && (await rows(page, "app_settings"))[0].drops_per_day === 3);
+    await page.goto(`${base}/reminders`);
+    await page.getByText("Still to come today").waitFor();
+    const drops = page.locator("[data-drop]");
+    await drops.first().waitFor({ timeout: 8000 });
+    const href = (await drops.first().getAttribute("href")) ?? "";
+    check("Drops: a drop in the list opens the reader on its quote", /^\/library\/read\?w=[a-z-]+&q=[a-z0-9-]+$/.test(href), href);
+    await drops.first().click();
+    await page.getByRole("button", { name: "Go deeper" }).waitFor();
+    check("Drops: the link lands on that quote", page.url().includes(decodeURIComponent(href.split("q=")[1])));
+  }
   const viceId = (await rows(page, "checklist_item")).find((i) => i.key === "vice_smoking").id;
   const boardId = (await rows(page, "board"))[0].id;
   // [path, text to wait for, name, on the contact sheet as]
@@ -615,6 +720,11 @@ export async function runFeatures(h) {
     ["/settings/challenge/new", "New challenge", "settings-new-challenge", null],
     ["/settings/reminders", "Quiet hours", "settings-reminders", null],
     ["/settings/coach", "Check-ins", "settings-coach", null],
+    ["/library", "Rough day", "library", "Library"],
+    ["/library/read?w=shakespeare", "Go deeper", "library-read", null],
+    ["/library/saved", "For a bad Tuesday", "library-saved", null],
+    ["/library/search", "Try", "library-search", null],
+    ["/library/writer/seneca", "Works", "library-writer", null],
   ];
   /** Put a theme row in force, as the boards screen and the theme picker do, and load it. */
   const wear = async (theme) => {

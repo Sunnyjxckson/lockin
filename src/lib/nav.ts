@@ -1,12 +1,12 @@
 // Where everything lives. One list, read by the tab bar, the More sheet on
 // Today and Settings, so a new screen is added in one place.
 //
-// The bottom bar holds the five screens used every day. Everything else is
+// The bottom bar holds the six screens used every day (the Library is the last). Everything else is
 // one tap from Today's header: Coach and Vices have their own icons, and the
 // More button opens the rest. Meals and Focus also have a way in from the
 // screens they belong to (Body and Schedule).
 
-import { CalendarClock, CircleCheck, DollarSign, Activity, Images, LayoutGrid, Settings, Timer, UtensilsCrossed, type LucideIcon } from "lucide-react";
+import { BookOpen, CalendarClock, CircleCheck, DollarSign, Activity, Images, LayoutGrid, Settings, Timer, UtensilsCrossed, type LucideIcon } from "lucide-react";
 
 export interface Tab {
   href: string;
@@ -22,6 +22,7 @@ export const TABS: readonly Tab[] = [
   { href: "/money", label: "Money", icon: DollarSign },
   { href: "/body", label: "Body", icon: Activity, also: ["/meals"] },
   { href: "/progress", label: "Record", icon: LayoutGrid },
+  { href: "/library", label: "Library", icon: BookOpen },
 ];
 
 export interface MoreLink {
@@ -33,6 +34,7 @@ export interface MoreLink {
 
 /** The rows of the More sheet, top to bottom. */
 export const MORE_LINKS: readonly MoreLink[] = [
+  { href: "/library", label: "Library", sub: "Read every quote, one at a time", icon: BookOpen },
   { href: "/focus", label: "Focus", sub: "Study timer and hours", icon: Timer },
   { href: "/meals", label: "Meals", sub: "Week plan, recipes and the grocery list", icon: UtensilsCrossed },
   { href: "/boards", label: "Boards", sub: "Mood boards and the look of the app", icon: Images },

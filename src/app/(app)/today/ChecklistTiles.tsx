@@ -110,14 +110,14 @@ export function NumberEntryTile({ item, target, log, state, sub, disabled, onVal
 }
 
 /** A number that is added up somewhere else (calories and protein from meals). The tile shows it and links there. */
-export function LinkedNumberTile({ item, target, log, state, href, from }: TileRowProps & { href: string; from: string }) {
+export function LinkedNumberTile({ item, target, log, state, href, from, opens = "Body" }: TileRowProps & { href: string; from: string; opens?: string }) {
   const value = log?.value ?? 0;
   const shown = value.toLocaleString("en-US");
   return (
     <Tile
       href={href}
       state={numberState(state, target, value)}
-      aria-label={`${item.name}: ${shown}${item.unit ?? ""} from ${from}. Open Body`}
+      aria-label={`${item.name}: ${shown}${item.unit ?? ""} from ${from}. Open ${opens}`}
       value={
         <>
           {shown}

@@ -1,0 +1,455 @@
+[
+  {
+    "text": "What stronger breastplate than a heart untainted?\nThrice is he armed that hath his quarrel just,\nAnd he but naked, though locked up in steel,\nWhose conscience with injustice is corrupted.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 2",
+    "plain": "Nothing armors you like a clear conscience. A just cause makes you strong, and a corrupt one leaves you exposed.",
+    "themes": [
+      "courage",
+      "mind"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "So bad a death argues a monstrous life.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 3",
+    "plain": "The way someone dies shows how they lived.",
+    "themes": [
+      "death",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Forbear to judge, for we are sinners all.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 3",
+    "plain": "Don't judge. Everyone has failed somewhere.",
+    "themes": [
+      "folly",
+      "friendship"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "A wilderness is populous enough,\nSo Suffolk had thy heavenly company;\nFor where thou art, there is the world itself,\nWith every several pleasure in the world;\nAnd where thou art not, desolation.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 2",
+    "plain": "With you, a wilderness is full of people. Without you, the whole world is empty.",
+    "themes": [
+      "love",
+      "solitude"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "If thou be’st Death, I’ll give thee England’s treasure,\nEnough to purchase such another island,\nSo thou wilt let me live and feel no pain.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 3 Scene 3",
+    "plain": "Money can't buy off death, and a dying man would pay anything to live.",
+    "themes": [
+      "wealth",
+      "death"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Small things make base men proud.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 1",
+    "plain": "Petty people puff up over petty wins.",
+    "themes": [
+      "folly",
+      "reputation"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "True nobility is exempt from fear;\nMore can I bear than you dare execute.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 1",
+    "plain": "Real nobility doesn't flinch. I can take more than you can dish out.",
+    "themes": [
+      "courage",
+      "fear",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "The first thing we do, let’s kill all the lawyers.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 2",
+    "plain": "A mob always starts by removing the people who understand the rules.",
+    "themes": [
+      "folly",
+      "power"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Some say the bee stings, but I say ’tis the bee’s wax; for I did but seal once to a thing, and I was never mine own man since.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 2",
+    "plain": "Be careful what you sign. One signature and you are never your own man again.",
+    "themes": [
+      "folly",
+      "wealth"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Trust nobody, for fear you be betrayed.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 4",
+    "plain": "Trust nobody, or you'll get betrayed.",
+    "themes": [
+      "fear",
+      "folly"
+    ],
+    "moments": [
+      "afraid",
+      "alone"
+    ]
+  },
+  {
+    "text": "The trust I have is in mine innocence,\nAnd therefore am I bold and resolute.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 4",
+    "plain": "Innocence gives you nerve. If you've done nothing wrong you can stand firm.",
+    "themes": [
+      "courage",
+      "mind"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "And seeing ignorance is the curse of God,\nKnowledge the wing wherewith we fly to heaven,\nUnless you be possessed with devilish spirits,\nYou cannot but forbear to murder me.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 7",
+    "plain": "Ignorance is a curse, and knowledge is the wing we fly on.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Great men have reaching hands; oft have I struck\nThose that I never saw, and struck them dead.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 7",
+    "plain": "Powerful people reach farther than they can see. Their decisions land on strangers.",
+    "themes": [
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Was never subject longed to be a king\nAs I do long and wish to be a subject.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 9",
+    "plain": "No subject ever wanted to be a king as much as I want to be a subject. The crown costs peace.",
+    "themes": [
+      "power",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Lord, who would live turmoiled in the court\nAnd may enjoy such quiet walks as these?\nThis small inheritance my father left me\nContenteth me, and worth a monarchy.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 10",
+    "plain": "Why live in turmoil at court when a small, quiet life is worth a monarchy?",
+    "themes": [
+      "happiness",
+      "desire"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "I seek not to wax great by others’ waning,\nOr gather wealth, I care not with what envy;\nSufficeth that I have maintains my state\nAnd sends the poor well pleased from my gate.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 4 Scene 10",
+    "plain": "I don't want to rise by someone else's fall. What I have is enough, and I share it.",
+    "themes": [
+      "wealth",
+      "happiness",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Let them obey that knows not how to rule.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 5 Scene 1",
+    "plain": "If you can't lead, follow.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "It is great sin to swear unto a sin,\nBut greater sin to keep a sinful oath.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 5 Scene 1",
+    "plain": "Breaking a bad promise is better than keeping it.",
+    "themes": [
+      "mind",
+      "courage"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Fear frames disorder, and disorder wounds\nWhere it should guard.",
+    "work": "plays",
+    "location": "Henry VI, Part 2, Act 5 Scene 2",
+    "plain": "Fear leads to disorder, and disorder hurts you right where you needed to be protected.",
+    "themes": [
+      "fear",
+      "folly"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "And, father, do but think\nHow sweet a thing it is to wear a crown,\nWithin whose circuit is Elysium\nAnd all that poets feign of bliss and joy.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 1 Scene 2",
+    "plain": "Think how sweet it is to wear the crown, with every bliss poets ever imagined inside it.",
+    "themes": [
+      "desire",
+      "power"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "But thou prefer’st thy life before thine honour.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 1 Scene 1",
+    "plain": "You chose your life over your honour.",
+    "themes": [
+      "reputation",
+      "courage"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Unless the adage must be verified,\nThat beggars mounted run their horse to death.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 1 Scene 4",
+    "plain": "Beggars on horseback ride the horse to death.",
+    "themes": [
+      "wealth",
+      "folly"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "The smallest worm will turn, being trodden on,\nAnd doves will peck in safeguard of their brood.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 2",
+    "plain": "Even the smallest worm turns when trodden on.",
+    "themes": [
+      "courage",
+      "anger",
+      "adversity"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "But, Clifford, tell me, didst thou never hear\nThat things ill got had ever bad success?",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 2",
+    "plain": "Things gotten the wrong way never end well.",
+    "themes": [
+      "wealth",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "broke"
+    ]
+  },
+  {
+    "text": "I’ll leave my son my virtuous deeds behind,\nAnd would my father had left me no more;\nFor all the rest is held at such a rate\nAs brings a thousand-fold more care to keep\nThan in possession any jot of pleasure.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 2",
+    "plain": "I'd leave my son my good deeds and nothing more. All the rest costs more care to keep than it gives in pleasure.",
+    "themes": [
+      "wealth",
+      "happiness"
+    ],
+    "moments": [
+      "broke",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Ill blows the wind that profits nobody.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 5",
+    "plain": "It's an ill wind that blows no one any good.",
+    "themes": [
+      "fate",
+      "change"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Whiles lions war and battle for their dens,\nPoor harmless lambs abide their enmity.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 5",
+    "plain": "When the strong fight for territory, the harmless pay for it.",
+    "themes": [
+      "power",
+      "pain"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Gives not the hawthorn bush a sweeter shade\nTo shepherds looking on their silly sheep\nThan doth a rich embroidered canopy\nTo kings that fear their subjects’ treachery?",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 5",
+    "plain": "A hawthorn shade feels better to a shepherd than a canopy does to a king who fears his own people.",
+    "themes": [
+      "happiness",
+      "power",
+      "fear"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "So minutes, hours, days, months, and years,\nPassed over to the end they were created,\nWould bring white hairs unto a quiet grave.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 5",
+    "plain": "Minutes, hours, days, months and years pass, and a simple life ends at a quiet grave with white hair.",
+    "themes": [
+      "time",
+      "death",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Stay we no longer dreaming of renown,\nBut sound the trumpets and about our task.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 1",
+    "plain": "Stop dreaming of glory and get to the task.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Now my soul’s palace is become a prison.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 2 Scene 1",
+    "plain": "Your own mind can turn into the cell you can't leave.",
+    "themes": [
+      "pain",
+      "mind"
+    ],
+    "moments": [
+      "alone",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Let me embrace thee, sour adversity,\nFor wise men say it is the wisest course.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 3 Scene 1",
+    "plain": "Welcome adversity. Wise people say it is the wisest teacher.",
+    "themes": [
+      "adversity",
+      "self-mastery"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "My crown is in my heart, not on my head;\nNot decked with diamonds and Indian stones,\nNot to be seen. My crown is called content;\nA crown it is that seldom kings enjoy.",
+    "work": "plays",
+    "location": "Henry VI, Part 3, Act 3 Scene 1",
+    "plain": "My crown is in my heart, not on my head. It is called contentment, and kings rarely have it.",
+    "themes": [
+      "happiness",
+      "power",
+      "mind"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  }
+]

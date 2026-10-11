@@ -281,3 +281,13 @@ export function isDayLocked(date: DateStr, now: Date = new Date(), installedOn?:
 export function isDayEditable(date: DateStr, now: Date = new Date(), installedOn?: DateStr | null): boolean {
   return date <= todayNY(now) && !isDayLocked(date, now, installedOn);
 }
+
+/** True when `time` is inside quiet hours. The window may wrap past midnight. Start is quiet, end is not. */
+export function isQuiet(time: TimeStr, quietStart: TimeStr, quietEnd: TimeStr): boolean {
+  const t = minutesOf(time);
+  const s = minutesOf(quietStart);
+  const e = minutesOf(quietEnd);
+  if (s === e) return false;
+  return s < e ? t >= s && t < e : t >= s || t < e;
+}
+

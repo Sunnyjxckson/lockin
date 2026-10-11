@@ -1,0 +1,421 @@
+[
+  {
+    "text": "O, what a world of vile ill-favoured faults\nLooks handsome in three hundred pounds a year!",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 3 Scene 4",
+    "plain": "Money makes a lot of ugly flaws look good. Watch what you forgive in people for the paycheck.",
+    "themes": [
+      "wealth",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Yet, wooing thee, I found thee of more value\nThan stamps in gold or sums in sealed bags.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 3 Scene 4",
+    "plain": "Whatever drew you in at first, the real prize is the person, not the gold.",
+    "themes": [
+      "love",
+      "wealth"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Be not as extreme in submission as in offence.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 4 Scene 4",
+    "plain": "Do not swing from one extreme to the other once you have been caught out.",
+    "themes": [
+      "self-mastery",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "O powerful love, that in some respects, makes a beast a man, in some other a man a beast!",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 5 Scene 5",
+    "plain": "Desire can lift you up or drag you down, and you do not always get to pick which.",
+    "themes": [
+      "desire",
+      "love"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Lust is but a bloody fire,\nKindled with unchaste desire,\nFed in heart, whose flames aspire,\nAs thoughts do blow them, higher and higher.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 5 Scene 5",
+    "plain": "Lust is a fire you feed with your own thoughts. Stop feeding it and it dies down.",
+    "themes": [
+      "desire",
+      "mind"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "In love, the heavens themselves do guide the state.\nMoney buys lands, and wives are sold by fate.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 5 Scene 5",
+    "plain": "Love is steered by something bigger than you, while money buys land and fate hands out the rest.",
+    "themes": [
+      "fate",
+      "wealth",
+      "love"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "What cannot be eschewed must be embraced.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 5 Scene 5",
+    "plain": "What you cannot avoid, you might as well accept and move on.",
+    "themes": [
+      "fate",
+      "adversity"
+    ],
+    "moments": [
+      "overwhelmed",
+      "angry"
+    ]
+  },
+  {
+    "text": "No man means evil but the devil, and we shall know him by his horns.",
+    "work": "plays",
+    "location": "The Merry Wives of Windsor, Act 5 Scene 2",
+    "plain": "Most people mean no harm. The ones who do usually show it.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The course of true love never did run smooth.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 1 Scene 1",
+    "plain": "Nothing worth having ever came easy, and love is no exception.",
+    "themes": [
+      "love",
+      "adversity"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "Swift as a shadow, short as any dream,\nBrief as the lightning in the collied night\nThat, in a spleen, unfolds both heaven and earth,\nAnd, ere a man hath power to say, ‘Behold!’\nThe jaws of darkness do devour it up:\nSo quick bright things come to confusion.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 1 Scene 1",
+    "plain": "Bright things burn out fast. Do not wait to make the good days count.",
+    "themes": [
+      "time",
+      "death",
+      "change"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Things base and vile, holding no quantity,\nLove can transpose to form and dignity.\nLove looks not with the eyes, but with the mind;\nAnd therefore is wing’d Cupid painted blind.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 1 Scene 1",
+    "plain": "Love does not see what is there. It sees what the mind decides to see.",
+    "themes": [
+      "love",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "And this same progeny of evils comes\nFrom our debate, from our dissension;\nWe are their parents and original.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 2 Scene 1",
+    "plain": "A lot of the chaos around you started with your own fights. Own it, and you can end it.",
+    "themes": [
+      "folly",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "And yet, to say the truth, reason and love keep little company together nowadays.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 3 Scene 1",
+    "plain": "Love and good sense rarely show up together.",
+    "themes": [
+      "love",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Lord, what fools these mortals be!",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 3 Scene 2",
+    "plain": "Watching people chase their own mistakes is the oldest comedy there is.",
+    "themes": [
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ]
+  },
+  {
+    "text": "Then fate o’er-rules, that, one man holding troth,\nA million fail, confounding oath on oath.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 3 Scene 2",
+    "plain": "One person keeps their word while a million break theirs. Fate seems stacked that way, so keep yours anyway.",
+    "themes": [
+      "fate",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "Weigh oath with oath, and you will nothing weigh:\nYour vows to her and me, put in two scales,\nWill even weigh; and both as light as tales.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 3 Scene 2",
+    "plain": "Swear the same thing to two people and your word weighs nothing. Be one person everywhere.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "What though I be not so in grace as you,\nSo hung upon with love, so fortunate,\nBut miserable most, to love unlov’d?",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 3 Scene 2",
+    "plain": "The worst kind of misery is caring for someone who does not care back.",
+    "themes": [
+      "love",
+      "pain"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "A foolish heart that I leave here behind.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 3 Scene 2",
+    "plain": "Some part of you stays behind with the thing you chased. Notice what you leave there.",
+    "themes": [
+      "love",
+      "pain"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Never so weary, never so in woe,\nBedabbled with the dew, and torn with briers,\nI can no further crawl, no further go;\nMy legs can keep no pace with my desires.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 3 Scene 2",
+    "plain": "Sometimes your will outruns your body. Rest when you hit the wall, then go again.",
+    "themes": [
+      "pain",
+      "desire"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "These things seem small and undistinguishable,\nLike far-off mountains turnèd into clouds.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 4 Scene 1",
+    "plain": "What felt huge up close looks like faraway clouds later. Give it time.",
+    "themes": [
+      "time",
+      "change",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Man is but an ass if he go about to expound this dream.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 4 Scene 1",
+    "plain": "Some experiences are bigger than your explanation of them. Stop trying to force words onto it.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Lovers and madmen have such seething brains,\nSuch shaping fantasies, that apprehend\nMore than cool reason ever comprehends.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 5 Scene 1",
+    "plain": "Passion and madness both run past what cool reason can see.",
+    "themes": [
+      "mind",
+      "folly",
+      "desire"
+    ],
+    "moments": [
+      "tempted",
+      "angry"
+    ]
+  },
+  {
+    "text": "And as imagination bodies forth\nThe forms of things unknown, the poet’s pen\nTurns them to shapes, and gives to airy nothing\nA local habitation and a name.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 5 Scene 1",
+    "plain": "Imagination turns nothing into something. That is how every idea and every brand starts.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Such tricks hath strong imagination,\nThat if it would but apprehend some joy,\nIt comprehends some bringer of that joy.\nOr in the night, imagining some fear,\nHow easy is a bush supposed a bear?",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 5 Scene 1",
+    "plain": "Fear makes shapes in the dark. Half the bears you dread are just bushes.",
+    "themes": [
+      "fear",
+      "mind"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "The best in this kind are but shadows; and the worst are no worse, if imagination amend them.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 5 Scene 1",
+    "plain": "Even the best of anything is mostly shadow. Bring your own imagination to finish the job.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "If we shadows have offended,\nThink but this, and all is mended,\nThat you have but slumber’d here\nWhile these visions did appear.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 5 Scene 1",
+    "plain": "If the whole thing felt wrong, think of it as a dream you woke from, and carry on.",
+    "themes": [
+      "mind",
+      "change"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Now the wasted brands do glow,\nWhilst the screech-owl, screeching loud,\nPuts the wretch that lies in woe\nIn remembrance of a shroud.",
+    "work": "plays",
+    "location": "A Midsummer Night's Dream, Act 5 Scene 1",
+    "plain": "At night the screech of an owl reminds the miserable of the grave.",
+    "themes": [
+      "death",
+      "pain"
+    ],
+    "moments": [
+      "afraid",
+      "alone"
+    ]
+  },
+  {
+    "text": "A victory is twice itself when the achiever brings home full numbers.",
+    "work": "plays",
+    "location": "Much Ado About Nothing, Act 1 Scene 1",
+    "plain": "A win counts double when everyone who fought for it comes home with you.",
+    "themes": [
+      "friendship",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "There are no faces truer than those that are so washed; how much better is it to weep at joy than to joy at weeping!",
+    "work": "plays",
+    "location": "Much Ado About Nothing, Act 1 Scene 1",
+    "plain": "Tears of joy are the most honest face a person has.",
+    "themes": [
+      "happiness",
+      "love"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "What need the bridge much broader than the flood?",
+    "work": "plays",
+    "location": "Much Ado About Nothing, Act 1 Scene 1",
+    "plain": "Do not overbuild the plan. Do what the moment needs.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "I cannot hide what I am: I must be sad when I have cause, and smile at no man’s jests; eat when I have stomach, and wait for no man’s leisure; sleep when I am drowsy, and tend on no man’s business; laugh when I am merry, and claw no man in his humour.",
+    "work": "plays",
+    "location": "Much Ado About Nothing, Act 1 Scene 3",
+    "plain": "Be what you are and live on your own clock, without performing for other people.",
+    "themes": [
+      "reputation",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  }
+]

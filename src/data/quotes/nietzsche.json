@@ -1,0 +1,5705 @@
+{
+  "writer": {
+    "slug": "nietzsche",
+    "name": "Friedrich Nietzsche",
+    "years": "AD 1844 to 1900",
+    "bio": "German philosopher, 1844 to 1900. A professor at 24, he quit at 34 because of his health and spent ten years writing alone in rented rooms in Switzerland and Italy, half blind and mostly unread. He collapsed in 1889 and never wrote again."
+  },
+  "works": [
+    {
+      "slug": "zarathustra",
+      "title": "Thus Spake Zarathustra",
+      "translator": "Thomas Common",
+      "year": "1909",
+      "source_url": "https://www.gutenberg.org/ebooks/1998",
+      "note": "Written in four bursts between 1883 and 1885 while he was sick, alone and freshly rejected by Lou Salome. The fourth part was printed privately in 40 copies."
+    },
+    {
+      "slug": "twilight-of-the-idols",
+      "title": "Twilight of the Idols",
+      "translator": "Anthony M. Ludovici",
+      "year": "1911",
+      "source_url": "https://www.gutenberg.org/ebooks/52263",
+      "note": "Written in about a week in the summer of 1888, his last working year, a few months before his collapse."
+    },
+    {
+      "slug": "antichrist",
+      "title": "The Antichrist",
+      "translator": "Anthony M. Ludovici",
+      "year": "1911",
+      "source_url": "https://www.gutenberg.org/ebooks/52263",
+      "note": "Written in 1888 in his last months of work and held back from print until 1895, after his mind had gone."
+    },
+    {
+      "slug": "joyful-wisdom",
+      "title": "The Joyful Wisdom",
+      "translator": "Thomas Common",
+      "year": "1910",
+      "source_url": "https://www.gutenberg.org/ebooks/52881",
+      "note": "Written in 1882 in Genoa during a stretch of recovered health, with a fifth book added in 1887. Also known as The Gay Science."
+    }
+  ],
+  "quotes": [
+    {
+      "id": "nietzsche-zarathustra-prologue-ced3e2",
+      "text": "I conjure you, my brethren, REMAIN TRUE TO THE EARTH, and believe not those who speak unto you of superearthly hopes! Poisoners are they, whether they know it or not.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "Put your effort into this life, this body, this day, not into someone's promise of later.",
+      "themes": [
+        "time",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-a4d289",
+      "text": "What is the greatest thing ye can experience? It is the hour of great contempt.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "The day you get sick of your own comfortable self is the day you can actually change.",
+      "themes": [
+        "change",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-a64813",
+      "text": "Man is a rope stretched between the animal and the Superman, a rope over an abyss.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "You are mid-crossing between what you were and what you could be, and the drop below is real.",
+      "themes": [
+        "change",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-b51e19",
+      "text": "What is great in man is that he is a bridge and not a goal: what is lovable in man is that he is an OVER-GOING and a DOWN-GOING.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "You are not the finished product. Being on the way to something is the point.",
+      "themes": [
+        "change",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-732273",
+      "text": "I love him who desireth not too many virtues. One virtue is more of a virtue than two, because it is more of a knot for one’s destiny to cling to.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "Pick one thing to be great at and hold onto it. Spread thin, nothing holds.",
+      "themes": [
+        "discipline",
+        "desire"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-de437b",
+      "text": "I tell you: one must still have chaos in one, to give birth to a dancing star. I tell you: ye have still chaos in you.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "The mess inside you is the raw material for something great. Don't flatten it.",
+      "themes": [
+        "mind",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-127bf7",
+      "text": "“We have discovered happiness”, say the last men, and blink thereby.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "Comfort with no goal is what the people who stopped trying call happiness.",
+      "themes": [
+        "happiness",
+        "folly"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-7f76cb",
+      "text": "Turning ill and being distrustful, they consider sinful: they walk warily. He is a fool who still stumbleth over stones or men!",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "The safe life treats any stumble as shameful. Stumbling is how anyone gets anywhere.",
+      "themes": [
+        "courage",
+        "folly"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-027f59",
+      "text": "Behold the good and just! Whom do they hate most? Him who breaketh up their tables of values, the breaker, the law-breaker: he, however, is the creator.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "The people who follow every rule resent whoever builds something new. Expect that.",
+      "themes": [
+        "reputation",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-prologue-53241c",
+      "text": "I make for my goal, I follow my course; over the loitering and tardy will I leap.",
+      "work": "zarathustra",
+      "location": "Prologue",
+      "plain": "Keep moving toward the target. Don't wait for the slow ones to catch up.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-1-94995a",
+      "text": "What is the heaviest thing, ye heroes? asketh the load-bearing spirit, that I may take it upon me and rejoice in my strength.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 1",
+      "plain": "A strong person asks for the heaviest load, because carrying it is what proves the strength.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-1-593043",
+      "text": "What is the great dragon which the spirit is no longer inclined to call Lord and God? “Thou shalt,” is the great dragon called. But the spirit of the lion saith, “I will.”",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 1",
+      "plain": "Every rule handed to you says 'you must.' Growing up means answering 'I will.'",
+      "themes": [
+        "self-mastery",
+        "courage"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-1-b708e6",
+      "text": "Innocence is the child, and forgetfulness, a new beginning, a game, a self-rolling wheel, a first movement, a holy Yea.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 1",
+      "plain": "After the fight, you start fresh and play. Forget the old score and say yes to the work.",
+      "themes": [
+        "change",
+        "happiness"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-2-1855df",
+      "text": "No small art is it to sleep: it is necessary for that purpose to keep awake all day.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 2",
+      "plain": "Good rest is earned by a full day of effort.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-2-063183",
+      "text": "Ten times a day must thou overcome thyself: that causeth wholesome weariness, and is poppy to the soul.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 2",
+      "plain": "Beat your own resistance over and over every day. The tiredness that follows is the good kind.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-3-1ea3e2",
+      "text": "Suffering was it, and impotence, that created all backworlds; and the short madness of happiness, which only the greatest sufferer experienceth.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 3",
+      "plain": "People invent a perfect other world when this one hurts and they feel helpless.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-4-06b9ba",
+      "text": "Behind thy thoughts and feelings, my brother, there is a mighty lord, an unknown sage, it is called Self; it dwelleth in thy body, it is thy body.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 4",
+      "plain": "Something deeper than your passing moods is steering. It lives in how you actually live.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-4-7c50d3",
+      "text": "There is more sagacity in thy body than in thy best wisdom.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 4",
+      "plain": "Your body has its own intelligence. Don't override it with clever talk.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-5-8c9679",
+      "text": "All thy passions in the end became virtues, and all thy devils angels.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 5",
+      "plain": "Your worst drives, pointed at a real goal, become your best strengths.",
+      "themes": [
+        "self-mastery",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-5-b7d7b8",
+      "text": "Once hadst thou wild dogs in thy cellar: but they changed at last into birds and charming songstresses.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 5",
+      "plain": "Wild urges can be trained into something that sings for you.",
+      "themes": [
+        "self-mastery",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-5-e6038c",
+      "text": "Out of thy poisons brewedst thou balsam for thyself; thy cow, affliction, milkedst thou, now drinketh thou the sweet milk of her udder.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 5",
+      "plain": "You turned what hurt you into what feeds you.",
+      "themes": [
+        "adversity",
+        "pain"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-5-76ef32",
+      "text": "He whom the flame of jealousy encompasseth, turneth at last, like the scorpion, the poisoned sting against himself.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 5",
+      "plain": "Envy ends up hurting you more than the person you envy.",
+      "themes": [
+        "desire",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-6-de32d3",
+      "text": "I am a railing alongside the torrent; whoever is able to grasp me may grasp me!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 6",
+      "plain": "Support what is steady and let people lean on it if they are strong enough. Don't be their crutch.",
+      "themes": [
+        "power",
+        "friendship"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-693981",
+      "text": "Of all that is written, I love only what a person hath written with his blood. Write with blood, and thou wilt find that blood is spirit.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "Only work that cost you something is worth reading. Put yourself on the line.",
+      "themes": [
+        "work",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-8105c3",
+      "text": "Ye look aloft when ye long for exaltation; and I look downward because I am exalted.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "People who feel small keep looking up at others. Standing high, you look at the ground you've climbed.",
+      "themes": [
+        "reputation",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-66c56b",
+      "text": "He who climbeth on the highest mountains, laugheth at all tragic plays and tragic realities.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "Get high enough on your own climb and the drama down below stops moving you.",
+      "themes": [
+        "courage",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-432d52",
+      "text": "Ye tell me, “Life is hard to bear.” But for what purpose should ye have your pride in the morning and your resignation in the evening?",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "You can't be proud at breakfast and whining by dinner. Pick one.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-5b5b9e",
+      "text": "Life is hard to bear: but do not affect to be so delicate! We are all of us fine sumpter asses and assesses.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "Yes it's heavy. Everyone is carrying a load. Stop acting too fragile for it.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-273347",
+      "text": "It is true we love life; not because we are wont to live, but because we are wont to love.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "We love life out of love, not habit.",
+      "themes": [
+        "love",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-028ce0",
+      "text": "I should only believe in a God that would know how to dance.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "Anything worth following has to have lightness and play in it.",
+      "themes": [
+        "happiness",
+        "mind"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-7e44ce",
+      "text": "Not by wrath, but by laughter, do we slay. Come, let us slay the spirit of gravity!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "Beat heaviness by laughing at it, not by getting angrier.",
+      "themes": [
+        "anger",
+        "happiness"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-7-f82a66",
+      "text": "I learned to walk; since then have I let myself run. I learned to fly; since then I do not need pushing in order to move from a spot.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 7",
+      "plain": "Once the skill is in you, you move without being pushed.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-8-5f4a4c",
+      "text": "The more he seeketh to rise into the height and light, the more vigorously do his roots struggle earthward, downward, into the dark and deep, into the evil.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 8",
+      "plain": "The higher you aim, the more your dark side pushes back. That's part of growing, not a sign you're failing.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-8-9b6bb0",
+      "text": "I change too quickly: my to-day refuteth my yesterday. I often overleap the steps when I clamber; for so doing, none of the steps pardons me.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 8",
+      "plain": "Rush the climb and skip steps, and the skipped steps come back to collect.",
+      "themes": [
+        "change",
+        "folly"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-8-a8273c",
+      "text": "When aloft, I find myself always alone. No one speaketh unto me; the frost of solitude maketh me tremble. What do I seek on the height?",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 8",
+      "plain": "Climbing past people gets lonely, and you will wonder if it's worth it.",
+      "themes": [
+        "solitude",
+        "courage"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-8-e7f348",
+      "text": "Maintain holy thy highest hope!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 8",
+      "plain": "Whatever else you drop, don't let go of the biggest thing you're aiming at.",
+      "themes": [
+        "courage",
+        "desire"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-10-585b26",
+      "text": "I know the hatred and envy of your hearts. Ye are not great enough not to know of hatred and envy. Then be great enough not to be ashamed of them!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 10",
+      "plain": "You will feel envy and hate. Admit it, then use it instead of hiding it.",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-10-a0d6ff",
+      "text": "Ye shall love peace as a means to new wars, and the short peace more than the long.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 10",
+      "plain": "Rest is for recovering before the next push. Don't sink into it.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-10-2c3941",
+      "text": "You I advise not to work, but to fight. You I advise not to peace, but to victory. Let your work be a fight, let your peace be a victory!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 10",
+      "plain": "Treat the work as a fight you intend to win, and make your rest something you earned.",
+      "themes": [
+        "work",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-10-a31bc6",
+      "text": "War and courage have done more great things than charity.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 10",
+      "plain": "Bravery gets more done in the world than good intentions.",
+      "themes": [
+        "courage",
+        "power"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-10-25e72b",
+      "text": "“What is good?” ye ask. To be brave is good.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 10",
+      "plain": "If you need a simple rule for what's good, start with courage.",
+      "themes": [
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-10-73c0fe",
+      "text": "Ye shall only have enemies to be hated, but not enemies to be despised. Ye must be proud of your enemies; then, the successes of your enemies are also your successes.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 10",
+      "plain": "Pick rivals worth respecting. Beating a weak one proves nothing.",
+      "themes": [
+        "power",
+        "courage"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-11-3b6ebd",
+      "text": "Wealth they acquire and become poorer thereby. Power they seek for, and above all, the lever of power, much money, these impotent ones!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 11",
+      "plain": "Chasing money for its own sake leaves you emptier than before.",
+      "themes": [
+        "wealth",
+        "power"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-11-e4a1fb",
+      "text": "Towards the throne they all strive: it is their madness, as if happiness sat on the throne! Ofttimes sitteth filth on the throne. and ofttimes also the throne on filth.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 11",
+      "plain": "The top spot is not where happiness lives, and often something rotten is sitting there.",
+      "themes": [
+        "power",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-11-4a4692",
+      "text": "Verily, he who possesseth little is so much the less possessed: blessed be moderate poverty!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 11",
+      "plain": "The less you own, the less owns you.",
+      "themes": [
+        "wealth",
+        "happiness"
+      ],
+      "moments": [
+        "broke"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-12-dd3b15",
+      "text": "Flee, my friend, into thy solitude! I see thee deafened with the noise of the great men, and stung all over with the stings of the little ones.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 12",
+      "plain": "Too much noise and too many small jabs. Go be alone and recover.",
+      "themes": [
+        "solitude",
+        "reputation"
+      ],
+      "moments": [
+        "overwhelmed",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-12-f5a717",
+      "text": "Slow is the experience of all deep fountains: long have they to wait until they know WHAT hath fallen into their depths.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 12",
+      "plain": "Deep things take a long time to process. Don't rush your answer to everything.",
+      "themes": [
+        "mind",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-12-769ee1",
+      "text": "Away from the market-place and from fame taketh place all that is great: away from the market-place and from fame have ever dwelt the devisers of new values.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 12",
+      "plain": "Great work gets made away from the crowd and the attention.",
+      "themes": [
+        "solitude",
+        "work"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-12-898650",
+      "text": "Raise no longer an arm against them! Innumerable are they, and it is not thy lot to be a fly-flap.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 12",
+      "plain": "Stop swatting at petty critics. There are too many, and you have better things to do.",
+      "themes": [
+        "reputation",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-12-352c62",
+      "text": "Thou art not stone; but already hast thou become hollow by the numerous drops. Thou wilt yet break and burst by the numerous drops.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 12",
+      "plain": "Small constant irritations wear you down even if no single one is big.",
+      "themes": [
+        "pain",
+        "adversity"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-12-2e7cac",
+      "text": "What we recognise in a man, we also irritate in him.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 12",
+      "plain": "The people who bother you most are often the ones who see the real thing in you.",
+      "themes": [
+        "reputation",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-13-75faa4",
+      "text": "Not when the truth is filthy, but when it is shallow, doth the discerning one go unwillingly into its waters.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 13",
+      "plain": "An ugly truth is fine. A shallow one is what's worth avoiding.",
+      "themes": [
+        "mind",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-14-dd2f0f",
+      "text": "I and me are always too earnestly in conversation: how could it be endured, if there were not a friend?",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 14",
+      "plain": "Alone with your own head it gets heavy. That's what a friend is for.",
+      "themes": [
+        "friendship",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-14-a57c69",
+      "text": "Our faith in others betrayeth wherein we would fain have faith in ourselves. Our longing for a friend is our betrayer.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 14",
+      "plain": "What you wish others believed in you shows where you don't yet believe in yourself.",
+      "themes": [
+        "friendship",
+        "mind"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-14-a2249d",
+      "text": "If one would have a friend, then must one also be willing to wage war for him: and in order to wage war, one must be CAPABLE of being an enemy.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 14",
+      "plain": "Real friendship means you'd fight for them, and that you are able to fight at all.",
+      "themes": [
+        "friendship",
+        "courage"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-14-9c9cc4",
+      "text": "In one’s friend one shall have one’s best enemy.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 14",
+      "plain": "A good friend pushes back hard on you.",
+      "themes": [
+        "friendship"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-14-30b1bf",
+      "text": "Art thou a tyrant? Then thou canst not have friends.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 14",
+      "plain": "If you need to rule people, you won't end up with friends, only subjects.",
+      "themes": [
+        "friendship",
+        "power"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-14-6bc0f1",
+      "text": "There is comradeship: may there be friendship!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 14",
+      "plain": "Having people around is easy. Having a real friend is the goal.",
+      "themes": [
+        "friendship"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-15-7dbd83",
+      "text": "Change of values, that is, change of the creating ones. Always doth he destroy who hath to be a creator.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 15",
+      "plain": "To build something new you have to tear something old down first.",
+      "themes": [
+        "change",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-16-c45d50",
+      "text": "The one goeth to his neighbour because he seeketh himself, and the other because he would fain lose himself. Your bad love to yourselves maketh solitude a prison to you.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 16",
+      "plain": "If you can't stand your own company, being alone is a cell. Fix that first.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-f897f5",
+      "text": "Alas! there are so many great thoughts that do nothing more than the bellows: they inflate, and make emptier than ever.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "Big ideas that never become action just puff you up and leave you hollow.",
+      "themes": [
+        "work",
+        "folly"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-5e4dbf",
+      "text": "Free, dost thou call thyself? Thy ruling thought would I hear of, and not that thou hast escaped from a yoke.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "Escaping a boss or a rule isn't freedom. What do you now stand for?",
+      "themes": [
+        "self-mastery",
+        "courage"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-9cbd25",
+      "text": "Free from what? What doth that matter to Zarathustra! Clearly, however, shall thine eye show unto me: free FOR WHAT?",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "Freedom from something is cheap. What are you free to do?",
+      "themes": [
+        "self-mastery",
+        "desire"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-a0153b",
+      "text": "Terrible is aloneness with the judge and avenger of one’s own law. Thus is a star projected into desert space, and into the icy breath of aloneness.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "Holding yourself to your own standards with nobody watching is lonely and cold.",
+      "themes": [
+        "solitude",
+        "discipline"
+      ],
+      "moments": [
+        "alone",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-24bddb",
+      "text": "One day wilt thou see no longer thy loftiness, and see too closely thy lowliness; thy sublimity itself will frighten thee as a phantom. Thou wilt one day cry: “All is false!”",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "There will be a day you see only your flaws and think the whole thing is a lie. Walk through it.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-fd0b4e",
+      "text": "Thou goest beyond them: but the higher thou risest, the smaller doth the eye of envy see thee. Most of all, however, is the flying one hated.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "The further ahead you get, the more people resent you for it.",
+      "themes": [
+        "reputation",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-8ad047",
+      "text": "Injustice and filth cast they at the lonesome one: but, my brother, if thou wouldst be a star, thou must shine for them none the less on that account!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "They'll throw mud at you. Keep shining anyway.",
+      "themes": [
+        "reputation",
+        "courage"
+      ],
+      "moments": [
+        "angry",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-463fd3",
+      "text": "Thou lonesome one, thou goest the way to thyself! And past thyself and thy seven devils leadeth thy way!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "The road to who you want to be runs straight through your own demons.",
+      "themes": [
+        "self-mastery",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-72711c",
+      "text": "Ready must thou be to burn thyself in thine own flame; how couldst thou become new if thou have not first become ashes!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "You can't become someone new without burning up the old version of you.",
+      "themes": [
+        "change",
+        "pain"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-17-2db654",
+      "text": "To create, desireth the loving one, because he despiseth! What knoweth he of love who hath not been obliged to despise just what he loved!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 17",
+      "plain": "You make something better because you can't stand how it is now. That comes from love.",
+      "themes": [
+        "love",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-19-a29073",
+      "text": "Nobler is it to own oneself in the wrong than to establish one’s right, especially if one be in the right. Only, one must be rich enough to do so.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 19",
+      "plain": "Admitting you were wrong, even when you weren't, takes a secure person.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-20-b0bf28",
+      "text": "Art thou the victorious one, the self-conqueror, the ruler of thy passions, the master of thy virtues? Thus do I ask thee.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 20",
+      "plain": "Before you reach for the big things, ask whether you actually rule yourself.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-20-97c204",
+      "text": "Beyond thyself shalt thou build. But first of all must thou be built thyself, rectangular in body and soul.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 20",
+      "plain": "Build yourself solid first. Everything else you make stands on that.",
+      "themes": [
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-20-375d4b",
+      "text": "Many short follies, that is called love by you. And your marriage putteth an end to many short follies, with one long stupidity.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 20",
+      "plain": "A string of crushes isn't love, and rushing to lock it in just makes one long mistake.",
+      "themes": [
+        "love",
+        "folly"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-21-2ab8a5",
+      "text": "One must discontinue being feasted upon when one tasteth best: that is known by those who want to be long loved.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 21",
+      "plain": "Leave while they still want more.",
+      "themes": [
+        "reputation",
+        "time"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-21-dc4ade",
+      "text": "Many never become sweet; they rot even in the summer. It is cowardice that holdeth them fast to their branches.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 21",
+      "plain": "Some people never ripen because fear keeps them clinging to where they are.",
+      "themes": [
+        "courage",
+        "change"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-22-575d0e",
+      "text": "Physician, heal thyself: then wilt thou also heal thy patient. Let it be his best cure to see with his eyes him who maketh himself whole.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 22",
+      "plain": "Fix yourself first. Your example does more than your advice.",
+      "themes": [
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-22-934a4d",
+      "text": "A thousand paths are there which have never yet been trodden; a thousand salubrities and hidden islands of life. Unexhausted and undiscovered is still man and man’s world.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 22",
+      "plain": "There are still countless roads nobody has taken. Yours might be one.",
+      "themes": [
+        "courage",
+        "change"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-22-87bb5e",
+      "text": "The man of knowledge must be able not only to love his enemies, but also to hate his friends.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 22",
+      "plain": "To think clearly you have to be willing to push back on the people you love.",
+      "themes": [
+        "friendship",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-22-c029d0",
+      "text": "One requiteth a teacher badly if one remain merely a scholar.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 22",
+      "plain": "The best way to honor a mentor is to go beyond them.",
+      "themes": [
+        "work",
+        "courage"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-22-59d141",
+      "text": "Ye venerate me; but what if your veneration should some day collapse? Take heed lest a statue crush you!",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 22",
+      "plain": "Putting someone on a pedestal sets you up to get crushed when they fall.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-1-discourse-22-54e2a6",
+      "text": "Now do I bid you lose me and find yourselves; and only when ye have all denied me, will I return unto you.",
+      "work": "zarathustra",
+      "location": "Part 1, Discourse 22",
+      "plain": "A real teacher wants you to leave and become your own person.",
+      "themes": [
+        "self-mastery",
+        "friendship"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-3-5af9f2",
+      "text": "Since humanity came into being, man hath enjoyed himself too little: that alone, my brethren, is our original sin!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 3",
+      "plain": "We don't enjoy ourselves enough, and that's the real failing.",
+      "themes": [
+        "happiness"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-3-214662",
+      "text": "Great obligations do not make grateful, but revengeful; and when a small kindness is not forgotten, it becometh a gnawing worm.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 3",
+      "plain": "Help that makes someone feel indebted can turn into resentment.",
+      "themes": [
+        "friendship",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-3-570d3d",
+      "text": "The worst things, however, are the petty thoughts. Verily, better to have done evilly than to have thought pettily!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 3",
+      "plain": "A small, mean thought festering inside does more damage than one honest bad act.",
+      "themes": [
+        "mind",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-3-913d7d",
+      "text": "It is difficult to live among men because silence is so difficult.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 3",
+      "plain": "Most of the trouble with people comes from the things we can't keep to ourselves.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-3-fd054b",
+      "text": "If, however, thou hast a suffering friend, then be a resting-place for his suffering; like a hard bed, however, a camp-bed: thus wilt thou serve him best.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 3",
+      "plain": "Give a hurting friend a place to rest, not a pillow to sink into.",
+      "themes": [
+        "friendship",
+        "pain"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-3-69f44b",
+      "text": "One should hold fast one’s heart; for when one letteth it go, how quickly doth one’s head run away!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 3",
+      "plain": "Lose control of your feelings and your judgment goes right after them.",
+      "themes": [
+        "self-mastery",
+        "love"
+      ],
+      "moments": [
+        "tempted",
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-3-39fd2a",
+      "text": "Ah, where in the world have there been greater follies than with the pitiful? And what in the world hath caused more suffering than the follies of the pitiful?",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 3",
+      "plain": "Pity can do more harm than cruelty. Respect people enough to be hard when it helps.",
+      "themes": [
+        "folly",
+        "pain"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-4-2f0e25",
+      "text": "And when a person goeth through fire for his teaching, what doth that prove! It is more, verily, when out of one’s own burning cometh one’s own teaching!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 4",
+      "plain": "Suffering for an idea proves nothing. Learning something real from your own fire does.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-5-85b50e",
+      "text": "Ye love your virtue as a mother loveth her child; but when did one hear of a mother wanting to be paid for her love?",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 5",
+      "plain": "Do the right thing because it's you, not for a reward.",
+      "themes": [
+        "self-mastery",
+        "love"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-5-7494d5",
+      "text": "With their virtues they want to scratch out the eyes of their enemies; and they elevate themselves only that they may lower others.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 5",
+      "plain": "Some people use their goodness as a weapon. Watch for it, including in yourself.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-7-936a80",
+      "text": "Distrust all those who talk much of their justice! Verily, in their souls not only honey is lacking.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 7",
+      "plain": "The loudest talkers about fairness are often hiding a grudge.",
+      "themes": [
+        "reputation",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-8-591ac6",
+      "text": "Hungry, fierce, lonesome, God-forsaken: so doth the lion-will wish itself.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 8",
+      "plain": "A strong will chooses hunger and solitude over comfort and being told what to do.",
+      "themes": [
+        "solitude",
+        "discipline"
+      ],
+      "moments": [
+        "alone",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-8-76e3a1",
+      "text": "Free from the happiness of slaves, redeemed from Deities and adorations, fearless and fear-inspiring, grand and lonesome: so is the will of the conscientious.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 8",
+      "plain": "The honest, independent mind gives up easy comfort and ends up fearless and alone.",
+      "themes": [
+        "self-mastery",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-8-05b047",
+      "text": "Spirit is life which itself cutteth into life: by its own torture doth it increase its own knowledge, did ye know that before?",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 8",
+      "plain": "You grow by cutting into your own life. Knowledge costs pain.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-8-e10192",
+      "text": "Ye know only the sparks of the spirit: but ye do not see the anvil which it is, and the cruelty of its hammer!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 8",
+      "plain": "You see the sparks. You don't see the hammering that made them.",
+      "themes": [
+        "work",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-8-7ea9c9",
+      "text": "Ye are not eagles: thus have ye never experienced the happiness of the alarm of the spirit. And he who is not a bird should not camp above abysses.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 8",
+      "plain": "You never feel the thrill of danger if you stay safe. And don't build your camp over a drop unless you can fly.",
+      "themes": [
+        "courage",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-11-adeb04",
+      "text": "How did I ever bear it? How did I survive and surmount such wounds? How did my soul rise again out of those sepulchres?",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 11",
+      "plain": "Look back at what you already got through. You did survive it.",
+      "themes": [
+        "pain",
+        "adversity"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-11-f682bb",
+      "text": "Yea, something invulnerable, unburiable is with me, something that would rend rocks asunder: it is called MY WILL. Silently doth it proceed, and unchanged throughout the years.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 11",
+      "plain": "Something in you can't be buried or broken. It's your will, and it keeps going.",
+      "themes": [
+        "self-mastery",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-11-e3d4a9",
+      "text": "Yea, thou art still for me the demolisher of all graves: Hail to thee, my Will! And only where there are graves are there resurrections.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 11",
+      "plain": "You can only rise again after something has been lost. Your will gets you up.",
+      "themes": [
+        "adversity",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-12-360edc",
+      "text": "And this heard I secondly: Whatever cannot obey itself, is commanded. Such is the nature of living things.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 12",
+      "plain": "If you can't command yourself, someone else will do it for you.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-12-405b17",
+      "text": "Wherever I found a living thing, there found I Will to Power; and even in the will of the servant found I the will to be master.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 12",
+      "plain": "Everything alive wants to grow stronger. Even the person serving wants to be in charge.",
+      "themes": [
+        "power",
+        "desire"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-12-bedb06",
+      "text": "Whatever I create, and however much I love it, soon must I be adverse to it, and to my love: so willeth my will.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 12",
+      "plain": "You'll outgrow even your best work. Let yourself move past it.",
+      "themes": [
+        "change",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-12-005711",
+      "text": "And he who hath to be a creator in good and evil, verily, he hath first to be a destroyer, and break values in pieces.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 12",
+      "plain": "Making your own rules means first breaking the ones you were given.",
+      "themes": [
+        "change",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-12-7df8be",
+      "text": "Let us SPEAK thereof, ye wisest ones, even though it be bad. To be silent is worse; all suppressed truths become poisonous.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 12",
+      "plain": "Say the hard thing. The truth you swallow turns toxic.",
+      "themes": [
+        "courage",
+        "mind"
+      ],
+      "moments": [
+        "afraid",
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-13-92aa1d",
+      "text": "Calm is the bottom of my sea: who would guess that it hideth droll monsters!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 13",
+      "plain": "A calm surface can hide plenty going on underneath. Don't judge by the look of things.",
+      "themes": [
+        "mind",
+        "reputation"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-13-1fe6ae",
+      "text": "To stand with relaxed muscles and with unharnessed will: that is the hardest for all of you, ye sublime ones!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 13",
+      "plain": "For driven people, the hard thing is letting go and just standing at ease.",
+      "themes": [
+        "self-mastery",
+        "happiness"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-13-5599e8",
+      "text": "And from no one do I want beauty so much as from thee, thou powerful one: let thy goodness be thy last self-conquest.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 13",
+      "plain": "If you get strong, the last thing to master is being kind with it.",
+      "themes": [
+        "power",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-13-3ac763",
+      "text": "Verily, I have often laughed at the weaklings, who think themselves good because they have crippled paws!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 13",
+      "plain": "Being harmless because you're weak isn't goodness.",
+      "themes": [
+        "power",
+        "courage"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-13-be8f5a",
+      "text": "The virtue of the pillar shalt thou strive after: more beautiful doth it ever become, and more graceful, but internally harder and more sustaining, the higher it riseth.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 13",
+      "plain": "Be like a pillar: the higher you go, the more graceful on the outside and the harder inside.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-15-2e13a5",
+      "text": "Loving and perishing: these have rhymed from eternity. Will to love: that is to be ready also for death.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 15",
+      "plain": "Loving anything means accepting you can lose it.",
+      "themes": [
+        "love",
+        "death"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-15-06456c",
+      "text": "Dare only to believe in yourselves, in yourselves and in your inward parts! He who doth not believe in himself always lieth.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 15",
+      "plain": "If you don't trust yourself, you end up lying to everyone, yourself first.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-16-ecbb28",
+      "text": "Freedom do I love, and the air over fresh soil; rather would I sleep on ox-skins than on their honours and dignities.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 16",
+      "plain": "I'd take a rough bed and my freedom over titles that come with strings.",
+      "themes": [
+        "self-mastery",
+        "wealth"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-17-b51840",
+      "text": "We also know too little, and are bad learners: so we are obliged to lie.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 17",
+      "plain": "When we don't know enough, we bluff.",
+      "themes": [
+        "folly",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-18-dcbb95",
+      "text": "The greatest events, are not our noisiest, but our stillest hours.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 18",
+      "plain": "What matters most happens quietly, not in the loud moments.",
+      "themes": [
+        "work",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-18-1a3a31",
+      "text": "Not around the inventors of new noise, but around the inventors of new values, doth the world revolve; INAUDIBLY it revolveth.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 18",
+      "plain": "The world turns around people who change what we value, not around whoever is loudest.",
+      "themes": [
+        "power",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-19-e4f005",
+      "text": "Verily, even for dying have we become too weary; now do we keep awake and live on, in sepulchres.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 19",
+      "plain": "Some exhaustion is so deep you're not living, just lingering in your own grave.",
+      "themes": [
+        "death",
+        "mind"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-20-d8d342",
+      "text": "To redeem what is past, and to transform every “It was” into “Thus would I have it!”, that only do I call redemption!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 20",
+      "plain": "You can't change what happened, but you can own it and decide it was what you wanted.",
+      "themes": [
+        "fate",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-20-9eab2d",
+      "text": "Not backward can the Will will; that it cannot break time and time’s desire, that is the Will’s lonesomest tribulation.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 20",
+      "plain": "Revenge is rage at the fact that time only runs forward.",
+      "themes": [
+        "time",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-21-3cad74",
+      "text": "Not the height, it is the declivity that is terrible!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 21",
+      "plain": "Climbing isn't the scary part. The drop below you is.",
+      "themes": [
+        "fear",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-21-73f2a6",
+      "text": "This is my first manly prudence, that I allow myself to be deceived, so as not to be on my guard against deceivers.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 21",
+      "plain": "Getting burned sometimes beats living guarded against everyone.",
+      "themes": [
+        "friendship",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-21-a686db",
+      "text": "And he who would not languish amongst men, must learn to drink out of all glasses; and he who would keep clean amongst men, must know how to wash himself even with dirty water.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 21",
+      "plain": "To live among people without going sour, take them as they are and stay clean anyway.",
+      "themes": [
+        "friendship",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-21-42c795",
+      "text": "Is not wounded vanity the mother of all tragedies? Where, however, pride is wounded, there groweth up something better than pride.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 21",
+      "plain": "A bruised ego causes most disasters. A bruised pride can grow into something real.",
+      "themes": [
+        "reputation",
+        "adversity"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-22-86ddaa",
+      "text": "The dew falleth on the grass when the night is most silent.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 22",
+      "plain": "Growth lands in the quiet hours, when it looks like nothing is happening.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-22-6d0358",
+      "text": "What matter about their mockery! Thou art one who hast unlearned to obey: now shalt thou command!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 22",
+      "plain": "Their mockery is nothing. You've outgrown taking orders, so lead.",
+      "themes": [
+        "reputation",
+        "power"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-22-4a276a",
+      "text": "To execute great things is difficult: but the more difficult task is to command great things.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 22",
+      "plain": "Doing the work is hard. Having the nerve to lead it is harder.",
+      "themes": [
+        "power",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-22-e20fc1",
+      "text": "It is the stillest words which bring the storm. Thoughts that come with doves’ footsteps guide the world.",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 22",
+      "plain": "The quiet ideas are the ones that end up steering everything.",
+      "themes": [
+        "mind",
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-2-discourse-22-d78376",
+      "text": "O Zarathustra, thy fruits are ripe, but thou art not ripe for thy fruits!",
+      "work": "zarathustra",
+      "location": "Part 2, Discourse 22",
+      "plain": "The work is ready before you are. Go grow into it.",
+      "themes": [
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-1-e9773f",
+      "text": "Thou goest the way to thy greatness: it must now be thy best courage that there is no longer any path behind thee!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 1",
+      "plain": "No way back is your best weapon. Now you have to go forward.",
+      "themes": [
+        "courage",
+        "fate"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-1-7e91c0",
+      "text": "And if all ladders henceforth fail thee, then must thou learn to mount upon thine own head: how couldst thou mount upward otherwise?",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 1",
+      "plain": "When every ladder breaks, you climb on your own head. There's no other way up.",
+      "themes": [
+        "adversity",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-1-245e51",
+      "text": "Now must the gentlest in thee become the hardest.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 1",
+      "plain": "The soft part of you has to get tough now.",
+      "themes": [
+        "discipline",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-1-16f3b2",
+      "text": "He who hath always much-indulged himself, sickeneth at last by his much-indulgence.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 1",
+      "plain": "Spoil yourself long enough and it makes you sick.",
+      "themes": [
+        "discipline",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-1-a469b4",
+      "text": "Out of the deepest must the highest come to its height.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 1",
+      "plain": "The highest peaks rise from the lowest depths. Your worst stretch is what you climb from.",
+      "themes": [
+        "adversity",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-1-06939a",
+      "text": "LOVE is the danger of the lonesomest one, love to anything, IF IT ONLY LIVE!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 1",
+      "plain": "When you're lonely, you'll love anything that moves, and that is the trap.",
+      "themes": [
+        "love",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-2-3e30dc",
+      "text": "Courage slayeth also giddiness at abysses: and where doth man not stand at abysses! Is not seeing itself, seeing abysses?",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 2",
+      "plain": "Everyone stands at an edge somewhere. Looking clearly means seeing the drop.",
+      "themes": [
+        "courage",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-2-5389a9",
+      "text": "Courage, however, is the best slayer, courage which attacketh: it slayeth even death itself; for it saith: “WAS THAT life? Well! Once more!”",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 2",
+      "plain": "Courage kills fear of death by looking at life and saying: again.",
+      "themes": [
+        "courage",
+        "death"
+      ],
+      "moments": [
+        "afraid",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-5-8ea856",
+      "text": "In their hearts they want simply one thing most of all: that no one hurt them.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 5",
+      "plain": "Most people mainly want to avoid getting hurt, and they call that virtue.",
+      "themes": [
+        "fear",
+        "folly"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-5-157461",
+      "text": "Ye ever become smaller, ye small people! Ye crumble away, ye comfortable ones!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 5",
+      "plain": "Comfort shrinks you a little more every day.",
+      "themes": [
+        "discipline",
+        "adversity"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-5-7acc16",
+      "text": "Too tender, too yielding: so is your soil! But for a tree to become GREAT, it seeketh to twine hard roots around hard rocks!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 5",
+      "plain": "Big things grow where the ground is hard. Soft soil makes small trees.",
+      "themes": [
+        "adversity",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-5-a5fd6d",
+      "text": "Ah, that ye would renounce all HALF-willing, and would decide for idleness as ye decide for action!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 5",
+      "plain": "Quit the half-effort. Either rest fully or act fully.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-5-f5812b",
+      "text": "Do ever what ye will, but first be such as CAN WILL.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 5",
+      "plain": "Do what you want, but first become someone with a real will.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-6-292fc5",
+      "text": "Never in my life did I creep before the powerful; and if ever I lied, then did I lie out of love.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 6",
+      "plain": "I never groveled to anyone with power.",
+      "themes": [
+        "power",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-6-5350d1",
+      "text": "A poor bed warmeth me more than a rich one, for I am jealous of my poverty. And in winter she is most faithful unto me.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 6",
+      "plain": "Being broke can be a friend that keeps you hungry and honest.",
+      "themes": [
+        "wealth",
+        "adversity"
+      ],
+      "moments": [
+        "broke"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-6-78bdda",
+      "text": "With a wickedness do I begin every day: I mock at the winter with a cold bath: on that account grumbleth my stern house-mate.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 6",
+      "plain": "Start the day by doing the hard thing on purpose, cold bath and all.",
+      "themes": [
+        "discipline",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-6-324398",
+      "text": "To one man, lonesomeness is the flight of the sick one; to another, it is the flight FROM the sick ones.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 6",
+      "plain": "Being alone can be running away from life or running away from the people draining it.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-7-01e47e",
+      "text": "They hound one another, and know not whither! They inflame one another, and know not why!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 7",
+      "plain": "The crowd rushes and fights with no idea where it is going.",
+      "themes": [
+        "folly",
+        "reputation"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-7-621df4",
+      "text": "They are cold, and seek warmth from distilled waters: they are inflamed, and seek coolness from frozen spirits; they are all sick and sore through public opinion.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 7",
+      "plain": "Public opinion makes people sick, and they chase the wrong cures.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-7-ed58e0",
+      "text": "This precept, however, give I unto thee, in parting, thou fool: Where one can no longer love, there should one, PASS BY!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 7",
+      "plain": "Where you can't love anymore, walk past. Don't waste time on the fight.",
+      "themes": [
+        "love",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-8-18476c",
+      "text": "The half-and-half spoil every whole.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 8",
+      "plain": "Half-committed people ruin the whole thing.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-9-1d45c5",
+      "text": "One thing is forsakenness, another matter is lonesomeness: THAT hast thou now learned!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 9",
+      "plain": "Being abandoned and choosing solitude are different things.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-9-b07642",
+      "text": "Everything among them talketh; no one knoweth any longer how to understand. Everything falleth into the water; nothing falleth any longer into deep wells.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 9",
+      "plain": "Everyone talks and nothing sinks in deep.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-9-1ef83f",
+      "text": "Everything among them talketh, nothing succeedeth any longer and accomplisheth itself. Everything cackleth, but who will still sit quietly on the nest and hatch eggs?",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 9",
+      "plain": "Everyone is loud, few sit still long enough to finish anything.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-9-f780bf",
+      "text": "He who liveth amongst the good, pity teacheth him to lie. Pity maketh stifling air for all free souls.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 9",
+      "plain": "Constant pity makes you lie to be gentle, and it smothers free people.",
+      "themes": [
+        "friendship",
+        "self-mastery"
+      ],
+      "moments": [
+        "alone",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-11-7203fd",
+      "text": "Thereof could I sing a song, and WILL sing it: though I be alone in an empty house, and must sing it to mine own ears.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 11",
+      "plain": "I'll make the thing even if the room is empty and the only audience is me.",
+      "themes": [
+        "solitude",
+        "work"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-11-6e8fd2",
+      "text": "One must learn to love oneself, thus do I teach, with a wholesome and healthy love: that one may endure to be with oneself, and not go roving about.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 11",
+      "plain": "Learn to like your own company so you stop running from it.",
+      "themes": [
+        "self-mastery",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-11-9195cb",
+      "text": "But man himself only is hard to bear! The reason thereof is that he carrieth too many extraneous things on his shoulders.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 11",
+      "plain": "Life feels heavy because you carry other people's rules and words.",
+      "themes": [
+        "mind",
+        "pain"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-11-d09797",
+      "text": "This however is my teaching: he who wisheth one day to fly, must first learn standing and walking and running and climbing and dancing: one doth not fly into flying!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 11",
+      "plain": "No skipping steps. You walk, run, and climb before you fly.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-11-f8614e",
+      "text": "“This, is now MY way, where is yours?” Thus did I answer those who asked me “the way.” For THE way, it doth not exist!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 11",
+      "plain": "There's no one right path. Find yours.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-fd3bb9",
+      "text": "He who cannot command himself shall obey. And many a one CAN command himself, but still sorely lacketh self-obedience!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "If you can't rule yourself, someone else will. And giving orders to yourself isn't enough, you have to follow them.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-107afd",
+      "text": "The daring venture, the prolonged distrust, the cruel Nay, the tedium, the cutting-into-the-quick, how seldom do THESE come together! Out of such seed, however, is truth produced!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "Truth comes from risk, doubt, saying no, boredom, and pain. Few stick with all of it.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-756fd2",
+      "text": "Let it not be your honour henceforth whence ye come, but whither ye go!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "Where you came from doesn't count. Where you're headed does.",
+      "themes": [
+        "reputation",
+        "change"
+      ],
+      "moments": [
+        "doubting",
+        "broke"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-a6c3d0",
+      "text": "In the best there is still something to loathe; and the best is still something that must be surpassed!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "Even your best has flaws, and even your best is something to beat.",
+      "themes": [
+        "change",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-fa9c32",
+      "text": "And such is always the nature of weak men: they lose themselves on their way. And at last asketh their weariness: “Why did we ever go on the way? All is indifferent!”",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "People who go soft lose the thread, then call the whole trip pointless.",
+      "themes": [
+        "discipline",
+        "folly"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-624fb2",
+      "text": "Willing emancipateth: for willing is creating: so do I teach.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "Deciding what you want frees you, because wanting is how things get made.",
+      "themes": [
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-921e5a",
+      "text": "Only a span-breadth is he from his goal; but from weariness hath he lain down obstinately in the dust, this brave one!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "He quit a hand's width from the finish because he was tired.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-7f0910",
+      "text": "I love the brave: but it is not enough to be a swordsman, one must also know WHEREON to use swordsmanship!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "Being tough isn't enough. Know what is worth fighting.",
+      "themes": [
+        "courage",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-8903ec",
+      "text": "And lost be the day to us in which a measure hath not been danced. And false be every truth which hath not had laughter along with it!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "A day without joy is a lost day, and a truth with no laughter in it is suspect.",
+      "themes": [
+        "happiness",
+        "mind"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-eecc0b",
+      "text": "Why so soft, so submissive and yielding? Why is there so much negation and abnegation in your hearts? Why is there so little fate in your looks?",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "You have gone too soft to want anything big. Get some destiny back in your eyes.",
+      "themes": [
+        "discipline",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-276421",
+      "text": "This new table, O my brethren, put I up over you: BECOME HARD!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "Stop going easy on yourself. Toughen up where it counts.",
+      "themes": [
+        "discipline",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-12-7dc96d",
+      "text": "O thou, my Will! Thou change of every need, MY needfulness! Preserve me from all small victories!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 12",
+      "plain": "Don't let a small win make you stop short of the big thing.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-13-833126",
+      "text": "Everything goeth, everything returneth; eternally rolleth the wheel of existence. Everything dieth, everything blossometh forth again; eternally runneth on the year of existence.",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 13",
+      "plain": "Everything ends and starts again. The wheel keeps turning.",
+      "themes": [
+        "time",
+        "death",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-3-discourse-16-c5406f",
+      "text": "Woe unto all loving ones who have not an elevation which is above their pity!",
+      "work": "zarathustra",
+      "location": "Part 3, Discourse 16",
+      "plain": "Love without a spine above its pity does damage.",
+      "themes": [
+        "love",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-4-20c660",
+      "text": "Call me however what thou wilt, I am who I must be.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 4",
+      "plain": "Their labels don't change what you have to become.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-4-ccc401",
+      "text": "Better know nothing than half-know many things! Better be a fool on one’s own account, than a sage on other people’s approbation!",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 4",
+      "plain": "Go deep on your own, even if you look foolish. Borrowed wisdom is worth nothing.",
+      "themes": [
+        "folly",
+        "reputation",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-5-b94f73",
+      "text": "O Zarathustra, everything is a lie in me; but that I collapse, this my collapsing is GENUINE!",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 5",
+      "plain": "Even when you feel like a fraud, the way you break is real.",
+      "themes": [
+        "pain",
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-5-503b93",
+      "text": "Many a one have I found who stretched and inflated himself, and the people cried: ‘Behold; a great man!’ But what good do all bellows do! The wind cometh out at last.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 5",
+      "plain": "Hype and image fade. Whatever is just puffed up goes flat in the end.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-7-e145e1",
+      "text": "I love the great despisers. Man is something that hath to be surpassed.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 7",
+      "plain": "People who hate their small selves are the ones who grow past them.",
+      "themes": [
+        "self-mastery",
+        "change"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-9-12c314",
+      "text": "‘Nothing is true, all is permitted’: so said I to myself.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 9",
+      "plain": "Once you drop all rules, you have to build your own, and that's the hard part.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-9-2f1c3c",
+      "text": "Too oft, verily, did I follow close to the heels of truth: then did it kick me on the face.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 9",
+      "plain": "Chasing the truth too closely gets you hurt. It's still worth it.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-9-98dc80",
+      "text": "Ah, he only who knoweth WHITHER he saileth, knoweth what wind is good, and a fair wind for him.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 9",
+      "plain": "Without a destination, no wind helps you. Know where you're going first.",
+      "themes": [
+        "fate",
+        "discipline"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-9-5b5bd3",
+      "text": "What still remaineth to me? A heart weary and flippant; an unstable will; fluttering wings; a broken backbone.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 9",
+      "plain": "At your lowest you can name exactly what is left, and start from that.",
+      "themes": [
+        "self-mastery",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-9-37d905",
+      "text": "Thou hast lost thy goal. Alas, how wilt thou forego and forget that loss? Thereby, hast thou also lost thy way!",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 9",
+      "plain": "Lose the goal and you lose the road. Keep the aim in front of you.",
+      "themes": [
+        "discipline",
+        "fate"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-10-84669c",
+      "text": "The least thing precisely, the gentlest thing, the lightest thing, a lizard’s rustling, a breath, a whisk, an eye-glance, LITTLE maketh up the BEST happiness.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 10",
+      "plain": "The best happiness is made of tiny things. Notice them.",
+      "themes": [
+        "happiness"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-11-659a95",
+      "text": "There is nothing, O Zarathustra, that groweth more pleasingly on earth than a lofty, strong will: it is the finest growth.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 11",
+      "plain": "A strong will is the best thing a person can grow.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-11-5cfcb5",
+      "text": "My arms and my legs, however, I do not treat indulgently, I DO NOT TREAT MY WARRIORS INDULGENTLY: how then could ye be fit for MY warfare?",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 11",
+      "plain": "Go easy on yourself and you're not ready for the real fight.",
+      "themes": [
+        "discipline",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-12-db11fc",
+      "text": "I am a law only for mine own; I am not a law for all.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 12",
+      "plain": "Hold yourself to a hard standard without forcing it on everyone else.",
+      "themes": [
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-af2656",
+      "text": "And when I spake unto all, I spake unto none.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Talk to everybody and nobody hears you. Aim at the few who matter.",
+      "themes": [
+        "reputation",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-dedfb7",
+      "text": "The most careful ask to-day: “How is man to be maintained?” Zarathustra however asketh, as the first and only one: “How is man to be SURPASSED?”",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Don't ask how to stay safe and comfortable. Ask how to get past who you are now.",
+      "themes": [
+        "change",
+        "courage"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-f13eba",
+      "text": "And rather despair than submit yourselves.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Better to struggle and hurt than to give in and shrink.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-c66c2c",
+      "text": "He hath heart who knoweth fear, but VANQUISHETH it; who seeth the abyss, but with PRIDE.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Courage means feeling the fear and looking into the drop anyway.",
+      "themes": [
+        "courage",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-6e09b8",
+      "text": "Do not will anything beyond your power: there is a bad falseness in those who will beyond their power.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Don't claim more than you can deliver. Faking big goals makes you fake.",
+      "themes": [
+        "self-mastery",
+        "folly"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-97e869",
+      "text": "Take good care there, ye higher men! For nothing is more precious to me, and rarer, than honesty.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Honesty is rare and valuable. Guard yours.",
+      "themes": [
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-f23d88",
+      "text": "If ye would go up high, then use your own legs! Do not get yourselves CARRIED aloft; do not seat yourselves on other people’s backs and heads!",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Climb it yourself. Getting carried up means you can't hold the height.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-448cfd",
+      "text": "In solitude there groweth what any one bringeth into it, also the brute in one’s nature. Thus is solitude inadvisable unto many.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Being alone grows whatever you bring in, good or bad. Know what you're feeding.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-06c87b",
+      "text": "The higher its type, always the seldomer doth a thing succeed. Ye higher men here, have ye not all, been failures?",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "The harder the thing you're trying, the more often it fails. That's normal.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-7d489b",
+      "text": "What wonder that many a vessel shattereth! Learn to laugh at yourselves, as ye ought to laugh! Ye higher men, O, how much is still possible!",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Of course you broke something. Laugh at it, a lot is still possible.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-95853f",
+      "text": "Set around you small, good, perfect things, ye higher men. Their golden maturity healeth the heart. The perfect teacheth one to hope.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Surround yourself with small things done well. They heal you and give hope.",
+      "themes": [
+        "happiness",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-df045a",
+      "text": "All great love doth not SEEK love: it seeketh more.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Real love isn't hunting to be loved back. It wants something bigger.",
+      "themes": [
+        "love"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-c43e75",
+      "text": "Tortuously do all good things come nigh to their goal.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Good things reach their goal by winding roads. A crooked path isn't a failed one.",
+      "themes": [
+        "time",
+        "adversity"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-bb0298",
+      "text": "His step betrayeth whether a person already walketh on HIS OWN path: just see me walk! He, however, who cometh nigh to his goal, danceth.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "You can tell who's on their own road by how they move. Close to the goal, you move lightly.",
+      "themes": [
+        "work",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-365b1f",
+      "text": "Better, however, to be foolish with happiness than foolish with misfortune, better to dance awkwardly than walk lamely.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "If you're going to look dumb, do it while enjoying yourself. Move badly rather than not at all.",
+      "themes": [
+        "folly",
+        "happiness"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-13-8edb88",
+      "text": "Ye higher men, the worst thing in you is that ye have none of you learned to dance as ye ought to dance, to dance beyond yourselves! What doth it matter that ye have failed!",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 13",
+      "plain": "Failing doesn't matter. Not learning to go beyond yourself does.",
+      "themes": [
+        "courage",
+        "change"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-15-e0c126",
+      "text": "Courage, however, and adventure, and delight in the uncertain, in the unattempted, COURAGE seemeth to me the entire primitive history of man.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 15",
+      "plain": "People got here by trying unknown things, not by hiding from them.",
+      "themes": [
+        "courage",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-19-d82e75",
+      "text": "Ye have danced: a leg, nevertheless, is not a wing.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 19",
+      "plain": "A little progress isn't flight yet. Keep climbing.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-19-360f31",
+      "text": "Said ye ever Yea to one joy? O my friends, then said ye Yea also unto ALL woe.",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 19",
+      "plain": "If you want one good moment, you accept all the pain that comes with it.",
+      "themes": [
+        "happiness",
+        "pain",
+        "fate"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-zarathustra-part-4-discourse-20-0c83e4",
+      "text": "Do I then strive after HAPPINESS? I strive after my WORK!",
+      "work": "zarathustra",
+      "location": "Part 4, Discourse 20",
+      "plain": "Don't aim for comfort. Aim at the work.",
+      "themes": [
+        "work",
+        "happiness"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-2-c77aae",
+      "text": "Even the pluckiest among us has but seldom the courage of what he really knows.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 2",
+      "plain": "Most of us know the hard truth and don't act on it.",
+      "themes": [
+        "courage",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-5-b3f9ad",
+      "text": "Once for all I wish to be blind to many things. Wisdom sets bounds even to knowledge.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 5",
+      "plain": "Ignore a lot on purpose. Knowing everything is not wise.",
+      "themes": [
+        "mind",
+        "discipline"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-8-cdafbe",
+      "text": "That which does not kill me, makes me stronger.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 8",
+      "plain": "Survive it and you come out stronger.",
+      "themes": [
+        "adversity",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-9-e80a86",
+      "text": "Help thyself, then everyone will help thee.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 9",
+      "plain": "Start moving yourself and others will join in.",
+      "themes": [
+        "self-mastery",
+        "friendship"
+      ],
+      "moments": [
+        "alone",
+        "broke"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-10-93d409",
+      "text": "A man should not play the coward to his deeds. He should not repudiate them once he has performed them. Pangs of conscience are indecent.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 10",
+      "plain": "Own what you did. Don't grovel over it afterward.",
+      "themes": [
+        "courage",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-12-968246",
+      "text": "If a man knows the wherefore of his existence, then the manner of it can take care of itself.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 12",
+      "plain": "Know your why and you can put up with almost any how.",
+      "themes": [
+        "adversity",
+        "fate"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-14-e964e5",
+      "text": "Thou seekest followers? Seek ciphers!",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 14",
+      "plain": "Followers are zeros. If you want a crowd, expect nothing in it.",
+      "themes": [
+        "reputation",
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-21-57d263",
+      "text": "One should adopt only those situations in which one is in no need of sham virtues, but rather, like the tight-rope dancer on his tight rope, in which one must either fall or stand, or escape.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 21",
+      "plain": "Put yourself where there's no room to fake it. You stand or you fall.",
+      "themes": [
+        "courage",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-33-ae6ebc",
+      "text": "Without music life would be a mistake.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 33",
+      "plain": "Keep something in your day that moves you. Without it everything goes flat.",
+      "themes": [
+        "happiness"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-34-f7ea51",
+      "text": "A sedentary life is the real sin against the Holy Spirit. Only those thoughts that come by walking have any value.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 34",
+      "plain": "Get up and move. Your best thinking happens on your feet.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-38-07e89b",
+      "text": "Art thou genuine or art thou only an actor?",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 38",
+      "plain": "Are you the real thing or playing a part?",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-41-b726d7",
+      "text": "A man should know what he desires, and that he desires something.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 41",
+      "plain": "Know what you want, and be sure you want something.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-maxims-and-missiles-42-0f8687",
+      "text": "They were but rungs in my ladder, on them I made my ascent: to that end I had to go beyond them.",
+      "work": "twilight-of-the-idols",
+      "location": "Maxims and Missiles 42",
+      "plain": "Use things to climb, then leave them behind without apology.",
+      "themes": [
+        "change",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-the-problem-of-socrates-11-54d245",
+      "text": "To be obliged to fight the instincts, this is the formula of degeneration: as long as life is in the ascending line, happiness is the same as instinct.",
+      "work": "twilight-of-the-idols",
+      "location": "The Problem of Socrates 11",
+      "plain": "If you're constantly fighting yourself, something is off. Healthy drive pulls the right way.",
+      "themes": [
+        "self-mastery",
+        "happiness"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-reason-in-philosophy-5-f46c1f",
+      "text": "I fear we shall never be rid of God, so long as we still believe in grammar.",
+      "work": "twilight-of-the-idols",
+      "location": "\"Reason\" in Philosophy 5",
+      "plain": "Old beliefs hide inside the way we speak and think.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-reason-in-philosophy-6-fcfb9b",
+      "text": "The tragic artist is no pessimist, he says Yea to everything questionable and terrible, he is Dionysian.",
+      "work": "twilight-of-the-idols",
+      "location": "\"Reason\" in Philosophy 6",
+      "plain": "The strong say yes to even the terrible parts of life.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "afraid",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-morality-as-the-enemy-of-nature-3-540bb9",
+      "text": "A man is productive only in so far as he is rich in contrasted instincts; he can remain young only on condition that his soul does not begin to take things easy and to yearn for peace.",
+      "work": "twilight-of-the-idols",
+      "location": "Morality as the Enemy of Nature 3",
+      "plain": "Stay in tension and keep yearning for more. Chasing peace and ease makes you old.",
+      "themes": [
+        "work",
+        "change"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-morality-as-the-enemy-of-nature-3-cbb01e",
+      "text": "The man who has renounced war has renounced a grand life.",
+      "work": "twilight-of-the-idols",
+      "location": "Morality as the Enemy of Nature 3",
+      "plain": "If you run from every fight, you give up a big life.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "afraid",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-morality-as-the-enemy-of-nature-6-427e21",
+      "text": "The individual in his past and future is a piece of fate, one law the more, one necessity the more for all that is to come and is to be.",
+      "work": "twilight-of-the-idols",
+      "location": "Morality as the Enemy of Nature 6",
+      "plain": "You are part of how things had to go. You belong here.",
+      "themes": [
+        "fate"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-morality-as-the-enemy-of-nature-6-fd88de",
+      "text": "We do not deny readily, we glory in saying yea to things.",
+      "work": "twilight-of-the-idols",
+      "location": "Morality as the Enemy of Nature 6",
+      "plain": "Say yes to life first and push back second.",
+      "themes": [
+        "courage",
+        "happiness"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-the-four-great-errors-5-a9e64c",
+      "text": "To trace something unfamiliar back to something familiar, is at once a relief, a comfort and a satisfaction, while it also produces a feeling of power.",
+      "work": "twilight-of-the-idols",
+      "location": "The Four Great Errors 5",
+      "plain": "Naming a strange thing makes you feel safe and in control, whether or not you understood it.",
+      "themes": [
+        "mind",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-the-four-great-errors-5-0e34aa",
+      "text": "First principle: any explanation is better than none at all.",
+      "work": "twilight-of-the-idols",
+      "location": "The Four Great Errors 5",
+      "plain": "We grab the first comforting answer just to stop feeling uneasy, and call it truth.",
+      "themes": [
+        "mind",
+        "fear"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-the-four-great-errors-5-00fb12",
+      "text": "The banker thinks immediately of business, the Christian of “sin,” and the girl of her love affair.",
+      "work": "twilight-of-the-idols",
+      "location": "The Four Great Errors 5",
+      "plain": "Everyone explains the world through whatever already fills their head.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-the-four-great-errors-8-1d0040",
+      "text": "No one is responsible for the fact that he exists at all, that he is constituted as he is, and that he happens to be in certain circumstances and in a particular environment.",
+      "work": "twilight-of-the-idols",
+      "location": "The Four Great Errors 8",
+      "plain": "You did not pick your start. Stop judging yourself for the hand you were dealt.",
+      "themes": [
+        "fate",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-things-the-germans-lack-4-1ec8c8",
+      "text": "After all, nobody can spend more than he has: this is true of individuals, it is also true of nations.",
+      "work": "twilight-of-the-idols",
+      "location": "Things the Germans Lack 4",
+      "plain": "Your energy and attention are a budget. Spend them in one place and they are gone from the others.",
+      "themes": [
+        "wealth",
+        "work"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-things-the-germans-lack-6-b5ac08",
+      "text": "One must not respond immediately to a stimulus; one must acquire a command of the obstructing and isolating instincts.",
+      "work": "twilight-of-the-idols",
+      "location": "Things the Germans Lack 6",
+      "plain": "Do not react the second something hits you. Learn to hold the pause.",
+      "themes": [
+        "self-mastery",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-things-the-germans-lack-6-22ee29",
+      "text": "All lack of intellectuality, all vulgarity, arises out of the inability to resist a stimulus: one must respond or react, every impulse is indulged.",
+      "work": "twilight-of-the-idols",
+      "location": "Things the Germans Lack 6",
+      "plain": "Cheap behavior is just not being able to say no to the urge in front of you.",
+      "themes": [
+        "self-mastery",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-7-1b2f0f",
+      "text": "To experience things on purpose, this is not a bit of good.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 7",
+      "plain": "Forced, staged experience is worthless. Live it for real.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-7-474ab8",
+      "text": "In the midst of an experience a man should not turn his eyes upon himself; in such cases any eye becomes the “evil eye.”",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 7",
+      "plain": "Stop watching yourself live. Be in the thing.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-7-382550",
+      "text": "One must know who one is.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 7",
+      "plain": "Know who you are before anything else.",
+      "themes": [
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-12-d96948",
+      "text": "To yearn for a strong faith is not the proof of a strong faith, but rather the reverse.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 12",
+      "plain": "Craving certainty means you do not have it.",
+      "themes": [
+        "mind",
+        "courage"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-12-251553",
+      "text": "If a man have a strong faith he can indulge in the luxury of scepticism; he is strong enough, firm enough, well-knit enough for such a luxury.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 12",
+      "plain": "Only the secure can afford to doubt freely.",
+      "themes": [
+        "mind",
+        "courage"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-14-bf554b",
+      "text": "In order to acquire intellect, one must be in need of it.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 14",
+      "plain": "You get sharp when you have to. Pressure builds the mind.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "broke",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-17-619eaa",
+      "text": "The most intellectual men, provided they are also the most courageous, experience the most excruciating tragedies: but on that very account they honour life, because it confronts them with its most formidable antagonism.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 17",
+      "plain": "The braver and smarter you are, the harder life hits you, and you love it for giving you something worth fighting.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-24-9fca11",
+      "text": "A courageous and free spirit, in the presence of a mighty foe, in the presence of a sublime misfortune, and face to face with a problem that inspires horror, this is the triumphant attitude which the tragic artist selects and which he glorifies.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 24",
+      "plain": "Facing the terrible thing without flinching is the winning posture.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-26-596437",
+      "text": "Those things for which we find words, are things wehave already overcome.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 26",
+      "plain": "If you can talk about it easily, you are already past it.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-26-26516b",
+      "text": "In all speech there lies an element of contempt.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 26",
+      "plain": "Talking cheapens what you felt.",
+      "themes": [
+        "mind",
+        "solitude"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-31-ce720d",
+      "text": "The means with which Julius Cæsar preserved himself against sickness and headaches: heavy marches, the simplest mode of living, uninterrupted sojourns in the open air, continual hardships, generally speaking these are the self-preservative and self-defensive measures against the extreme vulnerability of those subtle machines working at the highest pressure, which are called geniuses.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 31",
+      "plain": "High performers stay sane through hard physical work, simple living, and fresh air.",
+      "themes": [
+        "discipline",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-32-61728a",
+      "text": "That which justifies man is his reality, it will justify him to all eternity.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 32",
+      "plain": "What you actually do is what counts, not what you wish.",
+      "themes": [
+        "work",
+        "desire"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-34-df80f7",
+      "text": "There is a small dose of revenge in every lamentation.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 34",
+      "plain": "Every complaint is a bit of payback in disguise.",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-36-dc7ff9",
+      "text": "One never perishes through anybody’s fault but one’s own.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 36",
+      "plain": "Nobody ruins you but you.",
+      "themes": [
+        "self-mastery",
+        "fate"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-38-30ba70",
+      "text": "Sometimes the value of a thing does not lie in that which it helps us to achieve, but in the amount we have to pay for it, what it costs us.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 38",
+      "plain": "Things are worth what you pay to get them.",
+      "themes": [
+        "work",
+        "wealth"
+      ],
+      "moments": [
+        "tired",
+        "broke"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-38-b42651",
+      "text": "Freedom is the will to be responsible for ourselves. It is to preserve the distance which separates us from other men. To grow more indifferent to hardship, to severity, to privation, and even to life itself.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 38",
+      "plain": "Freedom means owning your life, keeping your distance from the crowd, and not caring about hardship.",
+      "themes": [
+        "self-mastery",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-38-6818b6",
+      "text": "First principle: a man must need to be strong, otherwise he will never attain it.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 38",
+      "plain": "You only get strong if you need to be.",
+      "themes": [
+        "adversity",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-44-ef5ecf",
+      "text": "The genius, in work and in deed, is necessarily a squanderer: the fact that he spends himself constitutes his greatness.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 44",
+      "plain": "Greatness means burning yourself out on the work without hedging.",
+      "themes": [
+        "work",
+        "power"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-47-039419",
+      "text": "The first rule of all: nobody must “let himself go,” not even when he is alone.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 47",
+      "plain": "Hold your standard when nobody is watching.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-47-061ba6",
+      "text": "Everything good is an inheritance: that which is not inherited is imperfect, it is simply a beginning.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 47",
+      "plain": "Anything you build alone is just a start. Greatness stacks over generations.",
+      "themes": [
+        "time",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-twilight-of-the-idols-skirmishes-in-a-war-with-the-age-51-7a4800",
+      "text": "The aphorism, the sentence, in both of which I, as the first among Germans, am a master, are the forms of “eternity”; it is my ambition to say in ten sentences what everyone else says in a whole book, what everyone else does not say in a whole book.",
+      "work": "twilight-of-the-idols",
+      "location": "Skirmishes in a War with the Age 51",
+      "plain": "Say in ten lines what others cannot say in a book.",
+      "themes": [
+        "work",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-1-976165",
+      "text": "The formula of our happiness: a Yea, a Nay, a straight line, a goal.",
+      "work": "antichrist",
+      "location": "Section 1",
+      "plain": "Happiness is a yes, a no, a straight line, and a target.",
+      "themes": [
+        "happiness",
+        "discipline"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-2-04ce28",
+      "text": "What is good? All that enhances the feeling of power, the Will to Power, and power itself in man.",
+      "work": "antichrist",
+      "location": "Section 2",
+      "plain": "Good is whatever makes you stronger.",
+      "themes": [
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-2-838b21",
+      "text": "What is bad? All that proceeds from weakness. What is happiness? The feeling that power is increasing, that resistance has been overcome.",
+      "work": "antichrist",
+      "location": "Section 2",
+      "plain": "Happiness is feeling yourself grow stronger by beating what resisted you.",
+      "themes": [
+        "happiness",
+        "power"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-2-ca9c88",
+      "text": "Not contentment, but more power; not peace at any price, but war; not virtue, but efficiency (virtue in the Renaissance sense, virtu, free from all moralic acid).",
+      "work": "antichrist",
+      "location": "Section 2",
+      "plain": "Aim for strength over comfort, and fight over easy peace.",
+      "themes": [
+        "power",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-6-c3460f",
+      "text": "I call an animal, a species, an individual corrupt, when it loses its instincts, when it selects and prefers that which is detrimental to it.",
+      "work": "antichrist",
+      "location": "Section 6",
+      "plain": "You are in trouble when you start choosing what hurts you.",
+      "themes": [
+        "self-mastery",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-6-48de85",
+      "text": "Life itself, to my mind, is nothing more nor less than the instinct of growth, of permanence, of accumulating forces, of power: where the will to power is lacking, degeneration sets in.",
+      "work": "antichrist",
+      "location": "Section 6",
+      "plain": "Life is growth. When you stop pushing to grow, you start to decay.",
+      "themes": [
+        "power",
+        "change"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-7-cf4f78",
+      "text": "A man loses power when he pities.",
+      "work": "antichrist",
+      "location": "Section 7",
+      "plain": "Pity drains strength from both people.",
+      "themes": [
+        "power",
+        "pain"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-9-26c67d",
+      "text": "The pathos which grows out of this state, is called Faith: that is to say, to shut one’s eyes once and for all, in order not to suffer at the sight of incurable falsity.",
+      "work": "antichrist",
+      "location": "Section 9",
+      "plain": "Faith can be closing your eyes so you do not have to see what hurts.",
+      "themes": [
+        "mind",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-11-781f75",
+      "text": "A virtue must be our invention, our most personal defence and need: in every other sense it is merely a danger.",
+      "work": "antichrist",
+      "location": "Section 11",
+      "plain": "Build values out of your own needs, not borrowed rules.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-11-cbca9f",
+      "text": "What is there that destroys a man more speedily than to work, think, feel, as an automaton of “duty,” without internal promptings, without a profound personal predilection, without joy?",
+      "work": "antichrist",
+      "location": "Section 11",
+      "plain": "Nothing kills you faster than grinding through duty with no joy of your own in it.",
+      "themes": [
+        "work",
+        "happiness"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-13-c90afd",
+      "text": "The most valuable standpoints are always the last to be found: but the most valuable standpoints are the methods.",
+      "work": "antichrist",
+      "location": "Section 13",
+      "plain": "The best insights come last, and the best of them are about how to work.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-14-cda8aa",
+      "text": "We deny that anything can be done perfectly so long as it is done consciously.",
+      "work": "antichrist",
+      "location": "Section 14",
+      "plain": "Your best work comes when you stop overthinking it.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-15-430bee",
+      "text": "What is the only kind of man who has reasons for wriggling out of reality by lies? The man who suffers from reality.",
+      "work": "antichrist",
+      "location": "Section 15",
+      "plain": "People lie to themselves when reality hurts them.",
+      "themes": [
+        "mind",
+        "pain"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-23-2a6ab7",
+      "text": "When a man is in love he endures more than at other times; he submits to everything.",
+      "work": "antichrist",
+      "location": "Section 23",
+      "plain": "Love makes you put up with almost anything.",
+      "themes": [
+        "love"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-38-ea2119",
+      "text": "There are days when I am visited by a feeling blacker than the blackest melancholy, the contempt of man.",
+      "work": "antichrist",
+      "location": "Section 38",
+      "plain": "Even the sharpest minds have days when they can't stand people.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "alone",
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-43-7c246c",
+      "text": "When the centre of gravity of life is laid, not in life, but in a beyond, in nonentity, life is utterly robbed of its balance.",
+      "work": "antichrist",
+      "location": "Section 43",
+      "plain": "If you live for some later reward instead of this life, you lose your footing now.",
+      "themes": [
+        "mind",
+        "happiness",
+        "time"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-44-bf337e",
+      "text": "The best way of leading mankind by the nose is with morality!",
+      "work": "antichrist",
+      "location": "Section 44",
+      "plain": "People who want control will wrap it in virtue. Watch for it.",
+      "themes": [
+        "power",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-50-bb5f76",
+      "text": "The proof through “happiness,” is a proof of happiness, and nothing else; why in the world should we take it for granted that true judgments cause more pleasure than false ones, and that in accordance with a pre-established harmony, they necessarily bring pleasant feelings in their wake?",
+      "work": "antichrist",
+      "location": "Section 50",
+      "plain": "Feeling good does not make something true. The truth often feels worse.",
+      "themes": [
+        "mind",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-50-bdf59e",
+      "text": "Every inch of truth has been conquered only after a struggle, almost everything to which our heart, our love and our trust in life cleaves, has had to be sacrificed for it Greatness of soul is necessary for this: the service of truth is the hardest of all services.",
+      "work": "antichrist",
+      "location": "Section 50",
+      "plain": "Facing the truth costs you comforts you love, and it takes a big person to pay.",
+      "themes": [
+        "adversity",
+        "mind",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-52-4d4329",
+      "text": "“Faith” simply means the refusal to know what is true.",
+      "work": "antichrist",
+      "location": "Section 52",
+      "plain": "Believing without checking is choosing not to look.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-54-c6c443",
+      "text": "Do not allow yourselves to be deceived: great minds are sceptical.",
+      "work": "antichrist",
+      "location": "Section 54",
+      "plain": "Strong thinkers keep questioning, they do not cling to certainty.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-54-1348ef",
+      "text": "Convictions are prisons.",
+      "work": "antichrist",
+      "location": "Section 54",
+      "plain": "Fixed opinions lock you in and stop you seeing further.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-54-0806f1",
+      "text": "Freedom from every kind of conviction belongs to strength, to the ability to open one’s eyes freely.",
+      "work": "antichrist",
+      "location": "Section 54",
+      "plain": "Being able to see without needing a belief to hide behind is real strength.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-54-bf3540",
+      "text": "Great passion makes use of and consumes convictions, it does not submit to them, it knows that it is a sovereign power.",
+      "work": "antichrist",
+      "location": "Section 54",
+      "plain": "Let your drive use your beliefs. Do not let beliefs run you.",
+      "themes": [
+        "power",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-55-21cb6e",
+      "text": "To comprehend the limits of reason, this alone is genuine philosophy.",
+      "work": "antichrist",
+      "location": "Section 55",
+      "plain": "Knowing what you cannot figure out is the start of wisdom.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-57-b67a87",
+      "text": "Life always gets harder towards the summit, the cold increases, responsibility increases.",
+      "work": "antichrist",
+      "location": "Section 57",
+      "plain": "The higher you climb, the colder and heavier it gets. That is normal.",
+      "themes": [
+        "adversity",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-antichrist-section-59-b5f237",
+      "text": "Everything essential had been discovered to make it possible for work to be begun: methods, and this cannot be said too often, are the essential thing, also the most difficult thing, while they moreover have to wage the longest war against custom and indolence.",
+      "work": "antichrist",
+      "location": "Section 59",
+      "plain": "Method is the hard part, and it fights habit and laziness the whole way.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-9-c37202",
+      "text": "We have all hidden gardens and plantations in us; and by another simile, we are all growing volcanoes, which will have their hours of eruption: how near or how distant this is, nobody of course knows, not even the good God.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 9",
+      "plain": "You carry more in you than you know, and it can break out any time.",
+      "themes": [
+        "change",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-14-8c7baf",
+      "text": "To become satiated with a possession, that is to become satiated with ourselves.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 14",
+      "plain": "Getting bored of what you own means you are bored of yourself.",
+      "themes": [
+        "desire",
+        "wealth"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-17-21e5ca",
+      "text": "We cannot, to be sure, by any artifice make a rich and richly-flowing virtue out of a poor one, but we can gracefully enough reinterpret its poverty into necessity, so that its aspect no longer gives pain to us, and we do not make any reproachful faces at fate on account of it.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 17",
+      "plain": "You can't fake having more, but you can make peace with what you have.",
+      "themes": [
+        "fate",
+        "wealth"
+      ],
+      "moments": [
+        "broke",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-19-290a8a",
+      "text": "The poison by which the weaker nature is destroyed is strengthening to the strong individual, and he does not call it poison.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 19",
+      "plain": "What breaks the weak makes the strong stronger.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-20-7026e0",
+      "text": "To be noble, that might then mean, perhaps, to be capable of follies.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 20",
+      "plain": "Being willing to take a bold, unwise swing is a kind of nobility.",
+      "themes": [
+        "folly",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-21-6a1717",
+      "text": "If you have a virtue, an actual, perfect virtue (and not merely a kind of impulse towards virtue!), you are its victim!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 21",
+      "plain": "A virtue taken to the extreme will eat you alive. Keep balance.",
+      "themes": [
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-21-1a441a",
+      "text": "The \"neighbour\" praises unselfishness because he profits by it!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 21",
+      "plain": "People who praise your sacrifice are usually the ones it benefits.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-28-b82e32",
+      "text": "Our strong points sometimes drive us so far forward that we cannot any longer endure our weaknesses, and we perish by them: we also perhaps see this result beforehand, but nevertheless do not want it to be otherwise.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 28",
+      "plain": "Your strengths can push you past what your weak spots can take.",
+      "themes": [
+        "adversity",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-28-489d89",
+      "text": "We then become hard towards that which would fain be spared in us, and our pitilessness is also our greatness.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 28",
+      "plain": "Being hard on your own softness is part of becoming great.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-39-2ffdb5",
+      "text": "The alteration of the general taste is more important than the alteration of opinions; opinions, with all their proving, refuting, and intellectual masquerade, are merely symptoms of altered taste, and are certainly not what they are still so often claimed to be, the causes of the altered taste.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 39",
+      "plain": "Culture moves by taste, not by argument.",
+      "themes": [
+        "change",
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-41-6175b3",
+      "text": "The thinker sees in his own actions attempts and questionings to obtain information about something or other; success and failure are answers to him first and foremost.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 41",
+      "plain": "Treat every try as an experiment. Win or lose, you got an answer.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-42-5dea0c",
+      "text": "It is common to scare away ennui in every way, just as it is common to labour without pleasure.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 42",
+      "plain": "Most people run from boredom and work without joy. Neither builds anything.",
+      "themes": [
+        "work",
+        "mind"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-48-d3a019",
+      "text": "Well! the remedy for \"the distress\" is distress.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 48",
+      "plain": "The cure for being soft about pain is more real hardship.",
+      "themes": [
+        "adversity",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-52-12c8f0",
+      "text": "We get on with our bad conscience more easily than with our bad reputation.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 52",
+      "plain": "You can live with what you know about yourself. What people say about you is harder.",
+      "themes": [
+        "reputation",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-58-5d331c",
+      "text": "It has caused me the greatest trouble, and for ever causes me the greatest trouble, to perceive that unspeakably more depends upon what things are called, than on what they are.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 58",
+      "plain": "Names and labels steer the world more than facts do.",
+      "themes": [
+        "mind",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-60-705dc3",
+      "text": "All great noise causes one to place happiness in the calm and the distance.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 60",
+      "plain": "When life is loud you start dreaming of somewhere quiet.",
+      "themes": [
+        "happiness",
+        "solitude"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-99-5100ef",
+      "text": "We also are to grow and blossom out of ourselves, free and fearless, in innocent selfishness!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 99",
+      "plain": "Grow from your own roots, without fear or apology.",
+      "themes": [
+        "courage",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-100-62b3cd",
+      "text": "One must learn the art of homage, as well as the art of contempt.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 100",
+      "plain": "Learn to honor what deserves it as well as to dismiss what does not.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-106-2da9b8",
+      "text": "Storms and doubts and worms and wickedness are necessary to the tree, that it may manifest its species and the strength of its germ; let it perish if it is not strong enough!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 106",
+      "plain": "An idea or a person proves itself only under attack. If it dies, it was not strong enough.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-107-034e47",
+      "text": "As an æsthetic phenomenon existence is still endurable to us; and by Art, eye and hand and above all the good conscience are given to us, to be able to make such a phenomenon out of ourselves.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 107",
+      "plain": "Life is bearable when you can shape it like a work of art, yourself included.",
+      "themes": [
+        "happiness",
+        "mind"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-108-5b3148",
+      "text": "After Buddha was dead people showed his shadow for centuries afterwards in a cave, an immense frightful shadow. God is dead: but as the human race is constituted, there will perhaps be caves for millenniums yet, in which people will show his shadow, And we, we have still to overcome his shadow!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 108",
+      "plain": "Old beliefs keep casting shadows long after they die. The work is walking out of them.",
+      "themes": [
+        "change",
+        "mind",
+        "courage"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-109-8d155c",
+      "text": "There are only necessities: there is no one who commands, no one who obeys, no one who transgresses.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 109",
+      "plain": "No cosmic boss is watching or judging. Things just happen by necessity.",
+      "themes": [
+        "fate",
+        "mind"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-109-fbd3fb",
+      "text": "The living being is only a species of dead being, and a very rare species.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 109",
+      "plain": "Death is the default. Being alive is the rare exception.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-116-a5e71f",
+      "text": "Morality is the herd-instinct in the individual.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 116",
+      "plain": "Most of what you call your conscience is the crowd talking inside your head.",
+      "themes": [
+        "mind",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-117-50d8d2",
+      "text": "To be alone, to feel independent, neither to obey nor to rule, to represent an individual, that was no pleasure to a person then, but a punishment; he was condemned \"to be an individual.\"",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 117",
+      "plain": "For most of history standing alone was punishment. It still feels that way, so expect it.",
+      "themes": [
+        "solitude",
+        "courage"
+      ],
+      "moments": [
+        "alone",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-121-7eb9c7",
+      "text": "Life is no argument; error might be among the conditions of life.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 121",
+      "plain": "That something keeps you alive does not make it true.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-124-546f9b",
+      "text": "We have left the land and have gone aboard ship! We have broken down the bridge behind us, nay, more, the land behind us!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 124",
+      "plain": "You committed and burned the way back. Now you sail.",
+      "themes": [
+        "courage",
+        "change"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-125-e7ba75",
+      "text": "God is dead! God remains dead! And we have killed him!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 125",
+      "plain": "The old foundations are gone and we did it. Nobody is coming to hand you meaning.",
+      "themes": [
+        "change",
+        "fate"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-126-e04344",
+      "text": "Mystical explanations are regarded as profound; the truth is that they do not even go the length of being superficial.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 126",
+      "plain": "Vague and mystical answers sound deep but say nothing.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-130-a5e97b",
+      "text": "The Christian resolution to find the world ugly and bad has made the world ugly and bad.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 130",
+      "plain": "If you decide the world is bad, you start living in a bad one.",
+      "themes": [
+        "mind",
+        "happiness"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-163-a5b67c",
+      "text": "The best thing in a great victory is that it deprives the conqueror of the fear of defeat.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 163",
+      "plain": "Winning big kills the fear of losing, which is the real prize.",
+      "themes": [
+        "courage",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-167-8dc869",
+      "text": "We only speak about being sick of men when we can no longer digest them, and yet have the stomach full of them.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 167",
+      "plain": "Disgust with people usually means you took in too much of them.",
+      "themes": [
+        "solitude",
+        "friendship"
+      ],
+      "moments": [
+        "tired",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-173-b6a123",
+      "text": "He who knows that he is profound strives for clearness; he who would like to appear profound to the multitude strives for obscurity.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 173",
+      "plain": "Real depth is clear. Fog is for people faking it.",
+      "themes": [
+        "mind",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-179-71d169",
+      "text": "Thoughts are the shadows of our sentiments, always, however, obscurer, emptier, and simpler.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 179",
+      "plain": "Your feelings run deeper than your thoughts about them.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-182-3c418b",
+      "text": "When one lives alone one does not speak too loudly, and one does not write too loudly either, for one fears the hollow reverberation, the criticism of the nymph Echo.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 182",
+      "plain": "Alone, you get quieter and more honest, because nobody is there to echo your noise.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-189-b3b412",
+      "text": "He is a thinker: that is to say, he knows how to take things more simply than they are.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 189",
+      "plain": "Good thinkers cut things down to something you can use.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-196-1a5369",
+      "text": "We hear only the questions to which we are capable of finding an answer.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 196",
+      "plain": "You can only notice what you are ready to understand.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-199-08cd12",
+      "text": "Liberality is often only a form of timidity in the rich.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 199",
+      "plain": "Some generosity is just fear wearing a nice outfit.",
+      "themes": [
+        "wealth",
+        "fear"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-205-cf6ca3",
+      "text": "Need is supposed to be the cause of things; but in truth it is often only the effect of the things themselves.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 205",
+      "plain": "We think need creates things, but owning things creates the need.",
+      "themes": [
+        "wealth",
+        "desire"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-215-bbc089",
+      "text": "You have a noble ideal before your eyes: but are you also such a noble stone that such a divine image could be formed out of you? And without that, is not all your labour barbaric sculpturing?",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 215",
+      "plain": "A big vision needs material worth carving. Are you building yourself into someone who can hold it?",
+      "themes": [
+        "discipline",
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-216-6008ae",
+      "text": "With a very loud voice a person is almost incapable of reflecting on subtle matters.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 216",
+      "plain": "Loud people miss the fine points.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-226-1f24bd",
+      "text": "We say the strongest things simply, provided people are about us who believe in our strength: such an environment educates to \"simplicity of style.\"",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 226",
+      "plain": "Strong people speak plainly. Insecure people shout and pile on emphasis.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-229-3ae5cb",
+      "text": "Out of obstinacy he holds fast to a cause of which the questionableness has become obvious, he calls that, however, his \"loyalty.\"",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 229",
+      "plain": "Stubbornness often hides under the word loyalty. Check which one you are doing.",
+      "themes": [
+        "folly",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-232-f14ef2",
+      "text": "Either one does not dream at all, or one dreams in an interesting manner. One must learn to be awake in the same fashion: either not at all, or in an interesting manner.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 232",
+      "plain": "Do not sleepwalk through your days. Be awake on purpose or not at all.",
+      "themes": [
+        "discipline",
+        "time"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-233-32b7c4",
+      "text": "What I now do, or neglect to do, is as important for all that is to come, as the greatest event of the past: in this immense perspective of effects all actions are equally great and small.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 233",
+      "plain": "What you do or skip today echoes forward as much as any big event.",
+      "themes": [
+        "time",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-244-1b8882",
+      "text": "Even our thoughts we are unable to render completely in words.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 244",
+      "plain": "Words never carry the whole thought.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-247-d929f1",
+      "text": "All habits make our hand wittier and our wit unhandier.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 247",
+      "plain": "Habit makes you skilled at the doing and dull at the thinking.",
+      "themes": [
+        "discipline",
+        "mind"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-248-731f90",
+      "text": "Of what account is a book that never carries us away beyond all books!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 248",
+      "plain": "A book that does not push you past books is not worth much.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-251-a7e603",
+      "text": "Great natures suffer otherwise than their worshippers imagine; they suffer most severely from the ignoble, petty emotions of certain evil moments; in short, from doubt of their own greatness; not however from the sacrifices and martyrdoms which their tasks require of them.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 251",
+      "plain": "Great people are hurt less by the sacrifices than by their own petty moments of self-doubt.",
+      "themes": [
+        "pain",
+        "courage",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-252-d3de00",
+      "text": "\"Better to remain in debt than to pay with money which does not bear our stamp!\", that is what our sovereignty prefers.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 252",
+      "plain": "Better to stay in debt than to pay with something that is not yours.",
+      "themes": [
+        "wealth",
+        "self-mastery"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-253-7010ce",
+      "text": "One day we attain our goal, and then refer with pride to the long journeys we have made to reach it. In truth, we did not notice that we travelled.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 253",
+      "plain": "The long climb feels like nothing when you look back. You only noticed you were moving once you arrived.",
+      "themes": [
+        "time",
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-254-9964e7",
+      "text": "He who is always thoroughly occupied is rid of all embarrassment.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 254",
+      "plain": "Stay busy with real work and self-consciousness fades.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-258-278801",
+      "text": "No conqueror believes in chance.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 258",
+      "plain": "People who win do not credit luck, they act like it is on them.",
+      "themes": [
+        "power",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-261-b2a250",
+      "text": "What is originality? To see something that does not yet bear a name, that cannot yet be named, although it is before everybody's eyes.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 261",
+      "plain": "Original is seeing what is already in front of everyone but has no name yet.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-264-fbd5c1",
+      "text": "What we do is never understood, but only praised and blamed.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 264",
+      "plain": "People will never fully get what you do. They will only cheer or boo.",
+      "themes": [
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-266-1cb126",
+      "text": "He who is great is cruel to his second-rate virtues and judgments.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 266",
+      "plain": "Greatness means cutting down your own good enough habits and opinions.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-267-fbb941",
+      "text": "With a high aim a person is superior even to justice, and not only to his deeds and his judges.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 267",
+      "plain": "A big enough goal puts you above your past and your critics.",
+      "themes": [
+        "courage",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-268-986df3",
+      "text": "To face simultaneously one's greatest suffering and one's highest hope.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 268",
+      "plain": "Being a hero means holding your worst pain and your biggest hope in the same hand.",
+      "themes": [
+        "courage",
+        "pain"
+      ],
+      "moments": [
+        "afraid",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-270-30cd19",
+      "text": "\"Thou shalt become what thou art.\"",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 270",
+      "plain": "Become who you already are underneath.",
+      "themes": [
+        "self-mastery",
+        "fate"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-274-493df4",
+      "text": "To spare a person shame.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 274",
+      "plain": "The kindest thing is to not humiliate someone.",
+      "themes": [
+        "friendship",
+        "love"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-275-88fb67",
+      "text": "To be no longer ashamed of oneself.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 275",
+      "plain": "Freedom is the day you stop being ashamed of who you are.",
+      "themes": [
+        "self-mastery",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-276-7e3cc7",
+      "text": "Amor fati: let that henceforth be my love! I do not want to wage war with the ugly. I do not want to accuse, I do not want even to accuse the accusers.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 276",
+      "plain": "Love your fate. Stop fighting what is ugly and stop blaming, even the blamers.",
+      "themes": [
+        "fate",
+        "self-mastery",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-276-fa2e7d",
+      "text": "Looking aside, let that be my sole negation! And all in all, to sum up: I wish to be at any time hereafter only a yea-sayer!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 276",
+      "plain": "Say no only by looking away. Otherwise just say yes to life.",
+      "themes": [
+        "happiness",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-278-3459ab",
+      "text": "Everyone wants to be foremost in this future, and yet death and the stillness of death are the only things certain and common to all in this future!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 278",
+      "plain": "Everybody races for the future while the only sure thing in it is death.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-278-2cf089",
+      "text": "How strange that this sole thing that is certain and common to all, exercises almost no influence on men, and that they are the furthest from regarding themselves as the brotherhood of death!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 278",
+      "plain": "We all die and almost nobody lets that change how they live.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-279-9998c8",
+      "text": "We were friends, and have become strangers to each other. But this is as it ought to be, and we do not want either to conceal or obscure the fact, as if we had to be ashamed of it.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 279",
+      "plain": "Friends drift apart. That is normal, and you do not have to be ashamed of it.",
+      "themes": [
+        "friendship",
+        "change"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-281-619247",
+      "text": "Masters of the first rank are recognised by knowing in a perfect manner how to find the end, in the whole as well as in the part; be it the end of a melody or of a thought, be it the fifth act of a tragedy or of a state affair.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 281",
+      "plain": "The real masters know how to finish. The rest get restless near the end.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-283-00b839",
+      "text": "Build your cities on the slope of Vesuvius! Send your ships into unexplored seas! Live in war with your equals and with yourselves!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 283",
+      "plain": "Take risks. Build near the danger and compete hard, mostly with yourself.",
+      "themes": [
+        "courage",
+        "adversity",
+        "power"
+      ],
+      "moments": [
+        "afraid",
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-290-ef4368",
+      "text": "To \"give style\" to one's character, that is a grand and a rare art!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 290",
+      "plain": "Shaping your own character like a craft is rare and takes real art.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-290-c64b9d",
+      "text": "He who is dissatisfied with himself is ever ready to avenge himself on that account: we others will be his victims, if only in having always to endure his ugly aspect.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 290",
+      "plain": "People who are unhappy with themselves make everyone around them pay for it.",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-295-6667f4",
+      "text": "The most unendurable thing, to be sure, the really terrible thing, would be a life without habits, a life which continually required improvisation: that would be my banishment and my Siberia.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 295",
+      "plain": "Even a restless person needs some routine. Pure improvising would be exile.",
+      "themes": [
+        "discipline",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-296-141d38",
+      "text": "How difficult it is to live when one feels that the judgment of many millenniums is around one and against one.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 296",
+      "plain": "Going against what everyone has always believed is lonely, and it weighs on you.",
+      "themes": [
+        "reputation",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-306-44e40b",
+      "text": "Stoicism may be quite advisable for men with whom fate improvises, for those who live in violent times and are dependent on abrupt and changeable individuals.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 306",
+      "plain": "Toughness is for rough, unpredictable seasons. Don't harden up more than you need to.",
+      "themes": [
+        "fate",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-307-20a687",
+      "text": "We deny, and must deny, because something in us wants to live and affirm itself, something which we perhaps do not as yet know, do not as yet see!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 307",
+      "plain": "When you outgrow old beliefs, it's because something new in you is trying to live.",
+      "themes": [
+        "change",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-308-d569b6",
+      "text": "What is it that constitutes the history of each day for thee? Look at thy habits of which it consists: are they the product of numberless little acts of cowardice and laziness, or of thy bravery and inventive reason?",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 308",
+      "plain": "Your days are made of habits. Check whether they come from fear and laziness or from nerve.",
+      "themes": [
+        "discipline",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-309-d6a18d",
+      "text": "I must set my foot forward, my weary wounded foot: and because I feel I must do this, I often cast grim glances back at the most beautiful things which could not detain me, because they could not detain me!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 309",
+      "plain": "You keep walking tired and hurt, even past good things, because the path won't let you stop.",
+      "themes": [
+        "work",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-312-2fb9aa",
+      "text": "I have given a name to my suffering, and call it \"dog,\", it is just as faithful, just as importunate and shameless, just as entertaining, just as wise, as any other dog, and I can domineer over it, and vent my bad humour on it, as others do with their dogs, servants, and wives.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 312",
+      "plain": "Name your pain and it stops being a monster. It's just a loud dog you live with.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-318-30da31",
+      "text": "In pain there is as much wisdom as in pleasure: like the latter it is one of the best self-preservatives of a species.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 318",
+      "plain": "Pain is information. It exists to keep you alive.",
+      "themes": [
+        "pain",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-318-cdc44a",
+      "text": "We must also know how to live with reduced energy: as soon as pain gives its precautionary signal, it is time to reduce the speed, some great danger, some storm, is approaching, and we do well to \"catch\" as little wind as possible.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 318",
+      "plain": "Learn to run at half power when your body warns you. Ease off before the storm, not after.",
+      "themes": [
+        "pain",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-319-990e30",
+      "text": "We ourselves want to be our own experiments, and our own subjects of experiment.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 319",
+      "plain": "Treat your own life as the experiment. Test things on yourself and watch what happens.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-320-066fb7",
+      "text": "I want to create my own sun for myself.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 320",
+      "plain": "Don't wait for a place in the light. Make your own.",
+      "themes": [
+        "power",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-321-18b2aa",
+      "text": "Let us ever give to our pattern more shining colours! Let us obscure the other by our light!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 321",
+      "plain": "Don't fight the people you dislike. Get so good they fade out of view.",
+      "themes": [
+        "anger",
+        "power"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-323-804e8f",
+      "text": "Destiny confers its greatest distinction upon us when it has made us fight for a time on the side of our adversaries. We are thereby predestined to a great victory.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 323",
+      "plain": "Having been on the other side of the fight, and learned it, sets you up to win.",
+      "themes": [
+        "fate",
+        "adversity"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-324-2d62f9",
+      "text": "And who could know how to laugh well and live well, who did not first understand the full meaning of war and victory!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 324",
+      "plain": "You can't enjoy life well until you know what it costs to fight for it.",
+      "themes": [
+        "adversity",
+        "happiness"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-326-6de8ba",
+      "text": "A loss scarcely remains a loss for an hour: in some way or other a gift from heaven has always fallen into our lap at the same moment, a new form of strength, for example: be it but a new opportunity for the exercise of strength!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 326",
+      "plain": "Every loss hands you something, even if it's just a chance to get stronger.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "broke",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-329-40e06a",
+      "text": "One is now ashamed of repose: even long reflection almost causes remorse of conscience.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 329",
+      "plain": "We've come to feel guilty for resting or thinking slowly. That's a sickness.",
+      "themes": [
+        "time",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-329-5a7877",
+      "text": "Thinking is done with a stop-watch, as dining is done with the eyes fixed on the financial newspaper; we live like men who are continually \"afraid of letting opportunities slip.\"",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 329",
+      "plain": "Rushing after every opportunity makes you worse at thinking and at living.",
+      "themes": [
+        "time",
+        "wealth"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-329-b5e07e",
+      "text": "Work is winning over more and more the good conscience to its side: the desire for enjoyment already calls itself \"need of recreation,\" and even begins to be ashamed of itself.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 329",
+      "plain": "Work has gotten so holy that even pleasure has to apologize and call itself recovery.",
+      "themes": [
+        "work",
+        "happiness"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-330-bd474a",
+      "text": "The thinker does not need applause nor the clapping of hands, provided he be sure of the clapping of his own hands: the latter, however, he cannot do without.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 330",
+      "plain": "You can live without the crowd's praise. You can't live without your own.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-332-4fc381",
+      "text": "There has perhaps been an evil hour for every philosopher, in which he thought: What do I matter, if people should not believe my poor arguments!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 332",
+      "plain": "Every serious person has a night where they ask if any of it matters. Expect it.",
+      "themes": [
+        "reputation",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-334-e45f02",
+      "text": "He also who loves himself must have learned it in this way: there is no other way. Love also has to be learned.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 334",
+      "plain": "Even loving yourself is a skill you build over time, not a feeling you wait for.",
+      "themes": [
+        "love",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-335-ea7cfb",
+      "text": "How many men are there who know how to observe? And among the few who do know, how many observe themselves?",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 335",
+      "plain": "Almost nobody watches themselves honestly. Start there.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-335-b30775",
+      "text": "We, however, would seek to become what we are, the new, the unique, the incomparable, making laws for ourselves and creating ourselves!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 335",
+      "plain": "Don't copy anyone. Become the specific person you are and write your own rules.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-338-9ecc96",
+      "text": "Ah, how little you know of the happiness of man, you comfortable and good-natured ones! for happiness and misfortune are brother and sister, and twins, who grow tall together, or, as with you, remain small together!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 338",
+      "plain": "Joy and hardship grow together. Dodge one and you stay small at both.",
+      "themes": [
+        "happiness",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-338-0b1350",
+      "text": "Put at least the skin of three centuries betwixt thyself and the present day! And the clamour of the present day, the noise of wars and revolutions, ought to be a murmur to thee!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 338",
+      "plain": "Step back from today's noise until it's a murmur and you can hear yourself.",
+      "themes": [
+        "mind",
+        "solitude"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-343-6e9bc5",
+      "text": "At last the horizon seems open once more, granting even that it is not bright; our ships can at last put out to sea in face of every danger; every hazard is again permitted to the discerner; the sea, our sea, again lies open before us; perhaps never before did such an \"open sea\" exist.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 343",
+      "plain": "When the old map breaks, the sea is open. Dark, but yours to sail.",
+      "themes": [
+        "courage",
+        "change"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-345-099e76",
+      "text": "\"Selflessness\" has no value either in heaven or on earth; the great problems all demand great love, and it is only the strong, well-rounded, secure spirits, those who have a solid basis, that are qualified for them.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 345",
+      "plain": "Erasing yourself helps no one. Big problems need a strong, whole person.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-346-78dc53",
+      "text": "So much distrust, so much philosophy!",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 346",
+      "plain": "Doubt is where thinking starts.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-347-2c92dd",
+      "text": "How much faith a person requires in order to flourish, how much \"fixed opinion\" he requires which he does not wish to have shaken, because he holds himself thereby, is a measure of his power (or more plainly speaking, of his weakness).",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 347",
+      "plain": "The more certainty you need to stay upright, the weaker you are.",
+      "themes": [
+        "power",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-347-4e1237",
+      "text": "Belief is always most desired, most pressingly needed where there is a lack of will: for the will, as emotion of command, is the distinguishing characteristic of sovereignty and power.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 347",
+      "plain": "People grab for something to obey when they can't command themselves.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-355-ea7b8a",
+      "text": "Is it not possible that it should be the instinct of fear which enjoins upon us to know?",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 355",
+      "plain": "Maybe our hunger for answers is really just fear wanting to feel safe.",
+      "themes": [
+        "fear",
+        "mind"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-355-e69c87",
+      "text": "The known is the accustomed, and the accustomed is the most difficult of all to \"understand,\" that is to say, to perceive as a problem, to perceive as strange, distant, \"outside of us.\"",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 355",
+      "plain": "What's familiar is the hardest to see clearly. You stop questioning what you're used to.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-366-00c148",
+      "text": "We do not belong to those who only get their thoughts from books, or at the prompting of books, it is our custom to think in the open air, walking, leaping, climbing, or dancing on lonesome mountains by preference, or close to the sea, where even the paths become thoughtful.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 366",
+      "plain": "Think on your feet outside, not just from books at a desk.",
+      "themes": [
+        "mind",
+        "solitude"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-366-a0a487",
+      "text": "Every kind of perfection is purchased at a high price on earth, where everything is perhaps purchased too dear; one is an expert in one's department at the price of being also a victim of one's department.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 366",
+      "plain": "Mastery has a price. Getting great at one thing bends the rest of you.",
+      "themes": [
+        "work",
+        "adversity"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-371-56b8a1",
+      "text": "We grow like trees, that is difficult to understand, like all life! not in one place, but everywhere, not in one direction only, but upwards and outwards, as well as inwards and downwards.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 371",
+      "plain": "Growth isn't one clean line. You grow in every direction at once, including down.",
+      "themes": [
+        "change",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-378-daae1b",
+      "text": "But we do as we have always done: we take whatever is cast into us down into our depths, for we are deep, we do not forget, and once more grow clear....",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 378",
+      "plain": "Take what people throw at you, let it sink, and come back clear.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-381-2d18f7",
+      "text": "There are hours in which I am ashamed of it; to be sure there are likewise hours in which I am ashamed of this shame.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 381",
+      "plain": "Feeling ashamed of what you don't know, then ashamed of the shame. Everyone loops like that.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "nietzsche-joyful-wisdom-aphorism-381-a6af75",
+      "text": "Not fat, but the greatest suppleness and power is what a good dancer wishes from his nourishment, and I know not what the spirit of a philosopher would like better than to be a good dancer.",
+      "work": "joyful-wisdom",
+      "location": "Aphorism 381",
+      "plain": "Want to be light and strong, not heavy and comfortable.",
+      "themes": [
+        "self-mastery",
+        "happiness"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    }
+  ]
+}

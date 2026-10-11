@@ -122,6 +122,34 @@ Build note: live store prices are the hard part, so v1 uses estimated prices and
 - Lock In keeps the simple $100 a day earnings floor for the challenge, the deeper money tracking lives in the finance app and feeds in
 - Business stays light: a goal-driven log, not a full build
 
+**21. Library**
+
+A reader for a library of real quotes from the Stoics, the pessimists and writers near them. The goal is to finish it, like a book, with a counter showing how far in you are. It is its own tab. (20, Philosophy drops, is the notification feature that pulls from it, below.)
+
+- Every quote is real and traced to a source text: the work, the place in it, the translator and a link to the text
+- Reading: one quote fills the screen, swipe for the next. Under it the writer, the source and a plain words line
+- Go deeper: the passage around the quote with the quote picked out, who the writer was and a note on the work
+- Read them all: quotes read out of the total, overall, per writer and per work. Finishing a writer, the whole library or a round number is a moment of its own
+- No repeats until you finish: a first pass shows only quotes not read yet. When a way in runs out, a second pass starts and says so
+- Ways in: one writer straight through, one theme, a shuffle across everyone that keeps its order, or Continue where you left off
+- Rough day: pick how you feel (overwhelmed, angry, broke, alone, doubting, tempted, tired, afraid) and get quotes matched to it. Today has a quiet "Rough day" row that opens the same picker
+- Save a quote in one tap and add a note on why it hit. Saved is your collection, newest first
+- Search by word, writer, work or theme
+- Stored per quote: read or not, saved or not, your note. The quotes themselves ship with the app as static files
+- The 48 Laws style entries show the law, who it is credited to and a link to the source, with the origin note under Go deeper
+- The coach may quote a Library line when it fits what you said (never in a safety reply), preferring ones you saved, then unread ones. The message links to that quote
+- Optional daily habit "Read N quotes" (default 10, off until turned on in Settings, Checklist). It is an ordinary checklist number item, so targets, streaks and day locking all apply
+
+**20. Philosophy drops**
+
+A short quote as a notification, a few times a day.
+
+- Setting in Settings, Reminders: on or off and how many a day (1 to 6, default 3). Off by default
+- Spread evenly between wake and bed, never in quiet hours
+- Each drop is a quote you have not read, chosen by date and slot, so the server and the app agree and a drop is never sent twice
+- Title is the writer, body is the quote trimmed at a word, a tap opens it in the Library reader
+- Works with no accounts at all: the in-app scheduler shows the same drops
+
 **3. Money**
 
 - Running total toward $1,000 at the top, with days left until Oct 14

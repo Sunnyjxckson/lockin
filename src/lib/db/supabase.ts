@@ -4,10 +4,37 @@
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { NewRow, Row, TableName } from "../types";
+import { missingColumn, withoutSoftColumn } from "./soft";
 import { DbError, type Backend, type Query } from "./types";
 
 function fail(table: string, op: string, error: { message: string }): never {
   throw new DbError(`${op} ${table} failed: ${error.message}`, error);
+}
+
+type Failure = { message: string };
+
+/**
+ * Run a write. When it is refused because a soft column is not there (the
+ * 0015 migration has not been run), take that column out and try again, so
+ * saving anything else on the row still works. `go` is given the payload to
+ * send. A payload with nothing left in it is done by `empty`.
+ */
+async function softWrite<K extends TableName>(
+  table: K,
+  payload: Record<string, unknown>,
+  go: (p: Record<string, unknown>) => PromiseLike<{ data: unknown; error: Failure | null }>,
+  empty: () => Promise<unknown>,
+): Promise<{ data: unknown; error: Failure | null }> {
+  let body = payload;
+  for (let tries = 0; tries < 6; tries++) {
+    if (Object.keys(body).length === 0) return { data: await empty(), error: null };
+    const out = await go(body);
+    const column = out.error ? missingColumn(out.error.message) : null;
+    const next = column ? withoutSoftColumn(table, body, column) : null;
+    if (!next) return out;
+    body = next;
+  }
+  return go(body);
 }
 
 export class SupabaseBackend implements Backend {
@@ -39,7 +66,7 @@ export class SupabaseBackend implements Backend {
   }
 
   async insert<K extends TableName>(table: K, row: NewRow<K>): Promise<Row<K>> {
-    const { data, error } = await this.client.from(table).insert(row).select("*").single();
+    const { data, error } = await softWrite(table, row as Record<string, unknown>, (p) => this.client.from(table).insert(p).select("*").single(), async () => null);
     if (error) fail(table, "insert", error);
     return data as Row<K>;
   }
@@ -55,7 +82,8 @@ export class SupabaseBackend implements Backend {
     const clean: Record<string, unknown> = { ...patch };
     delete clean.id;
     delete clean.created_at;
-    const { data, error } = await this.client.from(table).update(clean).eq("id", id).select("*").single();
+    // A patch that was only soft columns has nothing left to write: the row is returned as it is.
+    const { data, error } = await softWrite(table, clean, (p) => this.client.from(table).update(p).eq("id", id).select("*").single(), () => this.get(table, id));
     if (error) fail(table, "update", error);
     return data as Row<K>;
   }
@@ -70,11 +98,7 @@ export class SupabaseBackend implements Backend {
       delete clean.id;
       delete clean.created_at;
     }
-    const { data, error } = await this.client
-      .from(table)
-      .upsert(clean, { onConflict: conflict.join(",") })
-      .select("*")
-      .single();
+    const { data, error } = await softWrite(table, clean, (p) => this.client.from(table).upsert(p, { onConflict: conflict.join(",") }).select("*").single(), async () => null);
     if (error) fail(table, "upsert", error);
     return data as Row<K>;
   }

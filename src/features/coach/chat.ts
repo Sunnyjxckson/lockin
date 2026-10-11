@@ -7,8 +7,10 @@ import { buildSnapshot, cleanCoachText, viceName, type CoachData } from "@/lib/l
 import {
   MAX_MESSAGE,
   MAX_TURNS,
+  careInPlay,
   chatFallback,
   checkinsOf,
+  classifyMessage,
   dueCheckins,
   quotesUsedSince,
   voiceOf,
@@ -16,6 +18,7 @@ import {
   type ChatTurn,
 } from "@/lib/logic/coachChat";
 import { detectFlags } from "@/lib/logic/coachFlags";
+import type { LibCandidate } from "@/lib/logic/coachLibrary";
 import { quoteByKey } from "@/lib/logic/coachQuotes";
 import { addDays, formatTime, nowIso, timeNY, todayNY, weekdayOf } from "@/lib/logic/dates";
 import { summarizeDay } from "@/lib/logic/day";
@@ -68,24 +71,41 @@ interface Answer {
 }
 
 /** Ask the route. Offline or on any failure, answer here from the same rules. */
-async function answer(ctx: ChatContext, turns: ChatTurn[], voice: CoachVoice, used: string[]): Promise<Answer> {
+async function answer(ctx: ChatContext, turns: ChatTurn[], voice: CoachVoice, used: string[], library: LibCandidate[]): Promise<Answer> {
   try {
     const res = await fetch("/api/coach/chat", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ context: ctx, turns, voice, used }),
+      body: JSON.stringify({ context: ctx, turns, voice, used, library }),
     });
     if (res.ok) {
       const json = (await res.json()) as Partial<Answer>;
       if (typeof json.body === "string" && json.body.trim()) {
-        return { body: cleanCoachText(json.body), source: json.source === "ai" ? "ai" : "fallback", quote: quoteByKey(json.quote) ? (json.quote as string) : null };
+        return { body: cleanCoachText(json.body), source: json.source === "ai" ? "ai" : "fallback", quote: quoteByKey(json.quote) || library.some((c) => c.key === json.quote) ? (json.quote as string) : null };
       }
     }
   } catch {
     // Fall through to the local version.
   }
-  const local = chatFallback(turns[turns.length - 1].body, ctx, voice, used);
+  const local = chatFallback(turns[turns.length - 1].body, ctx, voice, used, library);
   return { body: local.body, source: "fallback", quote: local.quote };
+}
+
+/**
+ * A few lines from the Library for what the message is about. None for injury,
+ * an emergency, or anything that sounds like more than a bad day: those never
+ * carry a quote. The Library is fetched here, when a message is sent, and not
+ * before, so it is not part of any screen's first load.
+ */
+async function libraryLines(message: string, turns: readonly ChatTurn[], used: readonly string[]): Promise<LibCandidate[]> {
+  const topic = classifyMessage(message);
+  if (topic === "care" || topic === "emergency" || topic === "injury" || careInPlay(turns.slice(-6))) return [];
+  try {
+    const { libraryLinesFor } = await import("@/features/library/coachPicks");
+    return await libraryLinesFor(message, topic, used, todayNY());
+  } catch {
+    return [];
+  }
 }
 
 /**
@@ -102,7 +122,7 @@ export async function sendMessage(text: string): Promise<void> {
   const [data, why, settings, history, used] = await Promise.all([loadCoachData(today), loadWhy(), getSettings(), recent(MAX_TURNS), usedQuotes(today)]);
   if (!data) return;
   const turns: ChatTurn[] = history.map((m) => ({ sender: m.sender, body: m.body }));
-  const reply = await answer(contextFrom(data, why), turns, voiceOf(settings?.coach_voice), used);
+  const reply = await answer(contextFrom(data, why), turns, voiceOf(settings?.coach_voice), used, await libraryLines(body, turns, used));
   await db.insert("coach_message", { date: todayNY(), sent_at: nowIso(), sender: "coach", body: reply.body, trigger: "chat", source: reply.source, quote: reply.quote, check_key: null, read: true });
 }
 

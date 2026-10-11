@@ -1,0 +1,386 @@
+[
+  {
+    "text": "Why, ’tis no great matter; for a very little thief of occasion will rob you of a great deal of patience.",
+    "work": "plays",
+    "location": "Coriolanus, Act 2 Scene 1",
+    "plain": "Small annoyances steal your patience if you let them. Do not hand it over that cheap.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ]
+  },
+  {
+    "text": "We call a nettle but a nettle, and\nThe faults of fools but folly.",
+    "work": "plays",
+    "location": "Coriolanus, Act 2 Scene 1",
+    "plain": "Call a thing what it is. A nuisance is a nuisance and a mistake is a mistake.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I had rather have my wounds to heal again\nThan hear say how I got them.",
+    "work": "plays",
+    "location": "Coriolanus, Act 2 Scene 2",
+    "plain": "Do the work and skip the applause. Praise hurts more than the scars.",
+    "themes": [
+      "work",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "I had rather have one scratch my head i’ th’ sun\nWhen the alarum were struck than idly sit\nTo hear my nothings monstered.",
+    "work": "plays",
+    "location": "Coriolanus, Act 2 Scene 2",
+    "plain": "Better to be in the fight than to sit and listen to people inflate what you have done.",
+    "themes": [
+      "work",
+      "reputation"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "I had rather be their servant in my way\nThan sway with them in theirs.",
+    "work": "plays",
+    "location": "Coriolanus, Act 2 Scene 1",
+    "plain": "Better to serve on your own terms than to rule on someone else's.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Despising\nFor you the city, thus I turn my back.\nThere is a world elsewhere.",
+    "work": "plays",
+    "location": "Coriolanus, Act 3 Scene 3",
+    "plain": "If this place does not want you, leave. The world is bigger than one room.",
+    "themes": [
+      "courage",
+      "change"
+    ],
+    "moments": [
+      "alone",
+      "angry"
+    ]
+  },
+  {
+    "text": "You were used\nTo say extremities was the trier of spirits;\nThat common chances common men could bear;\nThat when the sea was calm, all boats alike\nShowed mastership in floating; fortune’s blows\nWhen most struck home, being gentle wounded craves\nA noble cunning.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 1",
+    "plain": "Anyone can float in calm water. Hard blows test you, and taking them well takes skill.",
+    "themes": [
+      "adversity",
+      "fate",
+      "courage"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I shall be loved when I am lacked.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 1",
+    "plain": "People only see what you were worth once you are gone.",
+    "themes": [
+      "reputation",
+      "solitude"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "’Tis fond to wail inevitable strokes\nAs ’tis to laugh at ’em.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 1",
+    "plain": "It is foolish to cry over what cannot be avoided, and just as foolish to laugh it off.",
+    "themes": [
+      "fate",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Anger’s my meat. I sup upon myself\nAnd so shall starve with feeding.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 2",
+    "plain": "Living on anger means eating yourself alive. It never fills you.",
+    "themes": [
+      "anger",
+      "pain"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Now we have shown our power,\nLet us seem humbler after it is done\nThan when it was a-doing.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 2",
+    "plain": "After you win, act smaller than you did while you were fighting.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Though thy tackle’s torn,\nThou show’st a noble vessel.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 5",
+    "plain": "Even broken and battered, you can still look like someone worth following.",
+    "themes": [
+      "adversity",
+      "courage"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "So our virtues\nLie in th’ interpretation of the time,\nAnd power, unto itself most commendable,\nHath not a tomb so evident as a chair\nT’ extol what it hath done.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 7",
+    "plain": "Your good name depends on the era judging it, and power's own praise is the loudest proof it is fading.",
+    "themes": [
+      "reputation",
+      "time",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "One fire drives out one fire, one nail one nail;\nRights by rights falter; strengths by strengths do fail.",
+    "work": "plays",
+    "location": "Coriolanus, Act 4 Scene 7",
+    "plain": "A new force replaces an old one. Nothing holds just because it is strong now.",
+    "themes": [
+      "change",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Like a dull actor now,\nI have forgot my part, and I am out,\nEven to a full disgrace.",
+    "work": "plays",
+    "location": "Coriolanus, Act 5 Scene 3",
+    "plain": "The feeling of blanking in front of everyone. It happens to the best, and it passes.",
+    "themes": [
+      "fear",
+      "reputation"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Think’st thou it honourable for a noble man\nStill to remember wrongs?",
+    "work": "plays",
+    "location": "Coriolanus, Act 5 Scene 3",
+    "plain": "Holding on to every wrong done to you is not strength.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "He was not taken well; he had not dined.\nThe veins unfilled, our blood is cold, and then\nWe pout upon the morning, are unapt\nTo give or to forgive; but when we have stuffed\nThese pipes and these conveyances of our blood\nWith wine and feeding, we have suppler souls\nThan in our priestlike fasts.",
+    "work": "plays",
+    "location": "Coriolanus, Act 5 Scene 1",
+    "plain": "A hungry, tired person is not at their best. Eat and rest before you judge or decide.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ]
+  },
+  {
+    "text": "There is differency between a grub and a butterfly, yet your butterfly was a grub.",
+    "work": "plays",
+    "location": "Coriolanus, Act 5 Scene 4",
+    "plain": "People change completely. What you are now does not limit what you become.",
+    "themes": [
+      "change"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "His nature is too noble for the world.\nHe would not flatter Neptune for his trident\nOr Jove for’s power to thunder. His heart’s his mouth;\nWhat his breast forges, that his tongue must vent,\nAnd, being angry, does forget that ever\nHe heard the name of death.",
+    "work": "plays",
+    "location": "Coriolanus, Act 3 Scene 1",
+    "plain": "Honest to a fault. He will not flatter anyone and cannot hide his anger, and it costs him.",
+    "themes": [
+      "reputation",
+      "anger",
+      "courage"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I will not do’t,\nLest I surcease to honour mine own truth\nAnd, by my body’s action, teach my mind\nA most inherent baseness.",
+    "work": "plays",
+    "location": "Coriolanus, Act 3 Scene 2",
+    "plain": "What you do with your body trains your mind. Act small and you become small.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I have a heart as little apt as yours,\nBut yet a brain that leads my use of anger\nTo better vantage.",
+    "work": "plays",
+    "location": "Coriolanus, Act 3 Scene 2",
+    "plain": "Same anger as you. I just aim it where it helps me.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "But now ’tis odds beyond arithmetic,\nAnd manhood is called foolery when it stands\nAgainst a falling fabric.",
+    "work": "plays",
+    "location": "Coriolanus, Act 3 Scene 1",
+    "plain": "Some fights are lost already. Standing alone against a collapse is not courage.",
+    "themes": [
+      "courage",
+      "folly"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "What is the city but the people?",
+    "work": "plays",
+    "location": "Coriolanus, Act 3 Scene 1",
+    "plain": "A place, a company, a country is only the people in it.",
+    "themes": [
+      "power",
+      "friendship"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Blessed be those,\nHow mean soe’er, that have their honest wills,\nWhich seasons comfort.",
+    "work": "plays",
+    "location": "Cymbeline, Act 1 Scene 7",
+    "plain": "Lucky are the people with simple wants. Getting what you want is what makes comfort sweet.",
+    "themes": [
+      "desire",
+      "happiness"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "I am senseless of your wrath; a touch more rare\nSubdues all pangs, all fears.",
+    "work": "plays",
+    "location": "Cymbeline, Act 1 Scene 2",
+    "plain": "When something matters more to you than the threat, the fear goes quiet.",
+    "themes": [
+      "fear",
+      "love",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "The cloyed will—\nThat satiate yet unsatisfied desire, that tub\nBoth fill’d and running—ravening first the lamb,\nLongs after for the garbage.",
+    "work": "plays",
+    "location": "Cymbeline, Act 1 Scene 7",
+    "plain": "A glutted appetite is never full. It eats the best and then craves the trash.",
+    "themes": [
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Boldness be my friend!\nArm me, audacity, from head to foot!",
+    "work": "plays",
+    "location": "Cymbeline, Act 1 Scene 7",
+    "plain": "Walking into something scary? Ask for nerve and put it on like armor.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Not any; but abide the change of time,\nQuake in the present winter’s state, and wish\nThat warmer days would come.",
+    "work": "plays",
+    "location": "Cymbeline, Act 2 Scene 4",
+    "plain": "Some stretches you can only wait out. Shiver through the winter and keep wanting spring.",
+    "themes": [
+      "time",
+      "adversity"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  }
+]

@@ -1,0 +1,442 @@
+[
+  {
+    "text": "In my stars I am above thee, but be not afraid of greatness. Some are born great, some achieve greatness, and some have greatness thrust upon ’em.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 2 Scene 5",
+    "plain": "Some are born great, some earn it, some get it dropped on them. Do not be afraid of greatness.",
+    "themes": [
+      "courage",
+      "fate",
+      "power"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Foolery, sir, does walk about the orb like the sun; it shines everywhere.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 3 Scene 1",
+    "plain": "Foolishness is everywhere, like the sun. Nobody is above it.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "A murd’rous guilt shows not itself more soon\nThan love that would seem hid. Love’s night is noon.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 3 Scene 1",
+    "plain": "Guilt shows itself fast, and so does love you are trying to hide.",
+    "themes": [
+      "love",
+      "mind"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Love sought is good, but given unsought is better.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 3 Scene 1",
+    "plain": "Love you chase is good. Love that comes to you unasked is better.",
+    "themes": [
+      "love",
+      "desire"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "In nature there’s no blemish but the mind;\nNone can be call’d deform’d but the unkind.\nVirtue is beauty, but the beauteous evil\nAre empty trunks, o’erflourished by the devil.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 3 Scene 4",
+    "plain": "The only real ugliness is a cold heart. Good looks can hide a rotten person.",
+    "themes": [
+      "reputation",
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "I say there is no darkness but ignorance, in which thou art more puzzled than the Egyptians in their fog.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 4 Scene 2",
+    "plain": "The only real darkness is not knowing.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Now my foes tell me plainly I am an ass: so that by my foes, sir, I profit in the knowledge of myself, and by my friends I am abused.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 5 Scene 1",
+    "plain": "Enemies tell you the truth about yourself. Friends flatter you into being a fool.",
+    "themes": [
+      "friendship",
+      "reputation"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "And thus the whirligig of time brings in his revenges.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 5 Scene 1",
+    "plain": "Time turns and everyone gets paid back eventually.",
+    "themes": [
+      "time",
+      "fate"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Alas, it is the baseness of thy fear\nThat makes thee strangle thy propriety.\nFear not, Cesario, take thy fortunes up.\nBe that thou know’st thou art, and then thou art\nAs great as that thou fear’st.",
+    "work": "plays",
+    "location": "Twelfth Night, Act 5 Scene 1",
+    "plain": "Fear is what keeps you small. Be who you know you are and you are as big as the thing you fear.",
+    "themes": [
+      "fear",
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Home-keeping youth have ever homely wits.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 1",
+    "plain": "Staying put makes you dull. You get sharp by going out.",
+    "themes": [
+      "change",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "To be in love, where scorn is bought with groans,\nCoy looks with heart-sore sighs, one fading moment’s mirth\nWith twenty watchful, weary, tedious nights.\nIf haply won, perhaps a hapless gain;\nIf lost, why then a grievous labour won;\nHowever, but a folly bought with wit,\nOr else a wit by folly vanquished.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 1",
+    "plain": "Chasing love often costs more than it pays: it is a folly bought with wit, or wit beaten by folly.",
+    "themes": [
+      "love",
+      "folly",
+      "pain"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Love is your master, for he masters you;\nAnd he that is so yoked by a fool\nMethinks should not be chronicled for wise.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 1",
+    "plain": "If love is your master and you obey it, do not expect to be called wise.",
+    "themes": [
+      "love",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Thou, Julia, thou hast metamorphosed me,\nMade me neglect my studies, lose my time,\nWar with good counsel, set the world at nought;\nMade wit with musing weak, heart sick with thought.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 1",
+    "plain": "Infatuation made me neglect my work, waste my time, and ignore good advice. My mind went weak.",
+    "themes": [
+      "love",
+      "time",
+      "folly"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Fie, fie, how wayward is this foolish love\nThat like a testy babe will scratch the nurse\nAnd presently, all humbled, kiss the rod!",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 2",
+    "plain": "Love makes you lash out at what you want, then crawl back and take the punishment.",
+    "themes": [
+      "love",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Fire that’s closest kept burns most of all.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 2",
+    "plain": "The fire you keep hidden burns hottest.",
+    "themes": [
+      "love",
+      "mind"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "I have no other but a woman’s reason:\nI think him so because I think him so.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 2",
+    "plain": "Sometimes the only reason is a feeling, and you cannot argue it.",
+    "themes": [
+      "love",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Experience is by industry achieved\nAnd perfected by the swift course of time.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 3",
+    "plain": "Experience comes from hard work and then time finishes it.",
+    "themes": [
+      "work",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Thus have I shunned the fire for fear of burning\nAnd drenched me in the sea, where I am drowned.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 3",
+    "plain": "Dodging the fire, I walked into the sea and drowned.",
+    "themes": [
+      "folly",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "O, how this spring of love resembleth\nThe uncertain glory of an April day,\nWhich now shows all the beauty of the sun,\nAnd by an by a cloud takes all away.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 1 Scene 3",
+    "plain": "Good things can be gone in a moment, like a cloud taking the sun on an April day.",
+    "themes": [
+      "change",
+      "time"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Except I be by Silvia in the night,\nThere is no music in the nightingale.\nUnless I look on Silvia in the day,\nThere is no day for me to look upon.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 3 Scene 1",
+    "plain": "Without the person you love, the whole world goes silent and dark.",
+    "themes": [
+      "love",
+      "pain"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Cease to lament for that thou canst not help,\nAnd study help for that which thou lament’st.\nTime is the nurse and breeder of all good.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 3 Scene 1",
+    "plain": "Stop mourning what you cannot help and work on what you can. Time heals most things.",
+    "themes": [
+      "time",
+      "adversity",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Hope is a lover’s staff; walk hence with that\nAnd manage it against despairing thoughts.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 3 Scene 1",
+    "plain": "Hope is the staff you walk with. Use it against despair.",
+    "themes": [
+      "adversity",
+      "courage"
+    ],
+    "moments": [
+      "tired",
+      "afraid"
+    ]
+  },
+  {
+    "text": "How use doth breed a habit in a man!",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 5 Scene 4",
+    "plain": "Habit builds itself in you without asking.",
+    "themes": [
+      "discipline",
+      "mind"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "The private wound is deepest. O time most accurst,\n’Mongst all foes that a friend should be the worst!",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 5 Scene 4",
+    "plain": "The deepest cuts come from a friend.",
+    "themes": [
+      "friendship",
+      "pain"
+    ],
+    "moments": [
+      "alone",
+      "angry"
+    ]
+  },
+  {
+    "text": "Who by repentance is not satisfied\nIs nor of heaven nor earth, for these are pleased;\nBy penitence th’ Eternal’s wrath’s appeased.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 5 Scene 4",
+    "plain": "Real remorse deserves forgiveness. Refusing it puts you out of step with heaven and earth.",
+    "themes": [
+      "self-mastery",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "O heaven, were man\nBut constant, he were perfect. That one error\nFills him with faults, makes him run through all th’ sins;\nInconstancy falls off ere it begins.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 5 Scene 4",
+    "plain": "A person who stayed constant would be perfect. Wavering is the one flaw that breeds all the others.",
+    "themes": [
+      "discipline",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "But love will not be spurred to what it loathes.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 5 Scene 2",
+    "plain": "Love cannot be forced.",
+    "themes": [
+      "love",
+      "desire"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "A thousand more mischances than this one\nHave learned me how to brook this patiently.",
+    "work": "plays",
+    "location": "The Two Gentlemen of Verona, Act 5 Scene 3",
+    "plain": "A thousand worse breaks than this one taught me how to take it calmly.",
+    "themes": [
+      "adversity",
+      "courage"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "O grief and time,\nFearful consumers, you will all devour!",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 1 Scene 1",
+    "plain": "Grief and time eat everything in the end.",
+    "themes": [
+      "time",
+      "death",
+      "pain"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "Extremity, that sharpens sundry wits,\nMakes me a fool.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 1 Scene 1",
+    "plain": "Extreme pain sharpens some minds and turns others into fools. Do not judge people in it.",
+    "themes": [
+      "adversity",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Who cannot feel nor see the rain, being in ’t,\nKnows neither wet nor dry.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 1 Scene 1",
+    "plain": "If you are standing in it, you cannot feel the rain. You are too deep to see it.",
+    "themes": [
+      "pain",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "alone"
+    ]
+  },
+  {
+    "text": "As we are men,\nThus should we do; being sensually subdued,\nWe lose our human title.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 1 Scene 1",
+    "plain": "We are men only while we stay in control of ourselves. Lose control and you lose that.",
+    "themes": [
+      "self-mastery",
+      "power"
+    ],
+    "moments": [
+      "tempted",
+      "angry"
+    ]
+  }
+]

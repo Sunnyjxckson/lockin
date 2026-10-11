@@ -1,0 +1,343 @@
+[
+  {
+    "text": "This world’s a city full of straying streets,\nAnd death’s the market-place where each one meets.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 1 Scene 5",
+    "plain": "Everyone takes a different road, and every road ends in the same place.",
+    "themes": [
+      "death",
+      "fate"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Let th’ event,\nThat never-erring arbitrator, tell us\nWhen we know all ourselves; and let us follow\nThe becking of our chance.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 1 Scene 2",
+    "plain": "Outcomes are the only honest judge. Do the work, then let results tell you who you are.",
+    "themes": [
+      "fate",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Their knot of love,\nTied, weaved, entangled, with so true, so long,\nAnd with a finger of so deep a cunning,\nMay be outworn, never undone.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 1 Scene 3",
+    "plain": "A bond built over years can wear thin, but it does not come apart.",
+    "themes": [
+      "friendship",
+      "love"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "We are an endless mine to one another;\nWe are one another’s wife, ever begetting\nNew births of love; we are father, friends, acquaintance;\nWe are, in one another, families;",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 2 Scene 2",
+    "plain": "Two real friends are each other's whole world.",
+    "themes": [
+      "friendship",
+      "adversity"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Whilst Palamon is with me, let me perish\nIf I think this our prison!",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 2 Scene 2",
+    "plain": "With the right person beside you, the worst place stops feeling like a cage.",
+    "themes": [
+      "friendship",
+      "adversity"
+    ],
+    "moments": [
+      "alone",
+      "tired"
+    ]
+  },
+  {
+    "text": "I am sure, a more content; and all those pleasures\nThat woo the wills of men to vanity\nI see through now, and am sufficient\nTo tell the world ’tis but a gaudy shadow\nThat old Time as he passes by takes with him.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 2 Scene 2",
+    "plain": "Most of what tempts people is a shiny shadow that time carries off anyway.",
+    "themes": [
+      "desire",
+      "time"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Come what can come,\nThe worst is death; I will not leave the kingdom.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 2 Scene 3",
+    "plain": "Once you accept the worst case, you stop running from what you want.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Their valiant temper\nMen lose when they incline to treachery;",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 3 Scene 1",
+    "plain": "Cut one corner on your own honor and the nerve goes out of you.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Fortune, whose title is as momentary,\nAs to us death is certain.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 5 Scene 4",
+    "plain": "Luck never holds a title for long. Death always does.",
+    "themes": [
+      "fate",
+      "death"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "And with our patience anger tottering Fortune,\nWho at her certain’st reels.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 5 Scene 4",
+    "plain": "Stay calm and luck gets rattled. Even at her best she is unsteady.",
+    "themes": [
+      "fate",
+      "adversity"
+    ],
+    "moments": [
+      "angry",
+      "afraid"
+    ]
+  },
+  {
+    "text": "That we should things desire, which do cost us\nThe loss of our desire! That naught could buy\nDear love, but loss of dear love!",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 5 Scene 4",
+    "plain": "Sometimes the price of the thing you want is the thing you wanted.",
+    "themes": [
+      "desire",
+      "love"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "What things you make of us! For what we lack\nWe laugh, for what we have are sorry, still\nAre children in some kind. Let us be thankful\nFor that which is, and with you leave dispute\nThat are above our question.",
+    "work": "plays",
+    "location": "The Two Noble Kinsmen, Act 5 Scene 4",
+    "plain": "We want what we lack and grieve what we have. Be thankful for what is.",
+    "themes": [
+      "happiness",
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Two lads that thought there was no more behind\nBut such a day tomorrow as today,\nAnd to be boy eternal.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 1 Scene 2",
+    "plain": "Youth feels like every tomorrow will match today. It does not.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Temptations have since then been born to ’s!",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 1 Scene 2",
+    "plain": "Innocence ends the day temptation shows up, and it always does.",
+    "themes": [
+      "desire",
+      "change"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Our praises are our wages.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 1 Scene 2",
+    "plain": "Praise is what people pay in. Don't work only for it.",
+    "themes": [
+      "reputation",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "He makes a July’s day short as December;\nAnd with his varying childness cures in me\nThoughts that would thick my blood.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 1 Scene 2",
+    "plain": "The right company makes the long days short and clears the heavy thoughts.",
+    "themes": [
+      "happiness",
+      "friendship"
+    ],
+    "moments": [
+      "tired",
+      "alone"
+    ]
+  },
+  {
+    "text": "I may be negligent, foolish, and fearful;\nIn every one of these no man is free,\nBut that his negligence, his folly, fear,\nAmong the infinite doings of the world,\nSometime puts forth.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 1 Scene 2",
+    "plain": "Everybody is lazy, foolish and scared sometimes. Own it and keep going.",
+    "themes": [
+      "folly",
+      "fear"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "I know not: but I am sure ’tis safer to\nAvoid what’s grown than question how ’tis born.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 1 Scene 2",
+    "plain": "When trouble is already big, stop asking how it started and get out of the way.",
+    "themes": [
+      "adversity",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "There’s some ill planet reigns:\nI must be patient till the heavens look\nWith an aspect more favourable.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 2 Scene 1",
+    "plain": "Some seasons are just bad. Hold steady until the luck turns.",
+    "themes": [
+      "adversity",
+      "fate"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "Alack, for lesser knowledge! How accurs’d\nIn being so blest! There may be in the cup\nA spider steep’d, and one may drink, depart,\nAnd yet partake no venom, for his knowledge\nIs not infected; but if one present\nTh’ abhorr’d ingredient to his eye, make known\nHow he hath drunk, he cracks his gorge, his sides,\nWith violent hefts. I have drunk, and seen the spider.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 2 Scene 1",
+    "plain": "Suspicion poisons you. Once you have seen the spider in the cup, you cannot unsee it.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The silence often of pure innocence\nPersuades, when speaking fails.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 2 Scene 2",
+    "plain": "Sometimes quiet integrity wins what arguing can't.",
+    "themes": [
+      "reputation",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "I am a feather for each wind that blows.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 2 Scene 3",
+    "plain": "No center, no direction. Every mood pushes you around.",
+    "themes": [
+      "folly",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "It is an heretic that makes the fire,\nNot she which burns in ’t.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 2 Scene 3",
+    "plain": "The shame belongs to the one who lights the fire, not the one standing in it.",
+    "themes": [
+      "reputation",
+      "courage"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ]
+  },
+  {
+    "text": "I doubt not, then, but innocence shall make\nFalse accusation blush, and tyranny\nTremble at patience.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 3 Scene 2",
+    "plain": "Patience under false blame makes the accuser nervous.",
+    "themes": [
+      "courage",
+      "adversity"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ]
+  },
+  {
+    "text": "What’s gone and what’s past help,\nShould be past grief.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 3 Scene 2",
+    "plain": "If you can't fix it, stop paying for it with your sleep.",
+    "themes": [
+      "pain",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  }
+]

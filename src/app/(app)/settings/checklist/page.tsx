@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowDown, ArrowUp, ListChecks, Plus } from "lucide-react";
 import {
@@ -19,7 +19,8 @@ import {
   Toggle,
   useToast,
 } from "@/components/ui";
-import { addItem, removeItem, reorderItems, saveItem, setDailyFloor } from "@/lib/db/helpers";
+import { addItem, getItemByKey, removeItem, reorderItems, saveItem, setDailyFloor } from "@/lib/db/helpers";
+import { DEFAULT_READ_TARGET, MAX_READ_TARGET, MIN_READ_TARGET, READ_KEY, clampReadTarget, disableReadHabit, enableReadHabit, isReadHabitOn, readTargetOf } from "@/features/library/habit";
 import { useChecklist, useMode } from "@/lib/db/hooks";
 import { ruleTarget } from "@/lib/logic/challenge";
 import { describeTarget } from "@/lib/logic/targets";
@@ -215,6 +216,58 @@ function summary(item: ChecklistItem, held: Target | null): string {
   return parts.filter(Boolean).join(" · ");
 }
 
+/** "Read N quotes": off until turned on here. */
+function ReadingHabit({ stamp }: { stamp: unknown }) {
+  const toast = useToast();
+  const [item, setItem] = useState<ChecklistItem | null>(null);
+  const [n, setN] = useState<number | null>(DEFAULT_READ_TARGET);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    let live = true;
+    void getItemByKey(READ_KEY).then((i) => {
+      if (!live) return;
+      setItem(i);
+      setN(readTargetOf(i));
+    });
+    return () => {
+      live = false;
+    };
+  }, [stamp]);
+  const on = isReadHabitOn(item);
+  const run = async (fn: () => Promise<unknown>, done: string) => {
+    setBusy(true);
+    try {
+      await fn();
+      toast(done, { kind: "done" });
+    } catch {
+      toast("Could not save", { kind: "error" });
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Section title="Reading">
+      <Card>
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-[15px] text-ink">Read quotes every day</p>
+            <p className="t-caption mt-0.5 text-ink-2">Adds a tile to Today. Counts from today.</p>
+          </div>
+          <Toggle label="Read quotes every day" checked={on} disabled={busy} onChange={(v) => void run(() => (v ? enableReadHabit(clampReadTarget(n)) : disableReadHabit()), v ? "Added. Counts from today." : "Removed from today forward")} />
+        </div>
+        {on ? (
+          <div className="mt-4 flex items-end gap-3">
+            <NumberField label="Quotes a day" value={n} onChange={setN} min={MIN_READ_TARGET} max={MAX_READ_TARGET} live />
+            <Button variant="secondary" disabled={busy || n === null || clampReadTarget(n) === readTargetOf(item)} onClick={() => void run(() => enableReadHabit(clampReadTarget(n)), "Saved. Applies from today.")}>
+              Save
+            </Button>
+          </div>
+        ) : null}
+      </Card>
+    </Section>
+  );
+}
+
 export default function ChecklistSettingsPage() {
   const checklist = useChecklist();
   const { challenge } = useMode();
@@ -269,6 +322,8 @@ export default function ChecklistSettingsPage() {
           .
         </p>
       </Section>
+
+      <ReadingHabit stamp={checklist.data} />
 
       {editing ? <ItemSheet key={editing === "new" ? "new" : editing.id} item={editing === "new" ? null : editing} onClose={() => setEditing(null)} /> : null}
     </Screen>

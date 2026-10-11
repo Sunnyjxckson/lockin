@@ -1,0 +1,360 @@
+[
+  {
+    "file": "01.json",
+    "text_start": "To sum up: remember that the door is open. Do not be a great",
+    "action": "drop",
+    "reason": "death as the way out when read alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Leave the scene, man, and do not complain.",
+    "action": "drop",
+    "reason": "death as the way out when read alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "When a man is not overcome by pleasure, or pain, or reputati",
+    "action": "drop",
+    "reason": "death as the way out when read alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Depart, if it does not suit you. God has no need of a querul",
+    "action": "drop",
+    "reason": "death as the way out when read alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Death: this is the harbour, this the refuge from all things,",
+    "action": "drop",
+    "reason": "death as the way out when read alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Does he who may leave the banquet when he will and play no l",
+    "action": "drop",
+    "reason": "death as the way out when read alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "What would he have done, if there had been nothing of this s",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "If he were anything more, he would have realized that one ma",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "When you remember this, whom will you flatter or fear any mo",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "The man who remembers this, I say, will be angry with no one",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "What then is the fruit of these judgements? A fruit which mu",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "Leave those other trifles to other men; let no one ever hear",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Therefore do not confound the processes, nor seek to spend e",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Show yourself superior in these qualities, that you may be s",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "What is wrong with the stone? Was it to move out of the way ",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "I will show its nature, I will shine in it. I will be firm a",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Why do you seek it outside? Do you seek it in the body? It i",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "In property? It is not there. If you disbelieve, look at Cro",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "In office? It is not there. If it were, then those who have ",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Reviling or blows or insults are nothing to him; he has give",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "03.json",
+    "text_start": "No one robs him of his will or masters that.",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Only show him the truth and you will see that he follows. Bu",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Very much the same is our position. What do we admire? Exter",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "How do you know, slave, whether he has paid you this attenti",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Let him have as much as he likes: does he gain in character?",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "I say, if we did this and trained ourselves on this principl",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Only let a man turn these efforts to the sphere of the will,",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Do not set your heart on them, and they will not be. Do not ",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Everything he had he was ready to let go, it was loosely att",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "You cannot excel both ways; in proportion as you succeed on ",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "It is very much the same in life: if you doze but a little, ",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "What are you going to sell all this for? Look and see what y",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "There is nothing to choose between being thirsty with fever,",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Yes, but happiness is far more beautiful\u2014freedom from passio",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Yes, but peace of mind outweighs all discomforts.",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Does he not expect the wicked to deal worse and more severel",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Well, what is more reasonable than that those who have spent",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Because I know that nothing good is given within to those wh",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "These are things to frighten children and fools.",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "If you look for greater things than these, go on doing as yo",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "When did he think any of his friends was immortal? When had ",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Have you nothing then in place of the supper? You have indee",
+    "action": "drop",
+    "reason": "does not stand alone"
+  },
+  {
+    "file": "01.json",
+    "text_start": "Well, how much better it is to wipe your rheum away than to ",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "01.json",
+    "text_start": "But what will he fail to bind or cut off? Your will.",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "01.json",
+    "text_start": "Now listen to the arguments on the other side; draw yourself",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "02.json",
+    "text_start": "If you always remember what is yours and what is not yours, ",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "02.json",
+    "text_start": "What you store away you have at hand and can show to others ",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Why are you surprised, then, that you surpass yourself in th",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "02.json",
+    "text_start": "Has He not given you endurance, has He not given you greatne",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "03.json",
+    "text_start": "In everything you do consider what comes first and what foll",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Then, when the contest comes, you get hacked, sometimes disl",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "03.json",
+    "text_start": "You will be just the same\u2014now athlete, now gladiator, then p",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Like an ape you imitate everything you see, and one thing af",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Nay, you must sit up late, you must work hard, conquer some ",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "04.json",
+    "text_start": "For another will not damage you, unless you choose: but you ",
+    "action": "drop",
+    "reason": "same as another pick"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Is it not better to be self-respecting than to be rich?'",
+    "action": "fix",
+    "plain": "Being self-respecting beats being rich.",
+    "reason": "plain lacks the point"
+  },
+  {
+    "file": "03.json",
+    "text_start": "Your evil is to defend yourself badly: that is the only thin",
+    "action": "fix",
+    "plain": "Your only real failure is defending yourself badly. How they judge you is out of your hands.",
+    "reason": "plain gets the meaning wrong"
+  },
+  {
+    "file": "04.json",
+    "text_start": "Do not use fine words, but state the facts as they are.",
+    "action": "fix",
+    "plain": "Skip the fancy words and say plainly what is there.",
+    "reason": "plain invents death"
+  },
+  {
+    "file": "04.json",
+    "text_start": "But if you wish not to fail in your desires, you are able to",
+    "action": "fix",
+    "plain": "You can never fail at your desires if you only want what is within your reach.",
+    "reason": "plain sounds like a song lyric"
+  }
+]

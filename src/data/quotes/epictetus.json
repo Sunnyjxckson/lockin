@@ -1,0 +1,4112 @@
+{
+  "writer": {
+    "slug": "epictetus",
+    "name": "Epictetus",
+    "years": "c. AD 50 to 135",
+    "bio": "Born a slave around AD 50, lame in one leg, owned by one of Nero's secretaries. Once freed he taught Stoicism, was banished from Rome with the other philosophers, and ran a school in Nicopolis. He wrote nothing down. His student Arrian did."
+  },
+  "works": [
+    {
+      "slug": "discourses",
+      "title": "The Discourses",
+      "translator": "P. E. Matheson",
+      "year": "1916",
+      "source_url": "https://en.wikisource.org/wiki/Epictetus,_The_Discourses_and_Manual,_together_with_Fragments_of_his_Writings",
+      "note": "Classroom talks at his school in Nicopolis around AD 108, taken down by his student Arrian. Four of the original eight books survive."
+    },
+    {
+      "slug": "enchiridion",
+      "title": "The Enchiridion",
+      "translator": "George Long",
+      "year": "1877",
+      "source_url": "https://www.gutenberg.org/ebooks/10661",
+      "note": "The Handbook. Arrian boiled the Discourses down to 52 short sections a student could carry and reread."
+    }
+  ],
+  "quotes": [
+    {
+      "id": "epictetus-discourses-book-1-chapter-1-42afb1",
+      "text": "We must make the best of those things that are in our power, and take the rest as nature gives it.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 1",
+      "plain": "Work on what you control. Let the rest happen.",
+      "themes": [
+        "fate",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-1-0b9c51",
+      "text": "I must die. But must I die groaning?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 1",
+      "plain": "Death is coming either way. Meeting it with whining adds nothing.",
+      "themes": [
+        "death",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-1-62a9f9",
+      "text": "What say you, fellow? Chain me? My leg you will chain, yes, but my will, no, not even Zeus can conquer that.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 1",
+      "plain": "They can take your body. Nobody can force your mind to give in.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-2-83d5f2",
+      "text": "Blows are not by nature intolerable.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 2",
+      "plain": "Hard things only crush you when you decide they can't be borne.",
+      "themes": [
+        "pain",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-2-f2c393",
+      "text": "You will do your part, and I mine. It is yours to kill, mine to die without quailing: yours to banish, mine to go into exile without groaning.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 2",
+      "plain": "You can't control what they do to you, only how you take it.",
+      "themes": [
+        "courage",
+        "power"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-2-556473",
+      "text": "Like the bull, the man of noble nature does not become noble of a sudden; he must train through the winter, and make ready, and not lightly leap to meet things that concern him not.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 2",
+      "plain": "Strength is built slowly in the off season, when nobody is watching.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-2-74cbcf",
+      "text": "If you do nothing else, do not sell your will cheap.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 2",
+      "plain": "Everyone has a price. Make yours high.",
+      "themes": [
+        "self-mastery",
+        "wealth"
+      ],
+      "moments": [
+        "tempted",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-3-f5ccae",
+      "text": "Wretched indeed, but you have too something better than your 'rags of flesh'. Why then do you discard the better and cling to your rags?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 3",
+      "plain": "You are more than your body and your circumstances. Act like it.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-6-517042",
+      "text": "Have you not received greatness of spirit? Have you not received courage? Have you not received endurance?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 6",
+      "plain": "You already have what it takes to get through this.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-6-cc90c4",
+      "text": "It is for you then, when you realize this, to look to the faculties you possess, and considering them to say, 'Zeus, send me what trial Thou wilt; for I have endowments and resources, given me by Thee, to bring myself honour through what befalls.'",
+      "work": "discourses",
+      "location": "Book 1, Chapter 6",
+      "plain": "Ask for the test. You have what you need to pass it.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-9-aad245",
+      "text": "Why do you whine? What room is there for tears any more? What occasion for flattery any more?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 9",
+      "plain": "Once you can't be threatened, you stop whining and stop sucking up.",
+      "themes": [
+        "self-mastery",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-9-50eae9",
+      "text": "We will pay no heed to what they have power to do, what we really care for they cannot touch.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 9",
+      "plain": "Care about what can't be taken and the powerful lose their hold on you.",
+      "themes": [
+        "power",
+        "self-mastery"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-9-401ad2",
+      "text": "Am I then, who can get from myself the gift of a noble and lofty spirit, to get from you a field or money or office?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 9",
+      "plain": "The best things come from inside. Why beg anyone for the lesser ones?",
+      "themes": [
+        "wealth",
+        "self-mastery"
+      ],
+      "moments": [
+        "broke",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-11-db2307",
+      "text": "And in a word it is not death nor exile nor pain nor any such thing which is the cause of our action or inaction, but thoughts and judgements of the mind.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 11",
+      "plain": "It's never the event that moves you. It's what you tell yourself about it.",
+      "themes": [
+        "mind",
+        "fear"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-12-4e879b",
+      "text": "Why, when you are alone you ought to call it peace and freedom and consider yourself the equal of the gods; when you are in a large company you should not call it a crowd or a mob or a nuisance, but a high-day and a festival, and so accept all things in a spirit of content.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 12",
+      "plain": "Alone is peace, crowded is a party. You pick the name.",
+      "themes": [
+        "solitude",
+        "happiness"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-12-eaec2f",
+      "text": "What punishment is there, you ask, for those who do not accept things in this spirit? Their punishment is to be as they are.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 12",
+      "plain": "Being discontent is its own punishment. Nobody needs to add one.",
+      "themes": [
+        "happiness",
+        "folly"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-12-0dfa0a",
+      "text": "What do you mean by prison? he is in prison already; for a man's prison is the place that he is in against his will, just as, conversely, Socrates was not in prison, for he chose to be there.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 12",
+      "plain": "A cell is wherever you resent being. Choose your place and it stops being one.",
+      "themes": [
+        "mind",
+        "fate"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-12-5e9f8e",
+      "text": "Rather give thanks to the gods that they set you above those things which they put out of your power, and made you responsible only for what is within your control.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 12",
+      "plain": "Be glad the weight of everything else isn't yours to carry.",
+      "themes": [
+        "fate",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-12-309322",
+      "text": "Why then do you insist on dragging in these things for which you are not responsible? That is to make trouble for yourself.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 12",
+      "plain": "Stop picking up burdens that were never yours.",
+      "themes": [
+        "folly",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-14-28af75",
+      "text": "The soldiers swear to respect no man above Caesar, but we to respect ourselves first of all.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 14",
+      "plain": "Your first loyalty is to your own standard.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-15-256b7f",
+      "text": "If you say to me now, 'I want a fig', I shall answer that it needs time. Let it flower first, then put forth its fruit and then ripen.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 15",
+      "plain": "Anything worth having has to grow first. Quit demanding it overnight.",
+      "themes": [
+        "time",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-17-24f175",
+      "text": "No, it is not what he threatens you with which compels you, but your decision that it is better to do what you are bidden than to die.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 17",
+      "plain": "Nobody forces you. You choose to obey because you fear the cost.",
+      "themes": [
+        "power",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-18-da12f0",
+      "text": "Ought we then to be angry with them or to pity them? Only show them their error and you will see how they desist from their faults.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 18",
+      "plain": "People do wrong because they're confused. Pity works better than rage.",
+      "themes": [
+        "anger",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-18-bf9b3a",
+      "text": "Why then are we angry? Because we admire the material things of which they rob us.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 18",
+      "plain": "Anger over stolen stuff comes from caring too much about stuff.",
+      "themes": [
+        "anger",
+        "wealth"
+      ],
+      "moments": [
+        "angry",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-18-cfad0a",
+      "text": "If you let them alone and count them as nothing you have no one to be angry with any more.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 18",
+      "plain": "Stop valuing what they can take and you have nobody left to hate.",
+      "themes": [
+        "anger",
+        "desire"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-18-e645d9",
+      "text": "The truth is, a man loses only what he has.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 18",
+      "plain": "You can only lose what you were holding. Hold less tightly.",
+      "themes": [
+        "wealth",
+        "desire"
+      ],
+      "moments": [
+        "broke",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-18-13b088",
+      "text": "You ought to practise in small things and go on from them to greater.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 18",
+      "plain": "Train your composure on small annoyances before the big tests come.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-18-887919",
+      "text": "Do not say, 'Ah me!' And I do not mean that you may not groan, but do not groan in spirit.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 18",
+      "plain": "Feel the pain if you must. Don't let it crack you inside.",
+      "themes": [
+        "pain",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-18-522773",
+      "text": "Who then is the man who is invincible? He whom nothing beyond his will can dismay.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 18",
+      "plain": "Unbeatable means nothing outside your control can rattle you.",
+      "themes": [
+        "courage",
+        "self-mastery"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-19-8f161e",
+      "text": "It is impossible for that which is free by nature to be disturbed or hindered by anything but itself. It is a man's own judgements which disturb him.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 19",
+      "plain": "Only your own opinions can knock you off balance.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-19-4e8fc7",
+      "text": "Zeus gave me my freedom. Or do you think that he was likely to let his own son be enslaved? You are master of my dead body, take it.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 19",
+      "plain": "The tyrant owns a body at best. The person inside stays free.",
+      "themes": [
+        "power",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-19-463561",
+      "text": "Write it on a stone and it will remain. But who will remember you outside Nicopolis?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 19",
+      "plain": "Fame is thin and local. Don't spend your life buying a name.",
+      "themes": [
+        "reputation",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-19-6f7880",
+      "text": "If you desire a crown at all, take a crown of roses and wear that: you will look smarter in that.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 19",
+      "plain": "Titles and trophies are costume jewelry. Pick the cheap one and move on.",
+      "themes": [
+        "reputation",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-21-aff7c3",
+      "text": "Who are these by whom you wish to be admired? Are not these the men whom you generally describe as mad?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 21",
+      "plain": "Look at who you're trying to impress. Do you even respect them?",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-24-1d0df7",
+      "text": "Difficulties are what show men's character. Therefore when a difficult crisis meets you, remember that you are as the raw youth with whom God the trainer is wrestling.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 24",
+      "plain": "Hard times are your coach putting you through reps.",
+      "themes": [
+        "adversity",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-24-8f1c9f",
+      "text": "That you may win at Olympia: and that cannot be done without sweating for it.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 24",
+      "plain": "The prize costs sweat. There's no version without it.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-24-674e7a",
+      "text": "Then take my poor body, every bit of it. The man to whom I can throw away my body has no fears for me.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 24",
+      "plain": "If you're ready to lose everything, nobody can threaten you.",
+      "themes": [
+        "courage",
+        "power"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-25-f8764a",
+      "text": "Guard what is your own by all means, grasp not at the things of others.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 25",
+      "plain": "Protect your own character. Stop reaching for what's theirs.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-25-c817fc",
+      "text": "If I pay regard to my poor body, I have given myself over as a slave: and if I value my wretched property I am a slave, for thereby I show at once what power can master me.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 25",
+      "plain": "Whatever you can't stand to lose is your owner.",
+      "themes": [
+        "wealth",
+        "power"
+      ],
+      "moments": [
+        "broke",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-25-2b5073",
+      "text": "Stand by a stone and slander it: what effect will you produce? If a man then listens like a stone, what advantage has the slanderer?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 25",
+      "plain": "Insults only land if you let them in.",
+      "themes": [
+        "reputation",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-26-ef193c",
+      "text": "I know a man who clung to the knees of Epaphroditus in tears and said he was in distress, for he had nothing left but a million and a half.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 26",
+      "plain": "Poor is relative. Distress comes from what you think you're owed.",
+      "themes": [
+        "wealth",
+        "desire"
+      ],
+      "moments": [
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-26-3611f0",
+      "text": "It is easy enough in speculation to examine and refute the ignorant, but in practical life men do not submit themselves to be tested, and we hate the man who examines and exposes us.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 26",
+      "plain": "Talk is easy. Real life tests you, and you resent whoever shows it.",
+      "themes": [
+        "folly",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-27-e9ee0c",
+      "text": "I cannot escape death: am I not to escape the fear of it? Am I to die in tears and trembling?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 27",
+      "plain": "You can't dodge death, but you can drop the dread.",
+      "themes": [
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-28-8c047f",
+      "text": "When did Achilles fail? Was it when Patroclus died? God forbid: it was when he was angry, when he cried for a trumpery maiden, when he forgot that he was there not to win lady-loves, but to make war.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 28",
+      "plain": "The real defeat was losing his head and forgetting the mission.",
+      "themes": [
+        "anger",
+        "desire",
+        "folly"
+      ],
+      "moments": [
+        "angry",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-28-c9eebb",
+      "text": "How do you think then we should describe the man who takes no pains to discipline his impressions? What name do we give to those who follow everything that comes into their mind?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 28",
+      "plain": "If you act on every passing thought, you're not running your own life.",
+      "themes": [
+        "self-mastery",
+        "folly"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-29-6044e2",
+      "text": "The will may conquer itself, but nothing else can conquer it.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 29",
+      "plain": "Only you can beat you.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-29-cd686f",
+      "text": "If you did not learn your lesson to display it in action, what did you learn it for?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 29",
+      "plain": "Knowing it is worthless until you do it.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-29-4c9007",
+      "text": "Am I to wear my life out idly in a corner, when I might win a crown at Olympia? When will some one bring me news of a contest like that?",
+      "work": "discourses",
+      "location": "Book 1, Chapter 29",
+      "plain": "Want the big test. Hiding in a corner wastes the training.",
+      "themes": [
+        "courage",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-29-07e7d4",
+      "text": "No, a body is given you of such a kind, parents of such a kind, brothers of such a kind, a country of such a kind, a position in it of such a kind: and yet you come to me and say, 'Change the task set me.'",
+      "work": "discourses",
+      "location": "Book 1, Chapter 29",
+      "plain": "You got this hand. Quit asking for a different one and play it.",
+      "themes": [
+        "fate",
+        "adversity"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-1-chapter-29-f2ee4e",
+      "text": "No man is master of another man; his masters are only death and life, pleasure and pain.",
+      "work": "discourses",
+      "location": "Book 1, Chapter 29",
+      "plain": "What really rules you is fear of dying, craving comfort, and dodging pain.",
+      "themes": [
+        "power",
+        "pain",
+        "death"
+      ],
+      "moments": [
+        "tempted",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-1-c6758c",
+      "text": "For it is not death or pain which is a fearful thing, but the fear of pain or death.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 1",
+      "plain": "The fear is worse than the thing.",
+      "themes": [
+        "fear",
+        "death",
+        "pain"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-1-0fa1a8",
+      "text": "What is death? A bogy. Turn it round and see what it is: you see it does not bite.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 1",
+      "plain": "Death is a mask that scares kids. Look at it closely and it's harmless.",
+      "themes": [
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-1-666a1b",
+      "text": "What is pain? A bogy. Turn it round and see what it is.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 1",
+      "plain": "Look straight at the pain and it shrinks to its real size.",
+      "themes": [
+        "pain",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-1-6e5f9e",
+      "text": "What else is freedom but power to pass our life as we will?",
+      "work": "discourses",
+      "location": "Book 2, Chapter 1",
+      "plain": "Freedom is living the way you choose.",
+      "themes": [
+        "power",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-1-3fcc09",
+      "text": "Have you not a master in money, a girl lover or a boy lover, the tyrant, or a friend of the tyrant? If not, why do you tremble when you go away to face a crisis of this sort?",
+      "work": "discourses",
+      "location": "Book 2, Chapter 1",
+      "plain": "If money, lust, and power don't own you, you have nothing to shake about.",
+      "themes": [
+        "wealth",
+        "desire",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-2-3ff42b",
+      "text": "Don't be drawn this way and that, wishing to be a slave one moment and free another, but be this or that simply and with all your mind, free or slave, philosopher or unenlightened, a fighting cock of spirit, or one of no spirit; either bear stroke after stroke patiently till you die, or give way at once.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 2",
+      "plain": "Pick a side and commit. Half-commitment gets you beaten and then you quit anyway.",
+      "themes": [
+        "discipline",
+        "courage",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-2-46ff03",
+      "text": "And who is your master? He who has authority over any of those things on which you set your heart or which you will to avoid.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 2",
+      "plain": "Whoever controls what you crave or dread controls you.",
+      "themes": [
+        "power",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-5-d18e0b",
+      "text": "My business is to use what does turn up with diligence and skill.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 5",
+      "plain": "You do not pick the roll of the dice. You play it well.",
+      "themes": [
+        "fate",
+        "work"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-5-00eafd",
+      "text": "Like the hour I must be here and like an hour pass away.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 5",
+      "plain": "You are here for a while and then you are gone, like an hour of the day.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-5-6430d6",
+      "text": "It is for you, then, to take what is given you and make the most of it.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 5",
+      "plain": "Take the hand you were dealt and make the most of it.",
+      "themes": [
+        "fate",
+        "adversity"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-6-734c04",
+      "text": "What matters it to you, by what road you are to go down to Hades? All roads are alike.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 6",
+      "plain": "The road down is the same no matter how you go.",
+      "themes": [
+        "death",
+        "fate"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-6-98b748",
+      "text": "No tyrant ever took six months to execute a man, but a fever often takes a year to kill one.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 6",
+      "plain": "Death comes by a fever as easily as by a tyrant, so quit fearing the method.",
+      "themes": [
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-6-6b45e4",
+      "text": "Who can compel you to think against your will?",
+      "work": "discourses",
+      "location": "Book 2, Chapter 6",
+      "plain": "Nobody can force a thought into your head.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-6-16e2d3",
+      "text": "There is only one thing for you to remember, that is, the distinction between what is yours and what is not yours. Never lay claim to anything that is not your own.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 6",
+      "plain": "Sort what is yours from what is not, and never claim the second.",
+      "themes": [
+        "self-mastery",
+        "desire"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-7-096a49",
+      "text": "What then leads us to consult diviners so constantly? Cowardice, fear of events.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 7",
+      "plain": "We keep asking for forecasts because we are scared of what happens.",
+      "themes": [
+        "fear",
+        "fate"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-9-a69d61",
+      "text": "Each man is strengthened and preserved by the exercise of the functions that correspond to his nature, the carpenter by carpentering, the grammarian by studies in grammar.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 9",
+      "plain": "You become what you practice. The carpenter by carpentering.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-9-ea899f",
+      "text": "Philosopher, where are those principles you were talking of? Whence did you fetch them forth to utter? From the lips and no further.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 9",
+      "plain": "Talking the talk is easy. Where are your principles when something goes wrong?",
+      "themes": [
+        "folly",
+        "discipline"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-10-5241e7",
+      "text": "Do you think you must lose cash in order to suffer damage? Does no other sort of loss damage man? If you lost skill in grammar or music you would count the loss as damage; if you are going to lose honour and dignity and gentleness, do you count it as nothing?",
+      "work": "discourses",
+      "location": "Book 2, Chapter 10",
+      "plain": "Losing money is not the only loss. Losing honor and self-respect costs more.",
+      "themes": [
+        "wealth",
+        "reputation"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-10-6a103b",
+      "text": "No one is evil without destruction and loss.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 10",
+      "plain": "Every bad act costs the person who does it something real.",
+      "themes": [
+        "folly",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-11-56faa6",
+      "text": "The beginning of philosophy with those who approach it in the right way and by the door is a consciousness of one's own weakness and want of power in regard to necessary things.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 11",
+      "plain": "Wisdom starts when you admit how little power you have.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-12-107370",
+      "text": "Our philosophers have precisely defined what a man must learn in order to know how to argue: but we are still quite unpractised in the proper use of what we have learnt.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 12",
+      "plain": "Everyone has learned the lessons. Almost nobody has practiced them.",
+      "themes": [
+        "discipline",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-13-15a941",
+      "text": "In fact, where he has knowledge there he has confidence.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 13",
+      "plain": "Where you have done the work, you are not afraid.",
+      "themes": [
+        "fear",
+        "work"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-13-f530bd",
+      "text": "Yet we are anxious for our bit of a body, for our bit of property, for what Caesar will think, but are not anxious at all for what is within us.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 13",
+      "plain": "We panic over our body, our stuff and what the boss thinks, and ignore our own character.",
+      "themes": [
+        "fear",
+        "reputation"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-13-9c8f9f",
+      "text": "Why, no good man whines or groans or laments, no good man grows pale or trembles or says, 'How will he receive me? What hearing will he give me?'",
+      "work": "discourses",
+      "location": "Book 2, Chapter 13",
+      "plain": "A steady person does not go pale over how someone else will receive him.",
+      "themes": [
+        "courage",
+        "reputation"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-13-d9867e",
+      "text": "Miserable man, tell the truth and be not a braggart nor claim to be a philosopher. Know who are your masters. As long as you give them this hold over your body, you must follow every one who is stronger than you.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 13",
+      "plain": "If you let others hold power over your body and comfort, you will obey whoever is stronger.",
+      "themes": [
+        "power",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-14-0ed735",
+      "text": "May we, then, infer that in the sphere of conduct too it is not enough merely to wish to become good, but one must learn certain things?",
+      "work": "discourses",
+      "location": "Book 2, Chapter 14",
+      "plain": "Wanting to be good is not enough. You have to study and train for it.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-15-c1b879",
+      "text": "What are you doing, man? Not all decisions, but right decisions.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 15",
+      "plain": "Sticking to a bad decision is not strength. Check that it is right first.",
+      "themes": [
+        "folly",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-15-05c604",
+      "text": "But if you lay a rotten and crumbling foundation you will not be able to build even a tiny building; the more courses and the stronger that you lay upon it the quicker will it collapse.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 15",
+      "plain": "Building more on a bad foundation just makes the collapse faster.",
+      "themes": [
+        "folly",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-15-3396ba",
+      "text": "May it never be my lot to have for friend a wise fool: nothing is more difficult to handle.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 15",
+      "plain": "A smart fool is the hardest friend to deal with.",
+      "themes": [
+        "friendship",
+        "folly"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-799d0d",
+      "text": "Sit still and pray forsooth, that your rheum may not flow. Nay, wipe your nose rather and do not accuse God.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "Quit praying that the problem goes away. Wipe your nose and handle it.",
+      "themes": [
+        "adversity",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-5f6230",
+      "text": "But if we kept our fear not for death or exile, but for fear itself, then we should practise to avoid what we think evil.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "Fear fear itself, and you will learn to avoid what actually harms you.",
+      "themes": [
+        "fear",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-521b15",
+      "text": "The result of our want of practice is that we are always heaping up terrors and imagining things bigger than they really are.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "Untrained minds pile up terrors and blow everything out of proportion.",
+      "themes": [
+        "fear",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-c027ac",
+      "text": "What is it alarms me? The sea? No, but my judgement about it.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "It is never the thing itself that scares you, it is what you think about it.",
+      "themes": [
+        "fear",
+        "mind"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-5f6ce4",
+      "text": "What, then, are the burdens that weigh upon us and drive us out of our minds? What else but our judgements?",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "What crushes you is mostly your own judgment of events.",
+      "themes": [
+        "mind",
+        "pain"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-645bee",
+      "text": "To guard what is your own, not to claim what is another's; to use what is given you, not to long for anything if it be not given; if anything be taken away, to give it up at once and without a struggle, with gratitude for the time you have enjoyed it, if you would not cry for your nurse and your mammy.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "Guard what is yours, use what you are given, and let go of what is taken without a fight.",
+      "themes": [
+        "self-mastery",
+        "desire",
+        "fate"
+      ],
+      "moments": [
+        "overwhelmed",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-15fb3a",
+      "text": "Man, be bold at last, even to despair, as the phrase is, that you may have peace and freedom and a lofty mind. Lift up your neck at last, as one released from slavery.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "Be bold. Peace and freedom come when you stop cowering.",
+      "themes": [
+        "courage",
+        "self-mastery"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-e890d5",
+      "text": "What would have become of Heracles, if he had stayed at home? He would have been Eurystheus, and no Heracles.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "Staying home safe makes you nobody.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-5278b7",
+      "text": "Cleanse your own heart, cast out from your mind, not Procrustes and Sciron, but pain, fear, desire, envy, ill will, avarice, cowardice, passion uncontrolled.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "Clear your own mind of pain, fear, desire and envy before you try to fix the world.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-16-511b3d",
+      "text": "If you wish for anything else, with groaning and sorrow you will follow what is stronger than you, ever seeking peace outside you, and never able to be at peace: for you seek it where it is not, and refuse to seek it where it is.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 16",
+      "plain": "You hunt for peace outside yourself, where it is not.",
+      "themes": [
+        "happiness",
+        "desire"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-17-2624c5",
+      "text": "What is the first business of the philosopher? To cast away conceit: for it is impossible for a man to begin learning what he thinks he knows.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 17",
+      "plain": "You cannot learn what you think you already know.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-a93aee",
+      "text": "Every habit and every faculty is confirmed and strengthened by the corresponding acts, the faculty of walking by walking, that of running by running. If you wish to have a faculty for reading, read; if for writing, write.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "You get better at a thing by doing it. Want to read more, read.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-fbde01",
+      "text": "So if you lie in bed for ten days, and then get up and try to take a fairly long walk, you will see how your legs lose their power.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "Rest ten days and watch your legs forget what they could do.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-f63041",
+      "text": "So generally if you wish to acquire a habit for anything, do the thing; if you do not wish to acquire the habit, abstain from doing it, and acquire the habit of doing something else instead.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "To build a habit, do the thing. To kill one, replace it.",
+      "themes": [
+        "discipline"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-ebeb64",
+      "text": "If, then, you wish not to be choleric, do not feed the angry habit, do not add fuel to the fire. To begin with, keep quiet, and count the days when you were not angry.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "Do not feed the angry habit. Count your calm days.",
+      "themes": [
+        "anger",
+        "discipline"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-5ebe4b",
+      "text": "I used to be angry every day, then every other day, then every three days, then every four.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "Progress on anger is slow: every day, then every other, then every third.",
+      "themes": [
+        "anger",
+        "discipline"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-7204dc",
+      "text": "But first of all do not be hurried away by the suddenness of the shock, but say, 'Wait for me a little, impression. Let me see what you are, and what is at stake: let me test you'.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "Pause before an impulse and ask what it really is.",
+      "themes": [
+        "self-mastery",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-446e3e",
+      "text": "Stay, unhappy man! be not carried away. Great is the struggle, divine the task; the stake is a kingdom, freedom, peace, an unruffled spirit.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "The fight is worth it: freedom, peace, a steady mind.",
+      "themes": [
+        "discipline",
+        "courage"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-18-ab553a",
+      "text": "Take away the fear of death, and you may bring as much thunder and lightning as you will, and you will discover what deep peace and tranquillity is in your mind.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 18",
+      "plain": "Without the fear of death, any storm leaves you calm.",
+      "themes": [
+        "fear",
+        "death"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-19-80b4ed",
+      "text": "Show me one who is sick and yet happy, in peril and yet happy, dying and yet happy, in exile and happy, in disgrace and happy.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 19",
+      "plain": "Show me a man who stays happy in sickness, danger, exile or disgrace.",
+      "themes": [
+        "happiness",
+        "adversity"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-19-4754bd",
+      "text": "Wealth is not in our power, nor health, nor anything else, in a word, except the proper use of impressions.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 19",
+      "plain": "Money and health are not up to you. How you read events is.",
+      "themes": [
+        "wealth",
+        "self-mastery"
+      ],
+      "moments": [
+        "broke",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-22-5cebf1",
+      "text": "The Governing Principle of the bad man is not to be trusted; it is uncertain, irresolute, conquered now by one impression, now by another.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 22",
+      "plain": "Do not trust anyone ruled by whatever impression hits them last.",
+      "themes": [
+        "friendship",
+        "folly"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-23-0547cb",
+      "text": "But what can hinder the will? Nothing beyond the will, only the perversion of the will itself.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 23",
+      "plain": "Only your own will can stop your will.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-23-21b3a3",
+      "text": "Man, you are forgetting your purpose! You were not travelling to this, but through it.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 23",
+      "plain": "The comfortable stop on the road is not the destination.",
+      "themes": [
+        "discipline",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-2-chapter-23-3e04c5",
+      "text": "What prevents you from being unfortunate, though you speak like Demosthenes? Though you can analyse syllogisms like Chrysippus, what prevents you from being wretched, mournful, envious, in a word, bewildered and miserable? Nothing prevents you.",
+      "work": "discourses",
+      "location": "Book 2, Chapter 23",
+      "plain": "Polished words and clever skills do not make you any less miserable.",
+      "themes": [
+        "folly",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-1-243eb9",
+      "text": "What makes a man beautiful? Is it the presence of a man's virtue? Therefore, young man, if you would be beautiful, make this the object of your effort, human virtue.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 1",
+      "plain": "Real beauty in a man is virtue, so work on that.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-1-bb68df",
+      "text": "Did Socrates persuade all who came to him to attend to their characters? Not one in a thousand! Nevertheless when appointed to this post, as he says, by the ordinance of God, he refused to desert it.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 1",
+      "plain": "Socrates reached almost no one and kept at it anyway.",
+      "themes": [
+        "courage",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-1-2bf8bb",
+      "text": "First get to know who you are, and then adorn yourself.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 1",
+      "plain": "Know who you are first. Then dress it up.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-2-88be3f",
+      "text": "Unhappy man, even while you are learning this lesson you are in an agony of terror lest some one should think scorn of you, and you ask whether any one is talking about you!",
+      "work": "discourses",
+      "location": "Book 3, Chapter 2",
+      "plain": "You say you are studying wisdom and you are still sweating over who is talking about you.",
+      "themes": [
+        "reputation",
+        "fear"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-2-bd57c7",
+      "text": "It is fitting for sailors who are in good trim to light a fire, and take their dinner, if luck serves, and to sing and dance: but you come to me when the ship is sinking and begin hoisting the topsails!",
+      "work": "discourses",
+      "location": "Book 3, Chapter 2",
+      "plain": "Fancy theory is for calm seas. When the ship is sinking you need the basics.",
+      "themes": [
+        "adversity",
+        "folly"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-3-f14cb0",
+      "text": "Go out as soon as it is dawn and whomsoever you may see and hear, question yourself and answer as to an interrogator.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 3",
+      "plain": "Start the day by questioning what you see and what is up to you.",
+      "themes": [
+        "discipline",
+        "mind"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-3-dcdd97",
+      "text": "As it is, we are caught open-mouthed by every impression we meet, and only in the lecture-room, if then, does our mind wake up a little.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 3",
+      "plain": "We only think clearly in the classroom, and out in the street every impression catches us off guard.",
+      "themes": [
+        "mind",
+        "discipline"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-3-e6becb",
+      "text": "What is faction, discord, criticism, accusation, irreligion, foolishness? All these are judgements, nothing else, and judgements passed on things beyond the will, as though they were good and evil.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 3",
+      "plain": "Most of your suffering is a judgment about things you cannot control.",
+      "themes": [
+        "mind",
+        "pain"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-3-9d92de",
+      "text": "The soul is like a dish full of water, and the impressions like the rays of light which strike the water. Now when the water is disturbed the light seems to be disturbed too, but it is not really disturbed.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 3",
+      "plain": "A disturbed mind makes everything seem disturbed, but the things themselves are fine.",
+      "themes": [
+        "mind",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-5-bce223",
+      "text": "For my own part I would wish death to overtake me occupied with nothing but the care of my will, trying to make it calm, unhindered, unconstrained, free.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 5",
+      "plain": "If death is coming either way, let it find you working on your own character.",
+      "themes": [
+        "death",
+        "self-mastery"
+      ],
+      "moments": [
+        "afraid",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-5-b4ade0",
+      "text": "Go to your mother then; for you deserve to be ill, with her to hold your head.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 5",
+      "plain": "If you want comfort over growth, go get comforted. Just don't call it a reason to quit.",
+      "themes": [
+        "discipline",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-5-852b16",
+      "text": "Is it nothing (do you think?) never to accuse any one, God or man, never to blame any, to go in and out with the same countenance?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 5",
+      "plain": "Never blaming anyone and keeping the same face in good and bad days is the hard thing.",
+      "themes": [
+        "self-mastery",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-6-8124a9",
+      "text": "'Take my lands, if you will: take my servants, take my office, take my poor body, yet you will not make me fail to get what I will or fall into what I will to avoid.'",
+      "work": "discourses",
+      "location": "Book 3, Chapter 6",
+      "plain": "They can take everything outside you. They can't take how you choose to respond.",
+      "themes": [
+        "self-mastery",
+        "adversity"
+      ],
+      "moments": [
+        "afraid",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-7-93bcad",
+      "text": "What is our nature? To be free, noble, self-respecting.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 7",
+      "plain": "You were built to stand on your own and respect yourself. Act like it.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-7-7e3b1c",
+      "text": "No harm but that of failing to do your duty: you will destroy the trustworthy, self-respecting, well-behaved man in you. Look not for any greater harm than this!",
+      "work": "discourses",
+      "location": "Book 3, Chapter 7",
+      "plain": "The only real damage is letting the better version of yourself die.",
+      "themes": [
+        "self-mastery",
+        "courage"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-9-548bbb",
+      "text": "You think so. So does he, and so do madmen. Opinion is a bad criterion.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 9",
+      "plain": "Feeling certain proves nothing. Everyone feels right, including fools.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-9-f013e8",
+      "text": "You need what you have not got, tranquillity, a mind in accord with Nature, and free from perturbation.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 9",
+      "plain": "What you're missing isn't more stuff. It's a calm mind.",
+      "themes": [
+        "wealth",
+        "happiness",
+        "mind"
+      ],
+      "moments": [
+        "broke",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-9-354da8",
+      "text": "I am richer than you: I am not in an agony as to what Caesar will think of me: I do not flatter any one for that.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 9",
+      "plain": "Not needing anyone's approval is real wealth.",
+      "themes": [
+        "reputation",
+        "wealth"
+      ],
+      "moments": [
+        "broke",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-9-ec6db1",
+      "text": "To you all that you have appears small: to me all I have appears great. Your desire can never be fulfilled, mine is fulfilled already.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 9",
+      "plain": "Wanting more never ends. Being satisfied is the only way to finish.",
+      "themes": [
+        "desire",
+        "wealth",
+        "happiness"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-9-4d4bc6",
+      "text": "So I say to you, 'Let your desire go.' Do not crave much, and you will obtain.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 9",
+      "plain": "Grab less and you keep more. Clenching a fist full of things traps your hand.",
+      "themes": [
+        "desire",
+        "wealth"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-10-86c6fa",
+      "text": "What ought one to say then as each hardship comes? 'I was practising for this, I was training for this.'",
+      "work": "discourses",
+      "location": "Book 3, Chapter 10",
+      "plain": "When it gets hard, tell yourself this is what the training was for.",
+      "themes": [
+        "adversity",
+        "discipline",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-10-968f41",
+      "text": "If now is the time for fever, take your fever in the right way; if for thirst, thirst in the right way, if for hunger, hunger aright.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 10",
+      "plain": "You can't skip the discomfort, but you control how you carry it.",
+      "themes": [
+        "pain",
+        "adversity",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-10-f7ba63",
+      "text": "For fever too is a part of life, like walking, sailing, travelling.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 10",
+      "plain": "Pain and sickness are just part of living, not an interruption of it.",
+      "themes": [
+        "pain",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-10-c932c0",
+      "text": "Is the world going to be turned upside down by your death?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 10",
+      "plain": "The world will be fine without you. Relax your grip on the drama.",
+      "themes": [
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-10-63194a",
+      "text": "'My brother ought not to have behaved so to me.' No, but it is his business to look to that; however he may behave, I will deal with him as I ought.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 10",
+      "plain": "How others behave is on them. How you respond is on you.",
+      "themes": [
+        "anger",
+        "self-mastery",
+        "friendship"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-10-74fcbc",
+      "text": "This is my part, that is another's: this no one can hinder, that is subject to hindrance.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 10",
+      "plain": "Do your part. What other people do is theirs, and they can mess it up.",
+      "themes": [
+        "self-mastery",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-12-adc6a2",
+      "text": "I am inclined to pleasure: in order to train myself I will incline beyond measure in the opposite direction.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 12",
+      "plain": "If you lean toward comfort, deliberately lean hard the other way.",
+      "themes": [
+        "discipline",
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-12-84b432",
+      "text": "But to begin with, fly far from enemies that are stronger than you.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 12",
+      "plain": "Early on, stay away from the temptations you can't beat yet.",
+      "themes": [
+        "discipline",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-13-4aaba5",
+      "text": "But nevertheless a man must prepare himself for solitude too, he must be able to suffice for himself, and able to commune with himself.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 13",
+      "plain": "Learn to be good company for yourself.",
+      "themes": [
+        "solitude",
+        "self-mastery"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-13-9ed479",
+      "text": "Fool, he murders not you, but your paltry body.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 13",
+      "plain": "The worst anyone can do is take your body. They can't touch you.",
+      "themes": [
+        "death",
+        "fear",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-13-9cfec0",
+      "text": "Great power is always dangerous in a beginner.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 13",
+      "plain": "Ease into it. Big power before big discipline blows up on you.",
+      "themes": [
+        "power",
+        "discipline"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-13-b1d8f8",
+      "text": "Take scant food, drink water: refrain from willing to get anything for a while, that you may one day direct your will rationally.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 13",
+      "plain": "Go without for a while so your wants stop running you.",
+      "themes": [
+        "discipline",
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-13-685af8",
+      "text": "Have you stirred yourself up first? You want to benefit them; then show them in your own life what sort of men philosophy makes, and cease to talk folly.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 13",
+      "plain": "Don't preach it. Live it first and let them see.",
+      "themes": [
+        "folly",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-14-e361d6",
+      "text": "Man, if you are worth anything, you must walk alone, and talk to yourself and not hide in the chorus.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 14",
+      "plain": "If you're worth anything you can stand alone and think for yourself.",
+      "themes": [
+        "solitude",
+        "courage"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-14-eb1f73",
+      "text": "Learn to bear mockery, look about you, examine yourself, that you may get to know who you are.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 14",
+      "plain": "Let people laugh and look at yourself honestly. That's how you find out who you are.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-14-a863b8",
+      "text": "Man, if it is to your profit to drink it, drink; if not, your conduct is absurd.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 14",
+      "plain": "Do the hard habit because it helps you, not so you can announce it.",
+      "themes": [
+        "discipline",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-15-1be980",
+      "text": "You must be under discipline, eat to order, touch no sweets, train under compulsion, at a fixed hour, in heat and cold, drink no cold water, nor wine, except to order; you must hand yourself over completely to your trainer as you would to a physician.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 15",
+      "plain": "Winning means a rigid routine and handing yourself over to the process.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-15-f9d7d6",
+      "text": "Man, consider first, what it is you are undertaking: then consider your own powers, and what you can bear.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 15",
+      "plain": "Know the job, then know what you can really carry.",
+      "themes": [
+        "work",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-16-fae591",
+      "text": "The man who mixes with other people a good deal either for talk or for a wine-party or generally for social purposes, must needs either grow like them himself or convert them to his likeness; for if you put a quenched coal by one that is burning, either it will put the burning 'one out, or will catch fire from it.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 16",
+      "plain": "You become the people you hang around, unless you're stronger than they are.",
+      "themes": [
+        "friendship",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-16-726899",
+      "text": "Adopt new habits: fix your opinions, exercise yourselves in them.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 16",
+      "plain": "Change your habits on purpose and drill the new ones.",
+      "themes": [
+        "change",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-17-1338b3",
+      "text": "Is it not better to be self-respecting than to be rich?'",
+      "work": "discourses",
+      "location": "Book 3, Chapter 17",
+      "plain": "Being self-respecting beats being rich.",
+      "themes": [
+        "wealth",
+        "reputation"
+      ],
+      "moments": [
+        "broke",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-18-274ec0",
+      "text": "Your evil is to defend yourself badly: that is the only thing you need be careful about.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 18",
+      "plain": "Your only real failure is defending yourself badly. How they judge you is out of your hands.",
+      "themes": [
+        "self-mastery",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-20-8899fa",
+      "text": "To use health well is good, to use it ill is evil.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 20",
+      "plain": "Health and money are neutral. What you do with them decides if they're good.",
+      "themes": [
+        "mind",
+        "wealth"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-20-98132d",
+      "text": "I adjure you by the gods, cease to admire material things, cease to make yourselves slaves, first of things, and next, for their sake, of men who can acquire them or take them away.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 20",
+      "plain": "Chase stuff and you end up owned by it and by whoever controls it.",
+      "themes": [
+        "wealth",
+        "desire",
+        "power"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-20-f2b89a",
+      "text": "So my reviler helps to train me for the contest: he trains me to be patient, dispassionate, gentle.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 20",
+      "plain": "The person who disrespects you is free reps in patience.",
+      "themes": [
+        "anger",
+        "adversity"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-20-30c640",
+      "text": "We carry these views to the lecture-room door, but no one takes them home: as soon as we leave here we are at war with our slave-boy, with our neighbours, with those who jeer and laugh at us.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 20",
+      "plain": "Everyone agrees with the wisdom until the first person annoys them.",
+      "themes": [
+        "anger",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-21-19648b",
+      "text": "The carpenter does not come and say, 'Hear me discourse on carpentry', but he undertakes a contract and builds a house and so shows that he has acquired the art.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 21",
+      "plain": "Don't talk about it. Build the thing.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-22-f599bc",
+      "text": "Exile? Can one be sent into exile beyond the Universe? One cannot.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 22",
+      "plain": "You can't actually be cast out of the world. Wherever you are, you're home.",
+      "themes": [
+        "fear",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-22-f6c0d6",
+      "text": "Man, it is an Olympic contest you are about to enter your name for, not a miserable, make-believe match.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 22",
+      "plain": "This is the real thing. Treat it that way before you sign up.",
+      "themes": [
+        "courage",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-22-073926",
+      "text": "You go all that way to Olympia to see athletes killed or matched in battle, and yet have you no wish to see a battle between fever and a man?'",
+      "work": "discourses",
+      "location": "Book 3, Chapter 22",
+      "plain": "Your own struggle is worth watching. Fight it like it matters.",
+      "themes": [
+        "pain",
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-23-a24b1f",
+      "text": "First say to yourself, what manner of man you want to be; when you have settled this, act upon it in all you do; for in pretty nearly all pursuits we see that done.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 23",
+      "plain": "Decide who you want to be, then act like him in everything.",
+      "themes": [
+        "discipline",
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-23-a515f2",
+      "text": "Do you wish to do men good or to receive compliments?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 23",
+      "plain": "Be honest about whether you're doing this to help or to be praised.",
+      "themes": [
+        "reputation",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-23-9d78db",
+      "text": "Rufus was wont to say, 'If you find leisure to praise me, my words are spoken in vain.'",
+      "work": "discourses",
+      "location": "Book 3, Chapter 23",
+      "plain": "If the audience is busy clapping, the message didn't land.",
+      "themes": [
+        "reputation",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-23-202d67",
+      "text": "The philosopher's school, sirs, is a physician's consulting-room. You must leave it in pain, not in pleasure; for you come to it in disorder, one with a shoulder put out, another with an ulcer, another with fistula, another with headache.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 23",
+      "plain": "Real learning should sting. If you leave feeling good and unchanged, nothing happened.",
+      "themes": [
+        "pain",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-e06452",
+      "text": "Now to desire what is impossible is slavish and silly; it is to make oneself a stranger in the world, and to fight against God with one's own judgements, as alone one can.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Wanting what can't be is a losing fight against how things are.",
+      "themes": [
+        "desire",
+        "fate"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-cd2c99",
+      "text": "What ill can happen to you in a place where you are not?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Don't suffer over things happening somewhere you aren't.",
+      "themes": [
+        "fear",
+        "mind"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-2d0c75",
+      "text": "Is it not enough that you should be miserable where you are yourself? Must you needs be miserable overseas, and by letter?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Being upset about your own life is enough. Stop borrowing worry from far away.",
+      "themes": [
+        "fear",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-c05754",
+      "text": "Do you not know that life is a soldier's service?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Life hands out hard assignments. Take yours without whining.",
+      "themes": [
+        "adversity",
+        "courage",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-c93aca",
+      "text": "Do you not know that a good man does nothing for the sake of what men think, but only for the sake of doing right?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Good people do right because it's right, not for how it looks.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-049389",
+      "text": "Will you then never cease to be a babe? Do you not know that he who acts like a child is ridiculous in proportion to his years?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "At some point you have to grow up. The older you get, the worse it looks.",
+      "themes": [
+        "folly",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-affbf1",
+      "text": "So too if you long for your son or your friend, when it is not given you to have him, know that you are longing for a fig in winter time.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Missing something that isn't in season anymore is wanting fruit in winter.",
+      "themes": [
+        "desire",
+        "time",
+        "change"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-62e905",
+      "text": "What harm is there in whispering to yourself as you kiss your child, 'To-morrow you will die', and to your friend in like manner, 'To-morrow you or I shall go away, and we shall see one another no more'?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Remember the people you love won't last. It makes you love them better.",
+      "themes": [
+        "death",
+        "love",
+        "time"
+      ],
+      "moments": [
+        "alone",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-0bcaa3",
+      "text": "Going abroad is a slight change; death is a greater change, from what now is, not to what is not, but to what is not now.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Death is just a bigger move, from what is now to what isn't yet.",
+      "themes": [
+        "death",
+        "change"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-a9b70f",
+      "text": "You will not be, but something else will be, of which the world now has need; for indeed you came into being, not when you willed it, but when the world had need.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "You showed up when you were needed. When that's done, something else takes your place.",
+      "themes": [
+        "death",
+        "fate",
+        "change"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-24-4f3f07",
+      "text": "Only make no display of your office, and boast not yourself in it, but prove it by your conduct; be content, even if no one observes you, to live in true health and happiness.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 24",
+      "plain": "Don't show off. Live well even if nobody's watching.",
+      "themes": [
+        "reputation",
+        "self-mastery",
+        "happiness"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-25-f086e5",
+      "text": "At once you may recover yourself, and pull yourself together, and renew the struggle with the same energy as before; and if you grow faint again, you may renew it again, and if you once attain to victory you are as one who has never failed.",
+      "work": "discourses",
+      "location": "Book 3, Chapter 25",
+      "plain": "You can restart right now, as many times as it takes. One win erases the failures.",
+      "themes": [
+        "discipline",
+        "courage",
+        "change"
+      ],
+      "moments": [
+        "tempted",
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-25-44c554",
+      "text": "Did you not feed this habit, by putting before it acts which were congenial to it?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 25",
+      "plain": "You feed a bad habit every time you hand it what it likes.",
+      "themes": [
+        "discipline",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-26-323fb5",
+      "text": "And when did a runaway slave ever die of hunger?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 26",
+      "plain": "People with nothing find a way to eat. You'll be okay too.",
+      "themes": [
+        "wealth",
+        "fear"
+      ],
+      "moments": [
+        "broke",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-3-chapter-26-1dbd9d",
+      "text": "Will you realize once for all that it is not death that is the source of all man's evils, and of a mean and cowardly spirit, but rather the fear of death?",
+      "work": "discourses",
+      "location": "Book 3, Chapter 26",
+      "plain": "It's not death that ruins people. It's being scared of it.",
+      "themes": [
+        "death",
+        "fear",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-fbbc1e",
+      "text": "That man is free, who lives as he wishes, who is proof against compulsion and hindrance and violence, whose impulses are untrammelled, who gets what he wills to get and avoids what he wills to avoid.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "You are free when nothing can force you off your own path.",
+      "themes": [
+        "self-mastery",
+        "power"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-dc64d3",
+      "text": "The softer he lives, the worse is his slavery.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "The more comfort you need, the more things own you.",
+      "themes": [
+        "discipline",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-1412df",
+      "text": "Keep your hands far away from it; above all, keep your will away, or else you surrender yourself into slavery, you put your neck under the yoke, if you admire what is not your own, and set your heart on anything mortal, whatever it be, or anything that depends upon another.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "Whatever you cling to that someone else can take, you have handed them control of you.",
+      "themes": [
+        "desire",
+        "power"
+      ],
+      "moments": [
+        "tempted",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-8c7d58",
+      "text": "How then is the citadel destroyed? Not by fire or sword, but by judgements.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "The fight that matters is inside your head, not out there.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-1e7545",
+      "text": "You have received everything, nay your very self, from Another, and yet you complain and blame the Giver, if He takes anything away from you.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "You were lent all of it. Complaining when it goes back is ungrateful.",
+      "themes": [
+        "fate",
+        "happiness"
+      ],
+      "moments": [
+        "angry",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-679da8",
+      "text": "Purify your judgements, and see that nothing that is not your own is attached to you or clings to you, that nothing shall give you pain if it is torn from you.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "Hold nothing so tight that losing it would wreck you.",
+      "themes": [
+        "desire",
+        "pain"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-2fef19",
+      "text": "No one can do wrong acts with impunity.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "Doing wrong always costs the one who does it.",
+      "themes": [
+        "folly"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-1-1861e7",
+      "text": "For freedom is secured not by the fulfilling of men's desires, but by the removal of desire.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 1",
+      "plain": "You get free by wanting less, not by getting more.",
+      "themes": [
+        "desire",
+        "happiness"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-2-3b4272",
+      "text": "When you do not drink with those whom you used to drink with, you cannot seem as agreeable to them as of old; choose then, whether you wish to be a drinker and gratify them, or sober and displease them.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 2",
+      "plain": "Changing means some people will like you less. Pick which you want.",
+      "themes": [
+        "discipline",
+        "reputation"
+      ],
+      "moments": [
+        "tempted",
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-3-902741",
+      "text": "If you give up any external possession, mind you see what you are to get in exchange for it: and if it is worth more, then never say, 'I have been a loser.'",
+      "work": "discourses",
+      "location": "Book 4, Chapter 3",
+      "plain": "Giving something up is a trade. If you get something better, you lost nothing.",
+      "themes": [
+        "discipline",
+        "wealth"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-4-843317",
+      "text": "Regard for any external thing, whatever it be, makes you subservient to another.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 4",
+      "plain": "Whatever you need from the outside gives someone else a hold on you.",
+      "themes": [
+        "desire",
+        "power"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-4-4dabcd",
+      "text": "If reading does not win you peace of mind, what is the good of it?",
+      "work": "discourses",
+      "location": "Book 4, Chapter 4",
+      "plain": "Learning that doesn't change how you live is wasted.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-4-9e9773",
+      "text": "To ask for books is as though an athlete should complain, as he enters the arena, that he is not training outside.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 4",
+      "plain": "Stop preparing. The game has started.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-4-f258b7",
+      "text": "Life is what you were training for all along, this is what the leaping-weights, and the sawdust, and the young men you wrestled with were leading up to.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 4",
+      "plain": "All the practice was for this. Now do it.",
+      "themes": [
+        "work",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-4-62fc91",
+      "text": "How long are you going to exercise yourself in solitude? The time has now come for you to discover whether you are an athlete worthy of victory, or one of those who go about the world suffering continual defeat.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 4",
+      "plain": "Practice is over. Time to find out what you are made of.",
+      "themes": [
+        "courage",
+        "work"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-4-754b39",
+      "text": "There is no conflict without a crowd: there must be many to train beforehand, many to cry applause, many stewards, many spectators.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 4",
+      "plain": "Hard tests come with an audience. That is part of the setup.",
+      "themes": [
+        "adversity",
+        "reputation"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-4-5e98b4",
+      "text": "You do not call a man industrious who keeps late hours for the sake of a mistress: neither do I. But if he does it for glory, I call him ambitious; if for money, I call him fond of money, not fond of work.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 4",
+      "plain": "Ask what you are really chasing when you grind.",
+      "themes": [
+        "work",
+        "wealth",
+        "desire"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-5-4fa82f",
+      "text": "You are no piece of crockery: you are a rational will.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 5",
+      "plain": "What breaks around you is not you.",
+      "themes": [
+        "mind",
+        "adversity"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-5-17b5ea",
+      "text": "What do you care for them? No craftsman cares for those who have no skill!",
+      "work": "discourses",
+      "location": "Book 4, Chapter 5",
+      "plain": "Don't take opinions from people who can't judge the work.",
+      "themes": [
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-5-5a0555",
+      "text": "Do we not remember that one man does not harm nor benefit another? It is man's judgement on each situation that harms him.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 5",
+      "plain": "What hurts you is how you read what happened.",
+      "themes": [
+        "mind",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-5-c828c5",
+      "text": "What is that to me, if I make up my mind that it is nothing to me?",
+      "work": "discourses",
+      "location": "Book 4, Chapter 5",
+      "plain": "An insult only lands if you agree it matters.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-5-eca0f8",
+      "text": "In the lecture-room we are lions, and foxes in the world outside!",
+      "work": "discourses",
+      "location": "Book 4, Chapter 5",
+      "plain": "Everyone is brave in theory. Live it when it counts.",
+      "themes": [
+        "courage",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-6-1665c8",
+      "text": "It is the part of a king, Cyrus, to do well and be ill-spoken of.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 6",
+      "plain": "Doing right and getting slandered for it comes with the job.",
+      "themes": [
+        "reputation",
+        "power"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-7-2884d8",
+      "text": "'Would you give me poverty?' Give it me and you shall learn what poverty is when a good actor plays the part.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 7",
+      "plain": "Poverty only crushes you if you play the part badly.",
+      "themes": [
+        "wealth",
+        "courage"
+      ],
+      "moments": [
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-7-f8a9a3",
+      "text": "Do not use fine words, but state the facts as they are.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 7",
+      "plain": "Skip the fancy words and say plainly what is there.",
+      "themes": [
+        "death",
+        "mind"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-7-c203ce",
+      "text": "Only try your authority and you will learn how far it extends.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 7",
+      "plain": "Their power stops at your body and your stuff. Your mind is out of reach.",
+      "themes": [
+        "power",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-7-a5e394",
+      "text": "Some one flings a shower of figs and nuts: the children try to seize them, and fight with one another for them; grown men do not, for they count it a small matter.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 7",
+      "plain": "Titles and status are scraps. Grown people don't scramble for them.",
+      "themes": [
+        "power",
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-7-8f2c05",
+      "text": "Seeing then that I neither fear anything that he can do to me nor desire anything that he can provide, why do I stand in awe and amazement before him any more?",
+      "work": "discourses",
+      "location": "Book 4, Chapter 7",
+      "plain": "Want nothing from someone and fear nothing from them, and they have no power over you.",
+      "themes": [
+        "power",
+        "desire",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-7-d9fe5d",
+      "text": "Well! does the Emperor himself, and you who obey him, keep his neck for ever?",
+      "work": "discourses",
+      "location": "Book 4, Chapter 7",
+      "plain": "The powerful die too. Nobody holds on forever.",
+      "themes": [
+        "death",
+        "power"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-7-a3928b",
+      "text": "So long as you busy yourself with external things, no one will succeed with them so well as you, but this faculty of reason will be, what your own choice makes it, mouldy and neglected.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 7",
+      "plain": "You can be great at the outside game and let your own mind rot.",
+      "themes": [
+        "mind",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-8-5339a4",
+      "text": "See how I eat, how I drink, how I sleep, how I bear and forbear, how I work for others, how I exercise the will to get and the will to avoid, how I observe my relationships, natural and acquired, without confusion and without hindrance. Judge me by this, if you can.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 8",
+      "plain": "Judge a person by how they live every day, not by how they look.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-8-11bf90",
+      "text": "Was it by proclaiming aloud, 'This is the man I am'? Never! but by being the man he was.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 8",
+      "plain": "Be it. Don't announce it.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-8-527fc0",
+      "text": "Study first not to let men know what you are: keep your philosophy to yourself for a little.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 8",
+      "plain": "Build quietly before you announce anything.",
+      "themes": [
+        "discipline",
+        "reputation"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-8-d471c2",
+      "text": "The seed must needs be buried first, and be hidden, and increase by slow degrees, that it may come to fullness.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 8",
+      "plain": "Growth starts out of sight and takes its time.",
+      "themes": [
+        "time",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-8-afc245",
+      "text": "That is the sort of plant you are: you have blossomed sooner than you ought, and will wither away when the storm comes.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 8",
+      "plain": "Showing off before you have roots means the first hard season takes you out.",
+      "themes": [
+        "folly",
+        "discipline"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-9-97b4b7",
+      "text": "When you see another man in office, set against his office the fact that you have no need of office: when you see another rich, look what you have instead.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 9",
+      "plain": "Against their wealth and rank, count what you don't need.",
+      "themes": [
+        "wealth",
+        "desire",
+        "happiness"
+      ],
+      "moments": [
+        "broke",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-9-719fa7",
+      "text": "Fight against yourself, deliver yourself, that you may be modest, self-respecting, free.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 9",
+      "plain": "The enemy is you. Beat that one.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-9-dbb527",
+      "text": "The boy has fallen, suppose. 'Get up', says the trainer, 'and wrestle again, until you are made strong.'",
+      "work": "discourses",
+      "location": "Book 4, Chapter 9",
+      "plain": "You fell. Get up and go again.",
+      "themes": [
+        "adversity",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-9-cab2de",
+      "text": "You have but to will a thing and it is done, and all is right; on the other hand you have but to relax your effort and all is lost. For destruction and deliverance lie within you.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 9",
+      "plain": "Your effort decides whether you rise or fall.",
+      "themes": [
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-10-3ef97b",
+      "text": "All men's difficulties and perplexities are concerned with external things.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 10",
+      "plain": "Most of your worry is about stuff you don't control.",
+      "themes": [
+        "mind",
+        "fear"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-10-f54966",
+      "text": "Say no more then, 'What is to happen?' For whatever happens, you will turn it to good purpose, and the issue will be your good fortune.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 10",
+      "plain": "Stop asking what will happen. Decide how you'll use whatever does.",
+      "themes": [
+        "fear",
+        "fate"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-10-7f5e9f",
+      "text": "What care you, I say? If a big boar appears, you will have a greater struggle to engage in; if evil men appear, you will free the world from evil men.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 10",
+      "plain": "A bigger enemy just means a bigger fight to win.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-10-8135ef",
+      "text": "What then would you have death find you doing?",
+      "work": "discourses",
+      "location": "Book 4, Chapter 10",
+      "plain": "Live so that whenever it ends, you were doing something worth doing.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-10-64cee7",
+      "text": "No, if you wish for what is not your own, you lose what is yours. This is in the nature of things: nothing is done but at a price.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 10",
+      "plain": "Chasing what isn't yours costs you what is. Everything has a price.",
+      "themes": [
+        "desire",
+        "wealth"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-10-7d27db",
+      "text": "Will you not weigh what the exchange is and how precious your gain, instead of wishing to obtain this great prize for nothing?",
+      "work": "discourses",
+      "location": "Book 4, Chapter 10",
+      "plain": "Nothing big comes free. Decide if the price is worth it.",
+      "themes": [
+        "work",
+        "wealth"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-10-d6b791",
+      "text": "You cannot combine attention to outward possessions with attention to your own Governing Principle.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 10",
+      "plain": "You can't chase stuff and master yourself at the same time.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-12-590319",
+      "text": "When you relax your attention for a little, do not imagine that you will recover it wherever you wish, but bear this well in mind, that your error of to-day must of necessity put you in a worse position for other occasions.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 12",
+      "plain": "Every lapse makes the next one easier. You don't get to pick up focus on demand.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-12-c8d63e",
+      "text": "Do you not realize, that when once you have let your mind go wandering, you lose the power to recall it, to bring it to bear on what is seemly, self-respecting, and modest: you do anything that occurs to you and follow your inclinations?",
+      "work": "discourses",
+      "location": "Book 4, Chapter 12",
+      "plain": "Let your attention drift and you end up doing whatever comes to mind.",
+      "themes": [
+        "mind",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-12-51ee23",
+      "text": "What then? Is it possible to escape error altogether? No, it is impossible: but it is possible to set one's mind continuously on avoiding error.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 12",
+      "plain": "You won't be perfect. Keep aiming at fewer mistakes anyway.",
+      "themes": [
+        "discipline",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-12-5c5fae",
+      "text": "As it is, you say, 'I will fix my attention to-morrow': which means, let me tell you, 'To-day I will be shameless, inopportune, abject: others shall have power to vex me: to-day I will harbour anger and envy.'",
+      "work": "discourses",
+      "location": "Book 4, Chapter 12",
+      "plain": "Saying you'll start tomorrow means you choose to be weak today.",
+      "themes": [
+        "discipline",
+        "time"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-discourses-book-4-chapter-13-130276",
+      "text": "That is just as though I had a sound cask and you an unsound one, and you came and handed over your wine to me to put it into my cask, and then were vexed that I did not trust my wine to you, because your cask had a hole in it.",
+      "work": "discourses",
+      "location": "Book 4, Chapter 13",
+      "plain": "Someone who spills everything to everyone hasn't earned your secrets.",
+      "themes": [
+        "friendship",
+        "folly"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-1-365210",
+      "text": "Of things some are in our power, and others are not.",
+      "work": "enchiridion",
+      "location": "Section 1",
+      "plain": "Sort everything into what you control and what you don't. Work only on the first.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-1-5eb3bd",
+      "text": "Straightway then practise saying to every harsh appearance: You are an appearance, and in no manner what you appear to be.",
+      "work": "enchiridion",
+      "location": "Section 1",
+      "plain": "When something looks terrible, tell yourself it's just how it looks right now.",
+      "themes": [
+        "fear",
+        "mind"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-2-c2c714",
+      "text": "But if you attempt to avoid disease, or death, or poverty, you will be unhappy.",
+      "work": "enchiridion",
+      "location": "Section 2",
+      "plain": "You can't dodge sickness, death, or lack. Trying to just makes you miserable.",
+      "themes": [
+        "fear",
+        "fate"
+      ],
+      "moments": [
+        "afraid",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-3-f4485e",
+      "text": "If you love an earthen vessel, say it is an earthen vessel which you love; for when it has been broken you will not be disturbed.",
+      "work": "enchiridion",
+      "location": "Section 3",
+      "plain": "Remember what a thing is, and losing it won't wreck you.",
+      "themes": [
+        "desire",
+        "pain"
+      ],
+      "moments": [
+        "afraid",
+        "alone"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-5-bdfd12",
+      "text": "Men are disturbed not by the things which happen, but by the opinions about the things; for example, death is nothing terrible, for if it were it would have seemed so to Socrates; for the opinion about death that it is terrible, is the terrible thing.",
+      "work": "enchiridion",
+      "location": "Section 5",
+      "plain": "It's not events that hurt you, it's the story you tell about them.",
+      "themes": [
+        "mind",
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-5-6dd036",
+      "text": "When then we are impeded, or disturbed, or grieved, let us never blame others, but ourselves, that is, our opinions.",
+      "work": "enchiridion",
+      "location": "Section 5",
+      "plain": "When you're upset, look at your own thinking first.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-5-428bc2",
+      "text": "It is the act of an ill-instructed man to blame others for his own bad condition; it is the act of one who has begun to be instructed, to lay the blame on himself; and of one whose instruction is completed, neither to blame another, nor himself.",
+      "work": "enchiridion",
+      "location": "Section 5",
+      "plain": "Beginners blame others, learners blame themselves, masters just deal with it.",
+      "themes": [
+        "self-mastery",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-6-a549c1",
+      "text": "What then is your own? The use of appearances.",
+      "work": "enchiridion",
+      "location": "Section 6",
+      "plain": "What you really own is how you respond to what comes at you.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-8-75fd82",
+      "text": "Seek not that the things which happen should happen as you wish; but wish the things which happen to be as they are, and you will have a tranquil flow of life.",
+      "work": "enchiridion",
+      "location": "Section 8",
+      "plain": "Stop demanding that things go your way. Want what happens and you stay calm.",
+      "themes": [
+        "fate",
+        "happiness"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-9-7c99ef",
+      "text": "Disease is an impediment to the body, but not to the will, unless the will itself chooses. Lameness is an impediment to the leg, but not to the will.",
+      "work": "enchiridion",
+      "location": "Section 9",
+      "plain": "Your body can be blocked. Your will only stops if you let it.",
+      "themes": [
+        "adversity",
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-10-fb606c",
+      "text": "On the occasion of every accident (event) that befalls you, remember to turn to yourself and inquire what power you have for turning it to use.",
+      "work": "enchiridion",
+      "location": "Section 10",
+      "plain": "When something hits you, ask what you can do with it.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-10-df268b",
+      "text": "If labor (pain) be presented to you, you will find that it is endurance. If it be abusive words, you will find it to be patience.",
+      "work": "enchiridion",
+      "location": "Section 10",
+      "plain": "Every hardship hands you the exact strength it takes to meet it.",
+      "themes": [
+        "pain",
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-11-dd5467",
+      "text": "Never say about anything, I have lost it, but say I have restored it.",
+      "work": "enchiridion",
+      "location": "Section 11",
+      "plain": "Nothing was ever yours to keep. Say it went back, not that you lost it.",
+      "themes": [
+        "fate",
+        "pain"
+      ],
+      "moments": [
+        "alone",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-12-74fd29",
+      "text": "Is the oil spilled? Is a little wine stolen? Say on the occasion, at such price is sold freedom from perturbation; at such price is sold tranquillity, but nothing is got for nothing.",
+      "work": "enchiridion",
+      "location": "Section 12",
+      "plain": "Small losses are the price of staying calm, and it's cheap.",
+      "themes": [
+        "wealth",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-13-9cc210",
+      "text": "If you would improve, submit to be considered without sense and foolish with respect to externals.",
+      "work": "enchiridion",
+      "location": "Section 13",
+      "plain": "Growing means being willing to look clueless to people who don't matter.",
+      "themes": [
+        "reputation",
+        "discipline"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-13-9de8a3",
+      "text": "Wish to be considered to know nothing; and if you shall seem to some to be a person of importance, distrust yourself.",
+      "work": "enchiridion",
+      "location": "Section 13",
+      "plain": "When people start treating you as important, get suspicious of yourself.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-14-39473d",
+      "text": "But if you wish not to fail in your desires, you are able to do that.",
+      "work": "enchiridion",
+      "location": "Section 14",
+      "plain": "You can never fail at your desires if you only want what is within your reach.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-14-f6a234",
+      "text": "Whoever then wishes to be free let him neither wish for anything nor avoid anything which depends on others: if he does not observe this rule, he must be a slave.",
+      "work": "enchiridion",
+      "location": "Section 14",
+      "plain": "If your wants depend on other people, they own you.",
+      "themes": [
+        "power",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-15-15a450",
+      "text": "Remember that in life you ought to behave as at a banquet. Suppose that something is carried round and is opposite to you. Stretch out your hand and take a portion with decency.",
+      "work": "enchiridion",
+      "location": "Section 15",
+      "plain": "When good things come around, take your share politely. Don't grab or chase.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-17-05195f",
+      "text": "For this is your duty, to act well the part that is given to you; but to select the part, belongs to another.",
+      "work": "enchiridion",
+      "location": "Section 17",
+      "plain": "You don't pick your role. You pick how well you play it.",
+      "themes": [
+        "fate",
+        "work",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-19-61f463",
+      "text": "You can be invincible, if you enter into no contest in which it is not in your power to conquer.",
+      "work": "enchiridion",
+      "location": "Section 19",
+      "plain": "Only fight the battles you can actually win, and you can't lose.",
+      "themes": [
+        "power",
+        "self-mastery"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-20-ebcc50",
+      "text": "Remember that it is not he who reviles you or strikes you, who insults you, but it is your opinion about these things as being insulting.",
+      "work": "enchiridion",
+      "location": "Section 20",
+      "plain": "An insult hurts only because you decide it does.",
+      "themes": [
+        "anger",
+        "mind",
+        "reputation"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-21-b7e24a",
+      "text": "Let death and exile and every other thing which appears dreadful be daily before your eyes; but most of all death: and you will never think of anything mean nor will you desire anything extravagantly.",
+      "work": "enchiridion",
+      "location": "Section 21",
+      "plain": "Keep death in view and petty wants shrink.",
+      "themes": [
+        "death",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "afraid"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-24-39243c",
+      "text": "If I can acquire money and also keep myself modest and faithful and magnanimous, point out the way, and I will acquire it.",
+      "work": "enchiridion",
+      "location": "Section 24",
+      "plain": "Money is fine if getting it doesn't cost me my character.",
+      "themes": [
+        "wealth",
+        "self-mastery"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-25-ff04b9",
+      "text": "You will be unjust then and insatiable, if you do not part with the price, in return for which those things are sold, and if you wish to obtain them for nothing.",
+      "work": "enchiridion",
+      "location": "Section 25",
+      "plain": "Don't expect what others got without paying what they paid.",
+      "themes": [
+        "work",
+        "desire"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-28-0c62f3",
+      "text": "If any person was intending to put your body in the power of any man whom you fell in with on the way, you would be vexed; but that you put your understanding in the power of any man whom you meet, so that if he should revile you, it is disturbed and troubled, are you not ashamed at this?",
+      "work": "enchiridion",
+      "location": "Section 28",
+      "plain": "You'd never hand a stranger your body, so why hand over your mood?",
+      "themes": [
+        "anger",
+        "mind",
+        "power"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-29-7961a0",
+      "text": "A man wishes to conquer at the Olympic games. I also wish indeed, for it is a fine thing. But observe both the things which come first, and the things which follow; and then begin the act.",
+      "work": "enchiridion",
+      "location": "Section 29",
+      "plain": "Everyone wants the win. Look at what it demands before you sign up.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-29-6c2c00",
+      "text": "So you also will be at one time an athlete, at another a gladiator, then a rhetorician, then a philosopher, but with your whole soul you will be nothing at all; but like an ape you imitate everything that you see, and one thing after another pleases you.",
+      "work": "enchiridion",
+      "location": "Section 29",
+      "plain": "Hopping between ideas of who you could be leaves you nobody.",
+      "themes": [
+        "folly",
+        "discipline"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-29-b9958c",
+      "text": "You must pass sleepless nights, endure toil, go away from your kinsmen, be despised by a slave, in everything have the inferior part, in honor, in office, in the courts of justice, in every little matter.",
+      "work": "enchiridion",
+      "location": "Section 29",
+      "plain": "The path costs sleep, comfort, home, and respect. Know it going in.",
+      "themes": [
+        "adversity",
+        "work",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-29-a66956",
+      "text": "You must be one man, either good or bad.",
+      "work": "enchiridion",
+      "location": "Section 29",
+      "plain": "Pick who you are and be that all the way.",
+      "themes": [
+        "self-mastery",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-33-bbcbc5",
+      "text": "Immediately prescribe some character and some form to yourself, which you shall observe both when you are alone and when you meet with men.",
+      "work": "enchiridion",
+      "location": "Section 33",
+      "plain": "Decide who you are and act that way alone and in public.",
+      "themes": [
+        "self-mastery",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-33-5668fd",
+      "text": "And let silence be the general rule, or let only what is necessary be said, and in few words.",
+      "work": "enchiridion",
+      "location": "Section 33",
+      "plain": "Talk less. Say what's needed.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-33-a2fa28",
+      "text": "If a man has reported to you, that a certain person speaks ill of you, do not make any defence (answer) to what has been told you; but reply, The man did not know the rest of my faults, for he would not have mentioned these only.",
+      "work": "enchiridion",
+      "location": "Section 33",
+      "plain": "When someone trashes you, don't defend yourself. Joke that they didn't know the half of it.",
+      "themes": [
+        "reputation",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-33-159644",
+      "text": "In company take care not to speak much and excessively about your own acts or dangers; for as it is pleasant to you to make mention of your own dangers, it is not so pleasant to others to hear what has happened to you.",
+      "work": "enchiridion",
+      "location": "Section 33",
+      "plain": "Your stories thrill you and bore everyone else.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-34-03e815",
+      "text": "If you have received the impression of any pleasure, guard yourself against being carried away by it; but let the thing wait for you, and allow yourself a certain delay on your own part.",
+      "work": "enchiridion",
+      "location": "Section 34",
+      "plain": "Feel the urge, then make it wait.",
+      "themes": [
+        "desire",
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-34-bd727a",
+      "text": "Then think of both times, of the time when you will enjoy the pleasure, and of the time after the enjoyment of the pleasure, when you will repent and will reproach yourself.",
+      "work": "enchiridion",
+      "location": "Section 34",
+      "plain": "Picture the pleasure, then picture the regret after it.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-35-272862",
+      "text": "When you have decided that a thing ought to be done, and are doing it, never avoid being seen doing it, though the many shall form an unfavorable opinion about it. For if it is not right to do it, avoid doing the thing; but if it is right, why are you afraid of those who shall find fault wrongly?",
+      "work": "enchiridion",
+      "location": "Section 35",
+      "plain": "If it's right, do it in public and ignore the critics.",
+      "themes": [
+        "courage",
+        "reputation"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-39-bb51ca",
+      "text": "The measure of possession (property) is to every man the body, as the foot is of the shoe.",
+      "work": "enchiridion",
+      "location": "Section 39",
+      "plain": "Own what you need. Past that there's no natural stopping point.",
+      "themes": [
+        "wealth",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "broke"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-42-3f8f3d",
+      "text": "When any person treats you ill or speaks ill of you, remember that he does this or says this because he thinks that it is his duty.",
+      "work": "enchiridion",
+      "location": "Section 42",
+      "plain": "People who treat you badly think they're in the right.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-43-7cbef3",
+      "text": "Everything has two handles, the one by which it may be borne, the other by which it may not.",
+      "work": "enchiridion",
+      "location": "Section 43",
+      "plain": "Every situation has a part you can carry. Grab that one.",
+      "themes": [
+        "mind",
+        "adversity"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-46-03293f",
+      "text": "On no occasion call yourself a philosopher, and do not speak much among the uninstructed about theorems (philosophical rules, precepts); but do that which follows from them.",
+      "work": "enchiridion",
+      "location": "Section 46",
+      "plain": "Don't preach your principles. Live them.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-46-11f6d4",
+      "text": "And when a man shall say to you that you know nothing, and you are not vexed, then be sure that you have begun the work (of philosophy).",
+      "work": "enchiridion",
+      "location": "Section 46",
+      "plain": "If being called clueless no longer stings, you're getting somewhere.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-46-241bee",
+      "text": "For even sheep do not vomit up their grass and show to the shepherds how much they have eaten; but when they have internally digested the pasture, they produce externally wool and milk.",
+      "work": "enchiridion",
+      "location": "Section 46",
+      "plain": "Don't show off what you've read. Let it turn into results.",
+      "themes": [
+        "work",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-47-0b47b8",
+      "text": "And if you ever wish to exercise yourself in labor and endurance, do it for yourself, and not for others.",
+      "work": "enchiridion",
+      "location": "Section 47",
+      "plain": "Train hard for yourself, not for an audience.",
+      "themes": [
+        "discipline",
+        "reputation"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-47-87046b",
+      "text": "Do not embrace statues; but if you are ever very thirsty, take a draught of cold water and spit it out, and tell no man.",
+      "work": "enchiridion",
+      "location": "Section 47",
+      "plain": "Practice hardship privately and keep quiet about it.",
+      "themes": [
+        "discipline",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-48-f7668a",
+      "text": "The condition and characteristic of an uninstructed person is this: he never expects from himself profit (advantage) nor harm, but from externals. The condition and characteristic of a philosopher is this: he expects all advantage and all harm from himself.",
+      "work": "enchiridion",
+      "location": "Section 48",
+      "plain": "Weak people wait for luck or blame the world. Strong people look at themselves.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-49-f87ae6",
+      "text": "When, then, any man says to me, Read Chrysippus to me, I rather blush, when I cannot show my acts like to and consistent with his words.",
+      "work": "enchiridion",
+      "location": "Section 49",
+      "plain": "Knowing the ideas means little if your actions don't match.",
+      "themes": [
+        "folly",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-50-6ebf88",
+      "text": "How long will you then still defer thinking yourself worthy of the best things, and in no matter transgressing the distinctive reason?",
+      "work": "enchiridion",
+      "location": "Section 50",
+      "plain": "How long will you wait before you hold yourself to a higher standard?",
+      "themes": [
+        "discipline",
+        "time"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-50-433d65",
+      "text": "You are no longer a youth, but already a full-grown man.",
+      "work": "enchiridion",
+      "location": "Section 50",
+      "plain": "You're not a kid anymore. Act like it now.",
+      "themes": [
+        "time",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-50-922288",
+      "text": "And if anything laborious or pleasant or glorious or inglorious be presented to you, remember that now is the contest, now are the Olympic games, and they cannot be deferred; and that it depends on one defeat and one giving way that progress is either lost or maintained.",
+      "work": "enchiridion",
+      "location": "Section 50",
+      "plain": "This moment is the real test, and one slip decides whether you keep your progress.",
+      "themes": [
+        "discipline",
+        "courage"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-50-3530fc",
+      "text": "But you, though you are not yet a Socrates, ought to live as one who wishes to be a Socrates.",
+      "work": "enchiridion",
+      "location": "Section 50",
+      "plain": "You're not there yet. Live like someone who is trying to be.",
+      "themes": [
+        "self-mastery",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-52-552cd8",
+      "text": "Lead me, O Zeus, and thou O Destiny, The way that I am bid by you to go: To follow I am ready. If I choose not, I make myself a wretch, and still must follow.",
+      "work": "enchiridion",
+      "location": "Section 52",
+      "plain": "Fate moves either way. Go willingly or get dragged.",
+      "themes": [
+        "fate",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "angry"
+      ]
+    },
+    {
+      "id": "epictetus-enchiridion-section-52-9b4863",
+      "text": "O Crito, if so it pleases the gods, so let it be; Anytus and Melitus are able indeed to kill me, but they cannot harm me.",
+      "work": "enchiridion",
+      "location": "Section 52",
+      "plain": "They can take my life, but not my character.",
+      "themes": [
+        "death",
+        "courage",
+        "power"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    }
+  ]
+}

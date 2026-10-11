@@ -158,6 +158,9 @@ export const COLUMNS: Columns = {
     display_name: "text",
     coach_voice: "text",
     coach_checkins: "jsonb",
+    library_position: "jsonb",
+    drops_enabled: "boolean",
+    drops_per_day: "smallint",
   },
   mood_log: { ...base, date: "date", time: "text", mood: "smallint", note: "text" },
   motivation: { ...base, kind: "text", body: "text", url: "text", sort_order: "integer" },
@@ -224,6 +227,7 @@ export const COLUMNS: Columns = {
     completed: "boolean",
     live: "jsonb",
   },
+  quote_state: { ...base, quote_id: "text", writer: "text", work: "text", read_at: "timestamptz", saved_at: "timestamptz", note: "text" },
 };
 
 /**
@@ -244,4 +248,5 @@ export const UNIQUE_KEYS: { [K in TableName]?: (keyof Row<K> & string)[][] } = {
   meal_plan: [["week_start"]],
   pantry_item: [["name"]],
   receipt_price: [["name", "store"]],
+  quote_state: [["quote_id"]],
 };

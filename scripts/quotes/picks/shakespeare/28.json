@@ -1,0 +1,417 @@
+[
+  {
+    "text": "I that please some, try all: both joy and terror\nOf good and bad, that makes and unfolds error,\nNow take upon me, in the name of Time,\nTo use my wings.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 4 Scene 1",
+    "plain": "Time tests everyone, brings the good and the bad, and slides past whatever you hoped would stay.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "I think affliction may subdue the cheek,\nBut not take in the mind.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 4 Scene 4",
+    "plain": "Hardship can wear down your face. It only gets your mind if you let it in.",
+    "themes": [
+      "adversity",
+      "mind"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "I am but sorry, not afeard; delay’d,\nBut nothing alt’red: what I was, I am:\nMore straining on for plucking back; not following\nMy leash unwillingly.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 4 Scene 4",
+    "plain": "Pulled back, not changed. The harder they yank the leash, the harder I pull forward.",
+    "themes": [
+      "courage",
+      "adversity"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "The selfsame sun that shines upon his court\nHides not his visage from our cottage, but\nLooks on alike.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 4 Scene 4",
+    "plain": "The same sun shines on the palace and the shack. Power is not the same as worth.",
+    "themes": [
+      "power",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "broke"
+    ]
+  },
+  {
+    "text": "Ha, ha! what a fool Honesty is! and Trust, his sworn brother, a very simple gentleman!",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 4 Scene 4",
+    "plain": "This is how a con man sees honest people. Don't be the easy mark.",
+    "themes": [
+      "folly",
+      "wealth"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "I see this is the time that the unjust man doth thrive.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 4 Scene 4",
+    "plain": "Sometimes the crooked one is winning. Don't confuse that with being right.",
+    "themes": [
+      "power",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "As every present time doth boast itself\nAbove a better gone, so must thy grave\nGive way to what’s seen now!",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 5 Scene 1",
+    "plain": "Every era brags it beats the last one, and the past always gets pushed aside.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Scarce any joy\nDid ever so long live; no sorrow\nBut kill’d itself much sooner.",
+    "work": "plays",
+    "location": "The Winter's Tale, Act 5 Scene 3",
+    "plain": "Even joy rarely lasts that long, and no sorrow does. This will wear itself out.",
+    "themes": [
+      "pain",
+      "time"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "When I do count the clock that tells the time,\nAnd see the brave day sunk in hideous night,\nWhen I behold the violet past prime,\nAnd sable curls all silvered o’er with white:",
+    "work": "sonnets",
+    "location": "Sonnet 12",
+    "plain": "Watch the clock long enough and you see everything beautiful going gray. Use the days.",
+    "themes": [
+      "time",
+      "death"
+    ],
+    "moments": [
+      "tired",
+      "afraid"
+    ]
+  },
+  {
+    "text": "When I consider everything that grows\nHolds in perfection but a little moment.",
+    "work": "sonnets",
+    "location": "Sonnet 15",
+    "plain": "Everything at its peak only holds it for a short moment.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Shall I compare thee to a summer’s day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer’s lease hath all too short a date:",
+    "work": "sonnets",
+    "location": "Sonnet 18",
+    "plain": "Even the best season is on a short lease. Good things end fast.",
+    "themes": [
+      "time",
+      "love"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "So long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee.",
+    "work": "sonnets",
+    "location": "Sonnet 18",
+    "plain": "What you make and put into the world can outlive you.",
+    "themes": [
+      "time",
+      "work"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Yet do thy worst, old Time; despite thy wrong,\nMy love shall in my verse ever live young.",
+    "work": "sonnets",
+    "location": "Sonnet 19",
+    "plain": "Time will take everything, but not what I put into my work. Do your worst.",
+    "themes": [
+      "time",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The painful warrior famoused for fight,\nAfter a thousand victories once foiled,\nIs from the book of honour razed quite,\nAnd all the rest forgot for which he toiled:",
+    "work": "sonnets",
+    "location": "Sonnet 25",
+    "plain": "A thousand wins get wiped out by one loss. Don't build your worth on the record.",
+    "themes": [
+      "reputation",
+      "power"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Yet in these thoughts my self almost despising,\nHaply I think on thee, and then my state,\n(Like to the lark at break of day arising\nFrom sullen earth) sings hymns at heaven’s gate,\nFor thy sweet love remembered such wealth brings,\nThat then I scorn to change my state with kings.",
+    "work": "sonnets",
+    "location": "Sonnet 29",
+    "plain": "Low and full of self-hate, then one good thought lifts you and you wouldn't trade places with a king.",
+    "themes": [
+      "happiness",
+      "solitude"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "When to the sessions of sweet silent thought,\nI summon up remembrance of things past,\nI sigh the lack of many a thing I sought,\nAnd with old woes new wail my dear time’s waste:",
+    "work": "sonnets",
+    "location": "Sonnet 30",
+    "plain": "In quiet you count every wasted year and every old loss all over again.",
+    "themes": [
+      "time",
+      "pain"
+    ],
+    "moments": [
+      "alone",
+      "tired"
+    ]
+  },
+  {
+    "text": "No more be grieved at that which thou hast done,\nRoses have thorns, and silver fountains mud,\nClouds and eclipses stain both moon and sun,\nAnd loathsome canker lives in sweetest bud.",
+    "work": "sonnets",
+    "location": "Sonnet 35",
+    "plain": "Everything good has something ugly in it. Stop beating yourself up for your flaws.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Like as the waves make towards the pebbled shore,\nSo do our minutes hasten to their end,\nEach changing place with that which goes before,\nIn sequent toil all forwards do contend.",
+    "work": "sonnets",
+    "location": "Sonnet 60",
+    "plain": "Minutes roll in like waves, each one pushing the last aside. They don't wait.",
+    "themes": [
+      "time",
+      "death"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "This thought is as a death which cannot choose\nBut weep to have, that which it fears to lose.",
+    "work": "sonnets",
+    "location": "Sonnet 64",
+    "plain": "The more you love something, the more the fear of losing it eats at you.",
+    "themes": [
+      "fear",
+      "love"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "That time of year thou mayst in me behold,\nWhen yellow leaves, or none, or few do hang\nUpon those boughs which shake against the cold,\nBare ruined choirs, where late the sweet birds sang.",
+    "work": "sonnets",
+    "location": "Sonnet 73",
+    "plain": "Late in life, the branches are bare where the birds used to sing.",
+    "themes": [
+      "time",
+      "death",
+      "change"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "Some glory in their birth, some in their skill,\nSome in their wealth, some in their body’s force,\nSome in their garments though new-fangled ill:\nSome in their hawks and hounds, some in their horse.",
+    "work": "sonnets",
+    "location": "Sonnet 91",
+    "plain": "Everyone brags about something: family, money, muscle, clothes, toys.",
+    "themes": [
+      "wealth",
+      "folly",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "broke"
+    ]
+  },
+  {
+    "text": "They that have power to hurt, and will do none,\nThat do not do the thing, they most do show,\nWho moving others, are themselves as stone,\nUnmoved, cold, and to temptation slow:",
+    "work": "sonnets",
+    "location": "Sonnet 94",
+    "plain": "The strongest people could hurt you and don't. They stay cold to temptation.",
+    "themes": [
+      "self-mastery",
+      "power"
+    ],
+    "moments": [
+      "tempted",
+      "angry"
+    ]
+  },
+  {
+    "text": "Take heed (dear heart) of this large privilege,\nThe hardest knife ill-used doth lose his edge.",
+    "work": "sonnets",
+    "location": "Sonnet 95",
+    "plain": "Misuse a sharp gift and it dulls. Talent wasted on junk goes blunt.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Let me not to the marriage of true minds\nAdmit impediments, love is not love\nWhich alters when it alteration finds,\nOr bends with the remover to remove.\nO no, it is an ever-fixed mark\nThat looks on tempests and is never shaken;\nIt is the star to every wand’ring bark,\nWhose worth’s unknown, although his height be taken.",
+    "work": "sonnets",
+    "location": "Sonnet 116",
+    "plain": "Real love does not move when things change. It is the fixed star you steer by in a storm.",
+    "themes": [
+      "love",
+      "courage"
+    ],
+    "moments": [
+      "alone",
+      "afraid"
+    ]
+  },
+  {
+    "text": "O benefit of ill, now I find true\nThat better is, by evil still made better.",
+    "work": "sonnets",
+    "location": "Sonnet 119",
+    "plain": "Getting burned made the good thing better. Trouble can improve what you rebuild.",
+    "themes": [
+      "adversity",
+      "change"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "No, I am that I am, and they that level\nAt my abuses, reckon up their own,\nI may be straight though they themselves be bevel;",
+    "work": "sonnets",
+    "location": "Sonnet 121",
+    "plain": "I know who I am. The ones judging me are often crooked themselves.",
+    "themes": [
+      "reputation",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Mad in pursuit and in possession so,\nHad, having, and in quest, to have extreme,\nA bliss in proof, and proved, a very woe;\nBefore a joy proposed behind a dream.",
+    "work": "sonnets",
+    "location": "Sonnet 129",
+    "plain": "Wanting it drives you mad, having it ruins you, and before you get it it was only a dream.",
+    "themes": [
+      "desire",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Poor soul the centre of my sinful earth,\nMy sinful earth these rebel powers array,\nWhy dost thou pine within and suffer dearth\nPainting thy outward walls so costly gay?",
+    "work": "sonnets",
+    "location": "Sonnet 146",
+    "plain": "You starve the part of you that matters while spending everything on the outside.",
+    "themes": [
+      "wealth",
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "So shall thou feed on death, that feeds on men,\nAnd death once dead, there’s no more dying then.",
+    "work": "sonnets",
+    "location": "Sonnet 146",
+    "plain": "Live for what lasts and death loses its hold on you.",
+    "themes": [
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Thus have I had thee as a dream doth flatter,\nIn sleep a king, but waking no such matter.",
+    "work": "sonnets",
+    "location": "Sonnet 87",
+    "plain": "It felt like a kingdom in the dream. Then you wake up and it is gone.",
+    "themes": [
+      "desire",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  }
+]

@@ -1,0 +1,954 @@
+[
+  {
+    "text": "The favour of ignoble men can be won only by ignoble means.",
+    "work": "letters",
+    "location": "Letter 29",
+    "plain": "Chasing the crowd's approval means becoming small to get it.",
+    "themes": [
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Do not count the number of those who inspire fear in you.",
+    "work": "letters",
+    "location": "Letter 29",
+    "plain": "Stop tallying what threatens you. It's never as many as it feels like.",
+    "themes": [
+      "fear",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "I have never wished to cater to the crowd; for what I know, they do not approve, and what they approve, I do not know.",
+    "work": "letters",
+    "location": "Letter 29",
+    "plain": "Real knowledge and popular taste rarely overlap. Pick knowledge.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "Nature has so ordered it that, as only one has given you life, so only one will take it away.",
+    "work": "letters",
+    "location": "Letter 29",
+    "plain": "Plenty of people threaten you, but only one thing can actually end you.",
+    "themes": [
+      "fear",
+      "death"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "We do not fear death; we fear the thought of death.",
+    "work": "letters",
+    "location": "Letter 30",
+    "plain": "The dread lives in your head. Death itself is always the same distance away.",
+    "themes": [
+      "fear",
+      "death",
+      "mind"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "He who does not wish to die cannot have wished to live.",
+    "work": "letters",
+    "location": "Letter 30",
+    "plain": "Life came with the ending built in. You can't take one without the other.",
+    "themes": [
+      "death",
+      "fate"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "But who is not near death? It is ready for us in all places and at all times.",
+    "work": "letters",
+    "location": "Letter 30",
+    "plain": "Nobody is far from death, so stop acting like you have forever.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Do you, however, always think on death in order that you may never fear it.",
+    "work": "letters",
+    "location": "Letter 30",
+    "plain": "Look at death often enough and it stops scaring you.",
+    "themes": [
+      "death",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Be deaf to those who love you most of all; they pray for bad things with good intentions.",
+    "work": "letters",
+    "location": "Letter 31",
+    "plain": "People who love you can want the wrong things for you. Don't take all their advice.",
+    "themes": [
+      "friendship",
+      "desire"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Work is the sustenance of noble minds.",
+    "work": "letters",
+    "location": "Letter 31",
+    "plain": "Serious people are fed by hard work, not by rest.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "I forbid you to be cast down or depressed. It is not enough if you do not shrink from work; ask for it.",
+    "work": "letters",
+    "location": "Letter 31",
+    "plain": "Don't just put up with the work. Go looking for it.",
+    "themes": [
+      "work",
+      "discipline",
+      "courage"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "By so much you are better! Rise, draw a fresh breath, and surmount that hill, if possible, at a single spurt!",
+    "work": "letters",
+    "location": "Letter 31",
+    "plain": "The harder you push up the hill, the better you get. Catch your breath and go again.",
+    "themes": [
+      "work",
+      "adversity"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "One may leap to heaven from the very slums.",
+    "work": "letters",
+    "location": "Letter 31",
+    "plain": "Where you start doesn't cap where you can get to.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "broke"
+    ]
+  },
+  {
+    "text": "We break up life into little bits, and fritter it away.",
+    "work": "letters",
+    "location": "Letter 32",
+    "plain": "Constant restarts chop your one life into scraps.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Would you know what makes men greedy for the future? It is because no one has yet found himself.",
+    "work": "letters",
+    "location": "Letter 32",
+    "plain": "People who don't know who they are keep chasing the next thing.",
+    "themes": [
+      "desire",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Live just as if I were sure to get news of your doings, nay, as if I were sure to behold them.",
+    "work": "letters",
+    "location": "Letter 32",
+    "plain": "Act like someone you respect is watching everything you do.",
+    "themes": [
+      "discipline",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "alone"
+    ]
+  },
+  {
+    "text": "Remembering is merely safeguarding something entrusted to the memory; knowing, however, means making everything your own; it means not depending upon the copy and not all the time glancing back at the master.",
+    "work": "letters",
+    "location": "Letter 33",
+    "plain": "Quoting wise people isn't wisdom. It's yours once you can act without checking the source.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Take command, and utter some word which posterity will remember.",
+    "work": "letters",
+    "location": "Letter 33",
+    "plain": "Stop echoing others. Say something of your own worth remembering.",
+    "themes": [
+      "courage",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Let there be a difference between yourself and your book! How long shall you be a learner? From now on be a teacher as well!",
+    "work": "letters",
+    "location": "Letter 33",
+    "plain": "At some point you have to stop only studying and start producing.",
+    "themes": [
+      "work",
+      "courage"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Men who have made these discoveries before us are not our masters, but our guides.",
+    "work": "letters",
+    "location": "Letter 33",
+    "plain": "Learn from the greats, but you're allowed to go further than them.",
+    "themes": [
+      "mind",
+      "courage"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "If a man’s acts are out of harmony, his soul is crooked.",
+    "work": "letters",
+    "location": "Letter 34",
+    "plain": "When what you do and what you say don't match, something in you is off.",
+    "themes": [
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "A shifting of the will indicates that the mind is at sea, heading in various directions, according to the course of the wind.",
+    "work": "letters",
+    "location": "Letter 35",
+    "plain": "If your wants change every day, you're drifting, not steering.",
+    "themes": [
+      "mind",
+      "discipline"
+    ],
+    "moments": [
+      "doubting",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Fortune has no jurisdiction over character.",
+    "work": "letters",
+    "location": "Letter 36",
+    "plain": "Luck can take your stuff. It can't touch who you are.",
+    "themes": [
+      "fate",
+      "adversity",
+      "self-mastery"
+    ],
+    "moments": [
+      "broke",
+      "afraid"
+    ]
+  },
+  {
+    "text": "In death there is nothing harmful; for there must exist something to which it is harmful.",
+    "work": "letters",
+    "location": "Letter 36",
+    "plain": "Death can't hurt you because there's no you left for it to hurt.",
+    "themes": [
+      "death",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "You cannot escape necessities, but you can overcome them.",
+    "work": "letters",
+    "location": "Letter 37",
+    "plain": "You can't dodge the hard parts of life, but you can beat them.",
+    "themes": [
+      "adversity",
+      "fate",
+      "courage"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "Proceed with steady step, and if you would have all things under your control, put yourself under the control of reason; if reason becomes your ruler, you will become ruler over many.",
+    "work": "letters",
+    "location": "Letter 37",
+    "plain": "Rule yourself with clear thinking first and everything else gets easier to rule.",
+    "themes": [
+      "self-mastery",
+      "power"
+    ],
+    "moments": [
+      "tempted",
+      "angry"
+    ]
+  },
+  {
+    "text": "You can show me no man who knows how he began to crave that which he craves.",
+    "work": "letters",
+    "location": "Letter 37",
+    "plain": "Most of our wants came from nowhere we chose. Question them.",
+    "themes": [
+      "desire",
+      "mind"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "You must die erect and unyielding.",
+    "work": "letters",
+    "location": "Letter 37",
+    "plain": "Don't beg or cave when the hard thing comes.",
+    "themes": [
+      "courage",
+      "death"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Utility measures our needs; but by what standard can you check the superfluous?",
+    "work": "letters",
+    "location": "Letter 39",
+    "plain": "Needs have a limit. Wants don't, so you have to set the limit yourself.",
+    "themes": [
+      "desire",
+      "wealth",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "broke"
+    ]
+  },
+  {
+    "text": "Then it is that the height of unhappiness is reached, when men are not only attracted, but even pleased, by shameful things, and when there is no longer any room for a cure, now that those things which once were vices have become habits.",
+    "work": "letters",
+    "location": "Letter 39",
+    "plain": "The worst point is when your bad habit feels fine to you and you've stopped wanting out.",
+    "themes": [
+      "desire",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "My terrors should be quieted, my irritations soothed, my illusions shaken off, my indulgences checked, my greed rebuked.",
+    "work": "letters",
+    "location": "Letter 40",
+    "plain": "The real job is inside: calm the fear, the irritation, the illusions, the cravings.",
+    "themes": [
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "angry",
+      "tempted"
+    ]
+  },
+  {
+    "text": "No man ought to glory except in that which is his own.",
+    "work": "letters",
+    "location": "Letter 41",
+    "plain": "Only take pride in what can't be handed to someone else.",
+    "themes": [
+      "reputation",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Praise the quality in him which cannot be given or snatched away, that which is the peculiar property of the man.",
+    "work": "letters",
+    "location": "Letter 41",
+    "plain": "Judge people, and yourself, by what can't be bought or taken.",
+    "themes": [
+      "reputation",
+      "wealth"
+    ],
+    "moments": [
+      "doubting",
+      "broke"
+    ]
+  },
+  {
+    "text": "Very often the things that cost nothing cost us the most heavily; I can show you many objects the quest and acquisition of which have wrested freedom from our hands.",
+    "work": "letters",
+    "location": "Letter 42",
+    "plain": "The stuff you chase for free often costs you your freedom.",
+    "themes": [
+      "desire",
+      "wealth"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "We should belong to ourselves, if only these things did not belong to us.",
+    "work": "letters",
+    "location": "Letter 42",
+    "plain": "Your possessions and ambitions own you more than you own them.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "He that owns himself has lost nothing. But how few men are blessed with ownership of self!",
+    "work": "letters",
+    "location": "Letter 42",
+    "plain": "If you hold yourself together, nothing outside can really take anything from you.",
+    "themes": [
+      "self-mastery",
+      "fate"
+    ],
+    "moments": [
+      "broke",
+      "afraid"
+    ]
+  },
+  {
+    "text": "If your deeds are honourable, let everybody know them; if base, what matters it that no one knows them, as long as you yourself know them?",
+    "work": "letters",
+    "location": "Letter 43",
+    "plain": "Nobody seeing it doesn't make it clean. You know.",
+    "themes": [
+      "reputation",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "alone"
+    ]
+  },
+  {
+    "text": "Philosophy did not find Plato already a nobleman; it made him one.",
+    "work": "letters",
+    "location": "Letter 44",
+    "plain": "Nobody starts great. You become it.",
+    "themes": [
+      "courage",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "This is what happens when you hurry through a maze; the faster you go, the worse you are entangled.",
+    "work": "letters",
+    "location": "Letter 44",
+    "plain": "Rushing blindly through confusion makes the mess worse.",
+    "themes": [
+      "mind",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "He who would arrive at the appointed end must follow a single road and not wander through many ways.",
+    "work": "letters",
+    "location": "Letter 45",
+    "plain": "Pick one road and stay on it.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Show me a man who is not a slave; one is a slave to lust, another to greed, another to ambition, and all men are slaves to fear.",
+    "work": "letters",
+    "location": "Letter 47",
+    "plain": "Everybody is ruled by something. Know which master is yours.",
+    "themes": [
+      "self-mastery",
+      "desire",
+      "fear"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "No servitude is more disgraceful than that which is self-imposed.",
+    "work": "letters",
+    "location": "Letter 47",
+    "plain": "The chains you put on yourself are the worst ones.",
+    "themes": [
+      "self-mastery",
+      "desire"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "That which annoys us does not necessarily injure us; but we are driven into wild rage by our luxurious lives, so that whatever does not answer our whims arouses our anger.",
+    "work": "letters",
+    "location": "Letter 47",
+    "plain": "Most of what makes you furious is only annoying. Comfort made you sensitive.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "And no one can live happily who has regard to himself alone and transforms everything into a question of his own utility; you must live for your neighbour, if you would live for yourself.",
+    "work": "letters",
+    "location": "Letter 48",
+    "plain": "A life that's only about you is a small, unhappy one.",
+    "themes": [
+      "friendship",
+      "happiness"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Infinitely swift is the flight of time, as those see more clearly who are looking backwards.",
+    "work": "letters",
+    "location": "Letter 49",
+    "plain": "Time looks slow while you're in it and fast once it's gone.",
+    "themes": [
+      "time",
+      "death"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Show me that the good in life does not depend upon life’s length, but upon the use we make of it; also, that it is possible, or rather usual, for a man who has lived long to have lived too little.",
+    "work": "letters",
+    "location": "Letter 49",
+    "plain": "A long life isn't a full one. What you did with it is.",
+    "themes": [
+      "time",
+      "death",
+      "happiness"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Say to me when I lie down to sleep: “You may not wake again!” And when I have waked: “You may not go to sleep again!”",
+    "work": "letters",
+    "location": "Letter 49",
+    "plain": "Treat every day like it could be the last one and the first one.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "The evil that afflicts us is not external, it is within us, situated in our very vitals; for that reason we attain soundness with all the more difficulty, because we do not know that we are diseased.",
+    "work": "letters",
+    "location": "Letter 50",
+    "plain": "The problem is inside, and it's hard to fix because we don't see it.",
+    "themes": [
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "There is nothing that will not surrender to persistent treatment, to concentrated and careful attention; however much the timber may be bent, you can make it straight again.",
+    "work": "letters",
+    "location": "Letter 50",
+    "plain": "Steady, focused effort straightens anything, even a warped habit.",
+    "themes": [
+      "discipline",
+      "change"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Learning virtue means unlearning vice.",
+    "work": "letters",
+    "location": "Letter 50",
+    "plain": "Getting better means dropping the bad stuff you picked up.",
+    "themes": [
+      "self-mastery",
+      "change"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "The mind must, therefore, be forced to make a beginning; from then on, the medicine is not bitter; for just as soon as it is curing us it begins to give pleasure.",
+    "work": "letters",
+    "location": "Letter 50",
+    "plain": "Starting is the hard part. Once it's working, it feels good.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Perspiration should flow only after toil.",
+    "work": "letters",
+    "location": "Letter 51",
+    "plain": "Earn the easy stuff first.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "And what is freedom, you ask? It means not being a slave to any circumstance, to any constraint, to any chance; it means compelling Fortune to enter the lists on equal terms.",
+    "work": "letters",
+    "location": "Letter 51",
+    "plain": "Freedom is not letting circumstances run you.",
+    "themes": [
+      "fate",
+      "self-mastery",
+      "courage"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "If any vice rend your heart, cast it away from you; and if you cannot be rid of it in any other way, pluck out your heart also.",
+    "work": "letters",
+    "location": "Letter 51",
+    "plain": "Whatever habit is tearing you apart, get rid of it, whatever it takes.",
+    "themes": [
+      "self-mastery",
+      "desire"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "I should accordingly deem more fortunate the man who has never had any trouble with himself; but the other, I feel, has deserved better of himself, who has won a victory over the meanness of his own nature, and has not gently led himself, but has wrestled his way, to wisdom.",
+    "work": "letters",
+    "location": "Letter 52",
+    "plain": "Having it easy is lucky. Fighting your own nature and winning earns more respect.",
+    "themes": [
+      "self-mastery",
+      "adversity"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "Choose as a guide one whom you will admire more when you see him act than when you hear him speak.",
+    "work": "letters",
+    "location": "Letter 52",
+    "plain": "Follow people whose actions beat their words.",
+    "themes": [
+      "friendship",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Why will no man confess his faults? Because he is still in their grasp; only he who is awake can recount his dream, and similarly a confession of sin is a proof of sound mind.",
+    "work": "letters",
+    "location": "Letter 53",
+    "plain": "Being able to admit your faults means you've started to wake up from them.",
+    "themes": [
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Do not study philosophy merely during your spare time.",
+    "work": "letters",
+    "location": "Letter 53",
+    "plain": "Don't give what matters only your leftover hours.",
+    "themes": [
+      "discipline",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Death is non-existence, and I know already what that means. What was before me will happen again after me.",
+    "work": "letters",
+    "location": "Letter 54",
+    "plain": "You've already been dead once, before birth, and it didn't hurt.",
+    "themes": [
+      "death",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "We mortals also are lighted and extinguished; the period of suffering comes in between, but on either side there is a deep peace.",
+    "work": "letters",
+    "location": "Letter 54",
+    "plain": "Pain only exists in the middle. Before and after is peace.",
+    "themes": [
+      "death",
+      "pain"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "I shall never be frightened when the last hour comes; I am already prepared and do not plan a whole day ahead.",
+    "work": "letters",
+    "location": "Letter 54",
+    "plain": "Live ready, with nothing left on hold.",
+    "themes": [
+      "death",
+      "courage"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "The place where one lives, however, can contribute little towards tranquillity; it is the mind which must make everything agreeable to itself.",
+    "work": "letters",
+    "location": "Letter 55",
+    "plain": "Peace comes from your head, not your location.",
+    "themes": [
+      "mind",
+      "happiness"
+    ],
+    "moments": [
+      "overwhelmed",
+      "alone"
+    ]
+  },
+  {
+    "text": "You need not suppose that the soul is at peace when the body is still. Sometimes quiet means disquiet.",
+    "work": "letters",
+    "location": "Letter 56",
+    "plain": "Resting isn't the same as being at peace.",
+    "themes": [
+      "mind",
+      "happiness"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "The much occupied man has no time for wantonness, and it is an obvious commonplace that the evils of leisure can be shaken off by hard work.",
+    "work": "letters",
+    "location": "Letter 56",
+    "plain": "Stay busy with real work and the temptations lose their grip.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "So with greed, ambition, and the other evils of the mind,—you may be sure that they do most harm when they are hidden behind a pretence of soundness.",
+    "work": "letters",
+    "location": "Letter 56",
+    "plain": "The worst vices are the ones that look respectable.",
+    "themes": [
+      "desire",
+      "mind"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "You may therefore be sure that you are at peace with yourself, when no noise reaches you, when no word shakes you out of yourself, whether it be of flattery or of threat, or merely an empty sound buzzing about you with unmeaning din.",
+    "work": "letters",
+    "location": "Letter 56",
+    "plain": "You're steady when neither praise nor threats can move you.",
+    "themes": [
+      "self-mastery",
+      "reputation"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "None of us is the same man in old age that he was in youth; nor the same on the morrow as on the day preceding.",
+    "work": "letters",
+    "location": "Letter 58",
+    "plain": "You're changing constantly, so don't cling to who you were.",
+    "themes": [
+      "change",
+      "time"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "We go down twice into the same river, and yet into a different river.",
+    "work": "letters",
+    "location": "Letter 58",
+    "plain": "Nothing stays put, including you.",
+    "themes": [
+      "change",
+      "time"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Will you not stop fearing lest that may happen once which really happens every day?",
+    "work": "letters",
+    "location": "Letter 58",
+    "plain": "You die a little each day already. One more time is nothing new.",
+    "themes": [
+      "death",
+      "fear",
+      "change"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "There is a pleasure in being in one’s own company as long as possible, when a man has made himself worth enjoying.",
+    "work": "letters",
+    "location": "Letter 58",
+    "plain": "Become someone you like being alone with.",
+    "themes": [
+      "solitude",
+      "self-mastery"
+    ],
+    "moments": [
+      "alone"
+    ]
+  }
+]

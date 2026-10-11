@@ -1,10 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { workoutsFor } from "@/lib/db/helpers";
 import { useDayBlocks, useList, useMode, useSettings, useToday, useWorkouts } from "@/lib/db/hooks";
 import { weekdayOf } from "@/lib/logic/dates";
+import { dropsPerDay } from "@/lib/logic/drops";
 import { planDay, type PlannedNotification, type ReminderDay } from "@/lib/logic/reminders";
+import { activateDrops, useDropsPicker } from "./dropsPicker";
 
 export interface TodayPlan {
   loading: boolean;
@@ -29,12 +31,19 @@ export function useTodayPlan(): TodayPlan {
   // The floor in force today: a running challenge's own target for "Earned today" when it has one.
   const liveFloor = useMode().floor;
 
+  // Philosophy drops: the runtime that picks them loads only while they are on.
+  const dropsOn = settings.data?.drops_enabled === true;
+  const picker = useDropsPicker();
+  useEffect(() => {
+    if (dropsOn) activateDrops();
+  }, [dropsOn]);
+
   const loading = reminders.loading || blocks.loading || earnings.loading || settings.loading || workouts.loading;
 
   return useMemo(() => {
     const earned = earnings.data.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
     const floor = liveFloor;
-    const enabledCount = reminders.data.filter((r) => r.enabled).length;
+    const enabledCount = reminders.data.filter((r) => r.enabled).length + (dropsOn ? 1 : 0);
     if (loading || !settings.data) return { loading: true, plan: [], toSend: [], earned, floor, enabledCount };
     const day: ReminderDay = {
       date: today,
@@ -42,7 +51,9 @@ export function useTodayPlan(): TodayPlan {
       earned,
       restDay: workoutsFor(workouts.data, weekdayOf(today)).main?.kind === "rest",
     };
-    const opts = { floor, quiet_start: settings.data.quiet_start, quiet_end: settings.data.quiet_end };
+    const perDay = dropsPerDay(settings.data.drops_per_day);
+    const drops = dropsOn && picker ? { perDay, pick: (date: string, slot: number) => picker(date, slot, perDay) } : null;
+    const opts = { floor, quiet_start: settings.data.quiet_start, quiet_end: settings.data.quiet_end, drops };
     return {
       loading: false,
       plan: planDay(reminders.data, day, opts),
@@ -51,5 +62,5 @@ export function useTodayPlan(): TodayPlan {
       floor,
       enabledCount,
     };
-  }, [loading, today, reminders.data, blocks.data, earnings.data, settings.data, workouts.data, liveFloor]);
+  }, [loading, today, reminders.data, blocks.data, earnings.data, settings.data, workouts.data, liveFloor, dropsOn, picker]);
 }

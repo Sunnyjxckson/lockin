@@ -363,11 +363,17 @@ export function workoutsFor(all: readonly Workout[], weekday: Weekday): { main: 
 /** Wipe everything this device can reach and seed again. Settings only. */
 export async function resetAllData(): Promise<void> {
   const { TABLE_NAMES, SERVER_ONLY_TABLES } = await import("../types");
+  const { isMissingSchema } = await import("./soft");
   const remote = (await db.backendName()) === "remote";
   for (const table of TABLE_NAMES) {
     if (remote && SERVER_ONLY_TABLES.includes(table)) continue;
-    const rows = await db.list(table);
-    for (const r of rows) await db.remove(table, r.id);
+    try {
+      const rows = await db.list(table);
+      for (const r of rows) await db.remove(table, r.id);
+    } catch (e) {
+      // A table whose migration has not been run has nothing to wipe.
+      if (!isMissingSchema(e instanceof Error ? e.message : String(e))) throw e;
+    }
   }
   const { ensureSeeded } = await import("../seed");
   await ensureSeeded();

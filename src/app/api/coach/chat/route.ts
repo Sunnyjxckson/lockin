@@ -1,6 +1,6 @@
 // The coach answers a message.
 //
-// POST { context, turns, voice, used }
+// POST { context, turns, voice, used, library? }
 // Answers { body, source: "ai" | "fallback", quote, reason? }.
 //
 // The browser sends everything (in local mode the server has no data): the
@@ -12,6 +12,10 @@
 //   still fails, the rule-based reply is used.
 // - Without a key, or when the call fails, the rule-based reply comes back
 //   with source "fallback". Never an error for a valid request.
+// - `library` is a few lines from the Library the browser picked for what the
+//   message is about ({ key, text, by }). They go into the prompt next to the
+//   coach's own lines, and a quoted line has to be word for word from one or
+//   the other. A careful reply (more than a bad day) never gets any.
 // - Injury and emergency messages get the fixed line, with or without a key.
 
 import type Anthropic from "@anthropic-ai/sdk";
@@ -23,15 +27,18 @@ import {
   MAX_TURNS,
   chatCorrection,
   chatFallback,
+  careInPlay,
   chatPrompt,
   isChatContext,
   isTurns,
+  quotedKey,
   replyProblem,
   voiceOf,
   type ChatContext,
   type ChatTurn,
 } from "@/lib/logic/coachChat";
-import { QUOTES, quotesIn } from "@/lib/logic/coachQuotes";
+import { cleanCandidates, isLibKey, type LibCandidate } from "@/lib/logic/coachLibrary";
+import { QUOTES } from "@/lib/logic/coachQuotes";
 import type { CoachVoice } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -47,8 +54,8 @@ function textOf(message: Anthropic.Message): string {
     .trim();
 }
 
-async function writeWithModel(client: Anthropic, ctx: ChatContext, turns: ChatTurn[], voice: CoachVoice, used: string[]): Promise<{ body: string } | { reason: FallbackReason }> {
-  const prompt = chatPrompt(ctx, turns, voice, used);
+async function writeWithModel(client: Anthropic, ctx: ChatContext, turns: ChatTurn[], voice: CoachVoice, used: string[], library: LibCandidate[]): Promise<{ body: string } | { reason: FallbackReason }> {
+  const prompt = chatPrompt(ctx, turns, voice, used, library);
   const messages: Anthropic.MessageParam[] = [{ role: "user", content: prompt.user }];
 
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -56,7 +63,7 @@ async function writeWithModel(client: Anthropic, ctx: ChatContext, turns: ChatTu
     if (message.stop_reason === "refusal") return { reason: "refused" };
     const raw = textOf(message);
     const body = cleanCoachText(raw);
-    const problem = replyProblem(body, ctx, turns, used, prompt.care);
+    const problem = replyProblem(body, ctx, turns, used, prompt.care, library);
     if (!problem) return { body };
     if (problem.kind === "empty") return { reason: "empty" };
     if (attempt === 1) return { reason: problem.kind === "too_long" ? "too_long" : problem.kind === "numbers" ? "numbers_not_in_data" : "no_read" };
@@ -70,6 +77,7 @@ interface ChatRequest {
   turns?: unknown;
   voice?: unknown;
   used?: unknown;
+  library?: unknown;
 }
 
 function readJson(text: string): ChatRequest | null {
@@ -97,11 +105,13 @@ export async function POST(request: Request) {
   if (last.sender !== "me" || !last.body.trim()) return Response.json({ error: "The last turn has to be their message." }, { status: 400 });
   const voice = voiceOf(parsed.voice);
   const known = new Set(QUOTES.map((q) => q.key));
-  const used = Array.isArray(parsed.used) ? parsed.used.filter((k): k is string => typeof k === "string" && known.has(k)) : [];
+  const used = Array.isArray(parsed.used) ? parsed.used.filter((k): k is string => typeof k === "string" && (known.has(k) || isLibKey(k))) : [];
+  // A conversation that has turned to something heavier gets no Library lines at all, whatever the browser sent.
+  const library = careInPlay(turns.slice(-6)) ? [] : cleanCandidates(parsed.library);
 
   let fallback: ReturnType<typeof chatFallback>;
   try {
-    fallback = chatFallback(last.body, ctx, voice, used);
+    fallback = chatFallback(last.body, ctx, voice, used, library);
   } catch {
     return Response.json({ error: "That context is missing fields." }, { status: 400 });
   }
@@ -114,8 +124,8 @@ export async function POST(request: Request) {
   if (!client) return aiFallback("no_key", rules);
 
   try {
-    const result = await writeWithModel(client, ctx, turns, voice, used);
-    if ("body" in result) return Response.json({ body: result.body, quote: quotesIn(result.body)[0] ?? null, source: "ai", model: anthropicModel() });
+    const result = await writeWithModel(client, ctx, turns, voice, used, library);
+    if ("body" in result) return Response.json({ body: result.body, quote: quotedKey(result.body, library), source: "ai", model: anthropicModel() });
     return aiFallback(result.reason, rules);
   } catch (err) {
     console.error("coach chat failed", err instanceof Error ? err.message : err);

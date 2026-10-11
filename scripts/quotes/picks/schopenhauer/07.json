@@ -1,0 +1,436 @@
+[
+  {
+    "text": "Ignorance is degrading only when found in company with riches.",
+    "work": "religion-a-dialogue",
+    "location": "On Books and Reading",
+    "plain": "Being ignorant is forgivable when you're poor and busy. With money and free time, it's just waste.",
+    "themes": [
+      "wealth",
+      "folly"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "This is the case with many learned persons: they have read themselves stupid.",
+    "work": "religion-a-dialogue",
+    "location": "On Books and Reading",
+    "plain": "You can consume so much that you stop thinking for yourself.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "A spring never free from the pressure of some foreign body at last loses its elasticity; and so does the mind if other people's thoughts are constantly forced upon it.",
+    "work": "religion-a-dialogue",
+    "location": "On Books and Reading",
+    "plain": "Constant input kills your own spring. Leave room for your own thoughts.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "The more you read, the fewer are the traces left by what you have read: the mind becomes like a tablet crossed over and over with writing.",
+    "work": "religion-a-dialogue",
+    "location": "On Books and Reading",
+    "plain": "Piling on more input means less sticks. Stop and chew on what you took in.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Herodotus relates that Xerxes wept at the sight of his army, which stretched further than the eye could reach, in the thought that of all these, after a hundred years, not one would be alive.",
+    "work": "religion-a-dialogue",
+    "location": "On Books and Reading",
+    "plain": "Even the biggest army ends up dead in a century. Keep your own stakes in proportion.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "You can never read bad literature too little, nor good literature too much. Bad books are intellectual poison; they destroy the mind.",
+    "work": "religion-a-dialogue",
+    "location": "On Books and Reading",
+    "plain": "Skip bad books entirely. You can't read good ones too much.",
+    "themes": [
+      "discipline",
+      "mind"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "There is only one mendacious being in the world, and that is man. Every other is true and sincere, and makes no attempt to conceal what it is, expressing its feelings just as they are.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Animals never fake it. Only people pretend to be something they aren't.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Real force of habit, as a matter of fact, rests upon that indolent, passive disposition which seeks to relieve the intellect and the will of a fresh choice, and so makes us do what we did yesterday and have done a hundred times before, and of which we know that it will attain its object.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Habit is the mind dodging a fresh decision. Do what you did yesterday and it gets easy.",
+    "themes": [
+      "discipline",
+      "mind"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "The deep grief we feel at the loss of a friend arises from the feeling that in every individual there is something which no words can express, something which is peculiarly his own and therefore irreparable.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "You can't replace a person because what made them them can't be put into words.",
+    "themes": [
+      "death",
+      "friendship"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "We may come to look upon the death of our enemies and adversaries, even long after it has occurred, with just as much regret as we feel for that of our friends, viz., when we miss them as witnesses of our brilliant success.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Sometimes you miss your rivals most when you win and they aren't around to see it.",
+    "themes": [
+      "friendship",
+      "reputation"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "That the sudden announcement of a very happy event may easily prove fatal rests upon the fact that happiness and misery depend merely on the proportion which our claims bear to what we get.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Happiness is what you get measured against what you expect. Lower the expectation and everything feels bigger.",
+    "themes": [
+      "happiness",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Hope is the result of confusing the desire that something should take place with the probability that it will.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Wanting it badly does not make it likely.",
+    "themes": [
+      "desire",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "He who has lost all hope has also lost all fear; this is the meaning of the expression \"desperate.\"",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "When you have nothing left to lose, fear goes with it.",
+    "themes": [
+      "fear",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "broke"
+    ]
+  },
+  {
+    "text": "We often happen to say things that may in some way or other be prejudicial to us; but we keep silent about things that might make us look ridiculous; because in this case effect follows very quickly on cause.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "People will risk their interests before they risk looking foolish.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "The pain of an unfulfilled wish is small in comparison with that of repentance; for the one stands in the presence of the vast open future, whilst the other has the irrevocable past closed behind it.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Regret hurts more than wanting, because the future is open and the past is shut. Act now.",
+    "themes": [
+      "time",
+      "desire"
+    ],
+    "moments": [
+      "doubting",
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "Money is human happiness in the abstract: he, then, who is no longer capable of enjoying human happiness in the concrete, devotes his heart entirely to money.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "People who can't enjoy real life end up chasing the number instead.",
+    "themes": [
+      "wealth",
+      "happiness"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Obstinacy is the result of the will forcing itself into the place of the intellect.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Stubbornness is wanting overruling thinking.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "If you want to find out your real opinion of anyone, observe the impression made upon you by the first sight of a letter from him.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Your gut reaction when their name pops up is your real opinion of them.",
+    "themes": [
+      "friendship",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Happy circumstances in life are like certain groups of trees. Seen from a distance they look very well: but go up to them and amongst them, and the beauty vanishes; you don't know where it can be; it is only trees you see. And so it is that we often envy the lot of others.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Other people's lives look great from far away. Up close it's just trees.",
+    "themes": [
+      "happiness",
+      "desire"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "The doctor sees all the weakness of mankind, the lawyer all the wickedness, the theologian all the stupidity.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Every profession sees one ugly side of people.",
+    "themes": [
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Now and then one learns something, but one forgets the whole day long.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "You learn a little and lose most of it. Keep at it anyway.",
+    "themes": [
+      "mind",
+      "time"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "So where there is a great deal of pride and vanity, there also will there be a great desire of vengeance.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "The bigger the ego, the bigger the urge to get even.",
+    "themes": [
+      "anger",
+      "reputation"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Vengeance taken will often tear the heart and torment the conscience: the motive to it is no longer active, and what remains is the evidence of our malice.",
+    "work": "religion-a-dialogue",
+    "location": "Psychological Observations",
+    "plain": "Revenge feels good until it's done. Then all that's left is what you did.",
+    "themes": [
+      "anger",
+      "mind"
+    ],
+    "moments": [
+      "angry",
+      "tempted"
+    ]
+  },
+  {
+    "text": "One might say with truth, Mankind are the devils of the earth, and the animals the souls they torment.",
+    "work": "religion-a-dialogue",
+    "location": "The Christian System",
+    "plain": "We treat animals the way devils would treat souls.",
+    "themes": [
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Our innate vanity, which is particularly sensitive in reference to our intellectual powers, will not suffer us to allow that our first position was wrong and our adversary's right.",
+    "work": "art-of-controversy",
+    "location": "Logic and Dialectic",
+    "plain": "Nobody wants to admit they were wrong about something they said out loud.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Two men often engage in a warm dispute, and then return to their homes each of the other's opinion, which he has exchanged for his own.",
+    "work": "art-of-controversy",
+    "location": "Logic and Dialectic",
+    "plain": "Arguments often end with each side holding the other's view, without noticing.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Truth is in the depths.",
+    "work": "art-of-controversy",
+    "location": "Logic and Dialectic",
+    "plain": "The truth is rarely on the surface of an argument.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Contradiction and contention irritate a man into exaggerating his statement.",
+    "work": "art-of-controversy",
+    "location": "Stratagem 23",
+    "plain": "Push back on someone and they overstate their case. Don't let that happen to you.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Every man prefers belief to the exercise of judgment, says Seneca; and it is therefore an easy matter if you have an authority on your side which your opponent respects.",
+    "work": "art-of-controversy",
+    "location": "Stratagem 30",
+    "plain": "People would rather believe than think, so they follow whoever sounds like an authority.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "There is no opinion, however absurd, which men will not readily embrace as soon as they can be brought to the conviction that it is generally adopted.",
+    "work": "art-of-controversy",
+    "location": "Stratagem 30",
+    "plain": "If enough people seem to believe it, people will believe anything.",
+    "themes": [
+      "folly",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "In short, there are very few who can think, but every man wants to have an opinion; and what remains but to take it ready-made from others, instead of forming opinions for himself?",
+    "work": "art-of-controversy",
+    "location": "Stratagem 30",
+    "plain": "Everyone wants an opinion, few want to think. Think for yourself.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Nothing is of greater moment to a man than the gratification of his vanity, and no wound is more painful than that which is inflicted on it.",
+    "work": "art-of-controversy",
+    "location": "Stratagem 38",
+    "plain": "Nothing hurts people like a hit to their ego. Remember that before you win an argument.",
+    "themes": [
+      "reputation",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "You may let the remainder say what they please, for every one is at liberty to be a fool--desipere est jus gentium.",
+    "work": "art-of-controversy",
+    "location": "Stratagem 38",
+    "plain": "Let fools be fools. It's their right.",
+    "themes": [
+      "folly",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  }
+]

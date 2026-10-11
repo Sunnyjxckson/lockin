@@ -1,0 +1,801 @@
+[
+  {
+    "text": "Well! the remedy for \"the distress\" is distress.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 48",
+    "plain": "The cure for being soft about pain is more real hardship.",
+    "themes": [
+      "adversity",
+      "pain"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "We get on with our bad conscience more easily than with our bad reputation.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 52",
+    "plain": "You can live with what you know about yourself. What people say about you is harder.",
+    "themes": [
+      "reputation",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "It has caused me the greatest trouble, and for ever causes me the greatest trouble, to perceive that unspeakably more depends upon what things are called, than on what they are.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 58",
+    "plain": "Names and labels steer the world more than facts do.",
+    "themes": [
+      "mind",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "All great noise causes one to place happiness in the calm and the distance.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 60",
+    "plain": "When life is loud you start dreaming of somewhere quiet.",
+    "themes": [
+      "happiness",
+      "solitude"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "One must learn the art of homage, as well as the art of contempt.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 100",
+    "plain": "Learn to honor what deserves it as well as to dismiss what does not.",
+    "themes": [
+      "self-mastery",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Storms and doubts and worms and wickedness are necessary to the tree, that it may manifest its species and the strength of its germ; let it perish if it is not strong enough!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 106",
+    "plain": "An idea or a person proves itself only under attack. If it dies, it was not strong enough.",
+    "themes": [
+      "adversity",
+      "courage"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "As an æsthetic phenomenon existence is still endurable to us; and by Art, eye and hand and above all the good conscience are given to us, to be able to make such a phenomenon out of ourselves.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 107",
+    "plain": "Life is bearable when you can shape it like a work of art, yourself included.",
+    "themes": [
+      "happiness",
+      "mind"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "After Buddha was dead people showed his shadow for centuries afterwards in a cave,—an immense frightful shadow. God is dead: but as the human race is constituted, there will perhaps be caves for millenniums yet, in which people will show his shadow,—And we—we have still to overcome his shadow!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 108",
+    "plain": "Old beliefs keep casting shadows long after they die. The work is walking out of them.",
+    "themes": [
+      "change",
+      "mind",
+      "courage"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The living being is only a species of dead being, and a very rare species.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 109",
+    "plain": "Death is the default. Being alive is the rare exception.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "There are only necessities: there is no one who commands, no one who obeys, no one who transgresses.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 109",
+    "plain": "No cosmic boss is watching or judging. Things just happen by necessity.",
+    "themes": [
+      "fate",
+      "mind"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Morality is the herd-instinct in the individual.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 116",
+    "plain": "Most of what you call your conscience is the crowd talking inside your head.",
+    "themes": [
+      "mind",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "To be alone, to feel independent, neither to obey nor to rule, to represent an individual—that was no pleasure to a person then, but a punishment; he was condemned \"to be an individual.\"",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 117",
+    "plain": "For most of history standing alone was punishment. It still feels that way, so expect it.",
+    "themes": [
+      "solitude",
+      "courage"
+    ],
+    "moments": [
+      "alone",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Life is no argument; error might be among the conditions of life.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 121",
+    "plain": "That something keeps you alive does not make it true.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "We have left the land and have gone aboard ship! We have broken down the bridge behind us,—nay, more, the land behind us!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 124",
+    "plain": "You committed and burned the way back. Now you sail.",
+    "themes": [
+      "courage",
+      "change"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "God is dead! God remains dead! And we have killed him!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 125",
+    "plain": "The old foundations are gone and we did it. Nobody is coming to hand you meaning.",
+    "themes": [
+      "change",
+      "fate"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "Mystical explanations are regarded as profound; the truth is that they do not even go the length of being superficial.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 126",
+    "plain": "Vague and mystical answers sound deep but say nothing.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "The Christian resolution to find the world ugly and bad has made the world ugly and bad.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 130",
+    "plain": "If you decide the world is bad, you start living in a bad one.",
+    "themes": [
+      "mind",
+      "happiness"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "We also are to grow and blossom out of ourselves, free and fearless, in innocent selfishness!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 99",
+    "plain": "Grow from your own roots, without fear or apology.",
+    "themes": [
+      "courage",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "The best thing in a great victory is that it deprives the conqueror of the fear of defeat.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 163",
+    "plain": "Winning big kills the fear of losing, which is the real prize.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "We only speak about being sick of men when we can no longer digest them, and yet have the stomach full of them.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 167",
+    "plain": "Disgust with people usually means you took in too much of them.",
+    "themes": [
+      "solitude",
+      "friendship"
+    ],
+    "moments": [
+      "tired",
+      "alone"
+    ]
+  },
+  {
+    "text": "He who knows that he is profound strives for clearness; he who would like to appear profound to the multitude strives for obscurity.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 173",
+    "plain": "Real depth is clear. Fog is for people faking it.",
+    "themes": [
+      "mind",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Thoughts are the shadows of our sentiments—always, however, obscurer, emptier, and simpler.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 179",
+    "plain": "Your feelings run deeper than your thoughts about them.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "When one lives alone one does not speak too loudly, and one does not write too loudly either, for one fears the hollow reverberation—the criticism of the nymph Echo.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 182",
+    "plain": "Alone, you get quieter and more honest, because nobody is there to echo your noise.",
+    "themes": [
+      "solitude",
+      "mind"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "He is a thinker: that is to say, he knows how to take things more simply than they are.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 189",
+    "plain": "Good thinkers cut things down to something you can use.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "We hear only the questions to which we are capable of finding an answer.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 196",
+    "plain": "You can only notice what you are ready to understand.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Liberality is often only a form of timidity in the rich.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 199",
+    "plain": "Some generosity is just fear wearing a nice outfit.",
+    "themes": [
+      "wealth",
+      "fear"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Need is supposed to be the cause of things; but in truth it is often only the effect of the things themselves.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 205",
+    "plain": "We think need creates things, but owning things creates the need.",
+    "themes": [
+      "wealth",
+      "desire"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "You have a noble ideal before your eyes: but are you also such a noble stone that such a divine image could be formed out of you? And without that—is not all your labour barbaric sculpturing?",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 215",
+    "plain": "A big vision needs material worth carving. Are you building yourself into someone who can hold it?",
+    "themes": [
+      "discipline",
+      "self-mastery",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "With a very loud voice a person is almost incapable of reflecting on subtle matters.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 216",
+    "plain": "Loud people miss the fine points.",
+    "themes": [
+      "mind",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "We say the strongest things simply, provided people are about us who believe in our strength:—such an environment educates to \"simplicity of style.\"",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 226",
+    "plain": "Strong people speak plainly. Insecure people shout and pile on emphasis.",
+    "themes": [
+      "self-mastery",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Out of obstinacy he holds fast to a cause of which the questionableness has become obvious,—he calls that, however, his \"loyalty.\"",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 229",
+    "plain": "Stubbornness often hides under the word loyalty. Check which one you are doing.",
+    "themes": [
+      "folly",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Either one does not dream at all, or one dreams in an interesting manner. One must learn to be awake in the same fashion:—either not at all, or in an interesting manner.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 232",
+    "plain": "Do not sleepwalk through your days. Be awake on purpose or not at all.",
+    "themes": [
+      "discipline",
+      "time"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "What I now do, or neglect to do, is as important for all that is to come, as the greatest event of the past: in this immense perspective of effects all actions are equally great and small.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 233",
+    "plain": "What you do or skip today echoes forward as much as any big event.",
+    "themes": [
+      "time",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Even our thoughts we are unable to render completely in words.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 244",
+    "plain": "Words never carry the whole thought.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "All habits make our hand wittier and our wit unhandier.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 247",
+    "plain": "Habit makes you skilled at the doing and dull at the thinking.",
+    "themes": [
+      "discipline",
+      "mind"
+    ],
+    "moments": [
+      "tired"
+    ]
+  },
+  {
+    "text": "Of what account is a book that never carries us away beyond all books!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 248",
+    "plain": "A book that does not push you past books is not worth much.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Great natures suffer otherwise than their worshippers imagine; they suffer most severely from the ignoble, petty emotions of certain evil moments; in short, from doubt of their own greatness;—not however from the sacrifices and martyrdoms which their tasks require of them.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 251",
+    "plain": "Great people are hurt less by the sacrifices than by their own petty moments of self-doubt.",
+    "themes": [
+      "pain",
+      "courage",
+      "mind"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "\"Better to remain in debt than to pay with money which does not bear our stamp!\"—that is what our sovereignty prefers.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 252",
+    "plain": "Better to stay in debt than to pay with something that is not yours.",
+    "themes": [
+      "wealth",
+      "self-mastery"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "One day we attain our goal—and then refer with pride to the long journeys we have made to reach it. In truth, we did not notice that we travelled.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 253",
+    "plain": "The long climb feels like nothing when you look back. You only noticed you were moving once you arrived.",
+    "themes": [
+      "time",
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "He who is always thoroughly occupied is rid of all embarrassment.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 254",
+    "plain": "Stay busy with real work and self-consciousness fades.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "No conqueror believes in chance.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 258",
+    "plain": "People who win do not credit luck, they act like it is on them.",
+    "themes": [
+      "power",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "What is originality? To see something that does not yet bear a name, that cannot yet be named, although it is before everybody's eyes.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 261",
+    "plain": "Original is seeing what is already in front of everyone but has no name yet.",
+    "themes": [
+      "mind",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "What we do is never understood, but only praised and blamed.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 264",
+    "plain": "People will never fully get what you do. They will only cheer or boo.",
+    "themes": [
+      "reputation"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "He who is great is cruel to his second-rate virtues and judgments.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 266",
+    "plain": "Greatness means cutting down your own good enough habits and opinions.",
+    "themes": [
+      "discipline",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "With a high aim a person is superior even to justice, and not only to his deeds and his judges.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 267",
+    "plain": "A big enough goal puts you above your past and your critics.",
+    "themes": [
+      "courage",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "To face simultaneously one's greatest suffering and one's highest hope.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 268",
+    "plain": "Being a hero means holding your worst pain and your biggest hope in the same hand.",
+    "themes": [
+      "courage",
+      "pain"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "\"Thou shalt become what thou art.\"",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 270",
+    "plain": "Become who you already are underneath.",
+    "themes": [
+      "self-mastery",
+      "fate"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "To spare a person shame.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 274",
+    "plain": "The kindest thing is to not humiliate someone.",
+    "themes": [
+      "friendship",
+      "love"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "To be no longer ashamed of oneself.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 275",
+    "plain": "Freedom is the day you stop being ashamed of who you are.",
+    "themes": [
+      "self-mastery",
+      "courage"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "Amor fati: let that henceforth be my love! I do not want to wage war with the ugly. I do not want to accuse, I do not want even to accuse the accusers.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 276",
+    "plain": "Love your fate. Stop fighting what is ugly and stop blaming, even the blamers.",
+    "themes": [
+      "fate",
+      "self-mastery",
+      "anger"
+    ],
+    "moments": [
+      "angry",
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Looking aside, let that be my sole negation! And all in all, to sum up: I wish to be at any time hereafter only a yea-sayer!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 276",
+    "plain": "Say no only by looking away. Otherwise just say yes to life.",
+    "themes": [
+      "happiness",
+      "self-mastery"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Everyone wants to be foremost in this future,—and yet death and the stillness of death are the only things certain and common to all in this future!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 278",
+    "plain": "Everybody races for the future while the only sure thing in it is death.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "How strange that this sole thing that is certain and common to all, exercises almost no influence on men, and that they are the furthest from regarding themselves as the brotherhood of death!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 278",
+    "plain": "We all die and almost nobody lets that change how they live.",
+    "themes": [
+      "death",
+      "time"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "We were friends, and have become strangers to each other. But this is as it ought to be, and we do not want either to conceal or obscure the fact, as if we had to be ashamed of it.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 279",
+    "plain": "Friends drift apart. That is normal, and you do not have to be ashamed of it.",
+    "themes": [
+      "friendship",
+      "change"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Masters of the first rank are recognised by knowing in a perfect manner how to find the end, in the whole as well as in the part; be it the end of a melody or of a thought, be it the fifth act of a tragedy or of a state affair.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 281",
+    "plain": "The real masters know how to finish. The rest get restless near the end.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Build your cities on the slope of Vesuvius! Send your ships into unexplored seas! Live in war with your equals and with yourselves!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 283",
+    "plain": "Take risks. Build near the danger and compete hard, mostly with yourself.",
+    "themes": [
+      "courage",
+      "adversity",
+      "power"
+    ],
+    "moments": [
+      "afraid",
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "To \"give style\" to one's character—that is a grand and a rare art!",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 290",
+    "plain": "Shaping your own character like a craft is rare and takes real art.",
+    "themes": [
+      "self-mastery",
+      "discipline"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "He who is dissatisfied with himself is ever ready to avenge himself on that account: we others will be his victims, if only in having always to endure his ugly aspect.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 290",
+    "plain": "People who are unhappy with themselves make everyone around them pay for it.",
+    "themes": [
+      "anger",
+      "self-mastery"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The most unendurable thing, to be sure, the really terrible thing, would be a life without habits, a life which continually required improvisation:—that would be my banishment and my Siberia.",
+    "work": "joyful-wisdom",
+    "location": "Aphorism 295",
+    "plain": "Even a restless person needs some routine. Pure improvising would be exile.",
+    "themes": [
+      "discipline",
+      "change"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  }
+]

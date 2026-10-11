@@ -9,7 +9,9 @@ import { floorOn, modeOn } from "@/lib/logic/challenge";
 import { addDays, todayNY, weekdayOf } from "@/lib/logic/dates";
 import type { ReminderDay } from "@/lib/logic/reminders";
 import type { DateStr } from "@/lib/types";
-import type { CronData, CronDeps } from "./cron";
+import pool from "@/data/quotes-short.json";
+import { dropCandidates, dropMessage, dropsPerDay, pickDrop, type ShortPool } from "@/lib/logic/drops";
+import type { CronData, CronDeps, DropSource } from "./cron";
 import type { PushTarget } from "./push";
 
 const RUN_ID = "cron";
@@ -38,6 +40,8 @@ export async function loadCronData(dates: DateStr[]): Promise<CronData> {
     }),
   );
   return {
+    // A settings row from before the 0015 migration has no drops columns: drops are off.
+    drops: { enabled: settings?.drops_enabled === true, perDay: dropsPerDay(settings?.drops_per_day) },
     reminders,
     floor: floorOn(settings?.daily_floor ?? 0, running, earned?.id),
     quiet_start: settings?.quiet_start ?? "23:00",
@@ -56,8 +60,32 @@ export async function listSubscriptions(): Promise<PushTarget[]> {
   return rows.map((r) => ({ endpoint: r.endpoint, p256dh: r.p256dh, auth: r.auth }));
 }
 
+const shortPool = pool as unknown as ShortPool;
+
+/**
+ * Philosophy drops on the server. The plan picks from the date and slot over
+ * the bundled short quotes (no read state, so nothing is loaded to plan). At
+ * the moment a drop is sent it asks about just that drop's few candidates and
+ * takes the first one not read in the Library: a handful of lookups, only
+ * when a drop is actually due.
+ */
+export const dropSource: DropSource = {
+  pick: (date, slot, perDay) => {
+    const q = pickDrop(shortPool, date, slot, perDay);
+    return q ? dropMessage(shortPool, q) : null;
+  },
+  async resolve(date, slot, perDay) {
+    const candidates = dropCandidates(shortPool, date, slot, perDay);
+    const reads = await Promise.all(candidates.map((c) => db.first("quote_state", { eq: { quote_id: c.id } }).then((r) => !!r?.read_at, () => false)));
+    const read = new Set(candidates.filter((_, i) => reads[i]).map((c) => c.id));
+    const q = pickDrop(shortPool, date, slot, perDay, (id) => read.has(id));
+    return q ? dropMessage(shortPool, q) : null;
+  },
+};
+
 export function cronStore(): Omit<CronDeps, "now" | "send"> {
   return {
+    drops: dropSource,
     loadData: loadCronData,
     getLastRun,
     async setLastRun(at) {

@@ -1,0 +1,848 @@
+[
+  {
+    "text": "Not the height, it is the declivity that is terrible!",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 21",
+    "plain": "Climbing isn't the scary part. The drop below you is.",
+    "themes": [
+      "fear",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "The greatest events—are not our noisiest, but our stillest hours.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 18",
+    "plain": "What matters most happens quietly, not in the loud moments.",
+    "themes": [
+      "work",
+      "mind"
+    ],
+    "moments": [
+      "doubting",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Not around the inventors of new noise, but around the inventors of new values, doth the world revolve; INAUDIBLY it revolveth.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 18",
+    "plain": "The world turns around people who change what we value, not around whoever is loudest.",
+    "themes": [
+      "power",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "To redeem what is past, and to transform every “It was” into “Thus would I have it!”—that only do I call redemption!",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 20",
+    "plain": "You can't change what happened, but you can own it and decide it was what you wanted.",
+    "themes": [
+      "fate",
+      "time"
+    ],
+    "moments": [
+      "doubting",
+      "angry"
+    ]
+  },
+  {
+    "text": "Not backward can the Will will; that it cannot break time and time’s desire—that is the Will’s lonesomest tribulation.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 20",
+    "plain": "Revenge is rage at the fact that time only runs forward.",
+    "themes": [
+      "time",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "Freedom do I love, and the air over fresh soil; rather would I sleep on ox-skins than on their honours and dignities.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 16",
+    "plain": "I'd take a rough bed and my freedom over titles that come with strings.",
+    "themes": [
+      "self-mastery",
+      "wealth"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Dare only to believe in yourselves—in yourselves and in your inward parts! He who doth not believe in himself always lieth.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 15",
+    "plain": "If you don't trust yourself, you end up lying to everyone, yourself first.",
+    "themes": [
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "This is my first manly prudence, that I allow myself to be deceived, so as not to be on my guard against deceivers.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 21",
+    "plain": "Getting burned sometimes beats living guarded against everyone.",
+    "themes": [
+      "friendship",
+      "courage"
+    ],
+    "moments": [
+      "afraid",
+      "alone"
+    ]
+  },
+  {
+    "text": "And he who would not languish amongst men, must learn to drink out of all glasses; and he who would keep clean amongst men, must know how to wash himself even with dirty water.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 21",
+    "plain": "To live among people without going sour, take them as they are and stay clean anyway.",
+    "themes": [
+      "friendship",
+      "self-mastery"
+    ],
+    "moments": [
+      "tired",
+      "angry"
+    ]
+  },
+  {
+    "text": "Is not wounded vanity the mother of all tragedies? Where, however, pride is wounded, there groweth up something better than pride.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 21",
+    "plain": "A bruised ego causes most disasters. A bruised pride can grow into something real.",
+    "themes": [
+      "reputation",
+      "adversity"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Loving and perishing: these have rhymed from eternity. Will to love: that is to be ready also for death.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 15",
+    "plain": "Loving anything means accepting you can lose it.",
+    "themes": [
+      "love",
+      "death"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Verily, even for dying have we become too weary; now do we keep awake and live on—in sepulchres.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 19",
+    "plain": "Some exhaustion is so deep you're not living, just lingering in your own grave.",
+    "themes": [
+      "death",
+      "mind"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "To execute great things is difficult: but the more difficult task is to command great things.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 22",
+    "plain": "Doing the work is hard. Having the nerve to lead it is harder.",
+    "themes": [
+      "power",
+      "work"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "What matter about their mockery! Thou art one who hast unlearned to obey: now shalt thou command!",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 22",
+    "plain": "Their mockery is nothing. You've outgrown taking orders, so lead.",
+    "themes": [
+      "reputation",
+      "power"
+    ],
+    "moments": [
+      "doubting",
+      "afraid"
+    ]
+  },
+  {
+    "text": "The dew falleth on the grass when the night is most silent.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 22",
+    "plain": "Growth lands in the quiet hours, when it looks like nothing is happening.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "doubting",
+      "alone"
+    ]
+  },
+  {
+    "text": "It is the stillest words which bring the storm. Thoughts that come with doves’ footsteps guide the world.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 22",
+    "plain": "The quiet ideas are the ones that end up steering everything.",
+    "themes": [
+      "mind",
+      "power"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "O Zarathustra, thy fruits are ripe, but thou art not ripe for thy fruits!",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 22",
+    "plain": "The work is ready before you are. Go grow into it.",
+    "themes": [
+      "self-mastery",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "We also know too little, and are bad learners: so we are obliged to lie.",
+    "work": "zarathustra",
+    "location": "Part 2, Discourse 17",
+    "plain": "When we don't know enough, we bluff.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Thou goest the way to thy greatness: it must now be thy best courage that there is no longer any path behind thee!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 1",
+    "plain": "No way back is your best weapon. Now you have to go forward.",
+    "themes": [
+      "courage",
+      "fate"
+    ],
+    "moments": [
+      "afraid",
+      "doubting"
+    ]
+  },
+  {
+    "text": "And if all ladders henceforth fail thee, then must thou learn to mount upon thine own head: how couldst thou mount upward otherwise?",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 1",
+    "plain": "When every ladder breaks, you climb on your own head. There's no other way up.",
+    "themes": [
+      "adversity",
+      "self-mastery"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Now must the gentlest in thee become the hardest.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 1",
+    "plain": "The soft part of you has to get tough now.",
+    "themes": [
+      "discipline",
+      "adversity"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "He who hath always much-indulged himself, sickeneth at last by his much-indulgence.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 1",
+    "plain": "Spoil yourself long enough and it makes you sick.",
+    "themes": [
+      "discipline",
+      "desire"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "Out of the deepest must the highest come to its height.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 1",
+    "plain": "The highest peaks rise from the lowest depths. Your worst stretch is what you climb from.",
+    "themes": [
+      "adversity",
+      "pain"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "LOVE is the danger of the lonesomest one, love to anything, IF IT ONLY LIVE!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 1",
+    "plain": "When you're lonely, you'll love anything that moves, and that is the trap.",
+    "themes": [
+      "love",
+      "solitude"
+    ],
+    "moments": [
+      "alone",
+      "tempted"
+    ]
+  },
+  {
+    "text": "Courage, however, is the best slayer, courage which attacketh: it slayeth even death itself; for it saith: “WAS THAT life? Well! Once more!”",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 2",
+    "plain": "Courage kills fear of death by looking at life and saying: again.",
+    "themes": [
+      "courage",
+      "death"
+    ],
+    "moments": [
+      "afraid",
+      "tired"
+    ]
+  },
+  {
+    "text": "Courage slayeth also giddiness at abysses: and where doth man not stand at abysses! Is not seeing itself—seeing abysses?",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 2",
+    "plain": "Everyone stands at an edge somewhere. Looking clearly means seeing the drop.",
+    "themes": [
+      "courage",
+      "fear"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "In their hearts they want simply one thing most of all: that no one hurt them.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 5",
+    "plain": "Most people mainly want to avoid getting hurt, and they call that virtue.",
+    "themes": [
+      "fear",
+      "folly"
+    ],
+    "moments": [
+      "afraid"
+    ]
+  },
+  {
+    "text": "Ye ever become smaller, ye small people! Ye crumble away, ye comfortable ones!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 5",
+    "plain": "Comfort shrinks you a little more every day.",
+    "themes": [
+      "discipline",
+      "adversity"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Too tender, too yielding: so is your soil! But for a tree to become GREAT, it seeketh to twine hard roots around hard rocks!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 5",
+    "plain": "Big things grow where the ground is hard. Soft soil makes small trees.",
+    "themes": [
+      "adversity",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Ah, that ye would renounce all HALF-willing, and would decide for idleness as ye decide for action!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 5",
+    "plain": "Quit the half-effort. Either rest fully or act fully.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Do ever what ye will—but first be such as CAN WILL.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 5",
+    "plain": "Do what you want, but first become someone with a real will.",
+    "themes": [
+      "self-mastery",
+      "discipline"
+    ],
+    "moments": [
+      "tempted"
+    ]
+  },
+  {
+    "text": "With a wickedness do I begin every day: I mock at the winter with a cold bath: on that account grumbleth my stern house-mate.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 6",
+    "plain": "Start the day by doing the hard thing on purpose, cold bath and all.",
+    "themes": [
+      "discipline",
+      "pain"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "A poor bed warmeth me more than a rich one, for I am jealous of my poverty. And in winter she is most faithful unto me.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 6",
+    "plain": "Being broke can be a friend that keeps you hungry and honest.",
+    "themes": [
+      "wealth",
+      "adversity"
+    ],
+    "moments": [
+      "broke"
+    ]
+  },
+  {
+    "text": "Never in my life did I creep before the powerful; and if ever I lied, then did I lie out of love.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 6",
+    "plain": "I never groveled to anyone with power.",
+    "themes": [
+      "power",
+      "reputation"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "To one man, lonesomeness is the flight of the sick one; to another, it is the flight FROM the sick ones.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 6",
+    "plain": "Being alone can be running away from life or running away from the people draining it.",
+    "themes": [
+      "solitude",
+      "mind"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "They hound one another, and know not whither! They inflame one another, and know not why!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 7",
+    "plain": "The crowd rushes and fights with no idea where it is going.",
+    "themes": [
+      "folly",
+      "reputation"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "They are cold, and seek warmth from distilled waters: they are inflamed, and seek coolness from frozen spirits; they are all sick and sore through public opinion.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 7",
+    "plain": "Public opinion makes people sick, and they chase the wrong cures.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "This precept, however, give I unto thee, in parting, thou fool: Where one can no longer love, there should one—PASS BY!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 7",
+    "plain": "Where you can't love anymore, walk past. Don't waste time on the fight.",
+    "themes": [
+      "love",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "The half-and-half spoil every whole.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 8",
+    "plain": "Half-committed people ruin the whole thing.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "doubting",
+      "tempted"
+    ]
+  },
+  {
+    "text": "One thing is forsakenness, another matter is lonesomeness: THAT hast thou now learned!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 9",
+    "plain": "Being abandoned and choosing solitude are different things.",
+    "themes": [
+      "solitude",
+      "mind"
+    ],
+    "moments": [
+      "alone"
+    ]
+  },
+  {
+    "text": "Everything among them talketh; no one knoweth any longer how to understand. Everything falleth into the water; nothing falleth any longer into deep wells.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 9",
+    "plain": "Everyone talks and nothing sinks in deep.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Everything among them talketh, nothing succeedeth any longer and accomplisheth itself. Everything cackleth, but who will still sit quietly on the nest and hatch eggs?",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 9",
+    "plain": "Everyone is loud, few sit still long enough to finish anything.",
+    "themes": [
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "He who liveth amongst the good—pity teacheth him to lie. Pity maketh stifling air for all free souls.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 9",
+    "plain": "Constant pity makes you lie to be gentle, and it smothers free people.",
+    "themes": [
+      "friendship",
+      "self-mastery"
+    ],
+    "moments": [
+      "alone",
+      "tired"
+    ]
+  },
+  {
+    "text": "Thereof could I sing a song—and WILL sing it: though I be alone in an empty house, and must sing it to mine own ears.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 11",
+    "plain": "I'll make the thing even if the room is empty and the only audience is me.",
+    "themes": [
+      "solitude",
+      "work"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "One must learn to love oneself—thus do I teach—with a wholesome and healthy love: that one may endure to be with oneself, and not go roving about.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 11",
+    "plain": "Learn to like your own company so you stop running from it.",
+    "themes": [
+      "self-mastery",
+      "solitude"
+    ],
+    "moments": [
+      "alone",
+      "doubting"
+    ]
+  },
+  {
+    "text": "This however is my teaching: he who wisheth one day to fly, must first learn standing and walking and running and climbing and dancing:—one doth not fly into flying!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 11",
+    "plain": "No skipping steps. You walk, run, and climb before you fly.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "“This—is now MY way,—where is yours?” Thus did I answer those who asked me “the way.” For THE way—it doth not exist!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 11",
+    "plain": "There's no one right path. Find yours.",
+    "themes": [
+      "self-mastery",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "But man himself only is hard to bear! The reason thereof is that he carrieth too many extraneous things on his shoulders.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 11",
+    "plain": "Life feels heavy because you carry other people's rules and words.",
+    "themes": [
+      "mind",
+      "pain"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ]
+  },
+  {
+    "text": "He who cannot command himself shall obey. And many a one CAN command himself, but still sorely lacketh self-obedience!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "If you can't rule yourself, someone else will. And giving orders to yourself isn't enough, you have to follow them.",
+    "themes": [
+      "self-mastery",
+      "discipline"
+    ],
+    "moments": [
+      "tempted",
+      "tired"
+    ]
+  },
+  {
+    "text": "Let it not be your honour henceforth whence ye come, but whither ye go!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "Where you came from doesn't count. Where you're headed does.",
+    "themes": [
+      "reputation",
+      "change"
+    ],
+    "moments": [
+      "doubting",
+      "broke"
+    ]
+  },
+  {
+    "text": "The daring venture, the prolonged distrust, the cruel Nay, the tedium, the cutting-into-the-quick—how seldom do THESE come together! Out of such seed, however—is truth produced!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "Truth comes from risk, doubt, saying no, boredom, and pain. Few stick with all of it.",
+    "themes": [
+      "adversity",
+      "mind"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ]
+  },
+  {
+    "text": "In the best there is still something to loathe; and the best is still something that must be surpassed!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "Even your best has flaws, and even your best is something to beat.",
+    "themes": [
+      "change",
+      "self-mastery"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "Willing emancipateth: for willing is creating: so do I teach.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "Deciding what you want frees you, because wanting is how things get made.",
+    "themes": [
+      "self-mastery",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ]
+  },
+  {
+    "text": "And such is always the nature of weak men: they lose themselves on their way. And at last asketh their weariness: “Why did we ever go on the way? All is indifferent!”",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "People who go soft lose the thread, then call the whole trip pointless.",
+    "themes": [
+      "discipline",
+      "folly"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Only a span-breadth is he from his goal; but from weariness hath he lain down obstinately in the dust, this brave one!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "He quit a hand's width from the finish because he was tired.",
+    "themes": [
+      "discipline",
+      "work"
+    ],
+    "moments": [
+      "tired",
+      "doubting"
+    ]
+  },
+  {
+    "text": "I love the brave: but it is not enough to be a swordsman,—one must also know WHEREON to use swordsmanship!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "Being tough isn't enough. Know what is worth fighting.",
+    "themes": [
+      "courage",
+      "anger"
+    ],
+    "moments": [
+      "angry"
+    ]
+  },
+  {
+    "text": "And lost be the day to us in which a measure hath not been danced. And false be every truth which hath not had laughter along with it!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "A day without joy is a lost day, and a truth with no laughter in it is suspect.",
+    "themes": [
+      "happiness",
+      "mind"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ]
+  },
+  {
+    "text": "Why so soft, so submissive and yielding? Why is there so much negation and abnegation in your hearts? Why is there so little fate in your looks?",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "You have gone too soft to want anything big. Get some destiny back in your eyes.",
+    "themes": [
+      "discipline",
+      "courage"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "This new table, O my brethren, put I up over you: BECOME HARD!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "Stop going easy on yourself. Toughen up where it counts.",
+    "themes": [
+      "discipline",
+      "adversity"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ]
+  },
+  {
+    "text": "O thou, my Will! Thou change of every need, MY needfulness! Preserve me from all small victories!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 12",
+    "plain": "Don't let a small win make you stop short of the big thing.",
+    "themes": [
+      "desire",
+      "self-mastery"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ]
+  },
+  {
+    "text": "Everything goeth, everything returneth; eternally rolleth the wheel of existence. Everything dieth, everything blossometh forth again; eternally runneth on the year of existence.",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 13",
+    "plain": "Everything ends and starts again. The wheel keeps turning.",
+    "themes": [
+      "time",
+      "death",
+      "change"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ]
+  },
+  {
+    "text": "Woe unto all loving ones who have not an elevation which is above their pity!",
+    "work": "zarathustra",
+    "location": "Part 3, Discourse 16",
+    "plain": "Love without a spine above its pity does damage.",
+    "themes": [
+      "love",
+      "self-mastery"
+    ],
+    "moments": [
+      "tired"
+    ]
+  }
+]

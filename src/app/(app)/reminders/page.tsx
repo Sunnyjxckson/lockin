@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Bell, BellOff, BellRing, Check, MoonStar, PlusSquare, Send, Share, X } from "lucide-react";
 import { Button, Card, EmptyState, List, ListRow, PageHeader, Screen, Section, cn, useToast } from "@/components/ui";
@@ -57,8 +58,8 @@ function EnvRow({ name, set, note }: { name: string; set: boolean; note?: string
 
 function ReminderLine({ n, note }: { n: PlannedNotification; note?: string }) {
   const [clock, half] = formatTime(n.time).split(" ");
-  return (
-    <div className="flex min-h-[64px] items-center gap-4 py-3">
+  const inner = (
+    <>
       <span className="flex w-[84px] shrink-0 items-baseline gap-1">
         <span className="t-value text-ink">{clock}</span>
         <span className="t-caption text-ink-2">{half}</span>
@@ -67,7 +68,16 @@ function ReminderLine({ n, note }: { n: PlannedNotification; note?: string }) {
         <span className="block truncate text-[15px] text-ink">{n.title}</span>
         <span className="t-caption mt-0.5 block truncate text-ink-2">{note ?? n.body}</span>
       </span>
-    </div>
+    </>
+  );
+  const cls = "flex min-h-[64px] items-center gap-4 py-3";
+  // A philosophy drop opens its quote, as tapping the notification does.
+  return n.kind === "drop" ? (
+    <Link href={n.url} className={`${cls} pressable`} data-drop={n.key}>
+      {inner}
+    </Link>
+  ) : (
+    <div className={cls}>{inner}</div>
   );
 }
 

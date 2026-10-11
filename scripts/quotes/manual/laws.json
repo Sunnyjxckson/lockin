@@ -1,0 +1,644 @@
+[
+  {
+    "name": "Murphy's law",
+    "text": "Anything that can go wrong will go wrong.",
+    "by": "Attributed to Edward A. Murphy Jr.",
+    "year": "1949",
+    "source": "Rocket sled tests at Edwards Air Force Base",
+    "source_url": "https://en.wikipedia.org/wiki/Murphy%27s_law",
+    "plain": "Expect things to break. Plan for the failure so it does not catch you off guard.",
+    "themes": [
+      "adversity",
+      "fate"
+    ],
+    "moments": [
+      "overwhelmed",
+      "afraid"
+    ],
+    "origin": "Named for aerospace engineer Edward A. Murphy Jr. The name is generally traced to rocket sled tests at Muroc Army Air Field (later Edwards Air Force Base) in 1948 or 1949, after a mishap. Murphy's own wording was closer to: if there are two or more ways to do something and one of them ends in catastrophe, someone will do it that way. The short form reached the public through a press conference held by project leader John Paul Stapp."
+  },
+  {
+    "name": "Hofstadter's law",
+    "text": "It always takes longer than you expect, even when you take into account Hofstadter's law.",
+    "by": "Douglas Hofstadter",
+    "year": "1979",
+    "source": "Godel, Escher, Bach: An Eternal Golden Braid",
+    "source_url": "https://en.wikipedia.org/wiki/Hofstadter%27s_law",
+    "plain": "It will take longer than you planned, even after you pad the plan. Start earlier than feels necessary.",
+    "themes": [
+      "time",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ],
+    "origin": "Coined by Douglas Hofstadter in Godel, Escher, Bach (1979). The self-reference is the joke: padding your estimate does not fix it."
+  },
+  {
+    "name": "Parkinson's law",
+    "text": "Work expands so as to fill the time available for its completion.",
+    "by": "C. Northcote Parkinson",
+    "year": "1955",
+    "source": "The Economist, 19 November 1955",
+    "source_url": "https://en.wikipedia.org/wiki/Parkinson%27s_law",
+    "plain": "Give a task a week and it takes a week. Set a tighter deadline and the work shrinks to fit.",
+    "themes": [
+      "time",
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "tempted"
+    ],
+    "origin": "The opening observation of a satirical essay by naval historian C. Northcote Parkinson, published in The Economist on 19 November 1955, two days after a Royal Commission report on the British Civil Service."
+  },
+  {
+    "name": "Hanlon's razor",
+    "text": "Never attribute to malice that which is adequately explained by stupidity.",
+    "by": "Attributed to Robert J. Hanlon",
+    "year": "1980",
+    "source": "Murphy's Law Book Two, Arthur Bloch",
+    "source_url": "https://en.wikipedia.org/wiki/Hanlon%27s_razor",
+    "plain": "Most people who wrong you are careless, not plotting. Save the anger for when you have proof.",
+    "themes": [
+      "anger",
+      "mind"
+    ],
+    "moments": [
+      "angry"
+    ],
+    "origin": "Printed as Hanlon's razor in Arthur Bloch's Murphy's Law Book Two (1980), submitted by a Robert J. Hanlon about whom nothing else is known. Similar sentiments appear earlier, in H. G. Wells's The Wheels of Chance (1896) and Robert Heinlein's Logic of Empire (1941). The name echoes Occam's razor."
+  },
+  {
+    "name": "Sturgeon's law",
+    "text": "Ninety percent of everything is crud.",
+    "by": "Theodore Sturgeon",
+    "year": "1957",
+    "source": "Venture Science Fiction column, September 1957",
+    "source_url": "https://en.wikipedia.org/wiki/Sturgeon%27s_law",
+    "plain": "Most of everything is mediocre. Stop expecting the average to be good and go look for the ten percent.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ],
+    "origin": "Theodore Sturgeon wrote in his September 1957 Venture Science Fiction column that science fiction is ninety percent crud, but so is ninety percent of everything. He restated it in 1958 as: Ninety percent of everything is crud."
+  },
+  {
+    "name": "Occam's razor",
+    "text": "Entities are not to be multiplied without necessity.",
+    "by": "Attributed to William of Ockham; this wording is from John Punch",
+    "year": "1639",
+    "source": "John Punch, commentary on Duns Scotus",
+    "source_url": "https://en.wikipedia.org/wiki/Occam%27s_razor",
+    "plain": "The simplest explanation that fits the facts usually wins. Do not add moving parts you do not need.",
+    "themes": [
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed",
+      "doubting"
+    ],
+    "origin": "Named for the 14th century friar William of Ockham, who never wrote this sentence. Its familiar form is credited to the Irish Franciscan John Punch in 1639, who called it a common axiom of the Scholastics. Ockham's own versions include that plurality must never be posited without necessity."
+  },
+  {
+    "name": "Goodhart's law",
+    "text": "When a measure becomes a target, it ceases to be a good measure.",
+    "by": "Marilyn Strathern, after Charles Goodhart",
+    "year": "1997",
+    "source": "Marilyn Strathern, Improving Ratings: Audit in the British University System",
+    "source_url": "https://en.wikipedia.org/wiki/Goodhart%27s_law",
+    "plain": "Chase a number and people, you included, will game it. Watch what the number was meant to show.",
+    "themes": [
+      "mind",
+      "work",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "Economist Charles Goodhart expressed the core idea in a 1975 article on monetary policy: any observed statistical regularity will tend to collapse once pressure is placed upon it for control purposes. The short form is anthropologist Marilyn Strathern's 1997 rewording."
+  },
+  {
+    "name": "Gall's law",
+    "text": "A complex system that works is invariably found to have evolved from a simple system that worked.",
+    "by": "John Gall",
+    "year": "1975",
+    "source": "Systemantics: How Systems Work and Especially How They Fail",
+    "source_url": "https://en.wikipedia.org/wiki/John_Gall_(author)",
+    "plain": "Big things that work started small and worked. Build the simple version first and grow it.",
+    "themes": [
+      "work",
+      "discipline",
+      "change"
+    ],
+    "moments": [
+      "overwhelmed"
+    ],
+    "origin": "From John Gall's book on why systems fail, first published in 1975 as General Systemantics and reissued in 1977 as Systemantics. He adds that a complex system designed from scratch never works and cannot be patched up to make it work, so you have to start over with a working simple system."
+  },
+  {
+    "name": "Chesterton's fence",
+    "text": "If you don't see the use of it, I certainly won't let you clear it away. Go away and think. Then, when you can come back and tell me that you do see the use of it, I may allow you to destroy it.",
+    "by": "G. K. Chesterton",
+    "year": "1929",
+    "source": "The Thing, chapter The Drift from Domesticity",
+    "source_url": "https://www.chesterton.org/taking-a-fence-down/",
+    "plain": "Do not tear down a rule until you know why it was put there. Understand it first, then decide.",
+    "themes": [
+      "mind",
+      "folly",
+      "change"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ],
+    "origin": "From Chesterton's 1929 book The Thing. He imagines a reformer who finds a fence or gate across a road and wants it cleared away because he cannot see its use. The wiser reformer, he says, should answer with the lines quoted here."
+  },
+  {
+    "name": "The Peter principle",
+    "text": "In a hierarchy, every employee tends to rise to his level of incompetence.",
+    "by": "Laurence J. Peter and Raymond Hull",
+    "year": "1969",
+    "source": "The Peter Principle",
+    "source_url": "https://en.wikipedia.org/wiki/Peter_principle",
+    "plain": "People get promoted for doing well until they land in a job they cannot do. Know where you stop being good.",
+    "themes": [
+      "work",
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "Formulated from the research of Laurence J. Peter and published in 1969 under both names, though Raymond Hull wrote almost all of the text. The book also states the corollary that in time every post tends to be occupied by an employee who is incompetent to carry out its duties."
+  },
+  {
+    "name": "Brandolini's law",
+    "text": "The amount of energy needed to refute bullshit is an order of magnitude bigger than that needed to produce it.",
+    "by": "Alberto Brandolini",
+    "year": "2013",
+    "source": "Post on Twitter, January 2013",
+    "source_url": "https://en.wikipedia.org/wiki/Brandolini%27s_law",
+    "plain": "Nonsense is cheap to make and costly to answer. Pick your fights, because you cannot win them all.",
+    "themes": [
+      "anger",
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "tired"
+    ],
+    "origin": "Coined by Italian programmer Alberto Brandolini, who posted it on Twitter in January 2013."
+  },
+  {
+    "name": "Hick's law",
+    "text": "Increasing the number of choices will increase the decision time logarithmically.",
+    "by": "William Edmund Hick and Ray Hyman",
+    "year": "1952",
+    "source": "On the rate of gain of information, W. E. Hick",
+    "source_url": "https://en.wikipedia.org/wiki/Hick%27s_law",
+    "plain": "More options means slower decisions. Cut the menu down and you act sooner.",
+    "themes": [
+      "mind",
+      "time"
+    ],
+    "moments": [
+      "overwhelmed"
+    ],
+    "origin": "Named for psychologist William Edmund Hick, who began his reaction-time experiments in 1951 and published them in 1952, and for Ray Hyman, whose related paper followed in 1953. It is also called the Hick-Hyman law."
+  },
+  {
+    "name": "The Pareto principle",
+    "text": "For many outcomes, roughly 80% of consequences come from 20% of causes.",
+    "by": "Joseph M. Juran, after Vilfredo Pareto",
+    "year": "1941",
+    "source": "Juran's work on quality control, after Pareto's 1906 land ownership finding",
+    "source_url": "https://en.wikipedia.org/wiki/Pareto_principle",
+    "plain": "A few things drive most of your results. Find the vital few and give them your hours.",
+    "themes": [
+      "work",
+      "wealth",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed"
+    ],
+    "origin": "Economist Vilfredo Pareto noticed that about 80 percent of Italy's land was owned by 20 percent of the population. In 1941 quality engineer Joseph Juran developed it into a general rule for quality control, later calling it the vital few and the useful many."
+  },
+  {
+    "name": "Finagle's law",
+    "text": "Anything that can go wrong will, at the worst possible moment.",
+    "by": "Associated with John W. Campbell Jr.",
+    "year": "1962",
+    "source": "Finagle Factors, The Michigan Technic, December 1962",
+    "source_url": "https://en.wikipedia.org/wiki/Finagle%27s_law",
+    "plain": "Murphy's law with a mean streak: the failure lands when you can least afford it. Build in slack.",
+    "themes": [
+      "adversity",
+      "fate"
+    ],
+    "moments": [
+      "afraid",
+      "overwhelmed"
+    ],
+    "origin": "Often credited to Astounding Science Fiction editor John W. Campbell Jr. One of the earliest records is a December 1962 article, Finagle Factors, in The Michigan Technic, credited to Campbell under the byline I. Finaglin. The usual printed form has a dash before the last clause; a comma is used here."
+  },
+  {
+    "name": "Segal's law",
+    "text": "A man with a watch knows what time it is. A man with two watches is never sure.",
+    "by": "Unsigned item in the San Diego Union, later called Segal's law",
+    "year": "1930",
+    "source": "San Diego Union, 20 September 1930",
+    "source_url": "https://en.wikipedia.org/wiki/Segal%27s_law",
+    "plain": "One source gives you an answer. Two that disagree give you doubt. Pick a trusted source and move.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting",
+      "overwhelmed"
+    ],
+    "origin": "The saying first ran in the San Diego Union on 20 September 1930, in a longer item about jewelers advising men to carry two watches. It was later wrongly credited to radio man Lee Segall, and Arthur Bloch's Murphy's Law books spelled the name Segal."
+  },
+  {
+    "name": "Conway's law",
+    "text": "Organizations which design systems (in the broad sense used here) are constrained to produce designs which are copies of the communication structures of these organizations.",
+    "by": "Melvin E. Conway",
+    "year": "1968",
+    "source": "How Do Committees Invent?, Datamation, April 1968",
+    "source_url": "https://www.melconway.com/Home/Committees_Paper.html",
+    "plain": "What you build mirrors how your team talks. If you want a different product, fix how people work together.",
+    "themes": [
+      "work",
+      "mind"
+    ],
+    "moments": [
+      "overwhelmed"
+    ],
+    "origin": "From Melvin Conway's paper How Do Committees Invent?, published in Datamation in April 1968. The sentence quoted is the paper's own statement of its basic thesis."
+  },
+  {
+    "name": "Brooks's law",
+    "text": "Adding manpower to a late software project makes it later.",
+    "by": "Fred Brooks",
+    "year": "1975",
+    "source": "The Mythical Man-Month",
+    "source_url": "https://en.wikipedia.org/wiki/Brooks%27s_law",
+    "plain": "Throwing more people at a late project slows it down. Cut scope instead of adding bodies.",
+    "themes": [
+      "work",
+      "time"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tired"
+    ],
+    "origin": "Coined by Fred Brooks in his 1975 book The Mythical Man-Month."
+  },
+  {
+    "name": "Cunningham's law",
+    "text": "The best way to get the right answer on the Internet is not to ask a question; it's to post the wrong answer.",
+    "by": "Named for Ward Cunningham by Steven McGeady (Cunningham disclaims it)",
+    "year": "2010",
+    "source": "Steven McGeady, Schott's Vocab, The New York Times",
+    "source_url": "https://en.wikipedia.org/wiki/Ward_Cunningham",
+    "plain": "People rush to correct a wrong claim faster than they answer a question. Put your best guess out there.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "Steven McGeady named it in a May 2010 post on The New York Times' Schott's Vocab blog, describing advice Ward Cunningham gave him in the early 1980s. Cunningham himself calls it a misquote that disproves itself by propagating through the internet and says he never suggested asking questions by posting wrong answers."
+  },
+  {
+    "name": "Betteridge's law of headlines",
+    "text": "Any headline that ends in a question mark can be answered by the word no.",
+    "by": "Ian Betteridge",
+    "year": "2009",
+    "source": "Article by Ian Betteridge, February 2009",
+    "source_url": "https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines",
+    "plain": "If a headline asks a yes or no question, the honest answer is almost always no. Do not take the bait.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "British technology journalist Ian Betteridge wrote in a February 2009 article that this was his maxim for headlines that end in a question mark."
+  },
+  {
+    "name": "The Lindy effect",
+    "text": "The future life expectancy of some non-perishable thing, like a technology or an idea, is proportional to its current age.",
+    "by": "Albert Goldman (1964), generalized by Nassim Nicholas Taleb",
+    "year": "2012",
+    "source": "Antifragile, Nassim Nicholas Taleb",
+    "source_url": "https://en.wikipedia.org/wiki/Lindy_effect",
+    "plain": "Things that have lasted a long time will probably last longer. Trust the old books over the new hype.",
+    "themes": [
+      "time",
+      "change"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "Named for Lindy's deli in New York, where comedians gathered. Albert Goldman used the idea about television comedians in a 1964 article in The New Republic, Benoit Mandelbrot gave a version in 1982, and Nassim Nicholas Taleb extended it to technologies and ideas in Antifragile (2012)."
+  },
+  {
+    "name": "Amara's law",
+    "text": "We tend to overestimate the effect of a technology in the short run and underestimate the effect in the long run.",
+    "by": "Roy Amara",
+    "year": "1978",
+    "source": "Adage coined by Roy Amara of the Institute for the Future",
+    "source_url": "https://en.wikipedia.org/wiki/Roy_Amara",
+    "plain": "Change is slower than you hope this year and bigger than you expect in ten. Stay with it.",
+    "themes": [
+      "time",
+      "change",
+      "discipline"
+    ],
+    "moments": [
+      "doubting",
+      "tired"
+    ],
+    "origin": "Coined in 1978 by Roy Amara, an American researcher and futurist who was president of the Institute for the Future."
+  },
+  {
+    "name": "Kernighan's law",
+    "text": "Everyone knows that debugging is twice as hard as writing a program in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?",
+    "by": "Brian Kernighan and P. J. Plauger",
+    "year": "1978",
+    "source": "The Elements of Programming Style, 2nd edition",
+    "source_url": "https://www.linusakesson.net/programming/kernighans-lever",
+    "plain": "Fixing is harder than making. If you build at the limit of your skill, you cannot fix it. Keep it simple.",
+    "themes": [
+      "work",
+      "folly",
+      "discipline"
+    ],
+    "moments": [
+      "overwhelmed"
+    ],
+    "origin": "From the second edition of The Elements of Programming Style by Brian Kernighan and P. J. Plauger (first edition 1974, second edition 1978), chapter 2. The shorter form often quoted, that debugging is twice as hard as writing the code in the first place, compresses this passage."
+  },
+  {
+    "name": "The law of triviality",
+    "text": "The time spent on any item of the agenda will be in inverse proportion to the sum involved.",
+    "by": "C. Northcote Parkinson",
+    "year": "1957",
+    "source": "Parkinson's Law and Other Studies in Administration",
+    "source_url": "https://en.wikipedia.org/wiki/Law_of_triviality",
+    "plain": "Groups argue longest about small things everyone understands and rush the big ones. Spend your time on what matters.",
+    "themes": [
+      "time",
+      "folly",
+      "work"
+    ],
+    "moments": [
+      "overwhelmed",
+      "tempted"
+    ],
+    "origin": "Stated by C. Northcote Parkinson in Parkinson's Law and Other Studies in Administration (1957). His illustration is the bicycle shed, which everyone can picture, so it draws the most debate. Also called bikeshedding."
+  },
+  {
+    "name": "Hitchens's razor",
+    "text": "What can be asserted without evidence can also be dismissed without evidence.",
+    "by": "Christopher Hitchens",
+    "year": "2007",
+    "source": "God Is Not Great",
+    "source_url": "https://en.wikipedia.org/wiki/Hitchens%27s_razor",
+    "plain": "If someone offers no proof, you owe them no rebuttal. Do not argue against claims nobody backed up.",
+    "themes": [
+      "mind",
+      "courage"
+    ],
+    "moments": [
+      "angry",
+      "doubting"
+    ],
+    "origin": "Christopher Hitchens wrote it in God Is Not Great (2007), in a passage about miracles. It echoes the older Latin maxim Quod gratis asseritur, gratis negatur: what is freely asserted is freely denied."
+  },
+  {
+    "name": "Campbell's law",
+    "text": "The more any quantitative social indicator is used for social decision-making, the more subject it will be to corruption pressures and the more apt it will be to distort and corrupt the social processes it is intended to monitor.",
+    "by": "Donald T. Campbell",
+    "year": "1979",
+    "source": "Assessing the impact of planned social change, Evaluation and Program Planning",
+    "source_url": "https://en.wikipedia.org/wiki/Campbell%27s_law",
+    "plain": "Once a number decides who wins, people bend the number. Be careful what you reward.",
+    "themes": [
+      "folly",
+      "power",
+      "work"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "From social psychologist Donald T. Campbell's paper Assessing the impact of planned social change, published in Evaluation and Program Planning in 1979. Similar in spirit to Goodhart's law."
+  },
+  {
+    "name": "Sayre's law",
+    "text": "In any dispute the intensity of feeling is inversely proportional to the value of the issues at stake.",
+    "by": "Attributed to Wallace Sayre",
+    "year": "1950s",
+    "source": "Remark of Columbia political scientist Wallace Sayre",
+    "source_url": "https://en.wikipedia.org/wiki/Sayre%27s_law",
+    "plain": "The smaller the stakes, the nastier the fight. If you are furious over something small, step back.",
+    "themes": [
+      "anger",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ],
+    "origin": "Named for Columbia University political scientist Wallace Sayre. His colleague Herbert Kaufman dates the idea to the early 1950s and says Sayre usually put it as: the politics of the university are so intense because the stakes are so low. The wording here is the version credited to Charles Issawi."
+  },
+  {
+    "name": "The law of the instrument",
+    "text": "I suppose it is tempting, if the only tool you have is a hammer, to treat everything as if it were a nail.",
+    "by": "Abraham Maslow",
+    "year": "1966",
+    "source": "The Psychology of Science",
+    "source_url": "https://en.wikipedia.org/wiki/Law_of_the_instrument",
+    "plain": "If you only know one method, every problem starts to look like it needs that method. Widen your toolkit.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "Written by Abraham Maslow in The Psychology of Science (1966). Abraham Kaplan had stated the idea in 1964 as: give a small boy a hammer, and he will find that everything he encounters needs pounding."
+  },
+  {
+    "name": "Stigler's law of eponymy",
+    "text": "No scientific discovery is named after its original discoverer.",
+    "by": "Stephen Stigler",
+    "year": "1980",
+    "source": "Stigler's Law of Eponymy, Transactions of the New York Academy of Sciences",
+    "source_url": "https://en.wikipedia.org/wiki/Stigler%27s_law_of_eponymy",
+    "plain": "Credit goes to whoever made the idea famous, not who had it first. Do the work and make sure it is seen.",
+    "themes": [
+      "reputation",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "Statistician Stephen Stigler stated it in a 1980 paper in Transactions of the New York Academy of Sciences, a Festschrift for Robert K. Merton."
+  },
+  {
+    "name": "The ninety-ninety rule",
+    "text": "The first 90 percent of the code accounts for the first 90 percent of the development time. The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+    "by": "Tom Cargill, popularized by Jon Bentley",
+    "year": "1985",
+    "source": "Bumper-Sticker Computer Science, Programming Pearls, Communications of the ACM, September 1985",
+    "source_url": "https://en.wikipedia.org/wiki/Ninety%E2%80%93ninety_rule",
+    "plain": "The last stretch takes as long as everything before it. Finishing is its own project, so budget for it.",
+    "themes": [
+      "time",
+      "work",
+      "discipline"
+    ],
+    "moments": [
+      "tired",
+      "overwhelmed"
+    ],
+    "origin": "Credited to Tom Cargill of Bell Labs and popularized by Jon Bentley in his September 1985 Programming Pearls column in Communications of the ACM, where it was called the Rule of Credibility. The numbers add up to 180 percent on purpose."
+  },
+  {
+    "name": "Gresham's law",
+    "text": "Bad money drives out good.",
+    "by": "Named for Thomas Gresham by Henry Dunning Macleod",
+    "year": "1858",
+    "source": "Henry Dunning Macleod, who named it after Thomas Gresham",
+    "source_url": "https://en.wikipedia.org/wiki/Gresham%27s_law",
+    "plain": "When a cheap thing and a good thing trade at the same price, people keep the good one and spend the cheap one.",
+    "themes": [
+      "wealth",
+      "folly"
+    ],
+    "moments": [
+      "broke"
+    ],
+    "origin": "Named after Tudor financier Sir Thomas Gresham, who in a 1558 letter to Queen Elizabeth wrote that good and bad coin cannot circulate together. The name Gresham's law dates only to 1858, when economist Henry Dunning Macleod gave it."
+  },
+  {
+    "name": "Benford's law of controversy",
+    "text": "Passion is inversely proportional to the amount of real information available.",
+    "by": "Gregory Benford",
+    "year": "1980",
+    "source": "Timescape",
+    "source_url": "https://en.wikipedia.org/wiki/Benford%27s_law_of_controversy",
+    "plain": "The less people actually know, the louder they get. Be wary of heat with no facts behind it.",
+    "themes": [
+      "anger",
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "angry"
+    ],
+    "origin": "From Gregory Benford's 1980 novel Timescape."
+  },
+  {
+    "name": "Cipolla's first law of stupidity",
+    "text": "Always and inevitably, everyone underestimates the number of stupid individuals in circulation.",
+    "by": "Carlo M. Cipolla",
+    "year": "1976",
+    "source": "The Basic Laws of Human Stupidity",
+    "source_url": "https://en.wikipedia.org/wiki/Carlo_M._Cipolla",
+    "plain": "There are more fools around than you think, and you are sometimes one. Plan on it.",
+    "themes": [
+      "folly",
+      "mind"
+    ],
+    "moments": [
+      "angry"
+    ],
+    "origin": "The first of five laws in economic historian Carlo M. Cipolla's 1976 essay The Basic Laws of Human Stupidity, written in Italian and later collected in Allegro ma non troppo (1988)."
+  },
+  {
+    "name": "Wiio's first law",
+    "text": "Communication usually fails, except by accident.",
+    "by": "Osmo A. Wiio",
+    "year": "1978",
+    "source": "Wiion lait, ja vahan muidenkin",
+    "source_url": "https://en.wikipedia.org/wiki/Wiio%27s_laws",
+    "plain": "Assume you were misunderstood. Say it plainly, say it twice, and check that it landed.",
+    "themes": [
+      "mind",
+      "folly"
+    ],
+    "moments": [
+      "angry",
+      "alone"
+    ],
+    "origin": "From Finnish communication scholar Osmo A. Wiio, in his 1978 book Wiion lait, ja vahan muidenkin (Wiio's laws, and some others of the same kind)."
+  },
+  {
+    "name": "The Sagan standard",
+    "text": "Extraordinary claims require extraordinary evidence.",
+    "by": "Carl Sagan, after Marcello Truzzi",
+    "year": "1980",
+    "source": "Cosmos",
+    "source_url": "https://en.wikipedia.org/wiki/Sagan_standard",
+    "plain": "The bigger the claim, the better the proof you should ask for. Cheap promises get cheap trust.",
+    "themes": [
+      "mind",
+      "wealth"
+    ],
+    "moments": [
+      "tempted",
+      "doubting"
+    ],
+    "origin": "Popularized by Carl Sagan, who used it in Cosmos (1980) and stated it in a 1977 interview. Sociologist Marcello Truzzi had written that extraordinary claims require extraordinary proof in 1975 and 1978. David Hume and Pierre-Simon Laplace made similar points earlier."
+  },
+  {
+    "name": "The Shirky principle",
+    "text": "Institutions will try to preserve the problem to which they are the solution.",
+    "by": "Attributed to Clay Shirky; named by Kevin Kelly",
+    "year": "2010",
+    "source": "Named by Kevin Kelly, April 2010",
+    "source_url": "https://en.wikipedia.org/wiki/Shirky_principle",
+    "plain": "Organizations that exist to fix a problem have a reason to keep it alive. Check who profits from the problem.",
+    "themes": [
+      "power",
+      "wealth",
+      "folly"
+    ],
+    "moments": [
+      "doubting"
+    ],
+    "origin": "Kevin Kelly named it the Shirky Principle in April 2010, crediting Clay Shirky, because the phrasing reminded him of the clarity of the Peter Principle."
+  },
+  {
+    "name": "TANSTAAFL",
+    "text": "There ain't no such thing as a free lunch.",
+    "by": "Popularized by Robert A. Heinlein",
+    "year": "1966",
+    "source": "The Moon Is a Harsh Mistress",
+    "source_url": "https://en.wikipedia.org/wiki/TANSTAAFL",
+    "plain": "Everything costs something. If you cannot see the price, you are probably the one paying it.",
+    "themes": [
+      "wealth",
+      "adversity"
+    ],
+    "moments": [
+      "broke",
+      "tempted"
+    ],
+    "origin": "The phrase was in use by the 1930s and its first appearance is unknown. An early use in the current sense is Walter Morrow's 1938 fable Economics in Eight Words in the El Paso Herald-Post. Robert Heinlein's 1966 novel The Moon Is a Harsh Mistress made the acronym TANSTAAFL a central theme and brought it to wide use."
+  }
+]

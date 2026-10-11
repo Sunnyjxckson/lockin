@@ -189,6 +189,7 @@ describe("upsert", () => {
       display_name: null,
       coach_voice: "stoic" as const,
       coach_checkins: { post_workout: true, slip: true, missed_item: true },
+      library_position: null, drops_enabled: false, drops_per_day: 3,
     };
     await db.upsert("app_settings", settings, ["id"]);
     await db.upsert("app_settings", { ...settings, haptics: false }, ["id"]);
