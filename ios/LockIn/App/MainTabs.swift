@@ -14,6 +14,9 @@ struct MainTabs: View {
     @State private var showMore = false
     @State private var showCoach = false
     @State private var coachUnread = false
+    @State private var showFocus = false
+    @State private var libraryPath = NavigationPath()
+    private let router = AppRouter.shared
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
@@ -33,7 +36,7 @@ struct MainTabs: View {
             shell { RecordView() }
                 .tabItem { Label("Record", systemImage: "chart.bar") }
                 .tag(AppTab.record)
-            shell { LibraryView() }
+            libraryShell { LibraryView() }
                 .tabItem { Label("Library", systemImage: "book") }
                 .tag(AppTab.library)
         }
@@ -43,13 +46,20 @@ struct MainTabs: View {
         .sheet(isPresented: $showMore) {
             MoreSheet().liSheetStyle()
         }
+        .sheet(isPresented: $showFocus) {
+            NavigationStack { FocusView() }.liSheetStyle()
+        }
         .sheet(isPresented: $showCoach) {
             NavigationStack { CoachView() }.liSheetStyle()
         }
         .onChange(of: store.needsLogin) { _, needs in
             if needs { session.sessionExpired() }
         }
-        .task { await refreshCoachAndDrops() }
+        .task {
+            consumeRoute()
+            await refreshCoachAndDrops()
+        }
+        .onChange(of: router.pending) { _, _ in consumeRoute() }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { Task { await refreshCoachAndDrops() } }
         }
@@ -67,14 +77,44 @@ struct MainTabs: View {
         await store.rescheduleDrops()
     }
 
+    private func decorated<Content: View>(_ built: Content) -> some View {
+        built
+            .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                TopBar(initial: initial, coachUnread: coachUnread, onCoach: { showCoach = true }, onMore: { showMore = true })
+            }
+    }
+
     private func shell<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
         let built = content()
-        return NavigationStack {
-            built
-                .toolbar(.hidden, for: .navigationBar)
-                .safeAreaInset(edge: .top, spacing: 0) {
-                    TopBar(initial: initial, coachUnread: coachUnread, onCoach: { showCoach = true }, onMore: { showMore = true })
-                }
+        return NavigationStack { decorated(built) }
+    }
+
+    /// The Library keeps its own path, so a quote drop can open the reader on a quote.
+    private func libraryShell<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        let built = content()
+        return NavigationStack(path: $libraryPath) { decorated(built) }
+    }
+
+    /// Act on a tapped notification: switch to the tab it names, or open the Library reader on the quote.
+    private func consumeRoute() {
+        guard let url = router.pending else { return }
+        router.pending = nil
+        showMore = false
+        showCoach = false
+        switch AppRouter.destination(for: url) {
+        case .tab(let t):
+            tab = t
+        case .focus:
+            showFocus = true
+        case .reader(let scope, let quoteId):
+            tab = .library
+            libraryPath = NavigationPath()
+            // Give the Library a moment to mount its destinations before it is pushed onto.
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 450_000_000)
+                libraryPath.append(LibraryRoute.reader(scope, quoteId))
+            }
         }
     }
 

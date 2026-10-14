@@ -5,6 +5,12 @@ import LockInKit
 struct SnapshotEntry: TimelineEntry {
     let date: Date
     let snapshot: WidgetSnapshot?
+
+    init(date: Date, snapshot: WidgetSnapshot?) {
+        self.date = date
+        self.snapshot = snapshot
+        W.apply(snapshot)
+    }
 }
 
 /// What a widget shows at one instant, worked out from the snapshot the app wrote. A snapshot from an earlier day shows a fresh day
@@ -25,6 +31,7 @@ struct DayModel {
 
     init(_ snapshot: WidgetSnapshot?, at date: Date) {
         at = date
+        W.apply(snapshot)
         guard let s = snapshot else { return }
         hasData = true
         let today = LIDate.todayNY(date)

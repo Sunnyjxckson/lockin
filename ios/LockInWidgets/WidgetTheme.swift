@@ -2,9 +2,28 @@ import SwiftUI
 import WidgetKit
 import LockInKit
 
-/// The Lock In tokens as the widgets draw them. Widgets are always the dark Aubergine look.
+/// The Lock In tokens as the widgets draw them. They follow the look the app wrote into the snapshot (base and palette),
+/// and are the dark Aubergine look until the app has written one.
 enum W {
-    static let theme = LITheme.dark
+    private static var built: LITheme? = nil
+    private static var builtBase: String? = nil
+    private static var builtPalette: ThemePalette? = nil
+
+    static var theme: LITheme {
+        if let t = built { return t }
+        apply(WidgetSnapshot.load())
+        return built ?? LITheme.dark
+    }
+
+    /// Call whenever a snapshot is read, so the colors follow it.
+    static func apply(_ snapshot: WidgetSnapshot?) {
+        let base = snapshot?.themeBase
+        let palette = snapshot?.themePalette
+        if built != nil && base == builtBase && palette == builtPalette { return }
+        builtBase = base
+        builtPalette = palette
+        built = LITheme.make(base: ThemeBase(rawValue: base ?? "") ?? .dark, palette: palette)
+    }
     static var bg: Color { return theme.bg }
     static var ink: Color { return theme.ink }
     static var ink2: Color { return theme.ink2 }

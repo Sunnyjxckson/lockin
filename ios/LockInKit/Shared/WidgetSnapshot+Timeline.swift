@@ -3,6 +3,8 @@ import Foundation
 extension Notification.Name {
     /// Posted by AppStore.refreshWidgets, so the system features (notifications, Live Activity) follow what the widgets show.
     public static let lockInSnapshotChanged = Notification.Name("lockin.snapshotChanged")
+    /// Reminders, quiet hours or the drops were saved: the phone's local notifications need to follow.
+    public static let lockInNotificationsChanged = Notification.Name("lockin.notificationsChanged")
 }
 
 extension WidgetSnapshot {

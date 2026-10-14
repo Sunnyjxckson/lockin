@@ -50,11 +50,14 @@ extension AppStore {
             "active": .bool(true),
         ]
         if clean == nil { fields["board_id"] = .null }
+        let made: ThemeRow
         if let m = match {
-            try await db.update(ThemeRow.self, id: m.id, patch: fields)
+            made = try await db.update(ThemeRow.self, id: m.id, patch: fields)
         } else {
-            try await db.insert(ThemeRow.self, fields)
+            made = try await db.insert(ThemeRow.self, fields)
         }
+        // Wear it now, on every screen and the widgets, then read everything back.
+        applyThemeRow(made)
         await reload()
     }
 
@@ -138,20 +141,29 @@ public final class SettingsModel {
         try await updateSettings(["haptics": .bool(on)])
     }
 
+    /// Tell the system layer that reminders, quiet hours or drops changed, so the local notifications follow at once.
+    func notificationsChanged() {
+        NotificationCenter.default.post(name: .lockInNotificationsChanged, object: nil)
+    }
+
     public func setQuiet(start: String?, end: String?) async throws {
         var patch: JSONObject = [:]
         if let s = start { patch["quiet_start"] = .string(s) }
         if let e = end { patch["quiet_end"] = .string(e) }
         if patch.isEmpty { return }
         try await updateSettings(patch)
+        notificationsChanged()
     }
 
+    /// Drops on or off, or how many a day. Turning them on asks for notification permission (in AppStore.setDrops, the
+    /// same path the Library uses) and plans the next week.
     public func setDrops(enabled: Bool?, perDay: Int?) async throws {
-        var patch: JSONObject = [:]
-        if let e = enabled { patch["drops_enabled"] = .bool(e) }
-        if let n = perDay { patch["drops_per_day"] = .int(min(6, max(1, n))) }
-        if patch.isEmpty { return }
-        try await updateSettings(patch)
+        if enabled == nil && perDay == nil { return }
+        let on = enabled ?? (settings?.dropsEnabled ?? store.settings?.dropsEnabled ?? false)
+        let ok = await store.setDrops(enabled: on, perDay: perDay)
+        settings = store.settings ?? settings
+        if !ok && on { throw MealsFailure("Could not turn drops on. Check that notifications are allowed for Lock In.") }
+        notificationsChanged()
     }
 
     public func setVoice(_ voice: CoachVoice) async throws {
@@ -344,12 +356,14 @@ public final class SettingsModel {
         }
         await loadTemplates(weekday: weekday)
         await applied()
+        notificationsChanged()
     }
 
     public func deleteBlock(_ id: String, weekday: Int) async throws {
         try await db.remove(ScheduleTemplate.self, id: id)
         await loadTemplates(weekday: weekday)
         await applied()
+        notificationsChanged()
     }
 
     // MARK: workouts
@@ -429,5 +443,6 @@ public final class SettingsModel {
     public func updateReminder(_ id: String, _ patch: JSONObject) async throws {
         let made = try await db.update(Reminder.self, id: id, patch: patch)
         if let i = reminders.firstIndex(where: { $0.id == id }) { reminders[i] = made }
+        notificationsChanged()
     }
 }

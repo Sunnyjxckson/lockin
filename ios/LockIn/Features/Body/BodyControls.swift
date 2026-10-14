@@ -225,36 +225,10 @@ struct MBSheet<Content: View, Footer: View>: View {
     }
 }
 
-/// A short message that slides up from the bottom and goes away by itself.
-struct MBToastModifier: ViewModifier {
-    @Environment(\.liTheme) private var theme
-    @Binding var message: String?
-
-    func body(content: Content) -> some View {
-        content.overlay(alignment: .bottom) {
-            if let message = message {
-                Text(message)
-                    .liType(.sub)
-                    .foregroundColor(theme.ink)
-                    .padding(.horizontal, 18)
-                    .frame(minHeight: 44)
-                    .background(Capsule().fill(theme.surface3))
-                    .overlay(Capsule().strokeBorder(theme.glassLine, lineWidth: 1))
-                    .padding(.bottom, 16)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .task(id: message) {
-                        try? await Task.sleep(nanoseconds: 2_200_000_000)
-                        if !Task.isCancelled { self.message = nil }
-                    }
-            }
-        }
-        .animation(.easeOut(duration: 0.25), value: message)
-    }
-}
-
 extension View {
+    /// The same toast as Settings (LXToastModifier), under the name the Body screens use.
     func mbToast(_ message: Binding<String?>) -> some View {
-        return modifier(MBToastModifier(message: message))
+        return modifier(LXToastModifier(message: message))
     }
 }
 

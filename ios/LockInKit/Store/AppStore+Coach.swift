@@ -180,12 +180,15 @@ extension AppStore {
         let usedRows = (try? await db.list(CoachMessage.self, Query(from: LIDate.addDays(t, -CoachChat.quoteRestDays), to: t, orderBy: "sent_at"))) ?? []
         let used = CoachChat.quotesUsedSince(usedRows, since: LIDate.addDays(t, -(CoachChat.quoteRestDays - 1)))
 
+        let lastBody = history.last?.body ?? ""
+        let library = await coachLibraryLines(message: lastBody, history: history, used: used, date: t)
+
         let request: JSON = .object([
             "context": .object(context),
             "turns": .array(turns),
             "voice": .string(prefs.voice.rawValue),
             "used": .array(used.map { JSON.string($0) }),
-            "library": .array([]),
+            "library": .array(library.map { $0.json() }),
         ])
         let reply = try await coachPost("/api/coach/chat", request)
         guard let raw = reply["body"]?.stringValue, !raw.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw CoachError.noAnswer }
@@ -203,6 +206,25 @@ extension AppStore {
             "read": .bool(true),
         ]
         return try await db.insert(CoachMessage.self, row)
+    }
+
+    /// A few lines from the Library for what the message is about. None for injury, an emergency, or anything that
+    /// sounds like more than a bad day. Reading state is optional: without it every line counts as unread.
+    func coachLibraryLines(message: String, history: [CoachMessage], used: [String], date: DateStr) async -> [LibCandidate] {
+        let topic = CoachLibrary.classify(message)
+        if topic == .care || topic == .emergency || topic == .injury { return [] }
+        let recent = history.suffix(6).map { (sender: $0.sender.rawValue, body: $0.body) }
+        if CoachLibrary.careInPlay(Array(recent)) { return [] }
+        guard let pool = try? LibraryCatalog.shared.shortPool() else { return [] }
+        var saved = Set<String>()
+        var read = Set<String>()
+        if let rows = try? await db.list(QuoteState.self) {
+            for r in rows {
+                if r.savedAt != nil { saved.insert(r.quoteId) }
+                if r.readAt != nil { read.insert(r.quoteId) }
+            }
+        }
+        return CoachLibrary.pickCandidates(pool: pool, topic: topic, message: message, saved: saved, read: read, used: used, date: date)
     }
 
     // MARK: check-ins

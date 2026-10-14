@@ -62,6 +62,7 @@ public final class AppStore {
     /// Goes up each time the last item of the day lands from a tap.
     public private(set) var celebrationTick: Int = 0
     public private(set) var refreshing = false
+    @ObservationIgnored private var reloadAgain = false
 
     static let emptyMode = ModeInfo(mode: .ongoing, challenge: nil, day: nil, length: nil, lastDay: nil, finished: nil, upcoming: nil, historyStart: LIDate.todayNY())
 
@@ -72,13 +73,32 @@ public final class AppStore {
         self.db = db
     }
 
+    /// Wear a theme row at once, before the next reload reads it back.
+    public func applyThemeRow(_ row: ThemeRow?) {
+        themeRow = row
+        theme = LITheme.make(base: row?.base ?? .dark, palette: row?.palette)
+        refreshWidgets()
+    }
+
     // MARK: loading
 
     /// Loads everything Today needs. Keeps what is on screen if the server cannot be reached.
     public func reload() async {
-        if refreshing { return }
+        // A reload asked for while one is running is not dropped: it runs again once the first is done, so a change
+        // saved in between (a theme, a setting) is read.
+        if refreshing {
+            reloadAgain = true
+            return
+        }
         refreshing = true
         defer { refreshing = false }
+        repeat {
+            reloadAgain = false
+            await reloadOnce()
+        } while reloadAgain
+    }
+
+    private func reloadOnce() async {
         if !loadedOnce { loadState = .loading }
         do {
             let t = LIDate.todayNY()
@@ -431,7 +451,9 @@ public final class AppStore {
             moneyTarget: target,
             streak: fullStreak,
             updatedAt: LIDate.nowIso(),
-            blocks: blocks.map { WidgetBlock(name: $0.blockName, start: $0.start, end: $0.end, kind: $0.kind.rawValue) }
+            blocks: blocks.map { WidgetBlock(name: $0.blockName, start: $0.start, end: $0.end, kind: $0.kind.rawValue) },
+            themeBase: (themeRow?.base ?? .dark).rawValue,
+            themePalette: themeRow?.palette
         )
     }
 

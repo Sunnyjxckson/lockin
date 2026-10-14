@@ -197,9 +197,16 @@ struct MoneyScreen: View {
                 LISecondaryButton("Set a target") { sheet = .target }
                     .padding(.top, 6)
             } else {
-                Text("Since \(LIDate.formatDateShort(model.historyStart)). A target comes with a challenge, which you start in Settings. The floor counts every day.")
+                Text("Since \(LIDate.formatDateShort(model.historyStart)). A target comes with a challenge. The floor counts every day.")
                     .liType(.sub)
                     .foregroundColor(theme.ink2)
+                NavigationLink {
+                    SettingsChallengeScreen()
+                } label: {
+                    Text("Start a challenge").liType(.label).foregroundColor(theme.accent)
+                        .frame(minHeight: 44, alignment: .leading)
+                }
+                .buttonStyle(LIPressStyle())
             }
         }
     }
@@ -270,6 +277,9 @@ struct MoneyScreen: View {
     @ViewBuilder
     private var groceries: some View {
         if model.groceriesThisWeek > 0 {
+            NavigationLink {
+                MealsView()
+            } label: {
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Groceries this week").liType(.body).foregroundColor(theme.ink)
@@ -277,10 +287,14 @@ struct MoneyScreen: View {
                 }
                 Spacer(minLength: 8)
                 Text(Money.formatMoney(model.groceriesThisWeek)).liType(.value).foregroundColor(theme.ink)
+                Image(systemName: "chevron.right").font(.system(size: 13, weight: .regular)).foregroundColor(theme.ink3)
             }
             .padding(.horizontal, 18)
             .frame(minHeight: 64)
             .background(LITileSurface(radius: 20))
+            .contentShape(Rectangle())
+            }
+            .buttonStyle(LIPressStyle())
             .padding(.top, 24)
         }
     }

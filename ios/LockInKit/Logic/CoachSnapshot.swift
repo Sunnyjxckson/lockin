@@ -1,8 +1,7 @@
 import Foundation
 
 // Coach, step 1: the deterministic part. Turns raw rows into the compact snapshot the coach writes from.
-// Port of buildSnapshot and friends in src/lib/logic/coach.ts. Pattern flags (coachFlags.ts) are not detected on the
-// phone yet: the snapshot carries an empty flag list and the web app's saved flag notes are shown as they are.
+// Port of buildSnapshot and friends in src/lib/logic/coach.ts. Pattern flags come from CoachFlags (coachFlags.ts).
 
 public struct CoachBlock: Equatable {
     public var blockName: String
@@ -466,7 +465,8 @@ public enum CoachSnapshotBuilder {
     // MARK: the snapshot
 
     /// The whole picture, compact, with every number the coach may use.
-    public static func buildSnapshot(_ data: CoachData, weekOf: DateStr? = nil) -> JSONObject {
+    public static func buildSnapshot(_ data: CoachData, weekOf: DateStr? = nil, flags: [CoachFlag]? = nil) -> JSONObject {
+        let flagList = flags ?? CoachFlags.detect(data)
         let today = data.today
         let historyStart = data.historyStart
         let items = data.items
@@ -699,8 +699,8 @@ public enum CoachSnapshotBuilder {
         out["vices"] = .array(vices)
         out["focus"] = .object(["goalMinutes": int(data.focusGoalMinutes), "days": .array(focusDays)])
         out["week"] = .object(week.json)
-        out["flags"] = .array([])
-        out["suggestedChange"] = .string(pickChange(week.items))
+        out["flags"] = .array(flagList.map { CoachFlags.json($0) })
+        out["suggestedChange"] = .string(flagList.first?.change ?? pickChange(week.items))
         return out
     }
 }

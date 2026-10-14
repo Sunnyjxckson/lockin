@@ -7,8 +7,22 @@ public enum NotificationScheduler {
     static let reminderPrefix = "lockin.rem."
     static let focusEndId = "lockin.focus.end"
     static let focusAwayId = "lockin.focus.away"
-    /// iOS keeps at most 64 pending requests. Leave room for the focus alerts.
-    public static let maxPending = 56
+    /// iOS keeps at most 64 pending requests and silently drops the rest. The budget:
+    /// reminders go first (two days of them, at most `maxPending`), the quote drops fill what is left, and a safety margin
+    /// plus room for the two focus alerts is never used. See `dropBudget`.
+    public static let systemLimit = 64
+    public static let safetyMargin = 4
+    public static let focusReserve = 2
+    public static let maxPending = 44
+    /// The drops look at most this many days ahead, whatever the budget allows.
+    public static let dropHorizonDays = 7
+
+    /// How many quote drops may be pending, given every pending identifier. Everything that is not a drop and not a
+    /// focus alert counts against the budget; the focus alerts are reserved for whether or not they are pending.
+    public static func dropBudget(pendingIds: [String]) -> Int {
+        let others = pendingIds.filter { !$0.hasPrefix(Drops.identifierPrefix) && !$0.hasPrefix("lockin.focus") }.count
+        return max(0, systemLimit - safetyMargin - focusReserve - others)
+    }
     /// The nudge used when the reminder table has none of its own.
     public static let nudgeTime = "20:00"
 

@@ -1,6 +1,28 @@
 import SwiftUI
 import LockInKit
 
+/// The challenge page opened from outside Settings (Money links here), with its own model.
+struct SettingsChallengeScreen: View {
+    @Environment(AppStore.self) private var store
+
+    var body: some View {
+        Inner(store: store)
+    }
+
+    private struct Inner: View {
+        @State private var model: SettingsModel
+
+        init(store: AppStore) {
+            _model = State(initialValue: SettingsModel(store: store))
+        }
+
+        var body: some View {
+            SettingsChallengePage(model: model)
+                .task { await model.load() }
+        }
+    }
+}
+
 /// The challenge: a stretch of days, held to the checklist, optionally with a money target.
 struct SettingsChallengePage: View {
     @Environment(AppStore.self) private var store

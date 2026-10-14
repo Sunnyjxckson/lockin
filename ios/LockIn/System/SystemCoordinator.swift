@@ -22,6 +22,7 @@ final class SystemCoordinator {
     @ObservationIgnored private var tomorrowBlocks: [DayBlock] = []
     @ObservationIgnored private var loadedAt: Date? = nil
     @ObservationIgnored private var observer: NSObjectProtocol? = nil
+    @ObservationIgnored private var settingsObserver: NSObjectProtocol? = nil
     @ObservationIgnored private var debounce: Task<Void, Never>? = nil
     @ObservationIgnored private var timer: Timer? = nil
     @ObservationIgnored private var rescheduling = false
@@ -46,6 +47,11 @@ final class SystemCoordinator {
         if observer == nil {
             observer = NotificationCenter.default.addObserver(forName: .lockInSnapshotChanged, object: nil, queue: .main) { [weak self] _ in
                 Task { @MainActor in self?.dataChanged() }
+            }
+        }
+        if settingsObserver == nil {
+            settingsObserver = NotificationCenter.default.addObserver(forName: .lockInNotificationsChanged, object: nil, queue: .main) { [weak self] _ in
+                Task { @MainActor in await self?.remindersChanged() }
             }
         }
         Task { await foreground() }
@@ -160,6 +166,8 @@ final class SystemCoordinator {
         notificationStatus = await NotificationScheduler.status()
         if !SystemPrefs.reminders || !NotificationScheduler.isAllowed(notificationStatus) {
             await NotificationScheduler.clearReminders()
+            // The drops take what the reminders leave, which is now everything.
+            await s.rescheduleDrops()
             return
         }
         if rescheduling {
@@ -185,6 +193,8 @@ final class SystemCoordinator {
                 now: Date()
             )
             await NotificationScheduler.apply(plan)
+            // Reminders first, then the quote drops fill the budget that is left.
+            await s.rescheduleDrops()
         } while rescheduleAgain
         rescheduling = false
     }

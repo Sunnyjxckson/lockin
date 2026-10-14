@@ -22,7 +22,12 @@ final class SystemAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificati
         completionHandler([.banner, .list, .sound])
     }
 
+    /// A tap on a reminder, a quote drop or a focus alert. Each carries the app path it opens in `userInfo["url"]`.
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let info = response.notification.request.content.userInfo
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier, let url = info["url"] as? String, !url.isEmpty {
+            Task { @MainActor in AppRouter.shared.open(url) }
+        }
         completionHandler()
     }
 }

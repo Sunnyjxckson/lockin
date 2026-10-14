@@ -174,11 +174,10 @@ extension AppStore {
     /// Returns false when the person said no to notifications.
     public func setDrops(enabled: Bool, perDay: Int? = nil) async -> Bool {
         if enabled {
-            let center = UNUserNotificationCenter.current()
-            let status = await center.notificationSettings().authorizationStatus
+            let status = await NotificationScheduler.status()
             if status == .notDetermined {
-                let granted = (try? await center.requestAuthorization(options: [.alert, .sound])) ?? false
-                if !granted { return false }
+                // The one place that asks for permission.
+                if !(await NotificationScheduler.requestAuthorization()) { return false }
             } else if status == .denied {
                 return false
             }
@@ -198,8 +197,27 @@ extension AppStore {
     /// Plan the next week of drops and hand them to the system. Safe to call on every launch and every return to the
     /// app. Only touches notifications whose identifier starts with "drop.".
     public func rescheduleDrops() async {
+        // One run at a time. A call that arrives meanwhile runs again afterwards, so the last state wins.
+        if AppStore.dropsRunning {
+            AppStore.dropsAgain = true
+            return
+        }
+        AppStore.dropsRunning = true
+        repeat {
+            AppStore.dropsAgain = false
+            await rescheduleDropsOnce()
+        } while AppStore.dropsAgain
+        AppStore.dropsRunning = false
+    }
+
+    private static var dropsRunning = false
+    private static var dropsAgain = false
+    private static var readCache: (at: Date, ids: Set<String>)? = nil
+
+    private func rescheduleDropsOnce() async {
         let center = UNUserNotificationCenter.current()
         let pendingRequests = await center.pendingNotificationRequests()
+        let budget = NotificationScheduler.dropBudget(pendingIds: pendingRequests.map { $0.identifier })
         let mine = pendingRequests.map { $0.identifier }.filter { $0.hasPrefix(Drops.identifierPrefix) }
         guard let s = settings, s.dropsEnabled else {
             if !mine.isEmpty { center.removePendingNotificationRequests(withIdentifiers: mine) }
@@ -209,9 +227,14 @@ extension AppStore {
         if status != .authorized && status != .provisional && status != .ephemeral { return }
         guard let pool = try? LibraryCatalog.shared.shortPool() else { return }
 
+        // Which quotes are read changes slowly, and this runs after every reminder reschedule: ask the server at most
+        // every ten minutes.
         var read = Set<String>()
-        if let rows = try? await db.list(QuoteState.self) {
+        if let c = AppStore.readCache, Date().timeIntervalSince(c.at) < 600 {
+            read = c.ids
+        } else if let rows = try? await db.list(QuoteState.self) {
             for r in rows where r.readAt != nil { read.insert(r.quoteId) }
+            AppStore.readCache = (at: Date(), ids: read)
         }
         let t = LIDate.todayNY()
         let todays = blocks.map { WindowBlock(kind: $0.kind.rawValue, start: $0.start) }
@@ -223,7 +246,9 @@ extension AppStore {
             quietStart: s.quietStart,
             quietEnd: s.quietEnd,
             blocksFor: { date in date == t ? todays : [] },
-            isRead: { read.contains($0) }
+            isRead: { read.contains($0) },
+            days: NotificationScheduler.dropHorizonDays,
+            cap: budget
         )
         if !mine.isEmpty { center.removePendingNotificationRequests(withIdentifiers: mine) }
 
