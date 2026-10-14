@@ -16,6 +16,8 @@ public struct DayBlock: Equatable, Identifiable {
     public var source: BlockSource
     /// True when this is a real schedule_block row, false when derived.
     public var persisted: Bool
+    /// The Google Calendar event this block is tied to, if any.
+    public var calendarEventId: String? = nil
 }
 
 public struct NowNext {
@@ -76,7 +78,8 @@ public enum Blocks {
                 note: r.note,
                 templateId: r.templateId,
                 source: r.source,
-                persisted: true
+                persisted: true,
+                calendarEventId: r.calendarEventId
             )
         }
         return blocks.sorted(by: byStart)
