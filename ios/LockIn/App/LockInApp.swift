@@ -3,6 +3,7 @@ import LockInKit
 
 @main
 struct LockInApp: App {
+    @UIApplicationDelegateAdaptor(SystemAppDelegate.self) private var appDelegate
     @State private var session = SessionStore()
 
     init() {

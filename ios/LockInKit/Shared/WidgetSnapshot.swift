@@ -52,8 +52,10 @@ public struct WidgetSnapshot: Codable, Equatable {
     public var streak: Int
     /// ISO instant the snapshot was written.
     public var updatedAt: String
+    /// Every block of the day, so a widget can move on to the next one without the app running. Nil in older snapshots.
+    public var blocks: [WidgetBlock]?
 
-    public init(date: String = "", dayNumber: Int? = nil, dayLength: Int? = nil, percent: Int = 0, done: Int = 0, total: Int = 0, items: [WidgetItem] = [], now: WidgetBlock? = nil, next: WidgetBlock? = nil, moneyToday: Double = 0, moneyFloor: Double = 0, moneyTotal: Double = 0, moneyTarget: Double? = nil, streak: Int = 0, updatedAt: String = "") {
+    public init(date: String = "", dayNumber: Int? = nil, dayLength: Int? = nil, percent: Int = 0, done: Int = 0, total: Int = 0, items: [WidgetItem] = [], now: WidgetBlock? = nil, next: WidgetBlock? = nil, moneyToday: Double = 0, moneyFloor: Double = 0, moneyTotal: Double = 0, moneyTarget: Double? = nil, streak: Int = 0, updatedAt: String = "", blocks: [WidgetBlock]? = nil) {
         self.date = date
         self.dayNumber = dayNumber
         self.dayLength = dayLength
@@ -69,6 +71,7 @@ public struct WidgetSnapshot: Codable, Equatable {
         self.moneyTarget = moneyTarget
         self.streak = streak
         self.updatedAt = updatedAt
+        self.blocks = blocks
     }
 
     public static let empty = WidgetSnapshot()

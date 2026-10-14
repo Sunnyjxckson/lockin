@@ -47,6 +47,7 @@ struct MainTabs: View {
         .onChange(of: store.needsLogin) { _, needs in
             if needs { session.sessionExpired() }
         }
+        .modifier(SystemHost())
     }
 
     private func shell<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {

@@ -430,7 +430,8 @@ public final class AppStore {
             moneyTotal: total,
             moneyTarget: target,
             streak: fullStreak,
-            updatedAt: LIDate.nowIso()
+            updatedAt: LIDate.nowIso(),
+            blocks: blocks.map { WidgetBlock(name: $0.blockName, start: $0.start, end: $0.end, kind: $0.kind.rawValue) }
         )
     }
 
@@ -438,5 +439,6 @@ public final class AppStore {
     public func refreshWidgets() {
         makeSnapshot().save()
         WidgetCenter.shared.reloadAllTimelines()
+        NotificationCenter.default.post(name: .lockInSnapshotChanged, object: nil)
     }
 }
