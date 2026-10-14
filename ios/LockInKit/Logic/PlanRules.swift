@@ -106,6 +106,10 @@ public struct DayWrite {
 public struct BlockLane: Equatable {
     public var lane: Int
     public var lanes: Int
+    public init(lane: Int, lanes: Int) {
+        self.lane = lane
+        self.lanes = lanes
+    }
 }
 
 public enum FreeTimerPhase: String, Equatable {
@@ -535,6 +539,9 @@ public enum PlanRules {
             row["id"] = .string(b.id)
         } else if b.id.hasPrefix("template:"), let tid = b.templateId {
             row["id"] = .string(materializedId(date, tid))
+        } else if !b.id.hasPrefix("new:") && !b.id.hasPrefix("template:") && !b.id.isEmpty {
+            // A block the phone made up with its own id keeps it, so a second edit before the first save lands still finds it.
+            row["id"] = .string(b.id)
         }
         return row
     }
