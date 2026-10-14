@@ -56,6 +56,7 @@ struct MainTabs: View {
         .onChange(of: showCoach) { _, open in
             if !open { Task { coachUnread = await store.unreadCoachCount() > 0 } }
         }
+        .modifier(SystemHost())
     }
 
     /// Sends the check-ins that are due, shows whether any are unread, and keeps the next week of quote drops scheduled.
