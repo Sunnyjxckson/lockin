@@ -1,0 +1,3360 @@
+{
+  "writer": {
+    "slug": "marcus-aurelius",
+    "name": "Marcus Aurelius",
+    "years": "AD 121 to 180",
+    "bio": "Emperor of Rome from 161 to 180. He ruled through plague, flood and nearly constant war on the northern frontier, and buried most of his children. He was a Stoic who never meant anyone to read his notes."
+  },
+  "works": [
+    {
+      "slug": "meditations",
+      "title": "Meditations",
+      "translator": "George Long",
+      "year": "1862",
+      "source_url": "https://www.gutenberg.org/ebooks/15877",
+      "note": "A private notebook written in Greek during the last ten years of his life, much of it in army camps on the Danube. He was talking to himself, not to readers. Words in square brackets are the translator's additions."
+    }
+  ],
+  "quotes": [
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-1-1ea846",
+      "text": "Begin the morning by saying to thyself, I shall meet with the busybody, the ungrateful, arrogant, deceitful, envious, unsocial. All these things happen to them by reason of their ignorance of what is good and evil.",
+      "work": "meditations",
+      "location": "Book 2, Section 1",
+      "plain": "Expect difficult people today. They act that way because they do not know better.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-4-4249a0",
+      "text": "Remember how long thou hast been putting off these things, and how often thou hast received an opportunity from the gods, and yet dost not use it.",
+      "work": "meditations",
+      "location": "Book 2, Section 4",
+      "plain": "You have had chance after chance and let them go. Stop stalling.",
+      "themes": [
+        "time",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-4-6e9a49",
+      "text": "Thou must now at last perceive of what universe thou art a part, and of what administrator of the universe thy existence is an efflux, and that a limit of time is fixed for thee, which if thou dost not use for clearing away the clouds from thy mind, it will go and thou wilt go, and it will never return.",
+      "work": "meditations",
+      "location": "Book 2, Section 4",
+      "plain": "Your time has a limit. Use it to clear your head or it is gone for good.",
+      "themes": [
+        "time",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-6-2db27e",
+      "text": "Every man's life is sufficient. But thine is nearly finished, though thy soul reverences not itself, but places thy felicity in the souls of others.",
+      "work": "meditations",
+      "location": "Book 2, Section 6",
+      "plain": "Your life is short and you are handing your happiness to other people. Respect yourself.",
+      "themes": [
+        "reputation",
+        "time"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-8-fdf905",
+      "text": "Through not observing what is in the mind of another a man has seldom been seen to be unhappy; but those who do not observe the movements of their own minds must of necessity be unhappy.",
+      "work": "meditations",
+      "location": "Book 2, Section 8",
+      "plain": "Ignoring what others think is harmless. Ignoring your own mind will wreck you.",
+      "themes": [
+        "mind",
+        "happiness"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-11-02fc74",
+      "text": "Since it is possible that thou mayest depart from life this very moment, regulate every act and thought accordingly.",
+      "work": "meditations",
+      "location": "Book 2, Section 11",
+      "plain": "You could die today, so act like it matters.",
+      "themes": [
+        "death",
+        "discipline"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-14-510164",
+      "text": "Though thou shouldest be going to live three thousand years and as many times ten thousand years, still remember that no man loses any other life than this which he now lives, nor lives any other than this which he now loses.",
+      "work": "meditations",
+      "location": "Book 2, Section 14",
+      "plain": "Even a long life is only ever lived one moment at a time.",
+      "themes": [
+        "time",
+        "death"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-15-701fab",
+      "text": "Remember that all is opinion.",
+      "work": "meditations",
+      "location": "Book 2, Section 15",
+      "plain": "Most of what hurts is how you judge it.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-17-79b8c9",
+      "text": "Of human life the time is a point, and the substance is in a flux, and the perception dull, and the composition of the whole body subject to putrefaction, and the soul a whirl, and fortune hard to divine, and fame a thing devoid of judgment.",
+      "work": "meditations",
+      "location": "Book 2, Section 17",
+      "plain": "Life is brief, shaky and unpredictable, and fame is a bad judge.",
+      "themes": [
+        "time",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-17-6fda0f",
+      "text": "And, to say all in a word, everything which belongs to the body is a stream, and what belongs to the soul is a dream and vapor, and life is a warfare and a stranger's sojourn, and after fame is oblivion.",
+      "work": "meditations",
+      "location": "Book 2, Section 17",
+      "plain": "Life is a fight and a short visit, and fame ends in being forgotten.",
+      "themes": [
+        "death",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-2-section-17-432860",
+      "text": "What then is that which is able to conduct a man? One thing, and only one, philosophy.",
+      "work": "meditations",
+      "location": "Book 2, Section 17",
+      "plain": "Only philosophy can guide you through a life like this.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-3-section-1-52845e",
+      "text": "We must make haste, then, not only because we are daily nearer to death, but also because the conception of things and the understanding of them cease first.",
+      "work": "meditations",
+      "location": "Book 3, Section 1",
+      "plain": "Move now. Time runs out and so does your sharpness.",
+      "themes": [
+        "time",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-3-section-3-b1997b",
+      "text": "Hippocrates, after curing many diseases, himself fell sick and died. The Chaldaei foretold the deaths of many, and then fate caught them too.",
+      "work": "meditations",
+      "location": "Book 3, Section 3",
+      "plain": "The healer got sick and the fortune tellers died too. Nobody is exempt.",
+      "themes": [
+        "death",
+        "fate"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-3-section-3-c28d92",
+      "text": "Thou hast embarked, thou hast made the voyage, thou art come to shore; get out.",
+      "work": "meditations",
+      "location": "Book 3, Section 3",
+      "plain": "You have lived your trip. When it ends, get off the boat without fuss.",
+      "themes": [
+        "death"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-3-section-4-315eec",
+      "text": "Do not waste the remainder of thy life in thoughts about others, when thou dost not refer thy thoughts to some object of common utility.",
+      "work": "meditations",
+      "location": "Book 3, Section 4",
+      "plain": "Stop spending your life wondering what other people are up to.",
+      "themes": [
+        "time",
+        "mind"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-3-section-5-493b57",
+      "text": "Be cheerful also, and seek not external help nor the tranquillity which others give. A man then must stand erect, not be kept erect by others.",
+      "work": "meditations",
+      "location": "Book 3, Section 5",
+      "plain": "Do not lean on others for your calm. Hold yourself up.",
+      "themes": [
+        "self-mastery",
+        "solitude"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-3-section-10-78d613",
+      "text": "Short then is the time which every man lives; and small the nook of the earth where he lives; and short too the longest posthumous fame, and even this only continued by a succession of poor human beings, who will very soon die, and who know not even themselves, much less him who died long ago.",
+      "work": "meditations",
+      "location": "Book 3, Section 10",
+      "plain": "Your time is short, your corner is small, and even legacy fades fast.",
+      "themes": [
+        "time",
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-3-section-14-a67130",
+      "text": "Hasten then to the end which thou hast before thee, and, throwing away idle hopes, come to thy own aid, if thou carest at all for thyself, while it is in thy power.",
+      "work": "meditations",
+      "location": "Book 3, Section 14",
+      "plain": "Drop the daydreams and help yourself while you still can.",
+      "themes": [
+        "discipline",
+        "time"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-3-02abed",
+      "text": "Men seek retreats for themselves, houses in the country, sea-shores, and mountains; and thou too art wont to desire such things very much. But this is altogether a mark of the most common sort of men, for it is in thy power whenever thou shalt choose to retire into thyself.",
+      "work": "meditations",
+      "location": "Book 4, Section 3",
+      "plain": "You do not need a getaway. You can go inside your own head any time.",
+      "themes": [
+        "mind",
+        "solitude"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-3-5e5347",
+      "text": "Constantly then give to thyself this retreat, and renew thyself; and let thy principles be brief and fundamental, which, as soon as thou shalt recur to them, will be sufficient to cleanse the soul completely, and to send thee back free from all discontent with the things to which thou returnest.",
+      "work": "meditations",
+      "location": "Book 4, Section 3",
+      "plain": "Keep a few simple principles and return to them to reset.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-3-f27998",
+      "text": "The universe is transformation: life is opinion.",
+      "work": "meditations",
+      "location": "Book 4, Section 3",
+      "plain": "Everything keeps changing, and how it feels depends on how you see it.",
+      "themes": [
+        "change",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-5-85f53e",
+      "text": "Death is such as generation is, a mystery of nature; composition out of the same elements, and a decomposition into the same; and altogether not a thing of which any man should be ashamed, for it is not contrary to [the nature of] a reasonable animal, and not contrary to the reason of our constitution.",
+      "work": "meditations",
+      "location": "Book 4, Section 5",
+      "plain": "Death is as natural as birth. Nothing to be ashamed of or to dread.",
+      "themes": [
+        "death"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-7-91243f",
+      "text": "Take away thy opinion, and then there is taken away the complaint, \"I have been harmed.\" Take away the complaint, \"I have been harmed,\" and the harm is taken away.",
+      "work": "meditations",
+      "location": "Book 4, Section 7",
+      "plain": "Stop telling yourself you were hurt and half the hurt goes away.",
+      "themes": [
+        "mind",
+        "pain"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-8-199a3c",
+      "text": "That which does not make a man worse than he was, also does not make his life worse, nor does it harm him either from without or from within.",
+      "work": "meditations",
+      "location": "Book 4, Section 8",
+      "plain": "If it does not make you a worse person, it has not really hurt you.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-11-60cf72",
+      "text": "Do not have such an opinion of things as he has who does thee wrong, or such as he wishes thee to have, but look at them as they are in truth.",
+      "work": "meditations",
+      "location": "Book 4, Section 11",
+      "plain": "Do not take on the story your enemy wants you to believe. See things as they are.",
+      "themes": [
+        "mind",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-13-0113a8",
+      "text": "Hast thou reason? I have. Why then dost not thou use it?",
+      "work": "meditations",
+      "location": "Book 4, Section 13",
+      "plain": "You have a brain. Use it.",
+      "themes": [
+        "mind",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-15-f636cd",
+      "text": "Many grains of frankincense on the same altar: one falls before, another falls after; but it makes no difference.",
+      "work": "meditations",
+      "location": "Book 4, Section 15",
+      "plain": "Some go early, some late. In the end it comes to the same.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-17-44ed55",
+      "text": "Do not act as if thou wert going to live ten thousand years. Death hangs over thee. While thou livest, while it is in thy power, be good.",
+      "work": "meditations",
+      "location": "Book 4, Section 17",
+      "plain": "You are not here forever. Do right while you still can.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "tempted",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-18-99d65a",
+      "text": "How much trouble he avoids who does not look to see what his neighbor says or does or thinks, but only to what he does himself, that it may be just and pure; or, as Agathon says, look not round at the depraved morals of others, but run straight along the line without deviating from it.",
+      "work": "meditations",
+      "location": "Book 4, Section 18",
+      "plain": "Watch your own lane. Ignoring what everyone else is doing saves a lot of trouble.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-19-7c20ba",
+      "text": "What is praise, except indeed so far as it has a certain utility?",
+      "work": "meditations",
+      "location": "Book 4, Section 19",
+      "plain": "Praise is only worth something if it is useful.",
+      "themes": [
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-20-068cea",
+      "text": "Neither worse then nor better is a thing made by being praised.",
+      "work": "meditations",
+      "location": "Book 4, Section 20",
+      "plain": "Praise does not make a thing better and blame does not make it worse.",
+      "themes": [
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-23-235ee9",
+      "text": "Everything harmonizes with me, which is harmonious to thee, O Universe. Nothing for me is too early nor too late, which is in due time for thee.",
+      "work": "meditations",
+      "location": "Book 4, Section 23",
+      "plain": "Whatever timing life gives you is the right timing.",
+      "themes": [
+        "fate",
+        "time"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-26-2f2b57",
+      "text": "Does any one do wrong? It is to himself that he does the wrong.",
+      "work": "meditations",
+      "location": "Book 4, Section 26",
+      "plain": "When someone wrongs you, the damage lands mostly on them.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-26-55bcb1",
+      "text": "In a word, thy life is short. Thou must turn to profit the present by the aid of reason and justice. Be sober in thy relaxation.",
+      "work": "meditations",
+      "location": "Book 4, Section 26",
+      "plain": "Life is short. Use today well, and keep your rest in moderation.",
+      "themes": [
+        "time",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-31-e17979",
+      "text": "Love the art, poor as it may be, which thou hast learned, and be content with it; and pass through the rest of life like one who has intrusted to the gods with his whole soul all that he has, making thyself neither the tyrant nor the slave of any man.",
+      "work": "meditations",
+      "location": "Book 4, Section 31",
+      "plain": "Love your craft even if it is modest. Do not rule anyone and do not serve anyone.",
+      "themes": [
+        "work",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-33-6b49c5",
+      "text": "And, to conclude the matter, what is even an eternal remembrance? A mere nothing.",
+      "work": "meditations",
+      "location": "Book 4, Section 33",
+      "plain": "Even being remembered forever is worth nothing.",
+      "themes": [
+        "reputation",
+        "death"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-35-62fdaa",
+      "text": "Everything is only for a day, both that which remembers and that which is remembered.",
+      "work": "meditations",
+      "location": "Book 4, Section 35",
+      "plain": "The one who remembers and the one remembered both last a day.",
+      "themes": [
+        "time",
+        "death"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-37-033452",
+      "text": "Thou wilt soon die, and thou art not yet simple, nor free from perturbations, nor without suspicion of being hurt by external things, nor kindly disposed towards all; nor dost thou yet place wisdom only in acting justly.",
+      "work": "meditations",
+      "location": "Book 4, Section 37",
+      "plain": "You will die soon and you are still not calm, still suspicious, still not living right. Get on it.",
+      "themes": [
+        "death",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-43-bd154d",
+      "text": "Time is like a river made up of the events which happen, and a violent stream; for as soon as a thing has been seen, it is carried away, and another comes in its place, and this will be carried away too.",
+      "work": "meditations",
+      "location": "Book 4, Section 43",
+      "plain": "Time sweeps everything away, and what replaces it gets swept away too.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-44-33d7fb",
+      "text": "Everything which happens is as familiar and well known as the rose in spring and the fruit in summer; for such is disease, and death, and calumny, and treachery, and whatever else delights fools or vexes them.",
+      "work": "meditations",
+      "location": "Book 4, Section 44",
+      "plain": "Bad things are as ordinary as the seasons. Do not act surprised.",
+      "themes": [
+        "adversity",
+        "fate"
+      ],
+      "moments": [
+        "afraid",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-48-fb7548",
+      "text": "To conclude, always observe how ephemeral and worthless human things are, and what was yesterday a little mucus, to-morrow will be a mummy or ashes.",
+      "work": "meditations",
+      "location": "Book 4, Section 48",
+      "plain": "Everyone is here briefly. Keep that in view.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-48-7061a5",
+      "text": "Pass then through this little space of time conformably to nature, and end thy journey in content, as an olive falls off when it is ripe, blessing nature who produced it, and thanking the tree on which it grew.",
+      "work": "meditations",
+      "location": "Book 4, Section 48",
+      "plain": "Live your short time well and leave with thanks, like ripe fruit falling.",
+      "themes": [
+        "death",
+        "happiness"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-49-da654b",
+      "text": "Be like the promontory against which the waves continually break, but it stands firm and tames the fury of the water around it.",
+      "work": "meditations",
+      "location": "Book 4, Section 49",
+      "plain": "Be the rock. Let the waves break on you and calm down.",
+      "themes": [
+        "courage",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-49-c263b9",
+      "text": "Unhappy am I because this has happened to me? Not so, but happy am I, though this has happened to me, because I continue free from pain, neither crushed by the present nor fearing the future.",
+      "work": "meditations",
+      "location": "Book 4, Section 49",
+      "plain": "This happened and I am still fine, not crushed and not scared of what comes.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-49-938b72",
+      "text": "Remember too on every occasion which leads thee to vexation to apply this principle; not that this is a misfortune, but that to bear it nobly is good fortune.",
+      "work": "meditations",
+      "location": "Book 4, Section 49",
+      "plain": "The bad thing is not bad luck. Handling it well is the good luck.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-50-6a3f4e",
+      "text": "Do not then consider life a thing of any value.",
+      "work": "meditations",
+      "location": "Book 4, Section 50",
+      "plain": "Do not hold life so tightly that you freeze.",
+      "themes": [
+        "death",
+        "courage"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-4-section-50-d80224",
+      "text": "In this infinity then what is the difference between him who lives three days and him who lives three generations?",
+      "work": "meditations",
+      "location": "Book 4, Section 50",
+      "plain": "Against infinite time, short and long lives are about the same.",
+      "themes": [
+        "time",
+        "death"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-1-1a5aa0",
+      "text": "In the morning when thou risest unwillingly, let this thought be present, I am rising to the work of a human being.",
+      "work": "meditations",
+      "location": "Book 5, Section 1",
+      "plain": "When you do not want to get up, remember that you are getting up to do a human's work.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-1-b885a5",
+      "text": "Why then am I dissatisfied if I am going to do the things for which I exist and for which I was brought into the world? Or have I been made for this, to lie in the bed-clothes and keep myself warm?",
+      "work": "meditations",
+      "location": "Book 5, Section 1",
+      "plain": "You were not made to lie in bed warm and comfortable. Get up and do the thing.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-1-34e7e4",
+      "text": "So thou lovest not thyself, for if thou didst, thou wouldst love thy nature and her will.",
+      "work": "meditations",
+      "location": "Book 5, Section 1",
+      "plain": "If you loved yourself you would do the work you were built for.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-2-0714b0",
+      "text": "How easy it is to repel and to wipe away every impression which is troublesome or unsuitable, and immediately to be in all tranquillity.",
+      "work": "meditations",
+      "location": "Book 5, Section 2",
+      "plain": "You can wipe a troubling thought away and be calm right now.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-5-e3ffc5",
+      "text": "Show those qualities then which are altogether in thy power, sincerity, gravity, endurance of labor, aversion to pleasure, contentment with thy portion and with few things, benevolence, frankness, no love of superfluity, freedom from trifling, magnanimity.",
+      "work": "meditations",
+      "location": "Book 5, Section 5",
+      "plain": "Stop pointing at your weak spots. Show the traits that are fully up to you.",
+      "themes": [
+        "self-mastery",
+        "discipline"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-5-27628a",
+      "text": "Dost thou not see how many qualities thou art immediately able to exhibit, in which there is no excuse of natural incapacity and unfitness, and yet thou still remainest voluntarily below the mark?",
+      "work": "meditations",
+      "location": "Book 5, Section 5",
+      "plain": "There are a lot of things you can do right now with no excuse. You stay below your level by choice.",
+      "themes": [
+        "discipline",
+        "folly"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-11-2e3f61",
+      "text": "About what am I now employing my own soul?",
+      "work": "meditations",
+      "location": "Book 5, Section 11",
+      "plain": "Where is my mind going right now?",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-16-6a7a47",
+      "text": "Such as are thy habitual thoughts, such also will be the character of thy mind; for the soul is dyed by the thoughts.",
+      "work": "meditations",
+      "location": "Book 5, Section 16",
+      "plain": "Your habitual thoughts shape who you are.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-17-99900c",
+      "text": "To seek what is impossible is madness: and it is impossible that the bad should not do something of this kind.",
+      "work": "meditations",
+      "location": "Book 5, Section 17",
+      "plain": "Expecting bad people not to act badly is madness.",
+      "themes": [
+        "anger",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-18-0fa1b6",
+      "text": "Nothing happens to any man which he is not formed by nature to bear.",
+      "work": "meditations",
+      "location": "Book 5, Section 18",
+      "plain": "Whatever you face, you can bear.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-18-62ac88",
+      "text": "It is a shame then that ignorance and conceit should be stronger than wisdom.",
+      "work": "meditations",
+      "location": "Book 5, Section 18",
+      "plain": "It is a shame when ignorance and conceit beat wisdom.",
+      "themes": [
+        "courage",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-19-824da6",
+      "text": "Things themselves touch not the soul, not in the least degree; nor have they admission to the soul, nor can they turn or move the soul: but the soul turns and moves itself alone, and whatever judgments it may think proper to make, such it makes for itself the things which present themselves to it.",
+      "work": "meditations",
+      "location": "Book 5, Section 19",
+      "plain": "Events cannot move your mind. Only your own judgments do.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-23-be23bb",
+      "text": "Often think of the rapidity with which things pass by and disappear, both the things which are and the things which are produced.",
+      "work": "meditations",
+      "location": "Book 5, Section 23",
+      "plain": "Things vanish fast. Remember that often.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-23-9fa040",
+      "text": "How then is he not a fool who is puffed up with such things or plagued about them and makes himself miserable?",
+      "work": "meditations",
+      "location": "Book 5, Section 23",
+      "plain": "Being puffed up or tormented over passing things is foolish.",
+      "themes": [
+        "folly",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-25-bbcf1f",
+      "text": "Does another do me wrong? Let him look to it.",
+      "work": "meditations",
+      "location": "Book 5, Section 25",
+      "plain": "Someone wronged you? That is theirs to deal with.",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-28-039a37",
+      "text": "Art thou angry with him whose armpits stink? art thou angry with him whose mouth smells foul? What good will this anger do thee?",
+      "work": "meditations",
+      "location": "Book 5, Section 28",
+      "plain": "You cannot change how someone is. What does your anger fix?",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-33-42a996",
+      "text": "Soon, very soon, thou wilt be ashes, or a skeleton, and either a name or not even a name; but name is sound and echo.",
+      "work": "meditations",
+      "location": "Book 5, Section 33",
+      "plain": "You will soon be ashes and even your name is just an echo.",
+      "themes": [
+        "death",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-33-a15ef3",
+      "text": "And the things which are much valued in life are empty and rotten and trifling, and [like] little dogs biting one another, and little children quarreling, laughing, and then straightway weeping.",
+      "work": "meditations",
+      "location": "Book 5, Section 33",
+      "plain": "What most people chase is petty, like squabbling kids and snapping dogs.",
+      "themes": [
+        "folly",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-33-f90bc2",
+      "text": "But to have good repute amid such a world as this is an empty thing.",
+      "work": "meditations",
+      "location": "Book 5, Section 33",
+      "plain": "Being well thought of in a world like this means little.",
+      "themes": [
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-34-c0d1ee",
+      "text": "Thou canst pass thy life in an equable flow of happiness, if thou canst go by the right way, and think and act in the right way.",
+      "work": "meditations",
+      "location": "Book 5, Section 34",
+      "plain": "Steady happiness comes from thinking and acting right.",
+      "themes": [
+        "happiness",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-5-section-35-9afab9",
+      "text": "If this is neither my own badness, nor an effect of my own badness, and the common weal is not injured, why am I troubled about it, and what is the harm to the common weal?",
+      "work": "meditations",
+      "location": "Book 5, Section 35",
+      "plain": "If it is not my fault and hurts no one, why am I bothered?",
+      "themes": [
+        "mind",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-2-1f1e87",
+      "text": "Let it make no difference to thee whether thou art cold or warm, if thou art doing thy duty; and whether thou art drowsy or satisfied with sleep; and whether ill-spoken of or praised; and whether dying or doing something else.",
+      "work": "meditations",
+      "location": "Book 6, Section 2",
+      "plain": "Do your job whether you are cold, tired, praised or blamed.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-3-6ad463",
+      "text": "Look within. Let neither the peculiar quality of anything nor its value escape thee.",
+      "work": "meditations",
+      "location": "Book 6, Section 3",
+      "plain": "Look inward and see things for what they really are.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-6-8175c7",
+      "text": "The best way of avenging thyself is not to become like [the wrong-doer].",
+      "work": "meditations",
+      "location": "Book 6, Section 6",
+      "plain": "The best revenge is not becoming like them.",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-11-dbc38d",
+      "text": "When thou hast been compelled by circumstances to be disturbed in a manner, quickly return to thyself, and do not continue out of tune longer than the compulsion lasts; for thou wilt have more mastery over the harmony by continually recurring to it.",
+      "work": "meditations",
+      "location": "Book 6, Section 11",
+      "plain": "When life knocks you off balance, return to yourself fast. Do it enough and it gets easy.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-15-725165",
+      "text": "It would be just as if a man should fall in love with one of the sparrows which fly by, but it has already passed out of sight.",
+      "work": "meditations",
+      "location": "Book 6, Section 15",
+      "plain": "Loving what passes is like falling for a bird already out of sight.",
+      "themes": [
+        "change",
+        "desire"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-16-fe4dc6",
+      "text": "Suppose then that thou hast given up this worthless thing called fame, what remains that is worth valuing?",
+      "work": "meditations",
+      "location": "Book 6, Section 16",
+      "plain": "Drop fame and ask what is actually worth wanting.",
+      "themes": [
+        "reputation",
+        "desire"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-18-e60b0d",
+      "text": "How strangely men act! They will not praise those who are living at the same time and living with themselves; but to be themselves praised by posterity, by those whom they have never seen nor ever will see, this they set much value on.",
+      "work": "meditations",
+      "location": "Book 6, Section 18",
+      "plain": "People stay stingy with praise today but crave the praise of strangers who are not born yet.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-19-499031",
+      "text": "If a thing is difficult to be accomplished by thyself, do not think that it is impossible for man: but if anything is possible for man and conformable to his nature, think that this can be attained by thyself too.",
+      "work": "meditations",
+      "location": "Book 6, Section 19",
+      "plain": "Hard for you is not impossible. If a human can do it, you can.",
+      "themes": [
+        "courage",
+        "discipline"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-21-c9aa0d",
+      "text": "If any man is able to convince me and show me that I do not think or act right, I will gladly change; for I seek the truth, by which no man was ever injured. But he is injured who abides in his error and ignorance.",
+      "work": "meditations",
+      "location": "Book 6, Section 21",
+      "plain": "Show me I am wrong and I will change. Truth never hurt anyone, staying wrong does.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-22-2edf7c",
+      "text": "I do my duty: other things trouble me not; for they are either things without life, or things without reason, or things that have rambled and know not the way.",
+      "work": "meditations",
+      "location": "Book 6, Section 22",
+      "plain": "Do the job. The rest is noise from things that cannot think.",
+      "themes": [
+        "work",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-26-7b4d95",
+      "text": "What then if they grow angry, wilt thou be angry too? Wilt thou not go on with composure and number every letter?",
+      "work": "meditations",
+      "location": "Book 6, Section 26",
+      "plain": "They get angry and you stay steady and keep working.",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-27-af8345",
+      "text": "Teach them then, and show them without being angry.",
+      "work": "meditations",
+      "location": "Book 6, Section 27",
+      "plain": "Teach people without anger.",
+      "themes": [
+        "anger",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-29-35b70a",
+      "text": "It is a shame for the soul to be first to give way in this life, when thy body does not give way.",
+      "work": "meditations",
+      "location": "Book 6, Section 29",
+      "plain": "Do not let your mind quit before your body does.",
+      "themes": [
+        "courage",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-30-a97be0",
+      "text": "Take care that thou art not made into a Caesar, that thou art not dyed with this dye; for such things happen.",
+      "work": "meditations",
+      "location": "Book 6, Section 30",
+      "plain": "Do not let power change who you are.",
+      "themes": [
+        "power",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-30-e8dc48",
+      "text": "Short is life. There is only one fruit of this terrene life, a pious disposition and social acts.",
+      "work": "meditations",
+      "location": "Book 6, Section 30",
+      "plain": "Life is short, and the one thing it yields is good character and good deeds.",
+      "themes": [
+        "time",
+        "happiness"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-34-fab7e5",
+      "text": "How many pleasures have been enjoyed by robbers, patricides, tyrants.",
+      "work": "meditations",
+      "location": "Book 6, Section 34",
+      "plain": "Pleasure proves nothing. Even awful people enjoy plenty.",
+      "themes": [
+        "desire",
+        "folly"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-37-8311c5",
+      "text": "He who has seen present things has seen all, both everything which has taken place from all eternity and everything which will be for time without end; for all things are of one kin and of one form.",
+      "work": "meditations",
+      "location": "Book 6, Section 37",
+      "plain": "See today and you have seen it all. The same patterns repeat forever.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-47-786b3a",
+      "text": "One thing here is worth a great deal, to pass thy life in truth and justice, with a benevolent disposition even to liars and unjust men.",
+      "work": "meditations",
+      "location": "Book 6, Section 47",
+      "plain": "What counts is living in truth and fairness, even toward liars.",
+      "themes": [
+        "self-mastery",
+        "happiness"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-49-baa82c",
+      "text": "Be not dissatisfied then that thou must live only so many years and not more; for as thou art satisfied with the amount of substance which has been assigned to thee, so be content with the time.",
+      "work": "meditations",
+      "location": "Book 6, Section 49",
+      "plain": "You accept your body weight. Accept your lifespan too.",
+      "themes": [
+        "time",
+        "death"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-51-5614ed",
+      "text": "He who loves fame considers another man's activity to be his own good; and he who loves pleasure, his own sensations; but he who has understanding considers his own acts to be his own good.",
+      "work": "meditations",
+      "location": "Book 6, Section 51",
+      "plain": "Fame lives in other people's hands, pleasure in feelings. Wisdom lives in what you do.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-52-9f6f4b",
+      "text": "It is in our power to have no opinion about a thing, and not to be disturbed in our soul; for things themselves have no natural power to form our judgments.",
+      "work": "meditations",
+      "location": "Book 6, Section 52",
+      "plain": "You can choose not to judge an event, and then it cannot shake you.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-54-9e460b",
+      "text": "That which is not good for the swarm, neither is it good for the bee.",
+      "work": "meditations",
+      "location": "Book 6, Section 54",
+      "plain": "What hurts the group hurts you too.",
+      "themes": [
+        "friendship"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-56-463c98",
+      "text": "How many together with whom I came into the world are already gone out of it.",
+      "work": "meditations",
+      "location": "Book 6, Section 56",
+      "plain": "So many people I started with are already gone.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-57-ee050d",
+      "text": "Why then am I angry? Dost thou think that a false opinion has less power than the bile in the jaundiced or the poison in him who is bitten by a mad dog?",
+      "work": "meditations",
+      "location": "Book 6, Section 57",
+      "plain": "A false belief can poison you like venom. Check it before you get angry.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-6-section-59-4212e6",
+      "text": "What kind of people are those whom men wish to please, and for what objects, and by what kind of acts?",
+      "work": "meditations",
+      "location": "Book 6, Section 59",
+      "plain": "Look at who you are trying to impress and why.",
+      "themes": [
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-1-8a91b0",
+      "text": "There is nothing new: all things are both familiar and short-lived.",
+      "work": "meditations",
+      "location": "Book 7, Section 1",
+      "plain": "Nothing is new and nothing lasts.",
+      "themes": [
+        "change",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-2-b5e91e",
+      "text": "I can have that opinion about anything which I ought to have. If I can, why am I disturbed?",
+      "work": "meditations",
+      "location": "Book 7, Section 2",
+      "plain": "I choose my view of things. So why let it bother me?",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-2-96924c",
+      "text": "To recover thy life is in thy power. Look at things again as thou didst use to look at them; for in this consists the recovery of thy life.",
+      "work": "meditations",
+      "location": "Book 7, Section 2",
+      "plain": "You can get your life back by seeing things the way you used to.",
+      "themes": [
+        "mind",
+        "change"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-3-84a3e2",
+      "text": "It is thy duty then in the midst of such things to show good humor and not a proud air; to understand however that every man is worth just so much as the things are worth about which he busies himself.",
+      "work": "meditations",
+      "location": "Book 7, Section 3",
+      "plain": "A man is worth what the things he busies himself with are worth. Pick well.",
+      "themes": [
+        "work",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-6-3823de",
+      "text": "How many after being celebrated by fame have been given up to oblivion; and how many who have celebrated the fame of others have long been dead.",
+      "work": "meditations",
+      "location": "Book 7, Section 6",
+      "plain": "The famous and their fans are both gone.",
+      "themes": [
+        "reputation",
+        "death"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-7-ae50b3",
+      "text": "Be not ashamed to be helped; for it is thy business to do thy duty like a soldier in the assault on a town.",
+      "work": "meditations",
+      "location": "Book 7, Section 7",
+      "plain": "Take help without shame. Soldiers do.",
+      "themes": [
+        "friendship",
+        "courage"
+      ],
+      "moments": [
+        "alone",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-8-d622a8",
+      "text": "Let not future things disturb thee, for thou wilt come to them, if it shall be necessary, having with thee the same reason which now thou usest for present things.",
+      "work": "meditations",
+      "location": "Book 7, Section 8",
+      "plain": "Do not fear the future. You will meet it with the same mind you have now.",
+      "themes": [
+        "fear",
+        "mind"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-14-456b7e",
+      "text": "Let there fall externally what will on the parts which can feel the effects of this fall. For those parts which have felt will complain, if they choose. But I, unless I think that what has happened is an evil, am not injured.",
+      "work": "meditations",
+      "location": "Book 7, Section 14",
+      "plain": "Let the blow land. The only real harm is deciding it is a disaster.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-15-daa603",
+      "text": "Whatever any one does or says, I must be emerald and keep my color.",
+      "work": "meditations",
+      "location": "Book 7, Section 15",
+      "plain": "No matter what anyone does, stay yourself.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-16-0c8cfd",
+      "text": "The leading principle in itself wants nothing, unless it makes a want for itself; and therefore it is both free from perturbation and unimpeded, if it does not disturb and impede itself.",
+      "work": "meditations",
+      "location": "Book 7, Section 16",
+      "plain": "Your mind wants nothing until you invent a want. Stop getting in your own way.",
+      "themes": [
+        "desire",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-18-8fca35",
+      "text": "Is any man afraid of change? Why, what can take place without change?",
+      "work": "meditations",
+      "location": "Book 7, Section 18",
+      "plain": "Afraid of change? Nothing happens without it.",
+      "themes": [
+        "change",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-19-bf6075",
+      "text": "How many a Chrysippus, how many a Socrates, how many an Epictetus has time already swallowed up!",
+      "work": "meditations",
+      "location": "Book 7, Section 19",
+      "plain": "Time has swallowed up the greatest thinkers. It will take us.",
+      "themes": [
+        "time",
+        "death"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-21-8b6a1f",
+      "text": "Near is thy forgetfulness of all things; and near the forgetfulness of thee by all.",
+      "work": "meditations",
+      "location": "Book 7, Section 21",
+      "plain": "You will forget everything soon and soon be forgotten.",
+      "themes": [
+        "time",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-22-f3f00a",
+      "text": "It is peculiar to man to love even those who do wrong.",
+      "work": "meditations",
+      "location": "Book 7, Section 22",
+      "plain": "Loving even those who wrong you is what makes you human.",
+      "themes": [
+        "love",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-26-10b1e4",
+      "text": "When a man has done thee any wrong, immediately consider with what opinion about good or evil he has done wrong.",
+      "work": "meditations",
+      "location": "Book 7, Section 26",
+      "plain": "When someone wrongs you, ask what they believed they were doing.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-27-3b1cca",
+      "text": "Think not so much of what thou hast not as of what thou hast: but of the things which thou hast select the best, and then reflect how eagerly they would have been sought, if thou hadst them not.",
+      "work": "meditations",
+      "location": "Book 7, Section 27",
+      "plain": "Count what you have by imagining you had lost it.",
+      "themes": [
+        "happiness",
+        "desire"
+      ],
+      "moments": [
+        "broke",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-28-17b7b6",
+      "text": "Retire into thyself.",
+      "work": "meditations",
+      "location": "Book 7, Section 28",
+      "plain": "Go inward. Peace is built there, not out in the crowd.",
+      "themes": [
+        "solitude",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-29-78ec30",
+      "text": "Wipe out the imagination. Stop the pulling of the strings. Confine thyself to the present.",
+      "work": "meditations",
+      "location": "Book 7, Section 29",
+      "plain": "Stop the stories in your head. Stay in what is actually happening.",
+      "themes": [
+        "mind",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-34-89b9e9",
+      "text": "About fame: look at the minds [of those who seek fame], observe what they are, and what kind of things they avoid, and what kind of things they pursue. And consider that as the heaps of sand piled on one another hide the former sands; so in life the events which go before are soon covered by those which come after.",
+      "work": "meditations",
+      "location": "Book 7, Section 34",
+      "plain": "Fame is sand piling over sand. What you did today gets buried fast.",
+      "themes": [
+        "reputation",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-36-b5600d",
+      "text": "From Antisthenes: It is royal to do good and to be abused.",
+      "work": "meditations",
+      "location": "Book 7, Section 36",
+      "plain": "Doing right and getting attacked for it is noble, not a loss.",
+      "themes": [
+        "reputation",
+        "courage"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-40-0db2f1",
+      "text": "Life must be reaped like the ripe ears of corn. One man is born; another dies.",
+      "work": "meditations",
+      "location": "Book 7, Section 40",
+      "plain": "Life gets cut down like grain, and the next one starts.",
+      "themes": [
+        "death",
+        "change"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-47-b64d69",
+      "text": "Look round at the courses of the stars, as if thou wert going along with them; and constantly consider the changes of the elements into one another, for such thoughts purge away the filth of the terrene life.",
+      "work": "meditations",
+      "location": "Book 7, Section 47",
+      "plain": "Think about the stars and constant change and the petty stuff drops away.",
+      "themes": [
+        "mind",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-49-5a20bb",
+      "text": "Consider the past, such great changes of political supremacies; thou mayest foresee also the things which will be.",
+      "work": "meditations",
+      "location": "Book 7, Section 49",
+      "plain": "History repeats. Read the past and you can see what is coming.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-54-964588",
+      "text": "Everywhere and at all times it is in thy power piously to acquiesce in thy present condition, and to behave, justly to those who are about thee, and to exert thy skill upon thy present thoughts, that nothing shall steal into them without being well examined.",
+      "work": "meditations",
+      "location": "Book 7, Section 54",
+      "plain": "You can always accept where you are, treat people right, and watch what gets into your head.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-56-bed0d3",
+      "text": "Consider thyself to be dead, and to have completed thy life up to the present time; and live according to nature the remainder which is allowed thee.",
+      "work": "meditations",
+      "location": "Book 7, Section 56",
+      "plain": "Pretend your old life is over and live what is left on purpose.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-57-2279fe",
+      "text": "Love that only which happens to thee and is spun with the thread of thy destiny. For what is more suitable?",
+      "work": "meditations",
+      "location": "Book 7, Section 57",
+      "plain": "Love what is happening to you. It is your life.",
+      "themes": [
+        "fate",
+        "happiness"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-58-7fa9d4",
+      "text": "In everything which happens keep before thy eyes those to whom the same things happened, and how they were vexed, and treated them as strange things, and found fault with them: and now where are they? Nowhere.",
+      "work": "meditations",
+      "location": "Book 7, Section 58",
+      "plain": "People before you cried about the same things, and they are gone. Why do it too?",
+      "themes": [
+        "adversity",
+        "time"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-59-ed4698",
+      "text": "Look within. Within is the fountain of good, and it will ever bubble up, if thou wilt ever dig.",
+      "work": "meditations",
+      "location": "Book 7, Section 59",
+      "plain": "The good stuff is inside you. You just have to keep digging.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-61-04d41f",
+      "text": "The art of life is more like the wrestler's art than the dancer's, in respect of this, that it should stand ready and firm to meet onsets which are sudden and unexpected.",
+      "work": "meditations",
+      "location": "Book 7, Section 61",
+      "plain": "Life is wrestling, not dancing. Be ready for the hit you did not see coming.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-64-2e13bf",
+      "text": "When then thou art discontented about any of these things, say to thyself that thou art yielding to pain.",
+      "work": "meditations",
+      "location": "Book 7, Section 64",
+      "plain": "If you are whining about something minor, that is you giving in to pain.",
+      "themes": [
+        "pain",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-67-652fea",
+      "text": "Always bear this in mind; and another thing too, that very little indeed is necessary for living a happy life.",
+      "work": "meditations",
+      "location": "Book 7, Section 67",
+      "plain": "You need very little to live happy.",
+      "themes": [
+        "happiness",
+        "wealth"
+      ],
+      "moments": [
+        "broke",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-68-e3bc38",
+      "text": "It is in thy power to live free from all compulsion in the greatest tranquillity of mind, even if all the world cry out against thee as much as they choose, and even if wild beasts tear in pieces the members of this kneaded matter which has grown around thee.",
+      "work": "meditations",
+      "location": "Book 7, Section 68",
+      "plain": "You can stay calm even if the whole world screams at you.",
+      "themes": [
+        "mind",
+        "reputation"
+      ],
+      "moments": [
+        "angry",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-69-1bdc23",
+      "text": "The perfection of moral character consists in this, in passing every day as the last, and in being neither violently excited nor torpid nor playing the hypocrite.",
+      "work": "meditations",
+      "location": "Book 7, Section 69",
+      "plain": "Perfect character is treating every day as your last without panic, laziness or faking.",
+      "themes": [
+        "discipline",
+        "death"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-71-2c97d3",
+      "text": "It is a ridiculous thing for a man not to fly from his own badness, which is indeed possible, but to fly from other men's badness, which is impossible.",
+      "work": "meditations",
+      "location": "Book 7, Section 71",
+      "plain": "Run from your own flaws, which you can fix, not from other people's, which you cannot.",
+      "themes": [
+        "folly",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-7-section-73-c74d8e",
+      "text": "When thou hast done a good act and another has received it, why dost thou still look for a third thing besides these, as fools do, either to have the reputation of having done a good act or to obtain a return?",
+      "work": "meditations",
+      "location": "Book 7, Section 73",
+      "plain": "Do the good thing and stop. Do not wait for credit or payback.",
+      "themes": [
+        "reputation",
+        "work"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-2-b85453",
+      "text": "On the occasion of every act ask thyself, How is this with respect to me? Shall I repent of it? A little time and I am dead, and all is gone.",
+      "work": "meditations",
+      "location": "Book 8, Section 2",
+      "plain": "Before you act, ask if you will regret it. You are about to be dead anyway.",
+      "themes": [
+        "death",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-4-d87f52",
+      "text": "[Consider] that men will do the same things nevertheless, even though thou shouldst burst.",
+      "work": "meditations",
+      "location": "Book 8, Section 4",
+      "plain": "People will keep doing what they do, no matter how much you rage.",
+      "themes": [
+        "anger",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-5-d10b19",
+      "text": "This is the chief thing: Be not perturbed, for all things are according to the nature of the universal; and in a little time thou wilt be nobody and nowhere, like Hadrianus and Augustus.",
+      "work": "meditations",
+      "location": "Book 8, Section 5",
+      "plain": "Stay calm. Even emperors end up nobody.",
+      "themes": [
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-6-56f7ce",
+      "text": "All things are change, yet we need not fear anything new.",
+      "work": "meditations",
+      "location": "Book 8, Section 6",
+      "plain": "Everything changes, so nothing new has to scare you.",
+      "themes": [
+        "change",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-8-674918",
+      "text": "Thou hast not leisure [or ability] to read. But thou hast leisure [or ability] to check arrogance: thou hast leisure to be superior to pleasure and pain: thou hast leisure to be superior to love of fame, and not to be vexed at stupid and ungrateful people, nay even to care for them.",
+      "work": "meditations",
+      "location": "Book 8, Section 8",
+      "plain": "You have no time to read, but you do have time to drop arrogance, beat pleasure and pain, and not get rattled by ungrateful people.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "tired",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-12-220133",
+      "text": "When thou risest from sleep with reluctance, remember that it is according to thy constitution and according to human nature to perform social acts, but sleeping is common also to irrational animals.",
+      "work": "meditations",
+      "location": "Book 8, Section 12",
+      "plain": "Dragging out of bed? Humans are made for work. Sleeping in is what animals do.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-15-f9489d",
+      "text": "Remember that as it is a shame to be surprised if the fig-tree produces figs, so it is to be surprised if the world produces such and such things of which it is productive; and for the physician and the helmsman it is a shame to be surprised if a man has a fever, or if the wind is unfavorable.",
+      "work": "meditations",
+      "location": "Book 8, Section 15",
+      "plain": "Do not act shocked when the world acts like the world.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-16-d3db5b",
+      "text": "Remember that to change thy opinion and to follow him who corrects thy error is as consistent with freedom as it is to persist in thy error.",
+      "work": "meditations",
+      "location": "Book 8, Section 16",
+      "plain": "Changing your mind when corrected is freedom, not weakness.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-21-ff6501",
+      "text": "Short lived are both the praiser and the praised, and the rememberer and the remembered: and all this in a nook of this part of the world; and not even here do all agree, no, not any one with himself: and the whole earth too is a point.",
+      "work": "meditations",
+      "location": "Book 8, Section 21",
+      "plain": "The praiser and the praised both vanish, and the whole earth is a dot.",
+      "themes": [
+        "reputation",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-22-cf0138",
+      "text": "Thou sufferest this justly: for thou choosest rather to become good to-morrow than to be good to-day.",
+      "work": "meditations",
+      "location": "Book 8, Section 22",
+      "plain": "You suffer because you keep putting off being good until tomorrow.",
+      "themes": [
+        "discipline",
+        "time"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-25-b6c2cf",
+      "text": "Lucilla saw Verus die, and then Lucilla died. Secunda saw Maximus die, and then Secunda died.",
+      "work": "meditations",
+      "location": "Book 8, Section 25",
+      "plain": "Everyone buries someone, then gets buried.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-25-0ab52a",
+      "text": "Some indeed have not been remembered even for a short time, and others have become the heroes of fables, and again others have disappeared even from fables.",
+      "work": "meditations",
+      "location": "Book 8, Section 25",
+      "plain": "Some are forgotten fast, some become legend, some are forgotten even by the legends.",
+      "themes": [
+        "reputation",
+        "death"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-28-40ddbb",
+      "text": "Pain is either an evil to the body, then let the body say what it thinks of it, or to the soul; but it is in the power of the soul to maintain its own serenity and tranquillity, and not to think that pain is an evil.",
+      "work": "meditations",
+      "location": "Book 8, Section 28",
+      "plain": "The body can feel pain, but your mind decides whether it is an evil.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "tired",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-29-08471e",
+      "text": "Wipe out thy imaginations by often saying to thyself: Now it is in my power to let no badness be in this soul, nor desire, nor any perturbation at all; but looking at all things I see what is their nature, and I use each according to its value.",
+      "work": "meditations",
+      "location": "Book 8, Section 29",
+      "plain": "Tell yourself you can keep your mind clean of desire and panic, and see each thing for what it is worth.",
+      "themes": [
+        "self-mastery",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-33-ebb273",
+      "text": "Receive [wealth or prosperity] without arrogance; and be ready to let it go.",
+      "work": "meditations",
+      "location": "Book 8, Section 33",
+      "plain": "Take success without arrogance and be ready to lose it.",
+      "themes": [
+        "wealth",
+        "reputation"
+      ],
+      "moments": [
+        "broke"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-36-49dc0b",
+      "text": "Do not disturb thyself by thinking of the whole of thy life. Let not thy thoughts at once embrace all the various troubles which thou mayest expect to befall thee: but on every occasion ask thyself, What is there in this which is intolerable and past bearing? for thou wilt be ashamed to confess.",
+      "work": "meditations",
+      "location": "Book 8, Section 36",
+      "plain": "Do not carry your whole life at once. Ask what is actually unbearable right now and it is usually nothing.",
+      "themes": [
+        "fear",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-37-6c0458",
+      "text": "All this is foul smell and blood in a bag.",
+      "work": "meditations",
+      "location": "Book 8, Section 37",
+      "plain": "Strip off the glamor and the body is just blood in a bag.",
+      "themes": [
+        "death",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-40-2b3027",
+      "text": "If thou takest away thy opinion about that which appears to give thee pain, thou thyself standest in perfect security.",
+      "work": "meditations",
+      "location": "Book 8, Section 40",
+      "plain": "Drop your opinion about what hurts you and you are safe.",
+      "themes": [
+        "pain",
+        "mind"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-44-e3eff2",
+      "text": "See that thou secure this present time to thyself: for those who rather pursue posthumous fame do not consider that the men of after time will be exactly such as these whom they cannot bear now; and both are mortal.",
+      "work": "meditations",
+      "location": "Book 8, Section 44",
+      "plain": "Live now. People who chase a legacy forget the future crowd will be just as annoying as today's.",
+      "themes": [
+        "reputation",
+        "time"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-45-764f47",
+      "text": "Take me and cast me where thou wilt; for there I shall keep my divine part tranquil, that is, content, if it can feel and act comformably to its proper constitution.",
+      "work": "meditations",
+      "location": "Book 8, Section 45",
+      "plain": "Put me anywhere and I can stay calm.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "alone",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-46-5e73b2",
+      "text": "If then there happens to each thing both what is usual and natural, why shouldst thou complain? For the common nature brings nothing which may not be borne by thee.",
+      "work": "meditations",
+      "location": "Book 8, Section 46",
+      "plain": "Whatever happens is normal for a person, so quit complaining. You can bear it.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-47-fb78ba",
+      "text": "If thou art pained by any external thing, it is not this thing that disturbs thee, but thy own judgment about it. And it is in thy power to wipe out this judgment now.",
+      "work": "meditations",
+      "location": "Book 8, Section 47",
+      "plain": "It is not the thing, it is your judgment of it. You can drop the judgment now.",
+      "themes": [
+        "mind",
+        "pain"
+      ],
+      "moments": [
+        "angry",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-47-8c7c9f",
+      "text": "And even if thou art pained because thou art not doing some particular thing which seems to thee to be right, why dost thou not rather act than complain?",
+      "work": "meditations",
+      "location": "Book 8, Section 47",
+      "plain": "If you are upset about something undone, why not just do it instead of complaining?",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-48-a7203b",
+      "text": "Remember that the ruling faculty is invincible, when self-collected it is satisfied with itself, if it does nothing which it does not choose to do, even if it resist from mere obstinacy.",
+      "work": "meditations",
+      "location": "Book 8, Section 48",
+      "plain": "Your mind cannot be forced if you refuse to be forced.",
+      "themes": [
+        "mind",
+        "courage"
+      ],
+      "moments": [
+        "doubting",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-49-2529ed",
+      "text": "Say nothing more to thyself than what the first appearances report. Suppose that it has been reported to thee that a certain person speaks ill of thee. This has been reported; but that thou hast been injured, that has not been reported.",
+      "work": "meditations",
+      "location": "Book 8, Section 49",
+      "plain": "Stick to the facts. Someone talked trash about you; you were not injured.",
+      "themes": [
+        "reputation",
+        "mind"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-50-d3a662",
+      "text": "A cucumber is bitter, Throw it away. There are briers in the road, Turn aside from them. This is enough.",
+      "work": "meditations",
+      "location": "Book 8, Section 50",
+      "plain": "Bitter cucumber, throw it away. Thorns on the road, step around. That is all.",
+      "themes": [
+        "adversity",
+        "mind"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-51-71548f",
+      "text": "Neither in thy actions be sluggish nor in thy conversation without method, nor wandering in thy thoughts, nor let there be in thy soul inward contention nor external effusion, nor in life be so busy as to have no leisure.",
+      "work": "meditations",
+      "location": "Book 8, Section 51",
+      "plain": "Do not be lazy, scattered, or so busy you have no room to breathe.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-51-058cc3",
+      "text": "Suppose that men kill thee, cut thee in pieces, curse thee. What then can these things do to prevent thy mind from remaining pure, wise, sober, just?",
+      "work": "meditations",
+      "location": "Book 8, Section 51",
+      "plain": "Even if they ruin you, they cannot touch your character.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-53-5a3f1c",
+      "text": "Dost thou wish to be praised by a man who curses himself thrice every hour? wouldst thou wish to please a man who does not please himself?",
+      "work": "meditations",
+      "location": "Book 8, Section 53",
+      "plain": "Why want praise from people who do not even like themselves?",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-55-18d4c4",
+      "text": "Generally, wickedness does no harm at all to the universe; and particularly the wickedness [of one man] does no harm to another. It is only harmful to him who has it in his power to be released from it as soon as he shall choose.",
+      "work": "meditations",
+      "location": "Book 8, Section 55",
+      "plain": "Other people's badness only hurts the one who keeps it, and they can drop it any time.",
+      "themes": [
+        "anger",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-58-b1d53c",
+      "text": "He who fears death either fears the loss of sensation or a different kind of sensation. But if thou shalt have no sensation, neither wilt thou feel any harm; and if thou shalt acquire another kind of sensation, thou wilt be a different kind of living being and thou wilt not cease to live.",
+      "work": "meditations",
+      "location": "Book 8, Section 58",
+      "plain": "Death is either no feeling or a new kind of feeling. Neither is harm.",
+      "themes": [
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-8-section-59-76bb62",
+      "text": "Men exist for the sake of one another. Teach them then, or bear with them.",
+      "work": "meditations",
+      "location": "Book 8, Section 59",
+      "plain": "Teach people or put up with them. Those are the choices.",
+      "themes": [
+        "friendship",
+        "anger"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-3-db3ba7",
+      "text": "Do not despise death, but be well content with it, since this too is one of those things which nature wills.",
+      "work": "meditations",
+      "location": "Book 9, Section 3",
+      "plain": "Do not hate death. It is just nature doing its thing.",
+      "themes": [
+        "death",
+        "fear"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-4-0ef9b7",
+      "text": "He who does wrong does wrong against himself. He who acts unjustly acts unjustly to himself, because he makes himself bad.",
+      "work": "meditations",
+      "location": "Book 9, Section 4",
+      "plain": "Doing wrong hurts the wrongdoer first.",
+      "themes": [
+        "self-mastery",
+        "folly"
+      ],
+      "moments": [
+        "tempted",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-6-bfa3c0",
+      "text": "Thy present opinion founded on understanding, and thy present conduct directed to social good, and thy present disposition of contentment with everything which happens, that is enough.",
+      "work": "meditations",
+      "location": "Book 9, Section 6",
+      "plain": "A clear mind, useful acts and peace with what happens is enough.",
+      "themes": [
+        "happiness",
+        "mind"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-7-5f9202",
+      "text": "Wipe out imagination; check desire: extinguish appetite: keep the ruling faculty in its own power.",
+      "work": "meditations",
+      "location": "Book 9, Section 7",
+      "plain": "Kill the fantasies, rein in wanting, keep control of your mind.",
+      "themes": [
+        "self-mastery",
+        "desire"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-12-7a5544",
+      "text": "Labor not as one who is wretched, nor yet as one who would be pitied or admired; but direct thy will to one thing only, to put thyself in motion and to check thyself, as the social reason requires.",
+      "work": "meditations",
+      "location": "Book 9, Section 12",
+      "plain": "Work without self pity or showing off. Pick one thing and go.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-13-f3aee4",
+      "text": "To-day I have got out of all trouble, or rather I have cast out all trouble, for it was not outside, but within and in my opinions.",
+      "work": "meditations",
+      "location": "Book 9, Section 13",
+      "plain": "The trouble was never outside. It was in how I saw things.",
+      "themes": [
+        "mind",
+        "adversity"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-14-d6eb29",
+      "text": "Everything now is just as it was in the time of those whom we have buried.",
+      "work": "meditations",
+      "location": "Book 9, Section 14",
+      "plain": "Nothing is new. It was the same for everyone already dead.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-16-951f14",
+      "text": "Not in passivity but in activity lie the evil and the good of the rational social animal, just as his virtue and his vice lie not in passivity but in activity.",
+      "work": "meditations",
+      "location": "Book 9, Section 16",
+      "plain": "Good and bad lie in what you do, not in what happens to you.",
+      "themes": [
+        "work",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-18-fd81ad",
+      "text": "Penetrate inwards into men's leading principles, and thou wilt see what judges thou art afraid of, and what kind of judges they are of themselves.",
+      "work": "meditations",
+      "location": "Book 9, Section 18",
+      "plain": "Look at who you fear to be judged by. See how they judge themselves.",
+      "themes": [
+        "reputation",
+        "fear"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-19-9b359b",
+      "text": "All things are changing: and thou thyself art in continuous mutation and in a manner in continuous destruction, and the whole universe too.",
+      "work": "meditations",
+      "location": "Book 9, Section 19",
+      "plain": "You and everything else are always changing.",
+      "themes": [
+        "change",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-26-d5f96e",
+      "text": "Thou hast endured infinite troubles through not being contented with thy ruling faculty when it does the things which it is constituted by nature to do.",
+      "work": "meditations",
+      "location": "Book 9, Section 26",
+      "plain": "Most of your suffering came from not being at peace with your own mind.",
+      "themes": [
+        "mind",
+        "pain"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-27-996897",
+      "text": "When another blames thee or hates thee, or when men say about thee anything injurious, approach their poor souls, penetrate within, and see what kind of men they are.",
+      "work": "meditations",
+      "location": "Book 9, Section 27",
+      "plain": "When someone hates you, look at what kind of person they are.",
+      "themes": [
+        "reputation",
+        "anger"
+      ],
+      "moments": [
+        "angry",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-27-b562b4",
+      "text": "Thou wilt discover that there is no reason to take any trouble that these men may have this or that opinion about thee.",
+      "work": "meditations",
+      "location": "Book 9, Section 27",
+      "plain": "You will find no reason to care what they think of you.",
+      "themes": [
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-28-97828d",
+      "text": "Soon will the earth cover us all: then the earth, too, will change, and the things also which result from change will continue to change forever, and these again forever.",
+      "work": "meditations",
+      "location": "Book 9, Section 28",
+      "plain": "Soon the earth covers all of us, and then it changes too.",
+      "themes": [
+        "death",
+        "change"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-29-30ecf7",
+      "text": "The universal cause is like a winter torrent: it carries everything along with it.",
+      "work": "meditations",
+      "location": "Book 9, Section 29",
+      "plain": "Time is a flood that carries everything away.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-29-a2deee",
+      "text": "Set thyself in motion, if it is in thy power, and do not look about thee to see if any one will observe it; nor yet expect Plato's Republic: but be content if the smallest thing goes on well, and consider such an event to be no small matter.",
+      "work": "meditations",
+      "location": "Book 9, Section 29",
+      "plain": "Start moving. Do not wait for anyone to notice. Be glad when even small things go right.",
+      "themes": [
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-29-114bf1",
+      "text": "Simple and modest is the work of philosophy.",
+      "work": "meditations",
+      "location": "Book 9, Section 29",
+      "plain": "The real work is plain and humble.",
+      "themes": [
+        "work",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-30-4b9b14",
+      "text": "Look down from above on the countless herds of men and their countless solemnities, and the infinitely varied voyagings in storms and calms, and the differences among those who are born, who live together, and die.",
+      "work": "meditations",
+      "location": "Book 9, Section 30",
+      "plain": "Zoom out. Look at all the people, all the voyages, all the dying. Your problem shrinks.",
+      "themes": [
+        "mind",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-33-9d4d35",
+      "text": "All that thou seest will quickly perish, and those who have been spectators of its dissolution will very soon perish too. And he who dies at the extremest old age will be brought into the same condition with him who died prematurely.",
+      "work": "meditations",
+      "location": "Book 9, Section 33",
+      "plain": "Everything you see will end, and the old and the young die the same.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-34-72e403",
+      "text": "When they think that they do harm by their blame or good by their praise, what an idea!",
+      "work": "meditations",
+      "location": "Book 9, Section 34",
+      "plain": "They think their praise or blame matters. What a thought.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-35-8a1bfe",
+      "text": "Loss is nothing else than change.",
+      "work": "meditations",
+      "location": "Book 9, Section 35",
+      "plain": "Loss is just change.",
+      "themes": [
+        "change",
+        "pain"
+      ],
+      "moments": [
+        "afraid",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-37-a65625",
+      "text": "Enough of this wretched life and murmuring and apish tricks. Why art thou disturbed? What is there new in this?",
+      "work": "meditations",
+      "location": "Book 9, Section 37",
+      "plain": "Enough whining. What about this is actually new?",
+      "themes": [
+        "adversity",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-38-9f6be7",
+      "text": "If a man has done wrong the harm is his own. But perhaps he has not done wrong.",
+      "work": "meditations",
+      "location": "Book 9, Section 38",
+      "plain": "If someone wronged you, the harm is theirs. Maybe they did not even wrong you.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-40-8ee0cf",
+      "text": "Well, then, is it not better to use what is in thy power like a free man than to desire in a slavish and abject way what is not in thy power?",
+      "work": "meditations",
+      "location": "Book 9, Section 40",
+      "plain": "Be free about what you control. Do not grovel over what you do not.",
+      "themes": [
+        "self-mastery",
+        "fate"
+      ],
+      "moments": [
+        "tempted",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-42-8fd1af",
+      "text": "When thou art offended with any man's shameless conduct, immediately ask thyself, Is it possible, then, that shameless men should not be in the world? It is not possible. Do not, then, require what is impossible.",
+      "work": "meditations",
+      "location": "Book 9, Section 42",
+      "plain": "Of course shameless people exist. Do not demand the impossible.",
+      "themes": [
+        "anger",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-42-3a10aa",
+      "text": "Consider whether thou shouldst not rather blame thyself, because thou didst not expect such a man to err in such a way.",
+      "work": "meditations",
+      "location": "Book 9, Section 42",
+      "plain": "Maybe blame yourself for not expecting it.",
+      "themes": [
+        "folly",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-9-section-42-0ea244",
+      "text": "For what more dost thou want when thou hast done a man a service? art thou not content that thou hast done something conformable to thy nature, and dost thou seek to be paid for it?",
+      "work": "meditations",
+      "location": "Book 9, Section 42",
+      "plain": "You did a good thing. Why do you need a payment?",
+      "themes": [
+        "reputation",
+        "work"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-3-06384b",
+      "text": "Remember, however, that thou art formed by nature to bear everything, with respect to which it depends on thy own opinion to make it endurable and tolerable, by thinking that it is either thy interest or thy duty to do this.",
+      "work": "meditations",
+      "location": "Book 10, Section 3",
+      "plain": "You were built to bear whatever you can see as useful or as your duty.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-12-c0f6b9",
+      "text": "What need is there of suspicious fear, since it is in thy power to inquire what ought to be done?",
+      "work": "meditations",
+      "location": "Book 10, Section 12",
+      "plain": "Why be afraid when you can just figure out what to do?",
+      "themes": [
+        "fear",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-12-1f7f33",
+      "text": "He who follows reason in all things is both tranquil and active at the same time, and also cheerful and collected.",
+      "work": "meditations",
+      "location": "Book 10, Section 12",
+      "plain": "Follow reason and you are calm, active and cheerful together.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-14-d3942e",
+      "text": "To her who gives and takes back all, to nature, the man who is instructed and modest says, Give what thou wilt; take back what thou wilt.",
+      "work": "meditations",
+      "location": "Book 10, Section 14",
+      "plain": "Tell nature: give what you want, take what you want.",
+      "themes": [
+        "fate",
+        "change"
+      ],
+      "moments": [
+        "afraid",
+        "broke"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-15-fdbefc",
+      "text": "Short is the little which remains to thee of life. Live as on a mountain.",
+      "work": "meditations",
+      "location": "Book 10, Section 15",
+      "plain": "Little time is left. Live like you are on a mountain, above the noise.",
+      "themes": [
+        "time",
+        "solitude"
+      ],
+      "moments": [
+        "overwhelmed",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-16-28e21f",
+      "text": "No longer talk at all about the kind of man that a good man ought to be, but be such.",
+      "work": "meditations",
+      "location": "Book 10, Section 16",
+      "plain": "Stop describing a good man. Be one.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-19-c08ca8",
+      "text": "Consider what men are when they are eating, sleeping, generating, easing themselves, and so forth. Then what kind of men they are when they are imperious and arrogant, or angry and scolding from their elevated place.",
+      "work": "meditations",
+      "location": "Book 10, Section 19",
+      "plain": "The powerful eat, sleep and use the toilet like you. Remember that when they posture.",
+      "themes": [
+        "power",
+        "reputation"
+      ],
+      "moments": [
+        "afraid",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-25-f487fc",
+      "text": "He then who fears or is grieved or is angry is a runaway.",
+      "work": "meditations",
+      "location": "Book 10, Section 25",
+      "plain": "Fear, grief and anger are all running away from reality.",
+      "themes": [
+        "fear",
+        "anger"
+      ],
+      "moments": [
+        "afraid",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-28-448e6b",
+      "text": "Imagine every man who is grieved at anything or discontented to be like a pig which is sacrificed and kicks and screams.",
+      "work": "meditations",
+      "location": "Book 10, Section 28",
+      "plain": "Complaining about what cannot change is a pig squealing on the way to the altar.",
+      "themes": [
+        "adversity",
+        "folly"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-30-cd7281",
+      "text": "When thou art offended at any man's fault, forthwith turn to thyself and reflect in what like manner thou dost err thyself; for example, in thinking that money is a good thing, or pleasure, or a bit of reputation, and the like.",
+      "work": "meditations",
+      "location": "Book 10, Section 30",
+      "plain": "When someone's fault bothers you, look at your own, like treating money or reputation as the real good.",
+      "themes": [
+        "anger",
+        "wealth"
+      ],
+      "moments": [
+        "angry",
+        "broke"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-32-56de96",
+      "text": "Let it not be in any man's power to say truly of thee that thou are not simple or that thou art not good; but let him be a liar whoever shall think anything of this kind about thee; and this is altogether in thy power.",
+      "work": "meditations",
+      "location": "Book 10, Section 32",
+      "plain": "Do not let anyone truthfully say you are not good. That is up to you.",
+      "themes": [
+        "self-mastery",
+        "reputation"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-34-f262c7",
+      "text": "But a brief existence is common to all things, and yet thou avoidest and pursuest all things as if they would be eternal.",
+      "work": "meditations",
+      "location": "Book 10, Section 34",
+      "plain": "Everything is brief and you chase and flee it like it will last forever.",
+      "themes": [
+        "time",
+        "desire"
+      ],
+      "moments": [
+        "tempted",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-34-984dfb",
+      "text": "A little time, and thou shalt close thy eyes; and him who has attended thee to thy grave another soon will lament.",
+      "work": "meditations",
+      "location": "Book 10, Section 34",
+      "plain": "Soon your eyes close, and the one who buried you gets buried too.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-35-f370ee",
+      "text": "The healthy eye ought to see all visible things and not to say, I wish for green things; for this is the condition of a diseased eye.",
+      "work": "meditations",
+      "location": "Book 10, Section 35",
+      "plain": "A healthy eye takes whatever it sees. Demanding only the pleasant is the sickness.",
+      "themes": [
+        "desire",
+        "mind"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-10-section-36-d786a6",
+      "text": "There is no man so fortunate that there shall not be by him when he is dying some who are pleased with what is going to happen.",
+      "work": "meditations",
+      "location": "Book 10, Section 36",
+      "plain": "Even the best person has people glad to see them go. Do not take it personally.",
+      "themes": [
+        "reputation",
+        "death"
+      ],
+      "moments": [
+        "alone",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-2-efadc8",
+      "text": "In all things, then, except virtue and the acts of virtue, remember to apply thyself to their several parts, and by this division to come to value them little: and apply this rule also to thy whole life.",
+      "work": "meditations",
+      "location": "Book 11, Section 2",
+      "plain": "Break pleasures into parts and they shrink. Only virtue holds up.",
+      "themes": [
+        "desire",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-4-a5c56a",
+      "text": "Have I done something for the general interest? Well then, I have had my reward. Let this always be present to thy mind, and never stop [doing such good].",
+      "work": "meditations",
+      "location": "Book 11, Section 4",
+      "plain": "If you did something useful, that is the reward. Keep going.",
+      "themes": [
+        "work",
+        "reputation"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-11-df1d95",
+      "text": "Let then thy judgment about them be at rest, and they will remain quiet, and thou wilt not be seen either pursuing or avoiding.",
+      "work": "meditations",
+      "location": "Book 11, Section 11",
+      "plain": "Calm your judgment about the things you chase and flee, and they go quiet.",
+      "themes": [
+        "desire",
+        "mind"
+      ],
+      "moments": [
+        "tempted",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-13-850476",
+      "text": "Suppose any man shall despise me. Let him look to that himself. But I will look to this, that I be not discovered doing or saying anything deserving of contempt.",
+      "work": "meditations",
+      "location": "Book 11, Section 13",
+      "plain": "Let them despise me. I will make sure I do nothing that deserves it.",
+      "themes": [
+        "reputation",
+        "self-mastery"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-15-55bc71",
+      "text": "Such as a man's character is, he immediately shows it in his eyes, just as he who is beloved forthwith reads everything in the eyes of lovers.",
+      "work": "meditations",
+      "location": "Book 11, Section 15",
+      "plain": "Your character shows in your eyes. You cannot hide it.",
+      "themes": [
+        "reputation",
+        "love"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-15-5228c0",
+      "text": "Nothing is more disgraceful than a wolfish friendship [false friendship]. Avoid this most of all.",
+      "work": "meditations",
+      "location": "Book 11, Section 15",
+      "plain": "Fake friendship is the worst. Stay away from it.",
+      "themes": [
+        "friendship",
+        "folly"
+      ],
+      "moments": [
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-18-a5489b",
+      "text": "Take away these opinions then, and resolve to dismiss thy judgment about an act as if it were something grievous, and thy anger is gone.",
+      "work": "meditations",
+      "location": "Book 11, Section 18",
+      "plain": "Drop the judgment about what they did and the anger goes.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-18-dc2479",
+      "text": "For he who yields to pain and he who yields to anger, both are wounded and both submit.",
+      "work": "meditations",
+      "location": "Book 11, Section 18",
+      "plain": "Yielding to pain and yielding to anger are both losing.",
+      "themes": [
+        "anger",
+        "pain"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-21-a66f76",
+      "text": "He who has not one and always the same object in life, cannot be one and the same all through his life.",
+      "work": "meditations",
+      "location": "Book 11, Section 21",
+      "plain": "If you have no single aim, you are a different person every day.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-27-1cf8cb",
+      "text": "The Pythagoreans bid us in the morning look to the heavens that we may be reminded of those bodies which continually do the same things and in the same manner perform their work, and also be reminded of their purity and nudity. For there is no veil over a star.",
+      "work": "meditations",
+      "location": "Book 11, Section 27",
+      "plain": "Look at the sky every morning. Stars do the same work every night with nothing to hide.",
+      "themes": [
+        "discipline",
+        "mind"
+      ],
+      "moments": [
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-11-section-29-e75634",
+      "text": "Neither in writing nor in reading wilt thou be able to lay down rules for others before thou shalt have first learned to obey rules thyself. Much more is this so in life.",
+      "work": "meditations",
+      "location": "Book 11, Section 29",
+      "plain": "You cannot give rules before you can follow them.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-1-fb8b79",
+      "text": "All those things at which thou wishest to arrive by a circuitous road thou canst have now, if thou dost not refuse them to thyself.",
+      "work": "meditations",
+      "location": "Book 12, Section 1",
+      "plain": "What you want at the end of the long road you can have now if you stop refusing it.",
+      "themes": [
+        "discipline",
+        "time"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-4-a0b120",
+      "text": "I have often wondered how it is that every man loves himself more than all the rest of men, but yet sets less value on his own opinion of himself than on the opinion of others.",
+      "work": "meditations",
+      "location": "Book 12, Section 4",
+      "plain": "We love ourselves most but trust our own opinion of ourselves less than anyone else's.",
+      "themes": [
+        "reputation",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-6-d6761d",
+      "text": "Practise thyself even in the things which thou despairest of accomplishing. For even the left hand, which is ineffectual for all other things for want of practice, holds the bridle more vigorously than the right hand; for it has been practised in this.",
+      "work": "meditations",
+      "location": "Book 12, Section 6",
+      "plain": "Practice what you think you cannot do. Your weak hand gets strong from practice.",
+      "themes": [
+        "discipline",
+        "work"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-7-e7eb6d",
+      "text": "Consider in what condition both in body and soul a man should be when he is overtaken by death; and consider the shortness of life, the boundless abyss of time past and future, the feebleness of all matter.",
+      "work": "meditations",
+      "location": "Book 12, Section 7",
+      "plain": "Think about how you want to be found by death and how short and fragile it all is.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-9-ae738f",
+      "text": "In the application of thy principles thou must be like the pancratiast, not like the gladiator; for the gladiator lets fall the sword which he uses and is killed; but the other always has his hand, and needs to do nothing else than use it.",
+      "work": "meditations",
+      "location": "Book 12, Section 9",
+      "plain": "Be a pancratiast, not a gladiator: keep your hand and never drop the weapon.",
+      "themes": [
+        "discipline",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-14-ad09ec",
+      "text": "And even if the tempest carry thee away, let it carry away the poor flesh, the poor breath, everything else; for the intelligence at least it will not carry away.",
+      "work": "meditations",
+      "location": "Book 12, Section 14",
+      "plain": "The storm can take your body. It cannot take your mind.",
+      "themes": [
+        "adversity",
+        "courage"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-15-53eef1",
+      "text": "Does the light of the lamp shine without losing its splendor until it is extinguished? and shall the truth which is in thee and justice and temperance be extinguished [before thy death]?",
+      "work": "meditations",
+      "location": "Book 12, Section 15",
+      "plain": "The lamp shines until it goes out. Truth and justice in you should too.",
+      "themes": [
+        "discipline",
+        "death"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-17-a8f453",
+      "text": "If it is not right, do not do it: if it is not true, do not say it.",
+      "work": "meditations",
+      "location": "Book 12, Section 17",
+      "plain": "If it is wrong, do not do it. If it is false, do not say it.",
+      "themes": [
+        "discipline",
+        "self-mastery"
+      ],
+      "moments": [
+        "tempted"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-19-978000",
+      "text": "Perceive at last that thou hast in thee something better and more divine than the things which cause the various affects, and as it were pull thee by the strings.",
+      "work": "meditations",
+      "location": "Book 12, Section 19",
+      "plain": "There is something in you better than whatever pulls your strings.",
+      "themes": [
+        "self-mastery",
+        "mind"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-21-a16574",
+      "text": "Consider that before long thou wilt be nobody and nowhere, nor will any of the things exist which thou now seest, nor any of those who are now living.",
+      "work": "meditations",
+      "location": "Book 12, Section 21",
+      "plain": "You will soon be nobody, nowhere, and so will everyone you know.",
+      "themes": [
+        "death",
+        "time"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-22-64f40c",
+      "text": "Consider that everything is opinion, and opinion is in thy power. Take away then, when thou choosest, thy opinion, and like a mariner who has doubled the promontory, thou wilt find calm, everything stable, and a waveless bay.",
+      "work": "meditations",
+      "location": "Book 12, Section 22",
+      "plain": "Everything is opinion, and you control your opinion. Drop it and the sea goes calm.",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "angry"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-25-a42ead",
+      "text": "Cast away opinion: thou art saved. Who then hinders thee from casting it away?",
+      "work": "meditations",
+      "location": "Book 12, Section 25",
+      "plain": "Drop the opinion and you are saved. Who is stopping you?",
+      "themes": [
+        "mind",
+        "self-mastery"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-27-b2b611",
+      "text": "Smoke and ash and a tale, or not even a tale.",
+      "work": "meditations",
+      "location": "Book 12, Section 27",
+      "plain": "It all ends as smoke and ash, and maybe a story.",
+      "themes": [
+        "death",
+        "reputation"
+      ],
+      "moments": [
+        "doubting",
+        "alone"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-29-cd7fd8",
+      "text": "What remains, except to enjoy life by joining one good thing to another so as not to leave even the smallest intervals between?",
+      "work": "meditations",
+      "location": "Book 12, Section 29",
+      "plain": "Enjoy life by stacking good things with no gaps.",
+      "themes": [
+        "happiness",
+        "time"
+      ],
+      "moments": [
+        "tired",
+        "doubting"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-32-4a0233",
+      "text": "How small a part of the boundless and unfathomable time is assigned to every man, for it is very soon swallowed up in the eternal!",
+      "work": "meditations",
+      "location": "Book 12, Section 32",
+      "plain": "Your share of time is tiny and gets swallowed up fast.",
+      "themes": [
+        "time",
+        "death"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-32-de3bab",
+      "text": "Reflecting on all this, consider nothing to be great, except to act as thy nature leads thee, and to endure that which the common nature brings.",
+      "work": "meditations",
+      "location": "Book 12, Section 32",
+      "plain": "Nothing is great except acting from your nature and enduring what comes.",
+      "themes": [
+        "courage",
+        "adversity"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ]
+    },
+    {
+      "id": "marcus-aurelius-meditations-book-12-section-36-0fa72a",
+      "text": "Depart then satisfied, for he also who releases thee is satisfied.",
+      "work": "meditations",
+      "location": "Book 12, Section 36",
+      "plain": "Leave content, because the one who lets you go is content too.",
+      "themes": [
+        "death",
+        "happiness"
+      ],
+      "moments": [
+        "afraid"
+      ]
+    }
+  ]
+}

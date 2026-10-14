@@ -1,0 +1,698 @@
+{
+  "writer": {
+    "slug": "laws",
+    "name": "Laws and maxims",
+    "years": "",
+    "bio": "Named laws, razors and maxims, each checked against a cited source."
+  },
+  "works": [
+    {
+      "slug": "laws",
+      "title": "Laws and maxims",
+      "translator": "",
+      "year": "",
+      "source_url": "",
+      "note": ""
+    }
+  ],
+  "quotes": [
+    {
+      "id": "laws-murphys-law",
+      "text": "Anything that can go wrong will go wrong.",
+      "work": "laws",
+      "location": "Murphy's law",
+      "plain": "Expect things to break. Plan for the failure so it does not catch you off guard.",
+      "themes": [
+        "adversity",
+        "fate"
+      ],
+      "moments": [
+        "overwhelmed",
+        "afraid"
+      ],
+      "by": "Attributed to Edward A. Murphy Jr.",
+      "year": "1949",
+      "source": "Rocket sled tests at Edwards Air Force Base",
+      "source_url": "https://en.wikipedia.org/wiki/Murphy%27s_law"
+    },
+    {
+      "id": "laws-hofstadters-law",
+      "text": "It always takes longer than you expect, even when you take into account Hofstadter's law.",
+      "work": "laws",
+      "location": "Hofstadter's law",
+      "plain": "It will take longer than you planned, even after you pad the plan. Start earlier than feels necessary.",
+      "themes": [
+        "time",
+        "work"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ],
+      "by": "Douglas Hofstadter",
+      "year": "1979",
+      "source": "Godel, Escher, Bach: An Eternal Golden Braid",
+      "source_url": "https://en.wikipedia.org/wiki/Hofstadter%27s_law"
+    },
+    {
+      "id": "laws-parkinsons-law",
+      "text": "Work expands so as to fill the time available for its completion.",
+      "work": "laws",
+      "location": "Parkinson's law",
+      "plain": "Give a task a week and it takes a week. Set a tighter deadline and the work shrinks to fit.",
+      "themes": [
+        "time",
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "tempted"
+      ],
+      "by": "C. Northcote Parkinson",
+      "year": "1955",
+      "source": "The Economist, 19 November 1955",
+      "source_url": "https://en.wikipedia.org/wiki/Parkinson%27s_law"
+    },
+    {
+      "id": "laws-hanlons-razor",
+      "text": "Never attribute to malice that which is adequately explained by stupidity.",
+      "work": "laws",
+      "location": "Hanlon's razor",
+      "plain": "Most people who wrong you are careless, not plotting. Save the anger for when you have proof.",
+      "themes": [
+        "anger",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ],
+      "by": "Attributed to Robert J. Hanlon",
+      "year": "1980",
+      "source": "Murphy's Law Book Two, Arthur Bloch",
+      "source_url": "https://en.wikipedia.org/wiki/Hanlon%27s_razor"
+    },
+    {
+      "id": "laws-sturgeons-law",
+      "text": "Ninety percent of everything is crud.",
+      "work": "laws",
+      "location": "Sturgeon's law",
+      "plain": "Most of everything is mediocre. Stop expecting the average to be good and go look for the ten percent.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ],
+      "by": "Theodore Sturgeon",
+      "year": "1957",
+      "source": "Venture Science Fiction column, September 1957",
+      "source_url": "https://en.wikipedia.org/wiki/Sturgeon%27s_law"
+    },
+    {
+      "id": "laws-occams-razor",
+      "text": "Entities are not to be multiplied without necessity.",
+      "work": "laws",
+      "location": "Occam's razor",
+      "plain": "The simplest explanation that fits the facts usually wins. Do not add moving parts you do not need.",
+      "themes": [
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed",
+        "doubting"
+      ],
+      "by": "Attributed to William of Ockham; this wording is from John Punch",
+      "year": "1639",
+      "source": "John Punch, commentary on Duns Scotus",
+      "source_url": "https://en.wikipedia.org/wiki/Occam%27s_razor"
+    },
+    {
+      "id": "laws-goodharts-law",
+      "text": "When a measure becomes a target, it ceases to be a good measure.",
+      "work": "laws",
+      "location": "Goodhart's law",
+      "plain": "Chase a number and people, you included, will game it. Watch what the number was meant to show.",
+      "themes": [
+        "mind",
+        "work",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Marilyn Strathern, after Charles Goodhart",
+      "year": "1997",
+      "source": "Marilyn Strathern, Improving Ratings: Audit in the British University System",
+      "source_url": "https://en.wikipedia.org/wiki/Goodhart%27s_law"
+    },
+    {
+      "id": "laws-galls-law",
+      "text": "A complex system that works is invariably found to have evolved from a simple system that worked.",
+      "work": "laws",
+      "location": "Gall's law",
+      "plain": "Big things that work started small and worked. Build the simple version first and grow it.",
+      "themes": [
+        "work",
+        "discipline",
+        "change"
+      ],
+      "moments": [
+        "overwhelmed"
+      ],
+      "by": "John Gall",
+      "year": "1975",
+      "source": "Systemantics: How Systems Work and Especially How They Fail",
+      "source_url": "https://en.wikipedia.org/wiki/John_Gall_(author)"
+    },
+    {
+      "id": "laws-chestertons-fence",
+      "text": "If you don't see the use of it, I certainly won't let you clear it away. Go away and think. Then, when you can come back and tell me that you do see the use of it, I may allow you to destroy it.",
+      "work": "laws",
+      "location": "Chesterton's fence",
+      "plain": "Do not tear down a rule until you know why it was put there. Understand it first, then decide.",
+      "themes": [
+        "mind",
+        "folly",
+        "change"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ],
+      "by": "G. K. Chesterton",
+      "year": "1929",
+      "source": "The Thing, chapter The Drift from Domesticity",
+      "source_url": "https://www.chesterton.org/taking-a-fence-down/"
+    },
+    {
+      "id": "laws-the-peter-principle",
+      "text": "In a hierarchy, every employee tends to rise to his level of incompetence.",
+      "work": "laws",
+      "location": "The Peter principle",
+      "plain": "People get promoted for doing well until they land in a job they cannot do. Know where you stop being good.",
+      "themes": [
+        "work",
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Laurence J. Peter and Raymond Hull",
+      "year": "1969",
+      "source": "The Peter Principle",
+      "source_url": "https://en.wikipedia.org/wiki/Peter_principle"
+    },
+    {
+      "id": "laws-brandolinis-law",
+      "text": "The amount of energy needed to refute bullshit is an order of magnitude bigger than that needed to produce it.",
+      "work": "laws",
+      "location": "Brandolini's law",
+      "plain": "Nonsense is cheap to make and costly to answer. Pick your fights, because you cannot win them all.",
+      "themes": [
+        "anger",
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "angry",
+        "tired"
+      ],
+      "by": "Alberto Brandolini",
+      "year": "2013",
+      "source": "Post on Twitter, January 2013",
+      "source_url": "https://en.wikipedia.org/wiki/Brandolini%27s_law"
+    },
+    {
+      "id": "laws-hicks-law",
+      "text": "Increasing the number of choices will increase the decision time logarithmically.",
+      "work": "laws",
+      "location": "Hick's law",
+      "plain": "More options means slower decisions. Cut the menu down and you act sooner.",
+      "themes": [
+        "mind",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed"
+      ],
+      "by": "William Edmund Hick and Ray Hyman",
+      "year": "1952",
+      "source": "On the rate of gain of information, W. E. Hick",
+      "source_url": "https://en.wikipedia.org/wiki/Hick%27s_law"
+    },
+    {
+      "id": "laws-the-pareto-principle",
+      "text": "For many outcomes, roughly 80% of consequences come from 20% of causes.",
+      "work": "laws",
+      "location": "The Pareto principle",
+      "plain": "A few things drive most of your results. Find the vital few and give them your hours.",
+      "themes": [
+        "work",
+        "wealth",
+        "discipline"
+      ],
+      "moments": [
+        "overwhelmed"
+      ],
+      "by": "Joseph M. Juran, after Vilfredo Pareto",
+      "year": "1941",
+      "source": "Juran's work on quality control, after Pareto's 1906 land ownership finding",
+      "source_url": "https://en.wikipedia.org/wiki/Pareto_principle"
+    },
+    {
+      "id": "laws-finagles-law",
+      "text": "Anything that can go wrong will, at the worst possible moment.",
+      "work": "laws",
+      "location": "Finagle's law",
+      "plain": "Murphy's law with a mean streak: the failure lands when you can least afford it. Build in slack.",
+      "themes": [
+        "adversity",
+        "fate"
+      ],
+      "moments": [
+        "afraid",
+        "overwhelmed"
+      ],
+      "by": "Associated with John W. Campbell Jr.",
+      "year": "1962",
+      "source": "Finagle Factors, The Michigan Technic, December 1962",
+      "source_url": "https://en.wikipedia.org/wiki/Finagle%27s_law"
+    },
+    {
+      "id": "laws-segals-law",
+      "text": "A man with a watch knows what time it is. A man with two watches is never sure.",
+      "work": "laws",
+      "location": "Segal's law",
+      "plain": "One source gives you an answer. Two that disagree give you doubt. Pick a trusted source and move.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting",
+        "overwhelmed"
+      ],
+      "by": "Unsigned item in the San Diego Union, later called Segal's law",
+      "year": "1930",
+      "source": "San Diego Union, 20 September 1930",
+      "source_url": "https://en.wikipedia.org/wiki/Segal%27s_law"
+    },
+    {
+      "id": "laws-conways-law",
+      "text": "Organizations which design systems (in the broad sense used here) are constrained to produce designs which are copies of the communication structures of these organizations.",
+      "work": "laws",
+      "location": "Conway's law",
+      "plain": "What you build mirrors how your team talks. If you want a different product, fix how people work together.",
+      "themes": [
+        "work",
+        "mind"
+      ],
+      "moments": [
+        "overwhelmed"
+      ],
+      "by": "Melvin E. Conway",
+      "year": "1968",
+      "source": "How Do Committees Invent?, Datamation, April 1968",
+      "source_url": "https://www.melconway.com/Home/Committees_Paper.html"
+    },
+    {
+      "id": "laws-brookss-law",
+      "text": "Adding manpower to a late software project makes it later.",
+      "work": "laws",
+      "location": "Brooks's law",
+      "plain": "Throwing more people at a late project slows it down. Cut scope instead of adding bodies.",
+      "themes": [
+        "work",
+        "time"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tired"
+      ],
+      "by": "Fred Brooks",
+      "year": "1975",
+      "source": "The Mythical Man-Month",
+      "source_url": "https://en.wikipedia.org/wiki/Brooks%27s_law"
+    },
+    {
+      "id": "laws-cunninghams-law",
+      "text": "The best way to get the right answer on the Internet is not to ask a question; it's to post the wrong answer.",
+      "work": "laws",
+      "location": "Cunningham's law",
+      "plain": "People rush to correct a wrong claim faster than they answer a question. Put your best guess out there.",
+      "themes": [
+        "folly",
+        "mind"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Named for Ward Cunningham by Steven McGeady (Cunningham disclaims it)",
+      "year": "2010",
+      "source": "Steven McGeady, Schott's Vocab, The New York Times",
+      "source_url": "https://en.wikipedia.org/wiki/Ward_Cunningham"
+    },
+    {
+      "id": "laws-betteridges-law-of-headlines",
+      "text": "Any headline that ends in a question mark can be answered by the word no.",
+      "work": "laws",
+      "location": "Betteridge's law of headlines",
+      "plain": "If a headline asks a yes or no question, the honest answer is almost always no. Do not take the bait.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Ian Betteridge",
+      "year": "2009",
+      "source": "Article by Ian Betteridge, February 2009",
+      "source_url": "https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines"
+    },
+    {
+      "id": "laws-the-lindy-effect",
+      "text": "The future life expectancy of some non-perishable thing, like a technology or an idea, is proportional to its current age.",
+      "work": "laws",
+      "location": "The Lindy effect",
+      "plain": "Things that have lasted a long time will probably last longer. Trust the old books over the new hype.",
+      "themes": [
+        "time",
+        "change"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Albert Goldman (1964), generalized by Nassim Nicholas Taleb",
+      "year": "2012",
+      "source": "Antifragile, Nassim Nicholas Taleb",
+      "source_url": "https://en.wikipedia.org/wiki/Lindy_effect"
+    },
+    {
+      "id": "laws-amaras-law",
+      "text": "We tend to overestimate the effect of a technology in the short run and underestimate the effect in the long run.",
+      "work": "laws",
+      "location": "Amara's law",
+      "plain": "Change is slower than you hope this year and bigger than you expect in ten. Stay with it.",
+      "themes": [
+        "time",
+        "change",
+        "discipline"
+      ],
+      "moments": [
+        "doubting",
+        "tired"
+      ],
+      "by": "Roy Amara",
+      "year": "1978",
+      "source": "Adage coined by Roy Amara of the Institute for the Future",
+      "source_url": "https://en.wikipedia.org/wiki/Roy_Amara"
+    },
+    {
+      "id": "laws-kernighans-law",
+      "text": "Everyone knows that debugging is twice as hard as writing a program in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?",
+      "work": "laws",
+      "location": "Kernighan's law",
+      "plain": "Fixing is harder than making. If you build at the limit of your skill, you cannot fix it. Keep it simple.",
+      "themes": [
+        "work",
+        "folly",
+        "discipline"
+      ],
+      "moments": [
+        "overwhelmed"
+      ],
+      "by": "Brian Kernighan and P. J. Plauger",
+      "year": "1978",
+      "source": "The Elements of Programming Style, 2nd edition",
+      "source_url": "https://www.linusakesson.net/programming/kernighans-lever"
+    },
+    {
+      "id": "laws-the-law-of-triviality",
+      "text": "The time spent on any item of the agenda will be in inverse proportion to the sum involved.",
+      "work": "laws",
+      "location": "The law of triviality",
+      "plain": "Groups argue longest about small things everyone understands and rush the big ones. Spend your time on what matters.",
+      "themes": [
+        "time",
+        "folly",
+        "work"
+      ],
+      "moments": [
+        "overwhelmed",
+        "tempted"
+      ],
+      "by": "C. Northcote Parkinson",
+      "year": "1957",
+      "source": "Parkinson's Law and Other Studies in Administration",
+      "source_url": "https://en.wikipedia.org/wiki/Law_of_triviality"
+    },
+    {
+      "id": "laws-hitchenss-razor",
+      "text": "What can be asserted without evidence can also be dismissed without evidence.",
+      "work": "laws",
+      "location": "Hitchens's razor",
+      "plain": "If someone offers no proof, you owe them no rebuttal. Do not argue against claims nobody backed up.",
+      "themes": [
+        "mind",
+        "courage"
+      ],
+      "moments": [
+        "angry",
+        "doubting"
+      ],
+      "by": "Christopher Hitchens",
+      "year": "2007",
+      "source": "God Is Not Great",
+      "source_url": "https://en.wikipedia.org/wiki/Hitchens%27s_razor"
+    },
+    {
+      "id": "laws-campbells-law",
+      "text": "The more any quantitative social indicator is used for social decision-making, the more subject it will be to corruption pressures and the more apt it will be to distort and corrupt the social processes it is intended to monitor.",
+      "work": "laws",
+      "location": "Campbell's law",
+      "plain": "Once a number decides who wins, people bend the number. Be careful what you reward.",
+      "themes": [
+        "folly",
+        "power",
+        "work"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Donald T. Campbell",
+      "year": "1979",
+      "source": "Assessing the impact of planned social change, Evaluation and Program Planning",
+      "source_url": "https://en.wikipedia.org/wiki/Campbell%27s_law"
+    },
+    {
+      "id": "laws-sayres-law",
+      "text": "In any dispute the intensity of feeling is inversely proportional to the value of the issues at stake.",
+      "work": "laws",
+      "location": "Sayre's law",
+      "plain": "The smaller the stakes, the nastier the fight. If you are furious over something small, step back.",
+      "themes": [
+        "anger",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ],
+      "by": "Attributed to Wallace Sayre",
+      "year": "1950s",
+      "source": "Remark of Columbia political scientist Wallace Sayre",
+      "source_url": "https://en.wikipedia.org/wiki/Sayre%27s_law"
+    },
+    {
+      "id": "laws-the-law-of-the-instrument",
+      "text": "I suppose it is tempting, if the only tool you have is a hammer, to treat everything as if it were a nail.",
+      "work": "laws",
+      "location": "The law of the instrument",
+      "plain": "If you only know one method, every problem starts to look like it needs that method. Widen your toolkit.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Abraham Maslow",
+      "year": "1966",
+      "source": "The Psychology of Science",
+      "source_url": "https://en.wikipedia.org/wiki/Law_of_the_instrument"
+    },
+    {
+      "id": "laws-stiglers-law-of-eponymy",
+      "text": "No scientific discovery is named after its original discoverer.",
+      "work": "laws",
+      "location": "Stigler's law of eponymy",
+      "plain": "Credit goes to whoever made the idea famous, not who had it first. Do the work and make sure it is seen.",
+      "themes": [
+        "reputation",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Stephen Stigler",
+      "year": "1980",
+      "source": "Stigler's Law of Eponymy, Transactions of the New York Academy of Sciences",
+      "source_url": "https://en.wikipedia.org/wiki/Stigler%27s_law_of_eponymy"
+    },
+    {
+      "id": "laws-the-ninety-ninety-rule",
+      "text": "The first 90 percent of the code accounts for the first 90 percent of the development time. The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+      "work": "laws",
+      "location": "The ninety-ninety rule",
+      "plain": "The last stretch takes as long as everything before it. Finishing is its own project, so budget for it.",
+      "themes": [
+        "time",
+        "work",
+        "discipline"
+      ],
+      "moments": [
+        "tired",
+        "overwhelmed"
+      ],
+      "by": "Tom Cargill, popularized by Jon Bentley",
+      "year": "1985",
+      "source": "Bumper-Sticker Computer Science, Programming Pearls, Communications of the ACM, September 1985",
+      "source_url": "https://en.wikipedia.org/wiki/Ninety%E2%80%93ninety_rule"
+    },
+    {
+      "id": "laws-greshams-law",
+      "text": "Bad money drives out good.",
+      "work": "laws",
+      "location": "Gresham's law",
+      "plain": "When a cheap thing and a good thing trade at the same price, people keep the good one and spend the cheap one.",
+      "themes": [
+        "wealth",
+        "folly"
+      ],
+      "moments": [
+        "broke"
+      ],
+      "by": "Named for Thomas Gresham by Henry Dunning Macleod",
+      "year": "1858",
+      "source": "Henry Dunning Macleod, who named it after Thomas Gresham",
+      "source_url": "https://en.wikipedia.org/wiki/Gresham%27s_law"
+    },
+    {
+      "id": "laws-benfords-law-of-controversy",
+      "text": "Passion is inversely proportional to the amount of real information available.",
+      "work": "laws",
+      "location": "Benford's law of controversy",
+      "plain": "The less people actually know, the louder they get. Be wary of heat with no facts behind it.",
+      "themes": [
+        "anger",
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "angry"
+      ],
+      "by": "Gregory Benford",
+      "year": "1980",
+      "source": "Timescape",
+      "source_url": "https://en.wikipedia.org/wiki/Benford%27s_law_of_controversy"
+    },
+    {
+      "id": "laws-cipollas-first-law-of-stupidity",
+      "text": "Always and inevitably, everyone underestimates the number of stupid individuals in circulation.",
+      "work": "laws",
+      "location": "Cipolla's first law of stupidity",
+      "plain": "There are more fools around than you think, and you are sometimes one. Plan on it.",
+      "themes": [
+        "folly",
+        "mind"
+      ],
+      "moments": [
+        "angry"
+      ],
+      "by": "Carlo M. Cipolla",
+      "year": "1976",
+      "source": "The Basic Laws of Human Stupidity",
+      "source_url": "https://en.wikipedia.org/wiki/Carlo_M._Cipolla"
+    },
+    {
+      "id": "laws-wiios-first-law",
+      "text": "Communication usually fails, except by accident.",
+      "work": "laws",
+      "location": "Wiio's first law",
+      "plain": "Assume you were misunderstood. Say it plainly, say it twice, and check that it landed.",
+      "themes": [
+        "mind",
+        "folly"
+      ],
+      "moments": [
+        "angry",
+        "alone"
+      ],
+      "by": "Osmo A. Wiio",
+      "year": "1978",
+      "source": "Wiion lait, ja vahan muidenkin",
+      "source_url": "https://en.wikipedia.org/wiki/Wiio%27s_laws"
+    },
+    {
+      "id": "laws-the-sagan-standard",
+      "text": "Extraordinary claims require extraordinary evidence.",
+      "work": "laws",
+      "location": "The Sagan standard",
+      "plain": "The bigger the claim, the better the proof you should ask for. Cheap promises get cheap trust.",
+      "themes": [
+        "mind",
+        "wealth"
+      ],
+      "moments": [
+        "tempted",
+        "doubting"
+      ],
+      "by": "Carl Sagan, after Marcello Truzzi",
+      "year": "1980",
+      "source": "Cosmos",
+      "source_url": "https://en.wikipedia.org/wiki/Sagan_standard"
+    },
+    {
+      "id": "laws-the-shirky-principle",
+      "text": "Institutions will try to preserve the problem to which they are the solution.",
+      "work": "laws",
+      "location": "The Shirky principle",
+      "plain": "Organizations that exist to fix a problem have a reason to keep it alive. Check who profits from the problem.",
+      "themes": [
+        "power",
+        "wealth",
+        "folly"
+      ],
+      "moments": [
+        "doubting"
+      ],
+      "by": "Attributed to Clay Shirky; named by Kevin Kelly",
+      "year": "2010",
+      "source": "Named by Kevin Kelly, April 2010",
+      "source_url": "https://en.wikipedia.org/wiki/Shirky_principle"
+    },
+    {
+      "id": "laws-tanstaafl",
+      "text": "There ain't no such thing as a free lunch.",
+      "work": "laws",
+      "location": "TANSTAAFL",
+      "plain": "Everything costs something. If you cannot see the price, you are probably the one paying it.",
+      "themes": [
+        "wealth",
+        "adversity"
+      ],
+      "moments": [
+        "broke",
+        "tempted"
+      ],
+      "by": "Popularized by Robert A. Heinlein",
+      "year": "1966",
+      "source": "The Moon Is a Harsh Mistress",
+      "source_url": "https://en.wikipedia.org/wiki/TANSTAAFL"
+    }
+  ]
+}
