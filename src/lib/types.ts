@@ -519,7 +519,12 @@ export interface Recipe extends Base {
   /** For likes and dislikes: "chicken", "vegetarian", "spicy". */
   tags: string[];
   photo_url: string | null;
-  source: "seed" | "user" | "ai";
+  source: "seed" | "user" | "ai" | "web";
+  /** Where a web recipe was found. Null for the others. Needs 0017_recipe_source.sql. */
+  source_url?: string | null;
+  source_name?: string | null;
+  /** Total cooking minutes, when known. */
+  minutes?: number | null;
 }
 
 /** One meal in a planned week. */
@@ -651,6 +656,20 @@ export interface FocusSession extends Base {
   live: FocusLive | null;
 }
 
+/** How the lock screen wallpaper looks: the page color, with the three lights, or the high contrast base. */
+export type WallpaperStyle = "plain" | "lights" | "contrast";
+
+/** The one quote pinned for the lock screen (PRD 28). Kept on app_settings. */
+export interface PinnedQuote {
+  text: string;
+  /** Who said it. Empty for a line you wrote. */
+  by: string;
+  /** The library quote it came from, or null for one you wrote. */
+  quote_id: string | null;
+  pinned_at: IsoStr;
+  wallpaper_style: WallpaperStyle;
+}
+
 /** Single row with id "app". */
 export interface AppSettings extends Base {
   /** Set once seed data has been written. */
@@ -691,6 +710,16 @@ export interface AppSettings extends Base {
   drops_enabled: boolean;
   /** How many a day, spread between wake and bedtime outside quiet hours. 1 to 6, default 3. */
   drops_per_day: number;
+  /** Minutes you have to cook on a weeknight: 15, 30, 45 or 60. Default 30. */
+  cook_minutes: number;
+  /** True once the first-run food questions were answered or skipped. */
+  food_onboarded: boolean;
+  /** The food goal. Null until one is chosen. */
+  goal: "cut" | "maintain" | "bulk" | null;
+  /** The quote on the lock screen. Null until one is pinned. */
+  pinned_quote: PinnedQuote | null;
+  /** The secret in the wallpaper link the iOS Shortcuts automation opens. Null until made. */
+  lockscreen_token: string | null;
 }
 
 // ---------- table map ----------

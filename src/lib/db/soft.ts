@@ -10,9 +10,11 @@
 
 import type { TableName } from "../types";
 
-/** Columns of 0015_library.sql on tables that exist already. */
+/** Columns of 0015_library.sql and 0016_food_goal.sql on tables that exist already. */
 export const SOFT_COLUMNS: { [K in TableName]?: readonly string[] } = {
-  app_settings: ["library_position", "drops_enabled", "drops_per_day"],
+  app_settings: ["library_position", "drops_enabled", "drops_per_day", "cook_minutes", "food_onboarded", "goal", "pinned_quote", "lockscreen_token"],
+  // 0017_recipe_source.sql
+  recipe: ["source_url", "source_name", "minutes"],
 };
 
 /**

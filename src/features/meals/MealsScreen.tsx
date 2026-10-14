@@ -3,9 +3,9 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { BookOpen, ChevronRight, Shuffle, SlidersHorizontal } from "lucide-react";
+import { BookOpen, ChevronRight, Salad, Shuffle, SlidersHorizontal } from "lucide-react";
 import { BigNumber, GlassCard, IconButton, IconLink, PageHeader, ProgressBar, Screen, SegmentedControl, Sheet, TrackStat, cn, useToast, Notice as UiNotice } from "@/components/ui";
-import { useList } from "@/lib/db/hooks";
+import { useList, useSettings } from "@/lib/db/hooks";
 import { haptics } from "@/lib/haptics";
 import { diffDays, formatDateShort, weekdayOf } from "@/lib/logic/dates";
 import { describeTargets, dollars, servingsLabel, SLOT_LABEL, SLOTS } from "@/lib/logic/meals";
@@ -17,9 +17,13 @@ import type { DateStr, MealSlot } from "@/lib/types";
 import { saveFoodSettings, savePlan, setPreferredStore, type Planned } from "./data";
 import { Est, EstimateNote, fmt, macroLine } from "./parts";
 import { SetupForm, type SetupValues } from "./SetupForm";
+import { GoalSwitch } from "./GoalSwitch";
+import { useFoodOnboarding } from "./useFoodOnboarding";
+import { withCookPrefs } from "@/lib/logic/mealsOnboarding";
 import { currentWeek, rememberWeek, useKeepInStep, useMeals, type MealsState, type WeekChoice } from "./useMeals";
 
 const PlannedMealSheet = dynamic(() => import("./PlannedMealSheet").then((x) => x.PlannedMealSheet));
+const FoodOnboarding = dynamic(() => import("./FoodOnboarding").then((x) => x.FoodOnboarding));
 
 const DAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -50,6 +54,8 @@ export default function MealsScreen() {
   };
   const m = useMeals(week);
   useKeepInStep(m);
+  const food = useFoodOnboarding();
+  const settings = useSettings();
   const [busy, setBusy] = useState(false);
   const [adjust, setAdjust] = useState(false);
   const [open, setOpen] = useState<{ date: DateStr; slot: MealSlot } | null>(null);
@@ -74,7 +80,8 @@ export default function MealsScreen() {
       if (v.ask) request = (await askModel(v.ask, m)) ?? parseRequest(v.ask, m.recipes);
       const budget = request?.budget ?? v.budget;
       if (request?.budget && request.budget !== v.budget) await saveFoodSettings({ weekly_food_budget: request.budget });
-      const prefs: PlanPrefs | undefined = request && !isEmptyRequest(request) ? toPrefs(request) : undefined;
+      const asked: PlanPrefs | undefined = request && !isEmptyRequest(request) ? toPrefs(request) : undefined;
+      const prefs = withCookPrefs(asked, settings.data?.cook_minutes);
 
       const seedKey = `meals:seed:${m.weekStart}`;
       const seed = (Number(getPref(seedKey)) || diffDays("2026-01-05", m.weekStart)) + (shuffle ? 1 : 0);
@@ -121,9 +128,14 @@ export default function MealsScreen() {
       title="Meals"
       back="/body"
       right={
-        <IconLink href="/meals/recipes" label="Recipes">
-          <BookOpen size={22} strokeWidth={1.75} aria-hidden />
-        </IconLink>
+        <>
+          <IconButton label="Food setup" onClick={food.show}>
+            <Salad size={22} strokeWidth={1.75} aria-hidden />
+          </IconButton>
+          <IconLink href="/meals/recipes" label="Recipes">
+            <BookOpen size={22} strokeWidth={1.75} aria-hidden />
+          </IconLink>
+        </>
       }
     />
   );
@@ -163,11 +175,20 @@ export default function MealsScreen() {
           <p className="t-sub mt-2.5">
             Set a budget. It builds 7 days from {m.recipes.length} recipes, with one grocery list.
           </p>
+          {m.recipes.length < 40 ? (
+            <Link href="/meals/recipes?online=1" className="t-sub pressable -my-1 mt-1.5 inline-flex min-h-11 items-center text-ink underline decoration-hair underline-offset-4">
+              More recipes
+            </Link>
+          ) : null}
         </section>
         {note ? <Notice text={note} /> : null}
+        <div className="mt-5">
+          <GoalSwitch />
+        </div>
         <GlassCard className="mt-5 overflow-hidden !py-5">
           <SetupForm initial={values} targets={m.targets} challengeName={m.challengeName} busy={busy} submitLabel="Build the week" onSubmit={(v) => build(v)} />
         </GlassCard>
+        {food.open ? <FoodOnboarding onClose={food.close} /> : null}
       </Screen>
     );
   }
@@ -266,6 +287,9 @@ export default function MealsScreen() {
           Each day: {describeTargets(m.targets)}
           {m.challengeName ? `, from ${m.challengeName}` : ""}.
         </p>
+        <div className="mt-3">
+          <GoalSwitch />
+        </div>
       </section>
 
       <GlassCard className="mt-6">
@@ -297,6 +321,7 @@ export default function MealsScreen() {
         <TrackStat label="A day" value={<Est>{dollars(Math.round((s.cost / 7) * 100) / 100)}</Est>} />
       </div>
 
+      {food.open ? <FoodOnboarding onClose={food.close} /> : null}
       {open ? <PlannedMealSheet key={`${open.date}-${open.slot}`} m={m} date={open.date} slot={open.slot} onClose={() => setOpen(null)} /> : null}
 
       <Sheet open={adjust} onClose={() => (busy ? undefined : setAdjust(false))} title="Adjust the week" subtitle="Rebuilds from today on. Past days stay.">

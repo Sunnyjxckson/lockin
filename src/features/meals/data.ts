@@ -11,6 +11,7 @@ import { foodKey, indexFoods, recipeNumbers, round, derivedTags, type Ingredient
 import { FOODS } from "@/lib/logic/mealsFoods";
 import { linePrices, listTotal, pantrySet, rollUp } from "@/lib/logic/mealsGrocery";
 import { LIBRARY } from "@/lib/logic/mealsLibrary";
+import { toRecipeRow, type WebRecipe } from "@/lib/logic/mealsWeb";
 import { DEFAULT_STORE, estimateSource, isStore, pricesAt, withCorrections, type Corrections, type PriceSource, type Store } from "@/lib/logic/mealsPricing";
 import type { DateStr, Expense, GroceryItem, MealPlan, MealSlot, PantryItem, PlannedMeal, ReceiptPrice, Recipe } from "@/lib/types";
 
@@ -238,6 +239,11 @@ export async function saveRecipe(input: RecipeInput, existing?: Recipe | null): 
     return db.update("recipe", existing.id, { ...row, tags: [...new Set([...row.tags, ...kept])].sort() });
   }
   return db.insert("recipe", { ...row, photo_url: null, source: "user" });
+}
+
+/** Save a recipe found on the web. The planner uses it like any other. */
+export async function addWebRecipe(recipe: WebRecipe): Promise<Recipe> {
+  return db.insert("recipe", toRecipeRow(recipe));
 }
 
 export async function deleteRecipe(recipe: Recipe): Promise<void> {

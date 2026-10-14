@@ -15,7 +15,7 @@ import { ensureSeeded } from "../seed";
 import { TABLE_NAMES, type TableName } from "../types";
 
 const CHALLENGE_V2 = ["name", "status", "ended_on", "rules", "restart_of"];
-const SETTINGS_V2 = ["history_start", "daily_floor", "weekly_food_budget", "food_likes", "food_dislikes", "focus_goal_minutes", "business_goal", "preferred_store", "display_name", "coach_voice", "coach_checkins", "library_position", "drops_enabled", "drops_per_day"];
+const SETTINGS_V2 = ["history_start", "daily_floor", "weekly_food_budget", "food_likes", "food_dislikes", "focus_goal_minutes", "business_goal", "preferred_store", "display_name", "coach_voice", "coach_checkins", "library_position", "drops_enabled", "drops_per_day", "pinned_quote", "lockscreen_token", "cook_minutes", "food_onboarded", "goal"];
 const NEW_TABLES: TableName[] = ["mood_log", "motivation", "board", "board_item", "theme", "recipe", "meal_plan", "grocery_item", "pantry_item", "receipt_price", "expense", "focus_session", "coach_message", "quote_state"];
 
 let store: KeyValueStore;

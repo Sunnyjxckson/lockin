@@ -2,16 +2,18 @@
 
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import { Pencil, Plus, Search } from "lucide-react";
+import { Globe, Pencil, Plus, Search } from "lucide-react";
 import { Button, EmptyState, IconButton, List, ListRow, PageHeader, Screen, Sheet, Chip } from "@/components/ui";
 import { useList, useSettings } from "@/lib/db/hooks";
 import { amountLabel, dollars, isExcluded, SLOT_LABEL, SLOTS } from "@/lib/logic/meals";
 import { displayName } from "@/lib/logic/mealsGrocery";
+import { safeUrl } from "@/lib/logic/mealsWeb";
 import type { MealSlot, Recipe } from "@/lib/types";
 import { ensureLibrary } from "./data";
 import { Est, IngredientList, MacroRow, StepList, fmt } from "./parts";
 
 const RecipeEditor = dynamic(() => import("./RecipeEditor").then((x) => x.RecipeEditor));
+const WebRecipesSheet = dynamic(() => import("./WebRecipesSheet").then((x) => x.WebRecipesSheet));
 
 type Filter = MealSlot | "all";
 
@@ -22,6 +24,9 @@ export default function RecipesScreen() {
   const [query, setQuery] = useState("");
   const [view, setView] = useState<Recipe | null>(null);
   const [edit, setEdit] = useState<{ recipe: Recipe | null } | null>(null);
+
+  // The planner links here with ?online=1 when the library is thin.
+  const [online, setOnline] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("online") === "1");
 
   useEffect(() => {
     void ensureLibrary().catch(() => undefined);
@@ -58,6 +63,11 @@ export default function RecipesScreen() {
           </Chip>
         ))}
       </div>
+      <div className="mt-3">
+        <Button variant="secondary" icon={<Globe size={17} strokeWidth={1.75} aria-hidden />} onClick={() => setOnline(true)}>
+          Find recipes online
+        </Button>
+      </div>
       <label className="tile mt-3 flex h-[52px] items-center gap-2.5 rounded-[16px] px-4 transition-colors focus-within:border-ink-2">
         <Search size={18} strokeWidth={1.75} className="shrink-0 text-ink-2" aria-hidden />
         <input
@@ -90,7 +100,7 @@ export default function RecipesScreen() {
               onClick={() => setView(r)}
               plain
               title={r.name}
-              sub={`${SLOT_LABEL[r.slot]}, ${fmt(r.calories)} kcal, ${fmt(r.protein)}g protein${r.source === "user" ? ", yours" : ""}${isExcluded(r, dislikes) ? ", left out" : ""}`}
+              sub={`${SLOT_LABEL[r.slot]}, ${fmt(r.calories)} kcal, ${fmt(r.protein)}g protein${r.source === "user" ? ", yours" : ""}${r.source === "web" ? ", " + (r.source_name ?? "web") : ""}${isExcluded(r, dislikes) ? ", left out" : ""}`}
               right={<Est className="text-[15px] text-ink">{dollars(r.est_cost)}</Est>}
             />
           ))}
@@ -124,6 +134,16 @@ export default function RecipesScreen() {
             Per serving, <Est className="text-ink">{dollars(viewing.est_cost)}</Est>
             {isExcluded(viewing, dislikes) ? <span className="text-warn">. Left out of plans by your dislikes.</span> : null}
           </p>
+          {viewing.source === "web" && safeUrl(viewing.source_url) ? (
+            <p className="t-sub mt-2">
+              From{" "}
+              <a href={safeUrl(viewing.source_url) ?? undefined} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-ink underline decoration-hair underline-offset-4">
+                {viewing.source_name || "the web"}
+              </a>
+              {viewing.minutes ? `, ${viewing.minutes} min` : ""}
+              {viewing.tags.includes("partial") ? ". Numbers are partial: some ingredients are not in the food table." : ""}
+            </p>
+          ) : null}
           <h3 className="t-label mt-6 mb-2.5">Ingredients, whole batch</h3>
           <IngredientList rows={viewing.ingredients.map((i) => ({ key: `${i.name}-${i.unit}`, name: displayName(i.name), amount: amountLabel(i.quantity, i.unit) }))} />
           <h3 className="t-label mt-6 mb-3">Steps</h3>
@@ -132,6 +152,7 @@ export default function RecipesScreen() {
         </Sheet>
       ) : null}
 
+      {online ? <WebRecipesSheet defaultSlot={slot === "all" ? null : slot} onClose={() => setOnline(false)} /> : null}
       {edit ? <RecipeEditor key={edit.recipe?.id ?? "new"} recipe={edit.recipe} defaultSlot={slot === "all" ? "dinner" : slot} onClose={() => setEdit(null)} /> : null}
     </Screen>
   );

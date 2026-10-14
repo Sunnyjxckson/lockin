@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { BellRing, CalendarClock, Dumbbell, Images, ListChecks, MessageSquareText, Target, Timer, UtensilsCrossed } from "lucide-react";
+import dynamic from "next/dynamic";
+import { BellRing, CalendarClock, Dumbbell, Images, ListChecks, MessageSquareText, Salad, Target, Timer, UtensilsCrossed } from "lucide-react";
 import { Button, Card, ListRow, PageHeader, Screen, Section, Sheet, TextField, Toggle, useToast } from "@/components/ui";
 import { ThemePicker } from "@/components/app/ThemePicker";
 import { LOCK_EVENT } from "@/components/app/AppShell";
@@ -11,6 +12,9 @@ import { resetAllData, updateSettings } from "@/lib/db/helpers";
 import { clearQueryCache, useMode, useSettings } from "@/lib/db/hooks";
 import { formatDateShort } from "@/lib/logic/dates";
 import { loadTheme } from "@/lib/theme";
+import { GoalSwitch } from "@/features/meals/GoalSwitch";
+
+const FoodOnboarding = dynamic(() => import("@/features/meals/FoodOnboarding").then((x) => x.FoodOnboarding));
 
 export default function SettingsPage() {
   const toast = useToast();
@@ -19,6 +23,7 @@ export default function SettingsPage() {
   const [confirmReset, setConfirmReset] = useState(false);
   const [busy, setBusy] = useState(false);
   const [name, setName] = useState<string | null>(null);
+  const [foodSetup, setFoodSetup] = useState(false);
   const challengeLine = mode.challenge
     ? `${mode.challenge.name}, day ${mode.day} of ${mode.length}`
     : mode.finished
@@ -85,6 +90,14 @@ export default function SettingsPage() {
           </div>
         </Card>
       </Section>
+
+      <Section title="Food">
+        <GoalSwitch />
+        <Card padded={false} className="mt-3 overflow-hidden">
+          <ListRow onClick={() => setFoodSetup(true)} left={<Salad size={20} strokeWidth={1.75} aria-hidden />} title="Food setup" sub="Likes, budget, cooking time, what is at home" />
+        </Card>
+      </Section>
+      {foodSetup ? <FoodOnboarding onClose={() => setFoodSetup(false)} /> : null}
 
       <Section title="You">
         <TextField

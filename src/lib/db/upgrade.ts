@@ -94,7 +94,11 @@ export async function upgradeLocalData(): Promise<void> {
     const coach = missing<AppSettings>(settings, { coach_voice: "stoic", coach_checkins: { post_workout: true, slip: true, missed_item: true } });
     // 0015: where the Library reader was left, and the philosophy drops (off, three a day).
     const library = missing<AppSettings>(settings, { library_position: null, drops_enabled: false, drops_per_day: 3 });
-    if (patch || rest || coach || library) await db.update("app_settings", "app", { ...patch, ...rest, ...coach, ...library });
+    // 0016: cook time, the food onboarding flag and the goal.
+    const food = missing<AppSettings>(settings, { cook_minutes: 30, food_onboarded: false, goal: null });
+    // 0019: the quote on the lock screen and the secret for its wallpaper link.
+    const pinned = missing<AppSettings>(settings, { pinned_quote: null, lockscreen_token: null });
+    if (patch || rest || coach || library || food || pinned) await db.update("app_settings", "app", { ...patch, ...rest, ...coach, ...library, ...food, ...pinned });
   }
 
   // 0009: focus sessions carry their away numbers and the running state.
