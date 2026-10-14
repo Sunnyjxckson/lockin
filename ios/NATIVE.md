@@ -69,3 +69,11 @@ Port the web design system (BUILD.md "Design system", tokens in `src/lib/theme` 
 ## Running it on the phone
 
 On the Mac: `brew install xcodegen`, then `cd ios && xcodegen`, open `LockIn.xcodeproj`, pick the team, plug in the phone, Run. TestFlight: Product, Archive, Distribute.
+
+## Foundation decisions (ios-native)
+
+- Swift 5 language mode, iOS 17, @Observable. `ios/project.yml` is the only source of the Xcode project (XcodeGen); the .xcodeproj is not committed.
+- Everything shared lives in the LockInKit framework: `API` (APIClient, DBClient, JSON), `Models` (one tolerant Codable struct per table, `Tables.all`), `Logic` (LIDate, Targets, Scoring, Streaks, Challenges, Money, Blocks, Tracks, Workouts), `Store` (AppStore), `Design` (LITheme, LIType, components), `Shared` (AppGroup, WidgetSnapshot, LockInActivityAttributes, FocusShieldStore).
+- Fonts: Schibsted Grotesk Regular and Medium static TTFs in LockInKit/Resources, registered at launch with CTFontManager by `LIFont`.
+- Writes go through AppStore helpers (`setChecked`, `setValue`, `setText`), which are optimistic, serialized and roll back on failure.
+- Stubbed: Plan, Money, Body, Record, Library, Focus, Meals, Boards, Vices, Coach screens; widget is a placeholder; focus monitor and shield are minimal; the web contrast-fixing theme port is a TODO.
