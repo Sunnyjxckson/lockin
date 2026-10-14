@@ -46,3 +46,7 @@ next-env.d.ts
 
 # local production server (scripts/serve.sh)
 .next-serve.*
+ios/LockIn.xcodeproj/
+ios/*.log
+ios/build/
+ios/DerivedData/
