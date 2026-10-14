@@ -9,7 +9,7 @@ import {
   isPinned,
   isToken,
   layoutWallpaper,
-  lightsCss,
+  lightLayers,
   lookFor,
   makePinned,
   readPinned,
@@ -152,14 +152,14 @@ describe("the looks", () => {
     expect(look.background).toBe(theme.tokens.bg);
     expect(look.ink).toBe(theme.tokens.ink);
     expect(look.lights).toEqual([]);
-    expect(lightsCss(look)).toBe(theme.tokens.bg);
+    expect(lightLayers(look)).toBeNull();
   });
   it("lights adds the three lights from the theme", () => {
     const look = lookFor("lights", theme, contrast);
     expect(look.lights).toHaveLength(3);
     expect(look.lights[0].color).toBe(theme.tokens["glow-1"]);
     expect(look.lights[2].alpha).toBe(theme.fx.glow[2]);
-    expect(lightsCss(look).match(/radial-gradient/g)).toHaveLength(3);
+    expect(lightLayers(look)?.match(/radial-gradient/g)).toHaveLength(3);
   });
   it("high contrast uses the high contrast base whatever the current look", () => {
     const look = lookFor("contrast", theme, contrast);

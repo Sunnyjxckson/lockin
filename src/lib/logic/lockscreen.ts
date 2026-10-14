@@ -255,11 +255,12 @@ export function lookFor(style: WallpaperStyle, theme: Pick<Theme, "tokens" | "fx
   return { background: t.bg, ink: t.ink, ink2: t["ink-2"], lights };
 }
 
-/** CSS for the lights over the page color, for a place that cannot run a canvas. */
-export function lightsCss(look: Look): string {
-  if (look.lights.length === 0) return look.background;
-  const layers = look.lights.map((l) => `radial-gradient(circle at ${Math.round(l.x * 100)}% ${Math.round(l.y * 100)}%, ${rgba(l.color, l.alpha)} 0%, ${rgba(l.color, 0)} ${Math.round(l.r * 100)}%)`);
-  return `${layers.join(", ")}, ${look.background}`;
+/** CSS for the three lights as gradient layers, or null for none. For a place that cannot run a canvas. */
+export function lightLayers(look: Look): string | null {
+  if (look.lights.length === 0) return null;
+  return look.lights
+    .map((l) => `radial-gradient(circle at ${Math.round(l.x * 100)}% ${Math.round(l.y * 100)}%, ${rgba(l.color, l.alpha)} 0%, ${rgba(l.color, 0)} ${Math.round(l.r * 100)}%)`)
+    .join(", ");
 }
 
 /** The file name for a saved wallpaper. */

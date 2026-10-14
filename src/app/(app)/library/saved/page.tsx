@@ -12,6 +12,7 @@ import { scopeQuotes } from "@/lib/logic/libraryQueue";
 import { ALL_WRITERS, useLibraryData } from "@/features/library/data";
 import { LibraryLoading } from "@/features/library/LibraryLoading";
 import { QuoteRow } from "@/features/library/QuoteRow";
+import { PutOnLockScreen } from "@/features/library/lockscreen/PutOnLockScreen";
 import { LibraryProblem } from "@/features/library/LibraryProblem";
 import { useMarks } from "@/features/library/state";
 
@@ -50,14 +51,16 @@ export default function SavedPage() {
           {list.map((q) => {
             const m = marks.get(q.id);
             return (
-              <QuoteRow
-                key={q.id}
-                href={readerLink({ kind: "saved" }, q.id)}
-                text={q.text}
-                by={`${library.writerName(q.writer)}, ${library.workTitle(q.writer, q.work)}`}
-                note={m?.note}
-                meta={m?.saved_at ? formatDateShort(nyParts(m.saved_at).date) : undefined}
-              />
+              <div key={q.id}>
+                <QuoteRow
+                  href={readerLink({ kind: "saved" }, q.id)}
+                  text={q.text}
+                  by={`${library.writerName(q.writer)}, ${library.workTitle(q.writer, q.work)}`}
+                  note={m?.note}
+                  meta={m?.saved_at ? formatDateShort(nyParts(m.saved_at).date) : undefined}
+                />
+                <PutOnLockScreen quoteId={q.id} writer={q.writer} className="mb-2 ml-1" />
+              </div>
             );
           })}
         </div>

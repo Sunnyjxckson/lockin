@@ -724,6 +724,7 @@ export async function runFeatures(h) {
     ["/library/read?w=shakespeare", "Go deeper", "library-read", null],
     ["/library/saved", "For a bad Tuesday", "library-saved", null],
     ["/library/search", "Try", "library-search", null],
+    ["/library/lockscreen", "Nothing on your lock screen", "library-lockscreen", null],
     ["/library/writer/seneca", "Works", "library-writer", null],
   ];
   /** Put a theme row in force, as the boards screen and the theme picker do, and load it. */

@@ -21,11 +21,10 @@ export interface PinnedState {
 /** The pinned quote and the link secret, live. */
 export function usePinned(): PinnedState {
   const settings = useSettings();
-  const row = settings.data;
-  return useMemo(
-    () => ({ pinned: readPinned(row?.pinned_quote), token: isToken(row?.lockscreen_token) ? row.lockscreen_token : null, loading: settings.loading }),
-    [row?.pinned_quote, row?.lockscreen_token, settings.loading],
-  );
+  const pq = settings.data?.pinned_quote;
+  const tk = settings.data?.lockscreen_token;
+  const loading = settings.loading;
+  return useMemo(() => ({ pinned: readPinned(pq), token: isToken(tk) ? tk : null, loading }), [pq, tk, loading]);
 }
 
 /**

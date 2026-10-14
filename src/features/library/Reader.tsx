@@ -17,6 +17,7 @@ import { fraction, libraryCounts, milestonesAfterRead, type Milestone } from "@/
 import type { LibraryPosition } from "@/lib/types";
 import { QUOTE_INDEX, type Library } from "./data";
 import { MilestoneMoment } from "./Milestone";
+import { PutOnLockScreen } from "./lockscreen/PutOnLockScreen";
 import { currentMarks, flushPosition, markRead, savePosition, setNote, setSaved, type QuoteRef } from "./state";
 import { prefersReducedMotion, useSwipe } from "./useSwipe";
 import type { Marks } from "@/lib/logic/library";
@@ -271,6 +272,11 @@ export function Reader({ scope, startAt, library, marks, position }: ReaderProps
           </span>
           {mark?.read_at && quote ? <span>Read</span> : null}
         </p>
+        {quote ? (
+          <div className="-mb-1 flex justify-end">
+            <PutOnLockScreen quoteId={quote.id} writer={quote.writer} />
+          </div>
+        ) : null}
         <div className="mt-2 mb-1 flex items-center justify-between gap-1.5">
           <div className="flex items-center gap-1">
             <IconButton label="Previous quote" filled disabled={index === 0} onClick={() => go(-1)}>

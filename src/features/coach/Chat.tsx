@@ -9,6 +9,7 @@ import { ActionButton, Chip, cn } from "@/components/ui";
 import { MAX_MESSAGE } from "@/lib/logic/coachChat";
 import { libId } from "@/lib/logic/coachLibrary";
 import { quoteLink } from "@/lib/logic/library";
+import { PutOnLockScreen } from "@/features/library/lockscreen/PutOnLockScreen";
 import { addDays, formatDateLong } from "@/lib/logic/dates";
 import type { CoachMessage, CoachTrigger, DateStr } from "@/lib/types";
 
@@ -63,6 +64,7 @@ function Bubble({ m }: { m: CoachMessage }) {
             Read it in the Library
           </Link>
         ) : null}
+        {libId(m.quote) ? <PutOnLockScreen quoteId={libId(m.quote)} /> : null}
       </div>
     </li>
   );
