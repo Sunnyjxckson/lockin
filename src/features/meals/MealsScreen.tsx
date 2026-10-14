@@ -259,7 +259,7 @@ export default function MealsScreen() {
                   const done = !!meal.logged && loggedIds.has(meal.logged);
                   // A long single word (quesadillas) gets a slightly smaller size so it breaks at a hyphen or not at all, never one letter down.
                   const longWord = (r?.name ?? "").split(/[\s,]+/).some((w) => w.length >= 10);
-                  const detail = `${SLOT_LABEL[slot]}${r ? `, ${servingsLabel(meal.servings)}, ${fmt(r.calories * meal.servings)} kcal, ${fmt(r.protein * meal.servings)}g` : ""}${done ? ", logged" : ""}`;
+                  const detail = `${SLOT_LABEL[slot]}${r ? `, ${servingsLabel(meal.servings)}, ${fmt(r.calories * meal.servings)} kcal, ${fmt(r.protein * meal.servings)}g` : ""}${done ? ", logged" : ""}${meal.eaten_out ? ", eaten out" : ""}`;
                   return (
                     <button
                       key={slot}
@@ -273,7 +273,7 @@ export default function MealsScreen() {
                       )}
                     >
                       <span lang="en" className={cn("line-clamp-3 leading-[1.2] hyphens-auto [overflow-wrap:anywhere]", longWord ? "text-[10.5px] tracking-[-0.025em]" : "text-[11.5px] tracking-[-0.01em]")}>
-                        {r?.name ?? "Recipe removed"}
+                        {meal.eaten_out ? `Out: ${meal.eaten_out.chain}` : (r?.name ?? "Recipe removed")}
                       </span>
                       <span className="sr-only">{detail}</span>
                     </button>

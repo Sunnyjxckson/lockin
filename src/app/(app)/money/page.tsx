@@ -143,6 +143,19 @@ export default function MoneyPage() {
                   </Link>
                 ) : null}
 
+                {m.eatingOutThisWeek > 0 ? (
+                  <Link href="/meals" className="pressable tile mt-3 flex min-h-[60px] items-center justify-between gap-3 rounded-[20px] px-4 py-3">
+                    <span className="min-w-0">
+                      <span className="block text-[15px] text-ink">Eating out this week</span>
+                      <span className="t-caption mt-0.5 block text-ink-2">Money out, from the meal plan</span>
+                    </span>
+                    <span className="flex shrink-0 items-center gap-1.5">
+                      <span className="t-value">{formatMoney(m.eatingOutThisWeek)}</span>
+                      <ChevronRight size={16} className="text-ink-3" aria-hidden />
+                    </span>
+                  </Link>
+                ) : null}
+
                 {m.days.length === 0 ? (
                   <EmptyState
                     className="!py-12"

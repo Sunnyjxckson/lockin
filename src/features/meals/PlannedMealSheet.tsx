@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeftRight, Check, ChefHat, Minus, Plus } from "lucide-react";
+import { ArrowLeftRight, Check, ChefHat, Minus, Plus, Utensils } from "lucide-react";
 import { Button, SegmentedControl, Sheet, cn, useToast } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { formatDateLong } from "@/lib/logic/dates";
@@ -10,6 +10,8 @@ import { displayName } from "@/lib/logic/mealsGrocery";
 import { applySwap, summarizePlan, swapOptions, type SwapOption, type SwapScope } from "@/lib/logic/mealsPlanner";
 import type { DateStr, MealSlot, Recipe } from "@/lib/types";
 import { logCooked, savePlan, type Planned } from "./data";
+import { EatOutSheet } from "./EatOutSheet";
+import { undoEatOut } from "./eatOutData";
 import { Est, IngredientList, MacroRow, StepList, fmt, macroLine } from "./parts";
 import type { MealsState } from "./useMeals";
 
@@ -26,7 +28,7 @@ const PORTION_MAX = 4;
 /** One planned meal: the recipe scaled to the planned portion, the portion itself, "Cooked, log it", and swap. */
 export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; date: DateStr; slot: MealSlot; onClose: () => void }) {
   const toast = useToast();
-  const [view, setView] = useState<"cook" | "swap">("cook");
+  const [view, setView] = useState<"cook" | "swap" | "eat">("cook");
   const [amount, setAmount] = useState<"portion" | "batch">("portion");
   const [scope, setScope] = useState<SwapScope>("day");
   const [picked, setPicked] = useState<string | null>(null);
@@ -105,6 +107,21 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
     }
   };
 
+  const undoOut = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await undoEatOut(m.plan!, date, slot, { recipes: m.recipes, book: m.book });
+      haptics.done();
+      toast("Eat out undone", { kind: "done" });
+    } catch (e) {
+      haptics.error();
+      toast(e instanceof Error ? e.message : "Could not undo", { kind: "error" });
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const confirmSwap = async () => {
     if (!choice || busy) return;
     setBusy(true);
@@ -120,6 +137,10 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
       setBusy(false);
     }
   };
+
+  if (view === "eat" && !meal.eaten_out) {
+    return <EatOutSheet m={m} date={date} slot={slot} onBack={() => setView("cook")} onClose={onClose} />;
+  }
 
   if (view === "swap") {
     return (
@@ -224,11 +245,25 @@ export function PlannedMealSheet({ m, date, slot, onClose }: { m: MealsState; da
               Save portion
             </Button>
           </div>
-        ) : (
-          <div className="flex gap-2.5">
-            <Button variant="secondary" size="lg" onClick={() => setView("swap")} disabled={busy || logged} icon={<ArrowLeftRight size={18} strokeWidth={1.75} aria-hidden />}>
-              Swap
+        ) : meal.eaten_out ? (
+          <div className="flex flex-col gap-2.5">
+            <p className="t-sub px-1" role="status" data-eaten-out>
+              Eaten out: {meal.eaten_out.chain}, {meal.eaten_out.order}. Logged and added to Money.
+            </p>
+            <Button variant="secondary" size="lg" full onClick={undoOut} loading={busy}>
+              Undo eat out
             </Button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-2.5">
+            <div className="flex gap-2.5">
+              <Button full variant="secondary" size="lg" onClick={() => setView("swap")} disabled={busy || logged} icon={<ArrowLeftRight size={18} strokeWidth={1.75} aria-hidden />}>
+                Swap
+              </Button>
+              <Button full variant="secondary" size="lg" onClick={() => setView("eat")} disabled={busy || logged} icon={<Utensils size={18} strokeWidth={1.75} aria-hidden />}>
+                Eat out
+              </Button>
+            </div>
             <Button full size="lg" onClick={log} disabled={!canLog} loading={busy} icon={logged ? <Check size={18} aria-hidden /> : <ChefHat size={18} aria-hidden />}>
               {logged ? "Logged" : date > m.today ? "Log it on the day" : "Cooked, log it"}
             </Button>

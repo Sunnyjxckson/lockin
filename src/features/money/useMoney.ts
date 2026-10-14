@@ -78,6 +78,8 @@ export function useMoney() {
       lastApp,
       /** Dollars spent on groceries this week, from the expense table. */
       groceriesThisWeek: spentBetween(expenses.data, weekStart(today), weekEnd(today), "groceries"),
+      /** Dollars spent eating out this week, from the expense table. */
+      eatingOutThisWeek: spentBetween(expenses.data, weekStart(today), weekEnd(today), "eating_out"),
     };
   }, [mode, list.data, list.loading, expenses.data, today]);
 }

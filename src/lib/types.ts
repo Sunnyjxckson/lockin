@@ -536,6 +536,8 @@ export interface PlannedMeal {
   servings: number;
   /** The meal row written when it was cooked and logged. Missing or null until then. */
   logged?: string | null;
+  /** Eaten out instead of cooked. `meal_id` is the meal row, `expense_id` the expense row. Its ingredients leave the grocery list unless `shopped`. */
+  eaten_out?: { chain: string; order: string; price: number; meal_id: string; expense_id?: string; shopped?: boolean } | null;
 }
 
 /** One planned week, Monday to Sunday. One row per week_start. */
@@ -576,7 +578,7 @@ export interface GroceryItem extends Base {
 export interface Expense extends Base {
   date: DateStr;
   amount: number;
-  /** "groceries" for now. */
+  /** "groceries" or "eating_out". */
   category: string;
   note: string | null;
   store: string | null;

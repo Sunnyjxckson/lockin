@@ -28,7 +28,7 @@ export function usePinned(): PinnedState {
 }
 
 /**
- * "empty" is nothing to pin. "setup" is the 0019 migration not run yet: the
+ * "empty" is nothing to pin. "setup" is the 0018 migration not run yet: the
  * database refused the column, so it was left out and nothing was kept.
  */
 export type PinResult = { ok: true; pinned: PinnedQuote } | { ok: false; reason: "empty" | "setup" | "failed" };
@@ -87,7 +87,7 @@ export async function makeLockscreenToken(): Promise<string | null> {
 
 /** What to tell the user when pinning did not work. */
 export function pinProblem(reason: "empty" | "setup" | "failed"): string {
-  if (reason === "setup") return "Could not keep it. Run supabase/migrations/0019_pinned_quote.sql first.";
+  if (reason === "setup") return "Could not keep it. Run supabase/migrations/0018_pinned_quote.sql first.";
   if (reason === "empty") return "Write a line first.";
   return "Could not put it on your lock screen. Try again.";
 }

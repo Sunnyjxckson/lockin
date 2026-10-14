@@ -1,0 +1,589 @@
+{
+ "updated": "2026-10-14",
+ "chains": [
+  {
+   "id": "chipotle",
+   "name": "Chipotle",
+   "kind": "build",
+   "slots": [
+    "lunch",
+    "dinner"
+   ],
+   "source_url": "https://www.chipotle.com/nutrition-calculator",
+   "checked": "2026-10-14",
+   "note": "Per ingredient numbers from Chipotle's published nutrition chart (standard 4 oz portions). Double protein is two portions.",
+   "price_estimate": true,
+   "entree": "bowl",
+   "no_base_label": "no rice",
+   "double_extra": 3.55,
+   "max_toppings": 3,
+   "proteins": [
+    {
+     "name": "Chicken",
+     "calories": 180,
+     "protein": 32,
+     "carbs": 0,
+     "fat": 7,
+     "price": 11.35
+    },
+    {
+     "name": "Steak",
+     "calories": 150,
+     "protein": 21,
+     "carbs": 1,
+     "fat": 6,
+     "price": 13.75
+    },
+    {
+     "name": "Barbacoa",
+     "calories": 170,
+     "protein": 24,
+     "carbs": 2,
+     "fat": 7,
+     "price": 13.75
+    },
+    {
+     "name": "Carnitas",
+     "calories": 210,
+     "protein": 23,
+     "carbs": 0,
+     "fat": 12,
+     "price": 12.45
+    },
+    {
+     "name": "Sofritas",
+     "calories": 150,
+     "protein": 8,
+     "carbs": 9,
+     "fat": 10,
+     "price": 11.35
+    }
+   ],
+   "bases": [
+    {
+     "name": "White rice",
+     "calories": 210,
+     "protein": 4,
+     "carbs": 40,
+     "fat": 4,
+     "price": 0
+    },
+    {
+     "name": "Brown rice",
+     "calories": 210,
+     "protein": 4,
+     "carbs": 36,
+     "fat": 6,
+     "price": 0
+    }
+   ],
+   "toppings": [
+    {
+     "name": "Black beans",
+     "calories": 130,
+     "protein": 8,
+     "carbs": 22,
+     "fat": 1.5,
+     "price": 0
+    },
+    {
+     "name": "Pinto beans",
+     "calories": 130,
+     "protein": 8,
+     "carbs": 21,
+     "fat": 1.5,
+     "price": 0
+    },
+    {
+     "name": "Fajita veggies",
+     "calories": 20,
+     "protein": 1,
+     "carbs": 5,
+     "fat": 0,
+     "price": 0
+    },
+    {
+     "name": "Fresh tomato salsa",
+     "calories": 25,
+     "protein": 0,
+     "carbs": 4,
+     "fat": 0,
+     "price": 0,
+     "group": "salsa"
+    },
+    {
+     "name": "Roasted chili corn salsa",
+     "calories": 80,
+     "protein": 3,
+     "carbs": 16,
+     "fat": 1.5,
+     "price": 0,
+     "group": "salsa"
+    },
+    {
+     "name": "Tomatillo green salsa",
+     "calories": 15,
+     "protein": 0,
+     "carbs": 4,
+     "fat": 0,
+     "price": 0,
+     "group": "salsa"
+    },
+    {
+     "name": "Tomatillo red salsa",
+     "calories": 30,
+     "protein": 0,
+     "carbs": 4,
+     "fat": 0,
+     "price": 0,
+     "group": "salsa"
+    },
+    {
+     "name": "Cheese",
+     "calories": 110,
+     "protein": 6,
+     "carbs": 1,
+     "fat": 8,
+     "price": 0,
+     "group": "creamy"
+    },
+    {
+     "name": "Sour cream",
+     "calories": 110,
+     "protein": 2,
+     "carbs": 2,
+     "fat": 9,
+     "price": 0,
+     "group": "creamy"
+    },
+    {
+     "name": "Queso blanco",
+     "calories": 120,
+     "protein": 5,
+     "carbs": 4,
+     "fat": 9,
+     "price": 2.5,
+     "group": "creamy"
+    },
+    {
+     "name": "Guacamole",
+     "calories": 230,
+     "protein": 2,
+     "carbs": 8,
+     "fat": 22,
+     "price": 3.25
+    },
+    {
+     "name": "Romaine lettuce",
+     "calories": 5,
+     "protein": 0,
+     "carbs": 1,
+     "fat": 0,
+     "price": 0
+    }
+   ]
+  },
+  {
+   "id": "subway",
+   "name": "Subway",
+   "kind": "build",
+   "slots": [
+    "lunch",
+    "dinner"
+   ],
+   "source_url": "https://www.subway.com/en-us/menunutrition/nutrition",
+   "checked": "2026-10-14",
+   "note": "From Subway's U.S. nutrition PDF dated October 2026. Meat amounts are for a 6 inch sub or bowl, double is two portions. Veggies are lettuce, spinach, tomatoes, cucumbers, onions and green peppers.",
+   "price_estimate": true,
+   "entree": "bowl",
+   "base_entree": "sub",
+   "no_base_label": "no bread",
+   "double_extra": 3.0,
+   "max_toppings": 3,
+   "proteins": [
+    {
+     "name": "Grilled chicken",
+     "calories": 80,
+     "protein": 16,
+     "carbs": 1,
+     "fat": 2,
+     "price": 9.29
+    },
+    {
+     "name": "Rotisserie style chicken",
+     "calories": 90,
+     "protein": 15,
+     "carbs": 0,
+     "fat": 4,
+     "price": 9.29
+    },
+    {
+     "name": "Steak",
+     "calories": 110,
+     "protein": 17,
+     "carbs": 2,
+     "fat": 5,
+     "price": 10.49
+    },
+    {
+     "name": "Oven roasted turkey",
+     "calories": 50,
+     "protein": 11,
+     "carbs": 1,
+     "fat": 0,
+     "price": 8.49
+    },
+    {
+     "name": "Roast beef",
+     "calories": 80,
+     "protein": 15,
+     "carbs": 2,
+     "fat": 2,
+     "price": 9.49
+    },
+    {
+     "name": "Black Forest ham",
+     "calories": 70,
+     "protein": 10,
+     "carbs": 2,
+     "fat": 2,
+     "price": 8.49
+    }
+   ],
+   "bases": [
+    {
+     "name": "6 inch multigrain bread",
+     "calories": 200,
+     "protein": 9,
+     "carbs": 36,
+     "fat": 3,
+     "price": 0
+    },
+    {
+     "name": "12 inch wrap",
+     "calories": 300,
+     "protein": 8,
+     "carbs": 50,
+     "fat": 8,
+     "price": 0
+    }
+   ],
+   "toppings": [
+    {
+     "name": "Fresh veggies",
+     "calories": 5,
+     "protein": 0,
+     "carbs": 3,
+     "fat": 0,
+     "price": 0
+    },
+    {
+     "name": "Sliced avocado",
+     "calories": 45,
+     "protein": 1,
+     "carbs": 2,
+     "fat": 4,
+     "price": 1.75
+    },
+    {
+     "name": "Provolone",
+     "calories": 90,
+     "protein": 6,
+     "carbs": 1,
+     "fat": 7,
+     "price": 0.9,
+     "group": "cheese"
+    },
+    {
+     "name": "American cheese",
+     "calories": 80,
+     "protein": 4,
+     "carbs": 1,
+     "fat": 7,
+     "price": 0.9,
+     "group": "cheese"
+    },
+    {
+     "name": "Pepper jack",
+     "calories": 100,
+     "protein": 5,
+     "carbs": 1,
+     "fat": 8,
+     "price": 0.9,
+     "group": "cheese"
+    },
+    {
+     "name": "Bacon",
+     "calories": 80,
+     "protein": 5,
+     "carbs": 1,
+     "fat": 6,
+     "price": 2.0
+    },
+    {
+     "name": "Yellow mustard",
+     "calories": 10,
+     "protein": 0,
+     "carbs": 1,
+     "fat": 1,
+     "price": 0,
+     "group": "sauce"
+    },
+    {
+     "name": "Sweet onion teriyaki",
+     "calories": 30,
+     "protein": 0,
+     "carbs": 7,
+     "fat": 0,
+     "price": 0,
+     "group": "sauce"
+    },
+    {
+     "name": "BBQ sauce",
+     "calories": 25,
+     "protein": 0,
+     "carbs": 6,
+     "fat": 0,
+     "price": 0,
+     "group": "sauce"
+    },
+    {
+     "name": "Baja chipotle",
+     "calories": 70,
+     "protein": 0,
+     "carbs": 1,
+     "fat": 7,
+     "price": 0,
+     "group": "sauce"
+    }
+   ]
+  },
+  {
+   "id": "chick-fil-a",
+   "name": "Chick-fil-A",
+   "kind": "menu",
+   "slots": [
+    "breakfast",
+    "lunch",
+    "dinner",
+    "snack"
+   ],
+   "source_url": "https://www.chick-fil-a.com/nutrition-allergens",
+   "checked": "2026-10-14",
+   "note": "From the nutrition table on Chick-fil-A's site. Sandwiches without cheese where cheese is optional.",
+   "price_estimate": true,
+   "items": [
+    {
+     "name": "Chick-fil-A Chicken Sandwich",
+     "calories": 420,
+     "protein": 29,
+     "carbs": 41,
+     "fat": 16,
+     "price": 6.19,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "Grilled Chicken Sandwich",
+     "calories": 390,
+     "protein": 28,
+     "carbs": 45,
+     "fat": 11,
+     "price": 7.79,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "Spicy Chicken Sandwich",
+     "calories": 450,
+     "protein": 28,
+     "carbs": 44,
+     "fat": 18,
+     "price": 6.69,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "Deluxe Sandwich, no cheese",
+     "calories": 430,
+     "protein": 29,
+     "carbs": 42,
+     "fat": 16,
+     "price": 7.49,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "Grilled Chicken Club, no cheese",
+     "calories": 440,
+     "protein": 31,
+     "carbs": 45,
+     "fat": 15,
+     "price": 9.19,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "8 count Chicken Nuggets",
+     "calories": 250,
+     "protein": 27,
+     "carbs": 11,
+     "fat": 11,
+     "price": 5.69,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "12 count Chicken Nuggets",
+     "calories": 380,
+     "protein": 40,
+     "carbs": 16,
+     "fat": 17,
+     "price": 8.29,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "8 count Grilled Nuggets",
+     "calories": 130,
+     "protein": 25,
+     "carbs": 1,
+     "fat": 3,
+     "price": 6.99,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "12 count Grilled Nuggets",
+     "calories": 200,
+     "protein": 38,
+     "carbs": 2,
+     "fat": 4.5,
+     "price": 9.49,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "3 count Chick-n-Strips",
+     "calories": 310,
+     "protein": 29,
+     "carbs": 16,
+     "fat": 14,
+     "price": 6.99,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "4 count Chick-n-Strips",
+     "calories": 410,
+     "protein": 39,
+     "carbs": 22,
+     "fat": 19,
+     "price": 8.49,
+     "slots": [
+      "lunch",
+      "dinner",
+      "snack"
+     ]
+    },
+    {
+     "name": "Egg White Grill",
+     "calories": 300,
+     "protein": 27,
+     "carbs": 29,
+     "fat": 8,
+     "price": 5.99,
+     "slots": [
+      "breakfast"
+     ]
+    },
+    {
+     "name": "Chicken, Egg and Cheese Muffin",
+     "calories": 410,
+     "protein": 27,
+     "carbs": 36,
+     "fat": 18,
+     "price": 5.99,
+     "slots": [
+      "breakfast"
+     ]
+    },
+    {
+     "name": "Chicken Biscuit",
+     "calories": 460,
+     "protein": 19,
+     "carbs": 45,
+     "fat": 23,
+     "price": 4.69,
+     "slots": [
+      "breakfast"
+     ]
+    }
+   ],
+   "sides": [
+    {
+     "name": "Small fruit cup",
+     "calories": 60,
+     "protein": 1,
+     "carbs": 14,
+     "fat": 0,
+     "price": 3.19
+    },
+    {
+     "name": "Kale crunch side",
+     "calories": 170,
+     "protein": 4,
+     "carbs": 13,
+     "fat": 12,
+     "price": 3.39
+    },
+    {
+     "name": "Small waffle fries",
+     "calories": 320,
+     "protein": 4,
+     "carbs": 35,
+     "fat": 19,
+     "price": 2.99
+    },
+    {
+     "name": "Berry parfait with granola",
+     "calories": 270,
+     "protein": 13,
+     "carbs": 35,
+     "fat": 9,
+     "price": 4.19
+    }
+   ]
+  }
+ ]
+}

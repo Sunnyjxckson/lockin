@@ -41,6 +41,8 @@ export function rollUp(meals: readonly PlannedMeal[], recipes: ReadonlyMap<strin
   for (const meal of meals) {
     const recipe = recipes.get(meal.recipe_id);
     if (!recipe || !(meal.servings > 0)) continue;
+    // Eaten out and not shopped yet: nothing to buy for it.
+    if (meal.eaten_out && !meal.eaten_out.shopped) continue;
     const share = meal.servings / (recipe.servings > 0 ? recipe.servings : 1);
     for (const ing of recipe.ingredients) {
       const food = findFood(index, ing.name);

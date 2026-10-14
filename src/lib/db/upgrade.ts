@@ -96,7 +96,7 @@ export async function upgradeLocalData(): Promise<void> {
     const library = missing<AppSettings>(settings, { library_position: null, drops_enabled: false, drops_per_day: 3 });
     // 0016: cook time, the food onboarding flag and the goal.
     const food = missing<AppSettings>(settings, { cook_minutes: 30, food_onboarded: false, goal: null });
-    // 0019: the quote on the lock screen and the secret for its wallpaper link.
+    // 0018: the quote on the lock screen and the secret for its wallpaper link.
     const pinned = missing<AppSettings>(settings, { pinned_quote: null, lockscreen_token: null });
     if (patch || rest || coach || library || food || pinned) await db.update("app_settings", "app", { ...patch, ...rest, ...coach, ...library, ...food, ...pinned });
   }

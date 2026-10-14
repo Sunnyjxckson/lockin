@@ -150,7 +150,7 @@ function Morning({ token, style }: { token: string | null; style: WallpaperStyle
     setBusy(true);
     try {
       const t = await makeLockscreenToken();
-      if (!t) toast("Could not make the link. Run supabase/migrations/0019_pinned_quote.sql first.", { kind: "error" });
+      if (!t) toast("Could not make the link. Run supabase/migrations/0018_pinned_quote.sql first.", { kind: "error" });
     } finally {
       setBusy(false);
     }
