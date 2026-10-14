@@ -1,0 +1,179 @@
+{
+  "total": 3076,
+  "writers": [
+    {
+      "slug": "seneca",
+      "name": "Seneca",
+      "count": 764,
+      "works": [
+        {
+          "slug": "letters",
+          "title": "Moral Letters to Lucilius",
+          "count": 551
+        },
+        {
+          "slug": "providence",
+          "title": "On Providence",
+          "count": 23
+        },
+        {
+          "slug": "constancy",
+          "title": "On the Constancy of the Wise Man",
+          "count": 13
+        },
+        {
+          "slug": "anger",
+          "title": "On Anger",
+          "count": 100
+        },
+        {
+          "slug": "happy-life",
+          "title": "On a Happy Life",
+          "count": 20
+        },
+        {
+          "slug": "leisure",
+          "title": "On Leisure",
+          "count": 1
+        },
+        {
+          "slug": "peace-of-mind",
+          "title": "On Peace of Mind",
+          "count": 36
+        },
+        {
+          "slug": "shortness-of-life",
+          "title": "On the Shortness of Life",
+          "count": 20
+        }
+      ]
+    },
+    {
+      "slug": "marcus-aurelius",
+      "name": "Marcus Aurelius",
+      "count": 230,
+      "works": [
+        {
+          "slug": "meditations",
+          "title": "Meditations",
+          "count": 230
+        }
+      ]
+    },
+    {
+      "slug": "epictetus",
+      "name": "Epictetus",
+      "count": 277,
+      "works": [
+        {
+          "slug": "discourses",
+          "title": "The Discourses",
+          "count": 224
+        },
+        {
+          "slug": "enchiridion",
+          "title": "The Enchiridion",
+          "count": 53
+        }
+      ]
+    },
+    {
+      "slug": "schopenhauer",
+      "name": "Arthur Schopenhauer",
+      "count": 390,
+      "works": [
+        {
+          "slug": "wisdom-of-life",
+          "title": "The Wisdom of Life",
+          "count": 67
+        },
+        {
+          "slug": "counsels-and-maxims",
+          "title": "Counsels and Maxims",
+          "count": 103
+        },
+        {
+          "slug": "studies-in-pessimism",
+          "title": "Studies in Pessimism",
+          "count": 55
+        },
+        {
+          "slug": "on-human-nature",
+          "title": "On Human Nature",
+          "count": 38
+        },
+        {
+          "slug": "art-of-literature",
+          "title": "The Art of Literature",
+          "count": 68
+        },
+        {
+          "slug": "religion-a-dialogue",
+          "title": "Religion: A Dialogue, Etc.",
+          "count": 29
+        },
+        {
+          "slug": "art-of-controversy",
+          "title": "The Art of Controversy, Etc.",
+          "count": 30
+        }
+      ]
+    },
+    {
+      "slug": "nietzsche",
+      "name": "Friedrich Nietzsche",
+      "count": 390,
+      "works": [
+        {
+          "slug": "zarathustra",
+          "title": "Thus Spake Zarathustra",
+          "count": 207
+        },
+        {
+          "slug": "twilight-of-the-idols",
+          "title": "Twilight of the Idols",
+          "count": 48
+        },
+        {
+          "slug": "antichrist",
+          "title": "The Antichrist",
+          "count": 27
+        },
+        {
+          "slug": "joyful-wisdom",
+          "title": "The Joyful Wisdom",
+          "count": 108
+        }
+      ]
+    },
+    {
+      "slug": "shakespeare",
+      "name": "William Shakespeare",
+      "count": 989,
+      "works": [
+        {
+          "slug": "plays",
+          "title": "The Plays",
+          "count": 967
+        },
+        {
+          "slug": "sonnets",
+          "title": "The Sonnets",
+          "count": 22
+        }
+      ]
+    },
+    {
+      "slug": "laws",
+      "name": "Laws and maxims",
+      "count": 36,
+      "works": [
+        {
+          "slug": "laws",
+          "title": "Laws and maxims",
+          "count": 36
+        }
+      ]
+    }
+  ]
+}

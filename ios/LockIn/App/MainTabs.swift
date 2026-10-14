@@ -13,6 +13,8 @@ struct MainTabs: View {
     @State private var tab: AppTab = .today
     @State private var showMore = false
     @State private var showCoach = false
+    @State private var coachUnread = false
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         TabView(selection: $tab) {
@@ -47,6 +49,21 @@ struct MainTabs: View {
         .onChange(of: store.needsLogin) { _, needs in
             if needs { session.sessionExpired() }
         }
+        .task { await refreshCoachAndDrops() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { Task { await refreshCoachAndDrops() } }
+        }
+        .onChange(of: showCoach) { _, open in
+            if !open { Task { coachUnread = await store.unreadCoachCount() > 0 } }
+        }
+    }
+
+    /// Sends the check-ins that are due, shows whether any are unread, and keeps the next week of quote drops scheduled.
+    private func refreshCoachAndDrops() async {
+        if store.settings == nil { return }
+        _ = try? await store.syncCoachCheckins()
+        coachUnread = await store.unreadCoachCount() > 0
+        await store.rescheduleDrops()
     }
 
     private func shell<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
@@ -55,7 +72,7 @@ struct MainTabs: View {
             built
                 .toolbar(.hidden, for: .navigationBar)
                 .safeAreaInset(edge: .top, spacing: 0) {
-                    TopBar(initial: initial, onCoach: { showCoach = true }, onMore: { showMore = true })
+                    TopBar(initial: initial, coachUnread: coachUnread, onCoach: { showCoach = true }, onMore: { showMore = true })
                 }
         }
     }
@@ -71,6 +88,7 @@ struct MainTabs: View {
 struct TopBar: View {
     @Environment(\.liTheme) private var theme
     let initial: String
+    var coachUnread: Bool = false
     let onCoach: () -> Void
     let onMore: () -> Void
 
@@ -86,6 +104,11 @@ struct TopBar: View {
                     .font(.system(size: 19, weight: .regular))
                     .foregroundColor(theme.ink2)
                     .frame(width: 44, height: 44)
+                    .overlay(alignment: .topTrailing) {
+                        if coachUnread {
+                            Circle().fill(theme.warn).frame(width: 8, height: 8).padding(.top, 9).padding(.trailing, 9)
+                        }
+                    }
             }
             .buttonStyle(LIPressStyle())
             .accessibilityLabel("Coach")
