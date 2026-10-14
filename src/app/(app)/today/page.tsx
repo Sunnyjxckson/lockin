@@ -31,7 +31,6 @@ import type { Challenge, DateStr, Track } from "@/lib/types";
 import { SetupRow } from "@/components/app/SetupRow";
 import BodyTodaySlot from "@/features/body/TodaySlot";
 import { BoardEntry } from "@/features/boards/TodayEntry";
-import { LockScreenRow } from "@/features/library/lockscreen/TodayRow";
 import CoachTodaySlot from "@/features/coach/TodaySlot";
 import { FocusAction } from "@/features/focus/TodaySlot";
 import RoughDayEntry from "@/features/library/RoughDay";
@@ -46,6 +45,7 @@ import { KIND_LABEL, WorkoutCard } from "./WorkoutCard";
 
 // Opens from the header. Loaded on first use so it costs Today nothing.
 const MoreSheet = dynamic(() => import("@/components/app/MoreSheet").then((m) => m.MoreSheet), { ssr: false });
+const LockScreenRow = dynamic(() => import("@/features/library/lockscreen/TodayRow").then((m) => m.LockScreenRow), { ssr: false });
 const ChallengeComplete = dynamic(() => import("./ChallengeComplete").then((m) => m.ChallengeComplete), { ssr: false });
 
 /** How far back Today reads logs. Streaks on the rows count at most this many days. */
@@ -503,7 +503,8 @@ export default function TodayPage() {
 
       {/* The why, under everything that gets checked off, so it never sits between the user and the list. */}
       {isToday ? <BoardEntry className="mt-7" /> : null}
-      {isToday ? <LockScreenRow className="mt-3" /> : null}
+      {/* The pinned quote. Its code loads only when a quote is pinned, so Today stays inside its budget. */}
+      {isToday && settings.data?.pinned_quote ? <LockScreenRow className="mt-3" /> : null}
 
       {moment === date && summary ? (
         <DayComplete title={dayTitle} total={summary.total} streak={fullDayStreak(statusByDate, today, start)} isToday={isToday} onDone={endMoment} />
