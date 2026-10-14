@@ -53,7 +53,9 @@ struct PlanTextField: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(label).liType(.label).foregroundColor(theme.ink2)
+            if !label.isEmpty {
+                Text(label).liType(.label).foregroundColor(theme.ink2)
+            }
             TextField(placeholder, text: $text)
                 .liType(.body)
                 .foregroundColor(theme.ink)
