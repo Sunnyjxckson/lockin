@@ -29,7 +29,6 @@ public struct LIFx: Equatable {
 
 /// The colors every screen draws with. Aubergine and High contrast bases from src/lib/logic/theme.ts,
 /// optionally re-colored by the palette on the active `theme` row.
-/// TODO: port the contrast fixing (ensure AA) that the web applies to custom palettes.
 public struct LITheme: Equatable {
     public var base: ThemeBase
     public var isLight: Bool
@@ -121,26 +120,10 @@ public struct LITheme: Equatable {
         fx: LIFx(glow: [0.1, 0.06, 0.08], glassHi: 0.05, glassLo: 0.02, glassSmoke: 0.5, glassLine: 0.4, tile: 0.03, tileLine: 0.34, hair: 0.3, bar: 1)
     )
 
-    /// The base theme with the palette of the active theme row laid over it.
+    /// The base theme with the palette of the active theme row laid over it. Colors are moved along their
+    /// own lightness until every pair the app draws passes WCAG AA (see ThemeBuild).
     public static func make(base: ThemeBase, palette: ThemePalette?) -> LITheme {
-        var t = base == .contrast ? LITheme.contrast : LITheme.dark
-        guard let p = palette else { return t }
-        if let v = p.background { t.bg = Color(hex: v); t.isLight = LITheme.luminance(hex: v) > 0.5 }
-        if let v = p.surface {
-            t.surface = Color(hex: v)
-            t.surface2 = Color(hex: v)
-            t.surface3 = Color(hex: v)
-        }
-        if let v = p.text { t.ink = Color(hex: v) }
-        if let v = p.muted {
-            t.ink2 = Color(hex: v)
-            t.ink3 = Color(hex: v)
-        }
-        if let v = p.accent { t.accent = Color(hex: v) }
-        if t.isLight {
-            t.fx = LIFx(glow: [0.3, 0.22, 0.22], glassHi: 0.72, glassLo: 0.42, glassSmoke: 0, glassLine: 0.1, tile: 0.5, tileLine: 0.08, hair: 0.12, bar: 0.86)
-        }
-        return t
+        return LITheme(built: ThemeBuild.build(base, palette))
     }
 
     /// Relative luminance of "#rrggbb", 0 to 1.
