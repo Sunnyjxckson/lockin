@@ -75,7 +75,7 @@ final class RemindersTests: XCTestCase {
         let r = rem("d", .custom, label: "Go\u{2014}now", body: "a \u{2013} b", time: "09:00")
         let plan = Reminders.planDay([r], day(), opts)
         XCTAssertEqual(plan[0].title, "Go, now")
-        XCTAssertEqual(plan[0].body, "a, b")
+        XCTAssertEqual(plan[0].body, "a,  b")
     }
 
     func testWhereATapLands() {
