@@ -12,6 +12,18 @@ import { readFileSync } from "node:fs";
 const NOON_DAY_1 = "2026-10-05T16:00:00Z"; // Monday Oct 5, 12:00 PM New York
 
 /** The app going to the background and coming back, as the page sees it. */
+/** Meals opens food setup the first time. The walkthrough skips it, which also marks it done. */
+async function skipFoodSetup(page) {
+  const sheet = page.getByRole("dialog").filter({ hasText: "What you eat" });
+  try {
+    await sheet.waitFor({ timeout: 3000 });
+  } catch {
+    return;
+  }
+  await sheet.getByRole("button", { name: "Not now" }).click();
+  await sheet.waitFor({ state: "detached" });
+}
+
 function setHidden(page, hidden) {
   return page.evaluate((h) => {
     Object.defineProperty(document, "visibilityState", { configurable: true, get: () => (h ? "hidden" : "visible") });
@@ -71,6 +83,7 @@ export async function runFeatures(h) {
   await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Body" }).click();
   await heading(page, "Body");
   await page.getByRole("link", { name: "Meal plan" }).click();
+  await skipFoodSetup(page);
   await heading(page, "Meals");
   await page.getByText(/No plan for the week of Oct 5/).waitFor();
   check("Meals opens from Body with a real empty state and the Body tab lit", (await page.getByRole("navigation", { name: "Main" }).locator('[aria-current="page"]').innerText()) === "Body");

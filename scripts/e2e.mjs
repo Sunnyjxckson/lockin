@@ -251,6 +251,18 @@ async function openTab(page, tab) {
   else await page.getByRole("heading", { name: tab, level: 1 }).waitFor();
 }
 
+/** Meals opens food setup the first time. The walkthrough skips it, which also marks it done. */
+async function skipFoodSetup(page) {
+  const sheet = page.getByRole("dialog").filter({ hasText: "What you eat" });
+  try {
+    await sheet.waitFor({ timeout: 3000 });
+  } catch {
+    return;
+  }
+  await sheet.getByRole("button", { name: "Not now" }).click();
+  await sheet.waitFor({ state: "detached" });
+}
+
 async function closeSheet(page) {
   await page.keyboard.press("Escape");
   await dialog(page).waitFor({ state: "detached" });
@@ -830,6 +842,7 @@ for (const [name, lit, backTo] of [
   await todayReady(page);
   await openMore(page, name);
   await page.getByRole("heading", { name, level: 1 }).waitFor();
+  if (name === "Meals") await skipFoodSetup(page);
   check(`${name} opens from More, lights ${lit} and has an empty state`, (await activeTab(page)) === lit && (await (name === "Meals" ? page.getByText(/^No plan for the week of/) : page.getByRole("heading", { level: 3 })).count()) === 1);
   await noOverflow(page, name);
   await page.getByRole("link", { name: "Back" }).click();
