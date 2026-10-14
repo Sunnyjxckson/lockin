@@ -556,12 +556,12 @@ extension View {
 }
 
 /// The menu behind a camera button: take a photo, or choose one.
-struct MBPhotoMenu<Label: View>: View {
+struct MBPhotoMenu<LabelContent: View>: View {
     @Binding var camera: Bool
     @Binding var library: Bool
-    let label: Label
+    let label: LabelContent
 
-    init(camera: Binding<Bool>, library: Binding<Bool>, @ViewBuilder label: () -> Label) {
+    init(camera: Binding<Bool>, library: Binding<Bool>, @ViewBuilder label: () -> LabelContent) {
         self._camera = camera
         self._library = library
         self.label = label()
