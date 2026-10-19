@@ -12,6 +12,8 @@ struct LoginView: View {
     @State private var busy = false
     @State private var shake = 0
     @State private var server = ""
+    @State private var useKeyboard = false
+    @FocusState private var keyboardFocused: Bool
 
     private let slots = 4
 
@@ -43,6 +45,16 @@ struct LoginView: View {
                         .frame(minHeight: 20, alignment: .leading)
                         .padding(.top, 12)
                     dots.padding(.top, 28)
+                    Button(action: toggleEntryMode) {
+                        Text(useKeyboard ? "Use keypad" : "Use keyboard")
+                            .liType(.label)
+                            .foregroundColor(theme.ink2)
+                            .frame(minHeight: 44, alignment: .leading)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(busy)
+                    .padding(.top, 4)
                 }
                 .padding(.horizontal, 4)
 
@@ -50,15 +62,19 @@ struct LoginView: View {
 
                 Spacer(minLength: 16)
 
-                LIKeypad(enabled: !busy, onDigit: { d in
-                    error = nil
-                    if code.count < 8 { code += d }
-                }, onDelete: {
-                    if !code.isEmpty { code.removeLast() }
-                }, onSubmit: {
-                    submit()
-                })
-                .padding(.bottom, 12)
+                if useKeyboard {
+                    passcodeField.padding(.bottom, 12)
+                } else {
+                    LIKeypad(enabled: !busy, onDigit: { d in
+                        error = nil
+                        if code.count < 64 { code += d }
+                    }, onDelete: {
+                        if !code.isEmpty { code.removeLast() }
+                    }, onSubmit: {
+                        submit()
+                    })
+                    .padding(.bottom, 12)
+                }
             }
             .padding(.horizontal, 20)
             .frame(maxWidth: 480)
@@ -68,7 +84,7 @@ struct LoginView: View {
 
     private var dots: some View {
         HStack(spacing: 14) {
-            ForEach(0..<max(slots, code.count), id: \.self) { i in
+            ForEach(0..<min(max(slots, code.count), 10), id: \.self) { i in
                 Circle()
                     .fill(i < code.count ? theme.ink : theme.tile)
                     .overlay(Circle().strokeBorder(i < code.count ? theme.ink : theme.tileLine, lineWidth: 1))
@@ -97,10 +113,31 @@ struct LoginView: View {
         }
     }
 
+    private var passcodeField: some View {
+        SecureField("Passcode", text: $code)
+            .liType(.sub)
+            .foregroundColor(theme.ink)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled(true)
+            .textContentType(.password)
+            .submitLabel(.go)
+            .focused($keyboardFocused)
+            .onSubmit { submit() }
+            .disabled(busy)
+            .padding(.horizontal, 16)
+            .frame(minHeight: 48)
+            .background(LITileSurface(radius: 16))
+    }
+
+    private func toggleEntryMode() {
+        useKeyboard.toggle()
+        keyboardFocused = useKeyboard
+    }
+
     private func submit() {
-        if busy || code.count < 4 { return }
+        let attempt = code.trimmingCharacters(in: .whitespacesAndNewlines)
+        if busy || attempt.count < 4 { return }
         busy = true
-        let attempt = code
         let text = server
         Task {
             let result = await session.login(passcode: attempt, serverText: text)
