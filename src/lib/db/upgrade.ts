@@ -8,6 +8,7 @@ import { todayNY, nyParts } from "../logic/dates";
 import { STAPLES } from "../logic/mealsFoods";
 import { parseLegacySpendHint } from "../logic/vices";
 import { getPref, setPref } from "../prefs";
+import { SEED_WORKOUTS } from "../seed/data";
 import type { AppSettings, BoardItem, Challenge, DateStr, FocusSession } from "../types";
 
 /** The Monday of the reserved meal_plan row that used to hold the pantry, receipt prices and preferred store. */
@@ -186,5 +187,38 @@ export async function adoptDevicePrefs(read: PrefReader = getPref, write: PrefWr
       if (row && (row.aspect === null || row.aspect === undefined)) await db.update("board_item", id, { aspect });
     }
     write("board-aspects", null);
+  }
+}
+
+/** Workout block names an earlier seed wrote, and the names that replace them. */
+const BLOCK_RENAMES: { weekday: number; from: string; to: string }[] = [
+  { weekday: 3, from: "Light basketball + core", to: "Cardio + core" },
+  { weekday: 0, from: "Jump rope + core", to: "Rest or easy rope + core" },
+];
+
+/**
+ * The first seeded workout plan (a bench press Monday, a light basketball
+ * Wednesday) is replaced by the real one, in every mode. It only runs while
+ * the stored plan still looks like the old default, so a plan the user has
+ * edited is never overwritten, and it does nothing once the new plan is in.
+ * The three schedule template blocks that were renamed follow the same rule,
+ * each on its own old name. Safe to run again.
+ */
+export async function upgradeWorkoutPlan(): Promise<void> {
+  const workouts = await db.list("workout");
+  if (workouts.length > 0) {
+    const monday = workouts.find((w) => w.weekday === 1 && w.slot === "main");
+    const wednesday = workouts.find((w) => w.weekday === 3 && w.slot === "main");
+    const oldMonday = !!monday && monday.exercises.some((e) => /bench press/i.test(e.name));
+    const oldWednesday = !!wednesday && /light basketball/i.test(wednesday.name);
+    if (oldMonday || oldWednesday) {
+      for (const seed of SEED_WORKOUTS) await db.upsert("workout", seed, ["weekday", "slot"]);
+    }
+  }
+
+  const template = await db.list("schedule_template");
+  for (const r of template) {
+    const rename = BLOCK_RENAMES.find((x) => x.weekday === r.weekday && x.from === r.block_name);
+    if (rename) await db.update("schedule_template", r.id, { block_name: rename.to });
   }
 }

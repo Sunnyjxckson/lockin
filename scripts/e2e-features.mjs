@@ -697,7 +697,7 @@ export async function runFeatures(h) {
     ["/money", "Groceries this week", "money", "Money"],
     ["/body", "Meals", "body", "Body"],
     ["/body", "Weigh-ins", "body-weight", null, () => page.getByRole("radio", { name: "Weight" }).click()],
-    ["/body/workout", "Bench press", "workout-log", null],
+    ["/body/workout", "Incline DB press", "workout-log", null],
     ["/progress", "Streaks", "record", "Record"],
     ["/progress/card", "Save image", "share-card", null],
     ["/coach", "voice", "coach", "Coach"],

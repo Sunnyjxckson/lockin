@@ -117,6 +117,12 @@ struct WorkoutExerciseCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(exercise.name).liType(.h2).foregroundColor(theme.ink).lineLimit(2)
                     Text(subtitle(last: last)).liType(.sub).foregroundColor(theme.ink2)
+                    if let note = exercise.note, !note.isEmpty {
+                        Text(note).liType(.caption).foregroundColor(theme.ink2)
+                    }
+                    if let bump = Workouts.suggestedWeight(exercise, last: last) {
+                        Text("Up 5 lb today (\(BodyRules.fmt(bump, 1)))").liType(.caption).foregroundColor(theme.accent)
+                    }
                 }
                 Spacer(minLength: 8)
                 Text("\(logged) of \(exercise.sets)")
@@ -134,7 +140,7 @@ struct WorkoutExerciseCard: View {
     }
 
     private func subtitle(last: [SetLog]) -> String {
-        var line = "\(exercise.sets) x \(exercise.reps)"
+        var line = Workouts.formatSets(exercise)
         if let first = last.first {
             line += ", last \(LIDate.formatDateShort(first.date))"
         } else {
@@ -277,7 +283,12 @@ struct BodyCoreCard: View {
                         LIHairline()
                         HStack(spacing: 12) {
                             Text("\(i + 1)").liType(.caption).foregroundColor(theme.ink2).frame(width: 16, alignment: .leading)
-                            Text(workout.exercises[i].name).liType(.body).foregroundColor(theme.ink)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(workout.exercises[i].name).liType(.body).foregroundColor(theme.ink)
+                                if let note = workout.exercises[i].note, !note.isEmpty {
+                                    Text(note).liType(.caption).foregroundColor(theme.ink2)
+                                }
+                            }
                             Spacer(minLength: 8)
                             Text(Workouts.formatSets(workout.exercises[i])).liType(.body).foregroundColor(theme.ink2)
                         }

@@ -5,7 +5,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { db, setBackend } from "./index";
 import { getChallenge, getChallenges, getScoringVersions, getSettings } from "./helpers";
 import { LocalBackend, memoryStore, STORAGE_PREFIX, type KeyValueStore } from "./local";
-import { adoptDevicePrefs, upgradeLocalData } from "./upgrade";
+import { adoptDevicePrefs, upgradeLocalData, upgradeWorkoutPlan } from "./upgrade";
+import { SEED_WORKOUTS } from "../seed/data";
 import { STAPLES } from "../logic/mealsFoods";
 import { modeOn } from "../logic/challenge";
 import { summarizeDay } from "../logic/day";
@@ -310,5 +311,53 @@ describe("adopting what an earlier build kept per device", () => {
     prefs.set("focus:business_goal", "An old device copy");
     await adoptDevicePrefs(readPref, writePref);
     expect((await getSettings())?.business_goal).toBe("The saved one");
+  });
+});
+
+describe("replacing the first workout plan", () => {
+  const oldPlan = async () => {
+    await db.upsert("workout", { weekday: 1, slot: "main", name: "Upper A", kind: "lift", detail: "Push focus", exercises: [{ name: "Bench press", sets: 4, reps: "6 to 8" }] }, ["weekday", "slot"]);
+    await db.upsert("workout", { weekday: 3, slot: "main", name: "Light basketball", kind: "sport", detail: "Easy pace, recovery day", exercises: [{ name: "Form shooting", sets: 1, reps: "10 min" }] }, ["weekday", "slot"]);
+    for (const r of await db.list("schedule_template")) {
+      if (r.weekday === 3 && r.block_name === "Cardio + core") await db.update("schedule_template", r.id, { block_name: "Light basketball + core" });
+      if (r.weekday === 0 && r.block_name === "Rest or easy rope + core") await db.update("schedule_template", r.id, { block_name: "Jump rope + core" });
+    }
+  };
+
+  beforeEach(async () => {
+    store = memoryStore();
+    setBackend(new LocalBackend(store, "local", () => "2026-10-19T09:50:00.000Z"));
+    await ensureSeeded("2026-10-19");
+  });
+
+  it("does nothing when the plan is already current", async () => {
+    const before = [read("workout"), read("schedule_template")];
+    await upgradeWorkoutPlan();
+    expect([read("workout"), read("schedule_template")]).toEqual(before);
+  });
+
+  it("writes all 14 rows and the block names over the old defaults, then stops", async () => {
+    await oldPlan();
+    await upgradeWorkoutPlan();
+    const all = await db.list("workout");
+    expect(all).toHaveLength(14);
+    for (const seed of SEED_WORKOUTS) {
+      expect(all.find((w) => w.weekday === seed.weekday && w.slot === seed.slot)).toMatchObject({ name: seed.name, exercises: seed.exercises });
+    }
+    const names = (await db.list("schedule_template")).map((r) => `${r.weekday}|${r.block_name}`);
+    expect(names).toContain("3|Cardio + core");
+    expect(names).toContain("0|Rest or easy rope + core");
+    expect(names).toContain("6|Jump rope + core");
+    expect(names).not.toContain("3|Light basketball + core");
+    const again = [read("workout"), read("schedule_template")];
+    await upgradeWorkoutPlan();
+    expect([read("workout"), read("schedule_template")]).toEqual(again);
+  });
+
+  it("never overwrites a plan the user has edited", async () => {
+    const mon = (await db.list("workout")).find((w) => w.weekday === 1 && w.slot === "main")!;
+    await db.update("workout", mon.id, { exercises: [{ name: "Squat", sets: 5, reps: "5" }] });
+    await upgradeWorkoutPlan();
+    expect((await db.get("workout", mon.id))?.exercises[0].name).toBe("Squat");
   });
 });

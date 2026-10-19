@@ -163,8 +163,8 @@ export function buildCoachFixture(today: DateStr, items: readonly ChecklistItem[
       const week = Math.floor((n - 1) / 7); // 0 is the most recent week
       main.exercises.forEach((ex, ei) => {
         const base = [185, 135, 95, 120, 30, 50, 225, 185, 60][ei % 9];
-        const isBench = ex.name === "Bench press";
-        // Bench: 185 x 6, then 180 x 6, then 175 x 5. Everything else creeps up.
+        const isBench = ex.name === "Incline DB press";
+        // Incline press: 185 x 6, then 180 x 6, then 175 x 5. Everything else creeps up.
         const weight = isBench ? [175, 180, 185, 185][Math.min(week, 3)] : base + (3 - Math.min(week, 3)) * 5 - 10;
         const reps = isBench ? [5, 6, 6, 6][Math.min(week, 3)] : 8;
         for (let set = 1; set <= ex.sets; set++) {

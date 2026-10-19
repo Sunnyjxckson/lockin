@@ -116,10 +116,18 @@ describe("seed", () => {
     const all = await getWorkouts();
     expect(all).toHaveLength(14);
     const names = ([1, 2, 3, 4, 5, 6, 0] as Weekday[]).map((d) => workoutsFor(all, d).main?.name);
-    expect(names).toEqual(["Upper A", "Lower", "Light basketball", "Upper B", "Lower", "Jump rope", "Jump rope"]);
+    expect(names).toEqual(["Upper A", "Lower", "Cardio", "Upper B", "Lower", "Jump rope", "Rest"]);
     expect(all.filter((w) => w.slot === "main" && w.kind === "lift").map((w) => w.weekday).sort()).toEqual([1, 2, 4, 5]);
-    expect(workoutsFor(all, 6).main?.detail).toBe("15 to 20 min");
-    expect(workoutsFor(all, 0).main?.detail).toBe("10 min");
+    expect(workoutsFor(all, 3).main).toMatchObject({ kind: "cardio", detail: "Basketball about 1 hour, or 30 to 60 min Peloton" });
+    expect(workoutsFor(all, 6).main?.detail).toBe("3 rounds of 10 min");
+    expect(workoutsFor(all, 0).main).toMatchObject({ kind: "rest", detail: "Full rest, or 10 min easy jump rope" });
+    expect(workoutsFor(all, 1).main?.exercises[0]).toEqual({ name: "Incline DB press", sets: 3, reps: "8 to 10", weight: "40s (try 45s)" });
+    expect(workoutsFor(all, 4).main?.exercises[0]).toMatchObject({ name: "Pull-ups", note: "Assisted if under 6" });
+    expect(workoutsFor(all, 2).main?.exercises.map((e) => e.name)).toEqual(workoutsFor(all, 5).main?.exercises.map((e) => e.name));
+    for (const d of [0, 1, 2, 3, 4, 5, 6] as Weekday[]) {
+      const core = workoutsFor(all, d).core;
+      expect(core?.exercises).toHaveLength(2);
+    }
     for (const w of all) {
       expect(w.exercises.length).toBeGreaterThan(0);
       for (const e of w.exercises) expect(e.name && e.sets >= 1 && e.reps).toBeTruthy();

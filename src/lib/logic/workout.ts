@@ -48,6 +48,39 @@ export function parseReps(reps: string): number | null {
   return m ? Number(m[0]) : null;
 }
 
+/** The weight to start from, from the plan text: "40s (try 45s)" is 40, "7.5 lb" is 7.5, "Light" is null. */
+export function parseWeight(weight: string | null | undefined): number | null {
+  if (!weight) return null;
+  const m = weight.match(/\d+(?:\.\d+)?/);
+  return m ? Number(m[0]) : null;
+}
+
+/** The top of a rep range: "8 to 10" is 10, "10" is 10. Null for timed or non numeric text. */
+export function topReps(reps: string): number | null {
+  if (/\b(sec|secs|seconds?|min|mins|minutes?|hours?|hrs?)\b/i.test(reps)) return null;
+  const all = reps.match(/\d+/g);
+  if (!all) return null;
+  if (/\b(each|per)\b/i.test(reps) && all.length > 1) return null;
+  return Number(all[all.length - 1]);
+}
+
+export const WEIGHT_STEP = 5;
+
+/**
+ * The +5 lb rule: when the last session logged every planned set with every
+ * set at the top of the rep range, the next session goes up by 5. Null when
+ * the last session fell short, had no weight, or the reps are not a count.
+ */
+export function suggestedWeight(exercise: Pick<Exercise, "sets" | "reps">, lastSets: readonly SetLog[]): number | null {
+  const top = topReps(exercise.reps);
+  if (top === null) return null;
+  const sets = lastSets.filter((l) => l.set_number >= 1 && l.set_number <= exercise.sets);
+  if (new Set(sets.map((l) => l.set_number)).size < exercise.sets) return null;
+  if (!sets.every((l) => l.reps !== null && l.reps >= top && l.weight !== null && l.weight > 0)) return null;
+  const weights = sets.map((l) => l.weight as number);
+  return Math.max(...weights) + WEIGHT_STEP;
+}
+
 export interface SetValues {
   weight: number | null;
   reps: number | null;
@@ -58,7 +91,9 @@ export interface SetValues {
  * 1. Same set last session (or last session's final set when it had fewer).
  * 2. If the set just before it today was logged heavier or lighter than last
  *    time, carry that weight forward.
- * 3. With no history, the planned reps and no weight.
+ * 3. With no history, the planned reps and the planned weight when it is a number.
+ * A last session that hit the top of the range on every set starts the first
+ * set of a new session 5 lb higher (suggestedWeight).
  */
 export function prefillSet(exercise: Exercise, setNumber: number, last: readonly SetLog[], today: readonly SetLog[]): SetValues {
   const lastSame = last.find((l) => l.set_number === setNumber) ?? (last.length > 0 ? last[last.length - 1] : null);
@@ -66,6 +101,9 @@ export function prefillSet(exercise: Exercise, setNumber: number, last: readonly
   const lastPrev = last.find((l) => l.set_number === setNumber - 1) ?? null;
   let weight = lastSame?.weight ?? null;
   let reps = lastSame?.reps ?? parseReps(exercise.reps);
+  if (!lastSame) weight = parseWeight(exercise.weight);
+  const bump = suggestedWeight(exercise, last);
+  if (bump !== null && setNumber === 1) weight = bump;
   if (prevToday && prevToday.weight !== null && (!lastPrev || lastPrev.weight !== prevToday.weight)) weight = prevToday.weight;
   if (!lastSame && prevToday) {
     weight = prevToday.weight;

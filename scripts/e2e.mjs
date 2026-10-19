@@ -867,7 +867,7 @@ for (const [link, title, file] of [
 check("every settings screen opens and goes back", true);
 await page.goto(`${base}/settings/workouts`);
 await page.getByRole("radio", { name: "M" }).click();
-await page.getByRole("button", { name: /^Bench press/ }).click();
+await page.getByRole("button", { name: /^Incline DB press/ }).click();
 await page.getByRole("textbox", { name: "Exercise" }).fill("Incline bench press");
 await page.getByRole("button", { name: "Save" }).click();
 await page.getByRole("button", { name: /^Incline bench press/ }).waitFor();

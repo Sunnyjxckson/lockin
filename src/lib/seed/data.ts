@@ -179,9 +179,9 @@ const FRI: BlockSeed[] = [
   BED,
 ];
 
-const WEEKEND = (lateNight: boolean): BlockSeed[] => [
+const WEEKEND = (lateNight: boolean, workout: string): BlockSeed[] => [
   WAKE,
-  ["Jump rope + core", "06:30", "07:00", "workout", false],
+  [workout, "06:30", "07:00", "workout", false],
   ["Home, shower, eat", "07:00", "08:00", "home", true],
   ["Study, homework, business", "08:00", "11:00", "study", true, "Longest block of the week."],
   ["Delivery: lunch", "11:00", "14:00", "delivery", true],
@@ -192,13 +192,13 @@ const WEEKEND = (lateNight: boolean): BlockSeed[] => [
 ];
 
 const TEMPLATE_BY_DAY: Record<Weekday, BlockSeed[]> = {
-  0: WEEKEND(false),
+  0: WEEKEND(false, "Rest or easy rope + core"),
   1: MON_WED("Lift + core"),
   2: TUE_THU,
-  3: MON_WED("Light basketball + core"),
+  3: MON_WED("Cardio + core"),
   4: TUE_THU,
   5: FRI,
-  6: WEEKEND(true),
+  6: WEEKEND(true, "Jump rope + core"),
 };
 
 export const SEED_TEMPLATE: NewRow<"schedule_template">[] = (Object.keys(TEMPLATE_BY_DAY) as unknown as string[]).flatMap(
@@ -220,9 +220,28 @@ export const SEED_TEMPLATE: NewRow<"schedule_template">[] = (Object.keys(TEMPLAT
 
 // ---------- workouts ----------
 
-const ex = (name: string, sets: number, reps: string): Exercise => ({ name, sets, reps });
+const ex = (name: string, sets: number, reps: string, weight?: string, note?: string): Exercise => ({
+  name,
+  sets,
+  reps,
+  ...(weight ? { weight } : {}),
+  ...(note ? { note } : {}),
+});
 
 type WorkoutSeed = Omit<Workout, "id" | "created_at">;
+
+const CORE_AB = () => ex("eGym ab machine", 3, "12 to 15");
+const CORE_KNEE = () => ex("Hanging knee raises", 3, "10 to 12");
+const CORE_REV = () => ex("Reverse crunches", 3, "15");
+
+const core = (weekday: Weekday, name: string, exercises: Exercise[], detail = "About 6 min"): WorkoutSeed => ({
+  weekday,
+  slot: "core",
+  name,
+  kind: "lift",
+  detail,
+  exercises,
+});
 
 export const SEED_WORKOUTS: WorkoutSeed[] = [
   {
@@ -230,14 +249,13 @@ export const SEED_WORKOUTS: WorkoutSeed[] = [
     slot: "main",
     name: "Upper A",
     kind: "lift",
-    detail: "Push focus",
+    detail: null,
     exercises: [
-      ex("Bench press", 4, "6 to 8"),
-      ex("Barbell row", 4, "8"),
-      ex("Overhead press", 3, "8 to 10"),
-      ex("Lat pulldown", 3, "10 to 12"),
-      ex("Dumbbell curl", 3, "12"),
-      ex("Triceps pushdown", 3, "12"),
+      ex("Incline DB press", 3, "8 to 10", "40s (try 45s)"),
+      ex("Lat pulldown", 3, "10", "200"),
+      ex("Seated cable row", 3, "10", "100"),
+      ex("Lateral raises", 3, "12 to 15", "7.5 lb"),
+      ex("Face pulls", 3, "15", "45"),
     ],
   },
   {
@@ -245,36 +263,35 @@ export const SEED_WORKOUTS: WorkoutSeed[] = [
     slot: "main",
     name: "Lower",
     kind: "lift",
-    detail: "Squat focus",
+    detail: null,
     exercises: [
-      ex("Back squat", 4, "6 to 8"),
-      ex("Romanian deadlift", 3, "8 to 10"),
-      ex("Walking lunge", 3, "10 each leg"),
-      ex("Leg curl", 3, "12"),
-      ex("Standing calf raise", 4, "12 to 15"),
+      ex("Box jumps", 3, "5", undefined, "35 inch box, step down"),
+      ex("RDL", 3, "8", "55s"),
+      ex("Bulgarian split squats", 3, "10 each leg", "35s"),
+      ex("Leg curl", 2, "12"),
+      ex("Calf raises", 3, "15", "Light"),
     ],
   },
   {
     weekday: 3,
     slot: "main",
-    name: "Light basketball",
-    kind: "sport",
-    detail: "Easy pace, recovery day",
-    exercises: [ex("Form shooting", 1, "10 min"), ex("Spot shooting", 1, "15 min"), ex("Easy full court runs", 1, "10 min")],
+    name: "Cardio",
+    kind: "cardio",
+    detail: "Basketball about 1 hour, or 30 to 60 min Peloton",
+    exercises: [ex("Basketball", 1, "about 1 hour", undefined, "or 30 to 60 min on the Peloton")],
   },
   {
     weekday: 4,
     slot: "main",
     name: "Upper B",
     kind: "lift",
-    detail: "Pull focus",
+    detail: null,
     exercises: [
-      ex("Pull up", 4, "6 to 10"),
-      ex("Incline dumbbell press", 4, "8 to 10"),
-      ex("Seated cable row", 3, "10"),
-      ex("Lateral raise", 3, "12 to 15"),
-      ex("Face pull", 3, "15"),
-      ex("Dip", 3, "8 to 12"),
+      ex("Pull-ups", 3, "6 to 10", undefined, "Assisted if under 6"),
+      ex("eGym shoulder press", 3, "10", "Light"),
+      ex("Push-ups", 3, "close to failure", undefined, "Bodyweight"),
+      ex("Lateral raises", 3, "12 to 15", "7.5 lb"),
+      ex("Face pulls", 3, "15", "45"),
     ],
   },
   {
@@ -282,13 +299,13 @@ export const SEED_WORKOUTS: WorkoutSeed[] = [
     slot: "main",
     name: "Lower",
     kind: "lift",
-    detail: "Hinge focus",
+    detail: null,
     exercises: [
-      ex("Deadlift", 3, "5"),
-      ex("Leg press", 3, "10"),
-      ex("Bulgarian split squat", 3, "8 each leg"),
-      ex("Hip thrust", 3, "10"),
-      ex("Seated calf raise", 4, "15"),
+      ex("Box jumps", 3, "5", undefined, "35 inch box, step down"),
+      ex("RDL", 3, "8", "55s"),
+      ex("Bulgarian split squats", 3, "10 each leg", "35s"),
+      ex("Leg curl", 2, "12"),
+      ex("Calf raises", 3, "15", "Light"),
     ],
   },
   {
@@ -296,74 +313,25 @@ export const SEED_WORKOUTS: WorkoutSeed[] = [
     slot: "main",
     name: "Jump rope",
     kind: "cardio",
-    detail: "15 to 20 min",
-    exercises: [ex("Easy warm up", 1, "3 min"), ex("Rounds: 90 sec on, 30 sec off", 8, "2 min"), ex("Easy cool down", 1, "1 min")],
+    detail: "3 rounds of 10 min",
+    exercises: [ex("Jump rope", 3, "10 min", undefined, "2 min rest between"), ex("Basketball", 1, "optional")],
   },
   {
     weekday: 0,
     slot: "main",
-    name: "Jump rope",
-    kind: "cardio",
-    detail: "10 min",
-    exercises: [ex("Steady rounds: 2 min on, 30 sec off", 4, "2 min 30 sec")],
+    name: "Rest",
+    kind: "rest",
+    detail: "Full rest, or 10 min easy jump rope",
+    exercises: [ex("Easy jump rope", 1, "10 min", undefined, "optional")],
   },
-  // Core rotation, 5 to 10 minutes, one routine per weekday.
-  {
-    weekday: 1,
-    slot: "core",
-    name: "Core: anti-extension",
-    kind: "lift",
-    detail: "About 7 min",
-    exercises: [ex("Plank", 3, "45 sec"), ex("Dead bug", 3, "10 each side"), ex("Ab wheel rollout", 3, "8")],
-  },
-  {
-    weekday: 2,
-    slot: "core",
-    name: "Core: obliques",
-    kind: "lift",
-    detail: "About 7 min",
-    exercises: [ex("Side plank", 3, "30 sec each side"), ex("Russian twist", 3, "20"), ex("Suitcase carry", 3, "30 sec each side")],
-  },
-  {
-    weekday: 3,
-    slot: "core",
-    name: "Core: lower abs",
-    kind: "lift",
-    detail: "About 6 min",
-    exercises: [ex("Hanging knee raise", 3, "12"), ex("Reverse crunch", 3, "15"), ex("Flutter kick", 3, "30 sec")],
-  },
-  {
-    weekday: 4,
-    slot: "core",
-    name: "Core: anti-rotation",
-    kind: "lift",
-    detail: "About 7 min",
-    exercises: [ex("Pallof press", 3, "10 each side"), ex("Bird dog", 3, "10 each side"), ex("Plank shoulder tap", 3, "20")],
-  },
-  {
-    weekday: 5,
-    slot: "core",
-    name: "Core: weighted",
-    kind: "lift",
-    detail: "About 8 min",
-    exercises: [ex("Cable crunch", 3, "12 to 15"), ex("Hanging leg raise", 3, "10"), ex("Weighted plank", 3, "30 sec")],
-  },
-  {
-    weekday: 6,
-    slot: "core",
-    name: "Core: circuit",
-    kind: "lift",
-    detail: "About 8 min, 3 rounds",
-    exercises: [ex("Mountain climber", 3, "30 sec"), ex("Bicycle crunch", 3, "20"), ex("V-up", 3, "10"), ex("Hollow hold", 3, "30 sec")],
-  },
-  {
-    weekday: 0,
-    slot: "core",
-    name: "Core: easy",
-    kind: "lift",
-    detail: "About 5 min",
-    exercises: [ex("Hollow hold", 3, "30 sec"), ex("Glute bridge", 3, "15"), ex("Side plank", 2, "30 sec each side")],
-  },
+  // Core: three moves, two a day, in a different pair or order each day so the names stay unique.
+  core(1, "Core: ab machine + knee raises", [CORE_AB(), CORE_KNEE()]),
+  core(2, "Core: knee raises + reverse crunches", [CORE_KNEE(), CORE_REV()]),
+  core(3, "Core: reverse crunches + ab machine", [CORE_REV(), CORE_AB()]),
+  core(4, "Core: knee raises + ab machine", [CORE_KNEE(), CORE_AB()]),
+  core(5, "Core: ab machine + reverse crunches", [CORE_AB(), CORE_REV()]),
+  core(6, "Core: reverse crunches + knee raises", [CORE_REV(), CORE_KNEE()]),
+  core(0, "Core: optional, ab machine + knee raises", [CORE_AB(), CORE_KNEE()], "Optional"),
 ];
 
 // ---------- reminders ----------

@@ -65,7 +65,7 @@ function ExerciseSheet({
               Remove
             </Button>
           ) : null}
-          <Button full disabled={!valid} onClick={() => onSave({ name: e.name.trim(), sets: e.sets, reps: e.reps.trim() })}>
+          <Button full disabled={!valid} onClick={() => onSave({ name: e.name.trim(), sets: e.sets, reps: e.reps.trim(), weight: e.weight?.trim() || null, note: e.note?.trim() || null })}>
             Save
           </Button>
         </div>
@@ -77,6 +77,8 @@ function ExerciseSheet({
           <NumberField label="Sets" decimal={false} min={1} max={20} value={e.sets} onChange={(v) => setE({ ...e, sets: v ?? 1 })} live />
           <TextField label="Reps or time" value={e.reps} onChange={(v) => setE({ ...e, reps: v })} placeholder="8 to 10" maxLength={30} />
         </div>
+        <TextField label="Weight" value={e.weight ?? ""} onChange={(v) => setE({ ...e, weight: v })} placeholder="40s (try 45s)" maxLength={30} />
+        <TextField label="Note" value={e.note ?? ""} onChange={(v) => setE({ ...e, note: v })} placeholder="Assisted if under 6" maxLength={60} />
       </div>
     </Sheet>
   );
@@ -147,7 +149,7 @@ function WorkoutEditor({ workout, weekday, slot }: { workout: Workout | null; we
           <li key={`${e.name}-${i}`} className="flex min-h-[56px] items-center gap-1 pr-1.5 pl-4">
             <button type="button" onClick={() => setEditing(i)} className="flex min-h-[56px] min-w-0 flex-1 items-center justify-between gap-3 text-left">
               <span className="min-w-0 truncate text-[15px] text-ink">{e.name}</span>
-              <span className="shrink-0 text-[15px] font-medium tracking-[-0.01em] text-ink">{formatSets(e)}</span>
+              <span className="max-w-[55%] shrink-0 truncate text-[15px] font-medium tracking-[-0.01em] text-ink">{formatSets(e)}</span>
             </button>
             <IconButton label={`Move ${e.name} up`} disabled={i === 0} onClick={() => move(i, -1)}>
               <ArrowUp size={18} strokeWidth={1.75} aria-hidden />

@@ -232,6 +232,9 @@ private struct ExerciseDraft: Identifiable, Equatable {
     var name: String
     var sets: Double?
     var reps: String
+    /// Not edited here, carried through so a save does not drop them.
+    var weight: String? = nil
+    var note: String? = nil
 }
 
 struct WorkoutSheet: View {
@@ -255,7 +258,7 @@ struct WorkoutSheet: View {
         _name = State(initialValue: workout.name)
         _kind = State(initialValue: workout.kind)
         _detail = State(initialValue: workout.detail ?? "")
-        _exercises = State(initialValue: workout.exercises.map { ExerciseDraft(name: $0.name, sets: $0.sets > 0 ? Double($0.sets) : nil, reps: $0.reps) })
+        _exercises = State(initialValue: workout.exercises.map { ExerciseDraft(name: $0.name, sets: $0.sets > 0 ? Double($0.sets) : nil, reps: $0.reps, weight: $0.weight, note: $0.note) })
     }
 
     var body: some View {
@@ -295,7 +298,7 @@ struct WorkoutSheet: View {
         busy = true
         let list: [Exercise] = exercises
             .filter { !$0.name.trimmingCharacters(in: .whitespaces).isEmpty }
-            .map { Exercise(name: $0.name.trimmingCharacters(in: .whitespaces), sets: max(0, Int(($0.sets ?? 0).rounded())), reps: $0.reps.trimmingCharacters(in: .whitespaces)) }
+            .map { Exercise(name: $0.name.trimmingCharacters(in: .whitespaces), sets: max(0, Int(($0.sets ?? 0).rounded())), reps: $0.reps.trimmingCharacters(in: .whitespaces), weight: $0.weight, note: $0.note) }
         let d = detail.trimmingCharacters(in: .whitespacesAndNewlines)
         let patch: JSONObject = [
             "name": .string(name.trimmingCharacters(in: .whitespaces)),

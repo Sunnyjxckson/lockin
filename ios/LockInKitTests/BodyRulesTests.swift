@@ -212,6 +212,31 @@ final class BodyWorkoutRulesTests: XCTestCase {
         XCTAssertEqual(Workouts.prefillSet(bench, setNumber: 2, last: [], today: [setRow("2026-10-19", "Bench press", 1, 95, 10)]), SetValues(weight: 95, reps: 10))
     }
 
+    func testParseWeightAndTopReps() {
+        XCTAssertEqual(Workouts.parseWeight("40s (try 45s)"), 40)
+        XCTAssertEqual(Workouts.parseWeight("200"), 200)
+        XCTAssertEqual(Workouts.parseWeight("7.5 lb"), 7.5)
+        XCTAssertNil(Workouts.parseWeight("Light"))
+        XCTAssertNil(Workouts.parseWeight(nil))
+        XCTAssertEqual(Workouts.topReps("8 to 10"), 10)
+        XCTAssertEqual(Workouts.topReps("10"), 10)
+        XCTAssertNil(Workouts.topReps("10 min"))
+        XCTAssertNil(Workouts.topReps("close to failure"))
+    }
+
+    func testSuggestedWeightAndPlanPrefill() {
+        let press = Exercise(name: "Incline DB press", sets: 3, reps: "8 to 10", weight: "40s (try 45s)")
+        let full = [1, 2, 3].map { setRow("2026-10-12", "Incline DB press", $0, 40, 10) }
+        XCTAssertEqual(Workouts.suggestedWeight(press, last: full), 45)
+        let short = [setRow("2026-10-12", "Incline DB press", 1, 40, 10), setRow("2026-10-12", "Incline DB press", 2, 40, 9), setRow("2026-10-12", "Incline DB press", 3, 40, 10)]
+        XCTAssertNil(Workouts.suggestedWeight(press, last: short))
+        XCTAssertNil(Workouts.suggestedWeight(press, last: Array(full.prefix(2))))
+        XCTAssertEqual(Workouts.prefillSet(press, setNumber: 1, last: [], today: []), SetValues(weight: 40, reps: 8))
+        XCTAssertEqual(Workouts.prefillSet(press, setNumber: 1, last: full, today: []), SetValues(weight: 45, reps: 10))
+        XCTAssertEqual(Workouts.prefillSet(press, setNumber: 2, last: full, today: []), SetValues(weight: 40, reps: 10))
+        XCTAssertEqual(Workouts.formatSets(press), "3 x 8 to 10 \u{00B7} 40s (try 45s)")
+    }
+
     func testParseReps() {
         XCTAssertEqual(Workouts.parseReps("6 to 8"), 6)
         XCTAssertEqual(Workouts.parseReps("10 each leg"), 10)

@@ -256,6 +256,10 @@ export interface Exercise {
   sets: number;
   /** Free text so it can hold "8 to 10", "45 sec", "10 each side". */
   reps: string;
+  /** Current working weight as text: "40s (try 45s)", "200", "7.5 lb", "Light". Kept in the exercises jsonb. */
+  weight?: string | null;
+  /** A short cue shown in muted text: "Assisted if under 6". */
+  note?: string | null;
 }
 
 export type WorkoutKind = "lift" | "cardio" | "sport" | "rest";

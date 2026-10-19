@@ -6,7 +6,7 @@ import { checkLocalPasscode, createLocalPasscode, hasLocalPasscode, isLocallyUnl
 import { subscribe } from "@/lib/db";
 import { getSettings } from "@/lib/db/helpers";
 import { setHapticsEnabled } from "@/lib/haptics";
-import { adoptDevicePrefs, upgradeLocalData } from "@/lib/db/upgrade";
+import { adoptDevicePrefs, upgradeLocalData, upgradeWorkoutPlan } from "@/lib/db/upgrade";
 import { ensureSeeded } from "@/lib/seed";
 import { loadTheme } from "@/lib/theme";
 import { CheckinWatcher } from "@/features/coach/CheckinWatcher";
@@ -74,6 +74,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       .then(() => upgradeLocalData())
       // Device copies an earlier build kept. A failure leaves them for the next load.
       .then(() => adoptDevicePrefs().catch(() => undefined))
+      // The first workout plan becomes the real one while it is still the default. Runs in every mode.
+      .then(() => upgradeWorkoutPlan().catch(() => undefined))
       .then(applySettings)
       // The saved theme, so a look set on another device shows up here. A failure leaves the cached one.
       .then(() => loadTheme().catch(() => undefined))

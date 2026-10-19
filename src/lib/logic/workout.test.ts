@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { SetLog } from "../types";
-import { formatSet, isLoggable, lastSession, lastSessionByExercise, parseReps, prefillSet, sessionVolume, setsOn, workoutProgress } from "./workout";
+import { formatSet, isLoggable, lastSession, lastSessionByExercise, parseReps, parseWeight, prefillSet, sessionVolume, setsOn, suggestedWeight, topReps, workoutProgress } from "./workout";
 
 const set = (date: string, exercise: string, n: number, weight: number | null, reps: number | null): SetLog => ({
   id: `${date}-${exercise}-${n}`,
@@ -97,5 +97,67 @@ describe("helpers", () => {
     expect(isLoggable({ kind: "lift", exercises: [bench] })).toBe(true);
     expect(isLoggable({ kind: "sport", exercises: [bench] })).toBe(false);
     expect(isLoggable(null)).toBe(false);
+  });
+});
+
+describe("parseWeight", () => {
+  it("takes the first number in the plan text", () => {
+    expect(parseWeight("40s (try 45s)")).toBe(40);
+    expect(parseWeight("200")).toBe(200);
+    expect(parseWeight("7.5 lb")).toBe(7.5);
+    expect(parseWeight("Light")).toBeNull();
+    expect(parseWeight(null)).toBeNull();
+    expect(parseWeight(undefined)).toBeNull();
+  });
+});
+
+describe("topReps", () => {
+  it("is the top of the range", () => {
+    expect(topReps("8 to 10")).toBe(10);
+    expect(topReps("10")).toBe(10);
+    expect(topReps("10 each leg")).toBe(10);
+    expect(topReps("12 to 15")).toBe(15);
+  });
+  it("skips timed and non numeric work", () => {
+    expect(topReps("10 min")).toBeNull();
+    expect(topReps("45 sec")).toBeNull();
+    expect(topReps("close to failure")).toBeNull();
+    expect(topReps("about 1 hour")).toBeNull();
+  });
+});
+
+describe("suggestedWeight", () => {
+  const press = { name: "Incline DB press", sets: 3, reps: "8 to 10" };
+  const day = (reps: (number | null)[], weight: number | null = 40) => reps.map((r, i) => set("2026-10-12", "Incline DB press", i + 1, weight, r));
+  it("adds 5 when every planned set hit the top of the range", () => {
+    expect(suggestedWeight(press, day([10, 10, 10]))).toBe(45);
+    expect(suggestedWeight(press, day([10, 11, 10]))).toBe(45);
+  });
+  it("is null when a set fell short, was skipped or has no weight", () => {
+    expect(suggestedWeight(press, day([10, 9, 10]))).toBeNull();
+    expect(suggestedWeight(press, day([10, 10]))).toBeNull();
+    expect(suggestedWeight(press, day([10, 10, null]))).toBeNull();
+    expect(suggestedWeight(press, day([10, 10, 10], null))).toBeNull();
+    expect(suggestedWeight(press, [])).toBeNull();
+  });
+  it("is null for timed work", () => {
+    expect(suggestedWeight({ sets: 3, reps: "10 min" }, day([10, 10, 10]))).toBeNull();
+  });
+});
+
+describe("prefillSet with the plan weight and progression", () => {
+  const press = { name: "Incline DB press", sets: 3, reps: "8 to 10", weight: "40s (try 45s)" };
+  it("starts from the planned weight with no history", () => {
+    expect(prefillSet(press, 1, [], [])).toEqual({ weight: 40, reps: 8 });
+    expect(prefillSet({ ...press, weight: "Light" }, 1, [], [])).toEqual({ weight: null, reps: 8 });
+  });
+  it("history wins over the planned weight", () => {
+    const last = [set("2026-10-12", "Incline DB press", 1, 42.5, 9)];
+    expect(prefillSet(press, 1, last, [])).toEqual({ weight: 42.5, reps: 9 });
+  });
+  it("starts the first set 5 lb up after a full session at the top of the range", () => {
+    const last = [1, 2, 3].map((n) => set("2026-10-12", "Incline DB press", n, 40, 10));
+    expect(prefillSet(press, 1, last, [])).toEqual({ weight: 45, reps: 10 });
+    expect(prefillSet(press, 2, last, [])).toEqual({ weight: 40, reps: 10 });
   });
 });

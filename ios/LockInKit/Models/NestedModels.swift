@@ -25,13 +25,19 @@ public struct Exercise: Codable, Equatable {
     public var name: String = ""
     public var sets: Int = 0
     public var reps: String = ""
-    public init(name: String = "", sets: Int = 0, reps: String = "") {
+    /// Current working weight as plan text ("40s (try 45s)", "Light"). Missing on older rows.
+    public var weight: String? = nil
+    /// A short cue shown in muted text. Missing on older rows.
+    public var note: String? = nil
+    public init(name: String = "", sets: Int = 0, reps: String = "", weight: String? = nil, note: String? = nil) {
         self.name = name
         self.sets = sets
         self.reps = reps
+        self.weight = weight
+        self.note = note
     }
     public enum CodingKeys: String, CodingKey {
-        case name, sets, reps
+        case name, sets, reps, weight, note
     }
 }
 
@@ -41,6 +47,10 @@ extension Exercise {
         name = c.or(.name, "")
         sets = c.or(.sets, 0)
         reps = c.flexString(.reps)
+        let w = c.flexString(.weight)
+        weight = w.isEmpty ? nil : w
+        let n = c.flexString(.note)
+        note = n.isEmpty ? nil : n
     }
 }
 

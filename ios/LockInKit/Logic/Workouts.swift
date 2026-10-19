@@ -20,6 +20,8 @@ public enum Workouts {
 
     /// "4 x 6 to 8" or, for a single set, just "10 min".
     public static func formatSets(_ e: Exercise) -> String {
-        return e.sets > 1 ? "\(e.sets) x \(e.reps)" : e.reps
+        let base = e.sets > 1 ? "\(e.sets) x \(e.reps)" : e.reps
+        let w = (e.weight ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        return w.isEmpty ? base : "\(base) \u{00B7} \(w)"
     }
 }

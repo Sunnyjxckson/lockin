@@ -7,9 +7,10 @@ import { useList, useSettings, useToday, useWorkouts } from "@/lib/db/hooks";
 import { workoutsFor } from "@/lib/db/helpers";
 import { haptics } from "@/lib/haptics";
 import { addDays, formatDateLong, formatDateShort, weekdayOf } from "@/lib/logic/dates";
-import { formatSet, isLoggable, lastSession, prefillSet, setsOn, workoutProgress, type SetValues } from "@/lib/logic/workout";
+import { formatSet, isLoggable, lastSession, prefillSet, setsOn, suggestedWeight, workoutProgress, type SetValues } from "@/lib/logic/workout";
 import { WEEKDAY_NAMES, type DateStr, type Exercise, type SetLog, type Workout } from "@/lib/types";
 import { clearSet, logSet } from "@/features/body/data";
+import { formatNumber, formatSets } from "../../today/format";
 
 function SetInput({
   value,
@@ -71,6 +72,7 @@ function ExerciseCard({ exercise, date, all, unit }: { exercise: Exercise; date:
   const toast = useToast();
   const last = useMemo(() => lastSession(all, exercise.name, date), [all, exercise.name, date]);
   const today = useMemo(() => setsOn(all, exercise.name, date), [all, exercise.name, date]);
+  const bump = useMemo(() => suggestedWeight(exercise, last), [exercise, last]);
   const [drafts, setDrafts] = useState<Record<number, SetValues>>({});
   const logged = today.filter((l) => l.set_number <= exercise.sets).length;
   const complete = logged >= exercise.sets;
@@ -86,9 +88,11 @@ function ExerciseCard({ exercise, date, all, unit }: { exercise: Exercise; date:
         <div className="min-w-0">
           <h2 className="t-h2 truncate">{exercise.name}</h2>
           <p className="t-sub mt-1">
-            {exercise.sets} x {exercise.reps}
+            {formatSets(exercise)}
             {last.length > 0 ? `, last ${formatDateShort(last[0].date)}` : ", first time"}
           </p>
+          {exercise.note ? <p className="t-caption mt-0.5 text-ink-3">{exercise.note}</p> : null}
+          {bump !== null ? <p className="t-caption mt-0.5 text-accent">Up 5 lb today ({formatNumber(bump)})</p> : null}
         </div>
         <span className={cn("t-label shrink-0 pb-0.5", complete ? "text-accent" : null)}>
           {logged} of {exercise.sets}

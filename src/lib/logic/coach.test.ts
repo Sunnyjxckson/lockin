@@ -344,7 +344,7 @@ describe("the fixture", () => {
     const flags = detectFlags(fixtureData());
     expect(kinds(flags)).toEqual(["earned_under", "protein_under", "lift_drop", "wake_after_late", "bed_missed", "vice_pattern", "rate_drop"]);
     expect(flags.find((f) => f.kind === "protein_under")?.title).toBe("Protein under 180g 4 days running");
-    expect(flags.find((f) => f.kind === "lift_drop")?.key).toBe("lift_drop:bench press");
+    expect(flags.find((f) => f.kind === "lift_drop")?.key).toBe("lift_drop:incline db press");
     expect(flags.find((f) => f.kind === "vice_pattern")?.title).toBe('Smoking slips: late night, "after delivery shift"');
     expect(flags.find((f) => f.kind === "rate_drop")?.key).toBe("rate_drop:doordash");
     for (const f of flags) {
@@ -391,9 +391,9 @@ describe("buildSnapshot", () => {
     const data = fixtureData();
     const s = buildSnapshot(data, detectFlags(data));
     expect(s.plan.workout?.name).toBe("Upper A");
-    expect(s.plan.workout?.exercises[0]).toBe("Bench press 4 x 6 to 8");
+    expect(s.plan.workout?.exercises[0]).toBe("Incline DB press 3 x 8 to 10");
     expect(s.plan.blocks[1]).toEqual({ name: "Lift + core", kind: "workout", start: "6:30 AM", end: "7:30 AM" });
-    expect(s.lifts.find((l) => l.exercise === "Bench press")?.sessions.map((x) => x.top)).toEqual(["185 lb x 6", "180 lb x 6", "175 lb x 5"]);
+    expect(s.lifts.find((l) => l.exercise === "Incline DB press")?.sessions.map((x) => x.top)).toEqual(["185 lb x 6", "180 lb x 6", "175 lb x 5"]);
     expect(s.macros.days).toHaveLength(7);
     expect(s.macros.days[5]).toMatchObject({ protein: 148, date: "2026-10-04" });
     expect(s.macros.days[5].carbs).toBeGreaterThan(100);

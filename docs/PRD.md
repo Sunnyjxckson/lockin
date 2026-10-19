@@ -35,8 +35,8 @@ A day counts as locked in when every daily item is done. Weekly items roll up on
 | Item | Type | Done when |
 | --- | --- | --- |
 | Up by 5:45 | Daily, yes/no | Checked before 6:00 |
-| Workout | Daily, yes/no | Lift on Mon, Tue, Thu, Fri. Light basketball Wed. Jump rope Sat (15 to 20 min) and Sun (10 min) |
-| Core | Daily, yes/no | 5 to 10 min, rotation for that day |
+| Workout | Daily, yes/no | Lift on Mon, Tue, Thu, Fri. Cardio Wed (basketball about 1 hour, or 30 to 60 min Peloton). Jump rope Sat (3 rounds of 10 min). Rest Sun (or 10 min easy rope) |
+| Core | Daily, yes/no | 2 moves a day from a rotation of 3 (eGym ab machine, hanging knee raises, reverse crunches). Optional on Sunday |
 | Calories | Daily, number | 1,900 to 2,100 |
 | Protein | Daily, number | 180g or more |
 | Earned today | Daily, number | $100 or more |
@@ -186,7 +186,7 @@ A short quote as a notification, a few times a day.
 
 - Snap a meal and get estimated calories, protein, carbs, and fat, editable before saving. Saved meals can be re-logged in one tap
 - Screenshot an earnings screen and the amount, app, and hours fill in on their own
-- Workout logging per exercise: weight and reps for each set, with last session shown beside it
+- Workout logging per exercise: weight and reps for each set, with last session shown beside it. With no history a set starts at the plan's working weight. When the last session hit the top of the rep range on every set, the first set starts 5 lb higher and the logger says "Up 5 lb today"
 
 **9. Coach**
 
@@ -292,7 +292,7 @@ Two fixed rocks hold every day: the 6:30 workout and class. Everything else fill
 | Block | Mon / Wed | Tue / Thu | Fri | Sat / Sun |
 | --- | --- | --- | --- | --- |
 | Wake | 5:45 | 5:45 | 5:45 | 5:45 |
-| Workout + core | 6:30 to 7:30 (Mon lift, Wed light basketball) | 6:30 to 7:30 lift | 6:30 to 7:30 lift | Jump rope + core |
+| Workout + core | 6:30 to 7:30 (Mon lift, Wed cardio) | 6:30 to 7:30 lift | 6:30 to 7:30 lift | Sat jump rope + core, Sun rest or easy rope + core |
 | Home, shower, eat | 7:30 to 9:00 | 7:30 to 9:30 | 7:30 to 9:00 | After workout |
 | Class | Ends 4:00 | 10:00 to 2:30 | To confirm | None |
 | Delivery | Lunch 11:00 to 2:00 if class allows, else after basketball | Dinner 5:00 to 9:00 | Lunch and dinner | Lunch, dinner, late night Fri and Sat |
@@ -300,7 +300,15 @@ Two fixed rocks hold every day: the 6:30 workout and class. Everything else fill
 | Study, homework, business | 8:00 to 11:00, pick one or two | 9:00 to 11:00 | Evening | Longest block of the week |
 | Bed | 11:00 | 11:00 | 11:00 | 11:00 |
 
-Lifting days: Mon upper A, Tue lower, Thu upper B, Fri lower. The exercises for each day and the 7 day core rotation are stored as seed data so Today can show them.
+Lifting days: Mon upper A, Tue lower, Thu upper B, Fri lower. The exercises for each day and the core rotation are stored as seed data so Today can show them. Each exercise can carry a working weight and a short note (kept in the workout's exercises field).
+
+- Mon, Upper A: incline DB press 3 x 8 to 10 (40s, try 45s), lat pulldown 3 x 10 (200), seated cable row 3 x 10 (100), lateral raises 3 x 12 to 15 (7.5 lb), face pulls 3 x 15 (45)
+- Tue and Fri, Lower: box jumps 3 x 5 (35 inch box, step down), RDL 3 x 8 (55s), Bulgarian split squats 3 x 10 each leg (35s), leg curl 2 x 12, calf raises 3 x 15 (light)
+- Wed, Cardio: basketball about 1 hour, or 30 to 60 min on the Peloton
+- Thu, Upper B: pull-ups 3 x 6 to 10 (assisted if under 6), eGym shoulder press 3 x 10 (light), push-ups 3 x close to failure, lateral raises 3 x 12 to 15 (7.5 lb), face pulls 3 x 15 (45)
+- Sat, Jump rope: 3 rounds of 10 min with 2 min rest between, basketball optional
+- Sun, Rest: full rest, or 10 min easy jump rope
+- Core, 2 moves a day in a different pair each day: eGym ab machine 3 x 12 to 15, hanging knee raises 3 x 10 to 12, reverse crunches 3 x 15
 
 ## Data model and tech
 

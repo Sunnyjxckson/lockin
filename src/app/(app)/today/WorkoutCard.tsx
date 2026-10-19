@@ -24,7 +24,10 @@ export function WorkoutCard({ workout, tag }: { workout: Workout; tag?: string }
           {workout.exercises.map((e, i) => (
             <li key={`${e.name}-${i}`} className="flex min-h-[46px] items-center gap-3 px-5 py-2.5">
               <span className="tnum w-4 shrink-0 text-[12px] text-ink-2">{i + 1}</span>
-              <span className="min-w-0 flex-1 text-[15px] leading-snug">{e.name}</span>
+              <span className="min-w-0 flex-1 text-[15px] leading-snug">
+                {e.name}
+                {e.note ? <span className="t-caption block text-ink-3">{e.note}</span> : null}
+              </span>
               <span className="tnum shrink-0 text-right text-[15px] text-ink-2">{formatSets(e)}</span>
             </li>
           ))}

@@ -55,7 +55,12 @@ struct WorkoutCard: View {
                     LIHairline()
                     HStack(spacing: 12) {
                         Text("\(i + 1)").liType(.caption).foregroundColor(theme.ink2).frame(width: 16, alignment: .leading)
-                        Text(workout.exercises[i].name).liType(.body).foregroundColor(theme.ink)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(workout.exercises[i].name).liType(.body).foregroundColor(theme.ink)
+                            if let note = workout.exercises[i].note, !note.isEmpty {
+                                Text(note).liType(.caption).foregroundColor(theme.ink2)
+                            }
+                        }
                         Spacer(minLength: 8)
                         Text(Workouts.formatSets(workout.exercises[i])).liType(.body).foregroundColor(theme.ink2)
                     }
