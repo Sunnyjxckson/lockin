@@ -1,9 +1,10 @@
 "use client";
 
-// The morning brief on Today, as one quiet line under the date: a label and
-// the first sentence of the brief (what today holds). Self-contained: mount
-// <TodaySlot /> with no props. It shows in both modes, challenge or ongoing.
-// The first open of the day writes the brief.
+// The coach on Today: the morning brief as one quiet line under the date (a
+// label and the first sentence of what today holds), and the mood check-in
+// under it when one is due. Self-contained: mount <TodaySlot /> with no
+// props. It shows in both modes, challenge or ongoing. The first open of the
+// day writes the brief.
 //
 // It is one line so the first screen stays greeting, Now, the four tracks and
 // the tiles. A tap opens the opening paragraph in place, with a link to the
@@ -15,6 +16,7 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/components/ui";
 import { haptics } from "@/lib/haptics";
 import { plural } from "@/lib/logic/coach";
+import { MoodCheck } from "./MoodCheck";
 import { NoteBody } from "./parts";
 import { useCoach } from "./useCoach";
 
@@ -25,7 +27,8 @@ export function TodaySlot({ className }: { className?: string }) {
   // Hold the line's height while the notes load, so nothing below jumps.
   if (coach.loading) return <div className={cn("h-11", className)} aria-busy="true" />;
   if (coach.phase !== "active") return null;
-  if (!coach.brief && !coach.writingBrief) return null;
+  // The mood check-in stands on its own: it shows when one is due, brief or no brief.
+  if (!coach.brief && !coach.writingBrief) return <MoodCheck className={className} />;
 
   const parts = coach.brief?.body.split(/\n+/).filter((p) => p.trim()) ?? [];
   const first = parts[0] ?? "";
@@ -72,6 +75,7 @@ export function TodaySlot({ className }: { className?: string }) {
           )}
         </div>
       ) : null}
+      <MoodCheck />
     </div>
   );
 }

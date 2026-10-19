@@ -5,12 +5,12 @@
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUp } from "lucide-react";
-import { ActionButton, Chip, cn } from "@/components/ui";
+import { ActionButton, Button, Chip, cn } from "@/components/ui";
 import { MAX_MESSAGE } from "@/lib/logic/coachChat";
 import { libId } from "@/lib/logic/coachLibrary";
 import { quoteLink } from "@/lib/logic/library";
 import { addDays, formatDateLong } from "@/lib/logic/dates";
-import type { CoachMessage, CoachTrigger, DateStr } from "@/lib/types";
+import type { CoachCommitment, CoachMessage, CoachTrigger, DateStr } from "@/lib/types";
 
 const QUOTE_LINE = /^"(.+)"\s*(.*?)\.?$/;
 
@@ -18,7 +18,22 @@ const CHECKIN_LABEL: Record<Exclude<CoachTrigger, "chat">, string> = {
   post_workout: "After the workout",
   slip: "After a slip",
   missed_item: "Yesterday",
+  commitment: "You said you would",
+  drift: "Checking in",
 };
+
+/** The small label over a check-in. A commitment or drift message saved before migration 0016 has the trigger "chat", so the key says what it is. */
+function checkinLabel(m: CoachMessage): string | null {
+  if (m.trigger !== "chat") return CHECKIN_LABEL[m.trigger];
+  if (m.check_key?.startsWith("commit:")) return CHECKIN_LABEL.commitment;
+  if (m.check_key?.startsWith("drift:")) return CHECKIN_LABEL.drift;
+  return null;
+}
+
+/** The commitment a check-in asks about, when the message is one. */
+function commitmentOf(m: CoachMessage, all: ReadonlyMap<string, CoachCommitment>): CoachCommitment | null {
+  return m.check_key?.startsWith("commit:") ? (all.get(m.check_key.slice("commit:".length)) ?? null) : null;
+}
 
 /** A coach message. A line that is a quote is set apart: the line, then the name small under it. */
 function CoachBody({ body }: { body: string }) {
@@ -45,7 +60,22 @@ function CoachBody({ body }: { body: string }) {
   );
 }
 
-function Bubble({ m }: { m: CoachMessage }) {
+/** Two taps to say how it went. Gone once answered, by tap or by reply. */
+function CommitmentTap({ c, onAnswer }: { c: CoachCommitment; onAnswer: (id: string, status: "done" | "missed") => void }) {
+  if (c.status !== "open") return null;
+  return (
+    <div className="mt-3 flex gap-2" role="group" aria-label="How did it go">
+      <Button size="sm" variant="secondary" onClick={() => onAnswer(c.id, "done")}>
+        Did it
+      </Button>
+      <Button size="sm" variant="secondary" onClick={() => onAnswer(c.id, "missed")}>
+        Missed it
+      </Button>
+    </div>
+  );
+}
+
+function Bubble({ m, commitment, onAnswer }: { m: CoachMessage; commitment: CoachCommitment | null; onAnswer: (id: string, status: "done" | "missed") => void }) {
   if (m.sender === "me") {
     return (
       <li className="flex justify-end" data-from="me">
@@ -56,8 +86,9 @@ function Bubble({ m }: { m: CoachMessage }) {
   return (
     <li className="animate-fade-in flex justify-start" data-from="coach" data-trigger={m.trigger}>
       <div className="tile max-w-[88%] rounded-[20px] rounded-bl-[8px] px-4 py-3">
-        {m.trigger !== "chat" ? <p className="t-label mb-2">{CHECKIN_LABEL[m.trigger]}</p> : null}
+        {checkinLabel(m) ? <p className="t-label mb-2">{checkinLabel(m)}</p> : null}
         <CoachBody body={m.body} />
+        {commitment ? <CommitmentTap c={commitment} onAnswer={onAnswer} /> : null}
         {libId(m.quote) ? (
           <Link href={quoteLink(libId(m.quote) as string)} data-lib-quote className="t-caption mt-2 inline-flex min-h-11 items-center text-accent underline underline-offset-2">
             Read it in the Library
@@ -75,7 +106,19 @@ function dayLabel(date: DateStr, today: DateStr): string {
 }
 
 /** The conversation, oldest first, with a small label where the day changes. It keeps the newest message in view. */
-export function Thread({ messages, thinking, today }: { messages: CoachMessage[]; thinking: boolean; today: DateStr }) {
+export function Thread({
+  messages,
+  thinking,
+  today,
+  commitments,
+  onAnswer,
+}: {
+  messages: CoachMessage[];
+  thinking: boolean;
+  today: DateStr;
+  commitments?: ReadonlyMap<string, CoachCommitment>;
+  onAnswer?: (id: string, status: "done" | "missed") => void;
+}) {
   const count = messages.length;
   // The page scrolls, not the list: go to the very end, so the newest message clears the composer.
   useLayoutEffect(() => {
@@ -89,7 +132,7 @@ export function Thread({ messages, thinking, today }: { messages: CoachMessage[]
         return (
           <Fragment key={m.id}>
             {first ? <li className={cn("t-label text-center", i > 0 && "mt-4")}>{dayLabel(m.date, today)}</li> : null}
-            <Bubble m={m} />
+            <Bubble m={m} commitment={commitments ? commitmentOf(m, commitments) : null} onAnswer={onAnswer ?? (() => undefined)} />
           </Fragment>
         );
       })}
@@ -115,6 +158,7 @@ export const STARTERS: { label: string; text: string }[] = [
   { label: "Not feeling it", text: "I don't feel like doing it today." },
   { label: "Tired", text: "I'm tired." },
   { label: "Slipped", text: "I slipped." },
+  { label: "Rough day", text: "I'm having a rough day." },
 ];
 
 /** How much of the bottom of the screen the keyboard covers. On iOS it covers the layout viewport without resizing it. */

@@ -228,6 +228,8 @@ export const COLUMNS: Columns = {
     live: "jsonb",
   },
   quote_state: { ...base, quote_id: "text", writer: "text", work: "text", read_at: "timestamptz", saved_at: "timestamptz", note: "text" },
+  coach_profile: { ...base, kind: "text", body: "text", updated_at: "timestamptz" },
+  coach_commitment: { ...base, body: "text", made_on: "date", due_at: "timestamptz", status: "text", asked_at: "timestamptz" },
 };
 
 /**

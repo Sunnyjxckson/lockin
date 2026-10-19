@@ -190,17 +190,48 @@ A short quote as a notification, a few times a day.
 
 **9. Coach**
 
-The coach is a chat, not a report. You message it any time and it answers like a coach who knows your numbers. The briefs are just one thing it sends.
+The coach is part coach, part therapist: someone in your corner who keeps you going. It knows you and your numbers, listens when you are low, pushes when you are making excuses, and notices you slipping before you say anything.
+
+Two modes, it reads which one you need
+
+- Push: you are tired, sore, or bargaining. One reframe, then one thing to do right now
+- Support: you are down, stressed, ashamed, or stuck. It slows down, asks what is going on, and listens before it coaches. No quotes until it gets what is actually happening
+- If it cannot tell, it asks: "you want a push or you want to talk?"
 
 Messaging it
 
-- Open the chat from any tab and say what is wrong: legs are dead, want to smoke, do not feel like delivering
-- It answers in two or three lines: one idea that reframes the moment, then one thing to do right now
-- It knows the data, so it is specific, for example "You have hit 4 workout days straight. Soreness is the receipt."
-- No lectures, no paragraphs, and it does not use the same quote twice in a week
+- Open the chat from any tab and say what is wrong: legs are dead, want to smoke, do not feel like delivering, rough day
+- Push replies stay two or three lines. Support replies can run longer and ask questions
+- It knows the data, so it is specific, for example "You have hit 4 workout days straight. Soreness is the receipt." No lectures, and it does not repeat the same line twice in a week
 - It remembers the conversation, so a check-in tonight can pick up what you said this morning
 
-What it draws from
+How it helps like a therapist would
+
+- Asks open questions and reflects back what you said before giving advice
+- Catches the thought behind a slip, like "I already messed up today so it doesn't matter", and helps you see it differently
+- Uses your own reasons: asks why this matters to you, then plays your answers back later instead of preaching
+- Cravings: walks you through riding out an urge, which peaks and passes, with something to do in the meantime
+- Looks under the slip: sleep, stress, food, being alone, money pressure, and connects them across days
+- No shame after a slip. It names it, gives a reset plan for the next 24 hours, and moves on. One bad day is data, not a verdict
+- Notices wins too, not just misses
+
+Long memory
+
+- Keeps a running profile on you: your why, what sets off slips, what has actually gotten you moving, what you are working on, things you said that mattered
+- You can see and edit it, on the coach notes page
+- It reads the profile before every reply
+
+Holds you to things
+
+- When you say you will do something ("lifting at 6:30", "studying after class"), it saves it as a commitment and checks back after it is due, in the chat, with two taps (did it, missed it) or just a reply
+- It knows the current schedule block and talks to that
+
+Tone
+
+- Three voices to pick from: calm stoic (the default), drill sergeant, big brother
+- Warm in support mode, hard on excuses in push mode, never insulting
+
+What it draws from (push mode)
 
 - Stoics (Marcus Aurelius, Epictetus, Seneca): you do not control the pain, you control your read on it. "We suffer more often in imagination than in reality."
 - The second arrow: the pain is the first arrow, complaining about it is the second one you shoot yourself. "Pain is inevitable. Suffering is optional."
@@ -209,24 +240,23 @@ What it draws from
 - Musashi and samurai discipline: do the thing today whether you feel like it or not
 - It quotes only from its own library of lines, word for word, so a quote on screen is never made up
 
-Tone
-
-- Three voices to pick from: calm stoic (the default), drill sergeant, big brother
-- Hard on excuses, never insulting
-
 When it reaches out on its own
 
+- A quick mood check-in once or twice a day on Today, one tap plus an optional note, so it can see how mood, sleep, and slips connect
+- After a logged slip or missed item: checks in, then gives the reset plan
+- After something you said you would do, once it is due
+- Drift: no logs for a day, missed items two days running, or mood dropping several days in a row. It reaches out and gets more direct the longer it goes. About mood it stays warm
 - Morning brief: today's plan, yesterday's misses, where the money total stands
 - A quick "how did it go" after the workout block
-- A check-in after a logged slip, asking what set it off, and after a missed item, asking what got in the way
 - Sunday review written from the week's data: what held, what slipped, one change for next week
 - Flags patterns, for example lifts dropping two weeks in a row or protein under target three days running
 
 Guardrails
 
-- It tells soreness from injury. Sharp, joint, or one sided pain gets "stop and get it checked", not a quote
+- Soreness vs injury handling stays as is. It tells soreness from injury. Sharp, joint, or one sided pain gets "stop and get it checked", not a quote
 - It never says to eat under the calorie target, skip a meal or cut sleep
-- If a message sounds like more than a bad day, it drops the tough talk and says to reach out to a real person
+- It is not a licensed therapist and says so if asked. If the same struggles keep coming back for weeks, it suggests talking to a real therapist
+- If a message sounds like a crisis or self-harm, tough talk stops completely: calm, and points to a real person right now: call or text 988, or someone you trust. If you are in danger right now, call 911
 
 **10. Design**
 
@@ -243,7 +273,7 @@ Nothing is hardcoded. Every number and item in this doc is a starting default.
 - Workouts: swap exercises, sets, and reps, and change which days are lift days
 - Challenge: start date, length, money target and deadline
 - Reminders: turn each one on or off and set its time
-- Coach: pick the voice, and turn each of its check-ins on or off
+- Coach: pick the voice, and turn each of its check-ins on or off (after the workout, a slip, a missed item, something you said you would do, and when you drift). See and edit what it remembers about you
 - Changes apply from today forward, so past days keep the targets they were scored against
 
 **12. Vices**
@@ -317,7 +347,7 @@ Build it in phases so it is usable from the first one, and each phase adds a lay
 4. Body: weight, meal photos with calorie and macro estimates, progress photos, per set workout logging
 5. Progress: 30 day grid, streaks, shareable card
 6. Reminders: push notifications and the 8:00 pm earnings nudge
-7. Coach: chat with data context, the quote library, voices, check-ins, morning brief, Sunday review, pattern flags
+7. Coach: chat with data context, push and support modes, memory, commitments, mood check-in, drift, the quote library, voices, check-ins, morning brief, Sunday review, pattern flags
 8. Polish: animations, haptics, empty states, load speed, install prompt
 
 Days 1 and 2 of the challenge get logged on paper or in Notes, then backfilled once Today ships.

@@ -2,9 +2,10 @@
 
 // Mounted once in the app shell. While the app is open it lets the coach send
 // the check-ins that are due: after the workout block, after a slip, after a
-// missed item. It waits a moment after load so it never competes with the
-// first screen, then looks again every few minutes, when the app comes back
-// to the front, and right after a slip or a tick is logged.
+// missed item, after something you said you would do, and when you drift (no
+// logs, missed days, a mood sliding). It waits a moment after load so it never
+// competes with the first screen, then looks again every few minutes, when the
+// app comes back to the front, and right after a slip or a mood is logged.
 
 import { useEffect } from "react";
 import { subscribe } from "@/lib/db";
@@ -32,12 +33,14 @@ export function CheckinWatcher() {
     const onShow = () => later(AFTER_WRITE_MS);
     document.addEventListener("visibilitychange", onShow);
     const offSlip = subscribe("vice_slip", () => later(AFTER_WRITE_MS));
+    const offMood = subscribe("mood_log", () => later(AFTER_WRITE_MS));
     return () => {
       live = false;
       if (soon !== null) window.clearTimeout(soon);
       window.clearInterval(every);
       document.removeEventListener("visibilitychange", onShow);
       offSlip();
+      offMood();
     };
   }, [today]);
   return null;

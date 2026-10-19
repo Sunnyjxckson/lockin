@@ -11,7 +11,8 @@
 
 import type { ChecklistItem, DateStr, DayLog } from "../types";
 import { addDays, dateRange, formatDateShort, formatTime, minutesOf, weekStart } from "./dates";
-import { itemState } from "./day";
+import { itemState, summarizeDay } from "./day";
+import { moodDrop } from "./coachMood";
 import { isActiveOn, targetOn } from "./targets";
 import { completedRange, money, plural, round1, topSets, touchedDates, viceName, withUnit, type CoachData, type Flag } from "./coach";
 
@@ -31,9 +32,12 @@ export const RULES = {
   /** Hourly rate: three worked days falling, and down at least this share overall. */
   rateDrop: 0.15,
   lookbackDays: 14,
+  /** Drift: finished days in a row that closed under this share of the list, and how many before it counts. */
+  driftShare: 0.5,
+  driftMissDays: 2,
 } as const;
 
-const ORDER: Flag["kind"][] = ["earned_under", "protein_under", "lift_drop", "wake_after_late", "bed_missed", "vice_pattern", "rate_drop"];
+const ORDER: Flag["kind"][] = ["earned_under", "protein_under", "lift_drop", "wake_after_late", "bed_missed", "vice_pattern", "rate_drop", "mood_drop", "no_logs", "missed_streak"];
 
 interface Ctx {
   data: CoachData;
@@ -368,6 +372,97 @@ function rateDrops(ctx: Ctx): Flag[] {
   return out.sort((x, y) => (x.key < y.key ? -1 : 1));
 }
 
+// ---------- drift ----------
+
+/** 1, 2 or 3 by how long it has gone on. The coach is gentler at 1 and more direct at 3. */
+export function driftLevel(days: number, firstAt: number): 1 | 2 | 3 {
+  const over = days - firstAt;
+  return over <= 0 ? 1 : over === 1 ? 2 : 3;
+}
+
+/** Every date with anything logged at all: a tick, a number, a meal, earnings, a lift, a weigh in, a slip, a focus session. */
+function activeDates(data: CoachData): Set<DateStr> {
+  const out = new Set<DateStr>(touchedDates(data.logs));
+  for (const r of [...data.earnings, ...data.meals, ...data.bodyLogs, ...data.setLogs, ...data.slips, ...(data.focus ?? [])]) out.add(r.date);
+  return out;
+}
+
+function noLogs(ctx: Ctx): Flag[] {
+  const active = activeDates(ctx.data);
+  const run: DateStr[] = [];
+  for (let i = ctx.days.length - 1; i >= 0; i--) {
+    if (active.has(ctx.days[i])) break;
+    run.unshift(ctx.days[i]);
+  }
+  if (run.length === 0) return [];
+  // A history with nothing in it before the gap is a new start, not a drift.
+  if (![...active].some((d) => d < run[0])) return [];
+  const n = run.length;
+  const level = driftLevel(n, 1);
+  return [
+    {
+      key: "no_logs",
+      kind: "no_logs",
+      title: n === 1 ? "Nothing logged yesterday" : `Nothing logged for ${n} days`,
+      detail: `No check-ins, meals, earnings or workouts were logged on ${run.length === 1 ? formatDateShort(run[0]) : `${formatDateShort(run[0])} to ${formatDateShort(run[n - 1])}`}.`,
+      change: "Open Today and tick one item, any item. A day back on the list beats a day spent thinking about it.",
+      evidence: run.slice(-7).map((d) => ({ label: formatDateShort(d), value: "nothing logged" })),
+      since: run[0],
+      level,
+    },
+  ];
+}
+
+function missedStreak(ctx: Ctx): Flag[] {
+  const { data } = ctx;
+  const run: { date: DateStr; done: number; total: number }[] = [];
+  for (let i = ctx.days.length - 1; i >= 0; i--) {
+    const d = ctx.days[i];
+    // A day with nothing logged ends the run: that is the "nothing logged" flag, not this one.
+    if (!ctx.touched.has(d)) break;
+    const day = summarizeDay(d, data.items, data.versions, data.logs);
+    if (day.total === 0 || day.done >= day.total * RULES.driftShare) break;
+    run.unshift({ date: d, done: day.done, total: day.total });
+  }
+  if (run.length < RULES.driftMissDays) return [];
+  const n = run.length;
+  return [
+    {
+      key: "missed_streak",
+      kind: "missed_streak",
+      title: `${n} days running closed under half the list`,
+      detail: `${run.map((r) => `${formatDateShort(r.date)}: ${r.done} of ${r.total}`).join(", ")}.`,
+      change: "Pick the one item that matters most tomorrow and give it a time on the schedule. Start there, not with all of it.",
+      evidence: run.slice(-7).map((r) => ({ label: formatDateShort(r.date), value: `${r.done} of ${r.total} done` })),
+      since: run[0].date,
+      level: driftLevel(n, RULES.driftMissDays),
+    },
+  ];
+}
+
+function moodDropFlag(ctx: Ctx): Flag[] {
+  const drop = moodDrop(ctx.data.moods ?? [], ctx.data.today);
+  if (!drop) return [];
+  const n = drop.days.length;
+  const first = drop.days[0];
+  const last = drop.days[n - 1];
+  return [
+    {
+      key: "mood_drop",
+      kind: "mood_drop",
+      title: drop.kind === "dropping" ? `Mood has dropped ${n} days in a row` : `Mood has been low ${n} days in a row`,
+      detail:
+        drop.kind === "dropping"
+          ? `From ${first.label.toLowerCase()} on ${formatDateShort(first.date)} to ${last.label.toLowerCase()} on ${formatDateShort(last.date)}.`
+          : `Low or down every day from ${formatDateShort(first.date)} to ${formatDateShort(last.date)}.`,
+      change: "Look under it: sleep, food, stress, being on your own, money. Tell the coach which one is loudest.",
+      evidence: drop.days.slice(-7).map((d) => ({ label: formatDateShort(d.date), value: d.note ? `${d.label}, ${d.note}` : d.label })),
+      since: first.date,
+      level: driftLevel(n, 3),
+    },
+  ];
+}
+
 /** Every pattern the rules can see today, most important first. */
 export function detectFlags(data: CoachData): Flag[] {
   const ctx = makeCtx(data);
@@ -379,6 +474,9 @@ export function detectFlags(data: CoachData): Flag[] {
     ...bedMissed(ctx),
     ...vicePatterns(ctx),
     ...rateDrops(ctx),
+    ...moodDropFlag(ctx),
+    ...noLogs(ctx),
+    ...missedStreak(ctx),
   ];
   return all.sort((a, b) => ORDER.indexOf(a.kind) - ORDER.indexOf(b.kind));
 }

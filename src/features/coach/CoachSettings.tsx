@@ -13,8 +13,10 @@ const VOICES = COACH_VOICES.map((v) => ({ value: v, label: VOICE_LABEL[v] }));
 
 const CHECKINS: { key: keyof CoachCheckins; title: string; sub: string }[] = [
   { key: "post_workout", title: "After the workout", sub: "How it went" },
-  { key: "slip", title: "After a slip", sub: "What set it off" },
+  { key: "slip", title: "After a slip", sub: "What set it off, then a reset" },
   { key: "missed_item", title: "After a missed item", sub: "What got in the way" },
+  { key: "commitment", title: "What you said you would do", sub: "Asks after it is due" },
+  { key: "drift", title: "When you drift", sub: "No logs, missed days, mood dropping" },
 ];
 
 export function CoachSettings() {

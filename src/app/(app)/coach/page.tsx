@@ -60,13 +60,13 @@ export default function CoachPage() {
         <EmptyState
           icon={<MessageSquareText size={22} strokeWidth={1.75} aria-hidden />}
           title="Say what is in the way"
-          body="Sore, tempted, tired, not feeling it. One idea back, and one thing to do now."
+          body="Sore, tempted, tired, or just having a rough one. Say it how it is. It pushes when you need a push and listens when you need that."
         />
       ) : null}
 
       {chat.missing ? null : (
         <>
-          <Thread messages={chat.messages} thinking={chat.thinking} today={mode.today} />
+          <Thread messages={chat.messages} thinking={chat.thinking} today={mode.today} commitments={chat.commitments} onAnswer={chat.answer} />
           <Composer onSend={chat.send} busy={chat.thinking} starters={chat.messages.length < 4} />
         </>
       )}

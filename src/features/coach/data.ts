@@ -39,7 +39,7 @@ export async function loadCoachData(today: DateStr): Promise<CoachData | null> {
   const from = mode.historyStart > back ? mode.historyStart : back;
   // Lifts can predate the history and still show a trend.
   const liftsFrom = addDays(today, -42);
-  const [items, versions, logs, earnings, meals, bodyLogs, setLogs, slips, workouts, blocks, focus] = await Promise.all([
+  const [items, versions, logs, earnings, meals, bodyLogs, setLogs, slips, workouts, blocks, focus, moods] = await Promise.all([
     db.list("checklist_item", { orderBy: "sort_order" }),
     getScoringVersions(),
     db.list("day_log", { from, to: today, orderBy: "date" }),
@@ -51,6 +51,8 @@ export async function loadCoachData(today: DateStr): Promise<CoachData | null> {
     db.list("workout"),
     getBlocksForDate(today),
     db.list("focus_session", { from: addDays(today, -14), to: today, orderBy: "date" }),
+    // Mood only feeds the drift rules and the chat. A table that cannot be read is no moods, not an error.
+    db.list("mood_log", { from: addDays(today, -13), to: today, orderBy: "date" }).catch(() => []),
   ]);
   return {
     today,
@@ -58,6 +60,7 @@ export async function loadCoachData(today: DateStr): Promise<CoachData | null> {
     challenge: mode.challenge,
     floor: floorOn(settings.daily_floor ?? mode.challenge?.daily_floor ?? 0, mode.challenge, items.find((i) => i.key === "earned")?.id),
     focus,
+    moods,
     settings,
     items,
     versions,

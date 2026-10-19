@@ -16,6 +16,7 @@ import type {
   Earning,
   FocusSession,
   Meal,
+  MoodLog,
   NewRow,
   SetLog,
   Target,
@@ -75,6 +76,8 @@ export interface CoachData {
   blocks: CoachBlock[];
   /** Focus sessions from the last two weeks. Optional so older callers still work. */
   focus?: FocusSession[];
+  /** Mood entries from the last two weeks. Optional: the table may not be readable. */
+  moods?: MoodLog[];
 }
 
 // ---------- flags ----------
@@ -86,7 +89,13 @@ export type FlagKind =
   | "wake_after_late"
   | "bed_missed"
   | "vice_pattern"
-  | "rate_drop";
+  | "rate_drop"
+  | "no_logs"
+  | "missed_streak"
+  | "mood_drop";
+
+/** The flags about drifting: going quiet, missing days running, a mood that keeps sliding. The coach reaches out about these. */
+export const DRIFT_KINDS: readonly FlagKind[] = ["no_logs", "missed_streak", "mood_drop"];
 
 export interface FlagEvidence {
   label: string;
@@ -106,6 +115,8 @@ export interface Flag {
   evidence: FlagEvidence[];
   /** First date in the evidence. */
   since: DateStr;
+  /** Drift flags only: 1, 2 or 3, rising the longer it goes. The coach gets more direct with it. */
+  level?: 1 | 2 | 3;
 }
 
 // ---------- small formatters ----------

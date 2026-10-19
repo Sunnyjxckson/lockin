@@ -317,13 +317,20 @@ export type CoachVoice = "stoic" | "sergeant" | "brother";
 export const COACH_VOICES: readonly CoachVoice[] = ["stoic", "sergeant", "brother"];
 
 /** Why a coach message was written: an answer in the chat, or a check-in it sent by itself. */
-export type CoachTrigger = "chat" | "post_workout" | "slip" | "missed_item";
+export type CoachTrigger = "chat" | "post_workout" | "slip" | "missed_item" | "commitment" | "drift";
 
-/** Which check-ins the coach may send by itself. */
+/**
+ * Which check-ins the coach may send by itself. `commitment` and `drift` came
+ * later and are missing on older rows: a missing key means on (`checkinsOf`).
+ */
 export interface CoachCheckins {
   post_workout: boolean;
   slip: boolean;
   missed_item: boolean;
+  /** Asking after something you said you would do. */
+  commitment?: boolean;
+  /** Reaching out when you go quiet, miss days running or your mood drops. */
+  drift?: boolean;
 }
 
 /** One message in the coach chat, yours or the coach's. */
@@ -404,6 +411,34 @@ export interface ReminderRun extends Base {
 export interface LoginAttempt extends Base {
   failures: number;
   locked_until: IsoStr | null;
+}
+
+// ---------- coach memory ----------
+
+/** What a profile entry is about. */
+export type ProfileKind = "why" | "trigger" | "what_works" | "working_on" | "said";
+export const PROFILE_KINDS: readonly ProfileKind[] = ["why", "trigger", "what_works", "working_on", "said"];
+
+/** One thing the coach keeps about you between conversations. You can read, edit and delete every one. */
+export interface CoachProfileEntry extends Base {
+  kind: ProfileKind;
+  body: string;
+  updated_at: IsoStr;
+}
+
+/** open: not due yet, or due and not answered. dropped: never answered and too old to ask about. */
+export type CommitmentStatus = "open" | "done" | "missed" | "dropped";
+
+/** Something you told the coach you would do ("lifting at 6:30"). The coach asks after it is due. */
+export interface CoachCommitment extends Base {
+  /** What you said you would do, short. */
+  body: string;
+  /** The New York date it was said on. */
+  made_on: DateStr;
+  due_at: IsoStr;
+  status: CommitmentStatus;
+  /** When the coach asked whether it happened. Null until it has. */
+  asked_at: IsoStr | null;
 }
 
 // ---------- mood and motivation ----------
@@ -731,6 +766,8 @@ export interface Tables {
   expense: Expense;
   focus_session: FocusSession;
   quote_state: QuoteState;
+  coach_profile: CoachProfileEntry;
+  coach_commitment: CoachCommitment;
 }
 
 export type TableName = keyof Tables;
@@ -777,6 +814,8 @@ export const TABLE_NAMES = [
   "expense",
   "focus_session",
   "quote_state",
+  "coach_profile",
+  "coach_commitment",
 ] as const satisfies readonly TableName[];
 
 /** Tables only the server may read or write (they hold secrets). */

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CalendarClock, Flag as FlagIcon, History, RefreshCw, Sunrise } from "lucide-react";
 import { Button, Card, EmptyState, GlassCard, List, ListRow, PageHeader, Screen, Section, Sheet } from "@/components/ui";
 import { FlagCard, FlagDetail, NoteBody, SourceTag, weekLabel } from "@/features/coach/parts";
+import { ProfileSection } from "@/features/coach/ProfileSection";
 import { useCoach } from "@/features/coach/useCoach";
 import { nextReviewDate, parseFlagNote } from "@/lib/logic/coach";
 import { formatDateLong, formatDateShort } from "@/lib/logic/dates";
@@ -134,6 +135,8 @@ export default function CoachNotesPage() {
           />
         )}
       </Section>
+
+      <ProfileSection />
 
       <Section title="History" right={coach.history.length > 0 ? coach.history.length : null}>
         {coach.history.length === 0 ? (

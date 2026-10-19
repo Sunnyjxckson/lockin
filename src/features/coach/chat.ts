@@ -11,19 +11,40 @@ import {
   chatFallback,
   checkinsOf,
   classifyMessage,
+  driftCheckins,
   dueCheckins,
   quotesUsedSince,
+  scheduleNow,
   voiceOf,
+  type Checkin,
   type ChatContext,
   type ChatTurn,
+  type CoachMode,
 } from "@/lib/logic/coachChat";
+import { commitmentAnswer, commitmentAsk, commitmentSteps, parseCommitment } from "@/lib/logic/coachCommit";
+import { DRIFT_KINDS } from "@/lib/logic/coach";
 import { detectFlags } from "@/lib/logic/coachFlags";
 import type { LibCandidate } from "@/lib/logic/coachLibrary";
+import { recurringStruggle } from "@/lib/logic/coachMood";
 import { quoteByKey } from "@/lib/logic/coachQuotes";
-import { addDays, formatTime, nowIso, timeNY, todayNY, weekdayOf } from "@/lib/logic/dates";
+import { addDays, formatTime, isQuiet, nowIso, timeNY, todayNY, weekdayOf } from "@/lib/logic/dates";
 import { summarizeDay } from "@/lib/logic/day";
-import type { CoachCheckins, CoachMessage, CoachVoice, DateStr } from "@/lib/types";
+import type { CoachCheckins, CoachMessage, CoachVoice, DateStr, NewRow } from "@/lib/types";
 import { loadCoachData } from "./data";
+import {
+  askedCommitment,
+  commitmentsForPrompt,
+  dropCommitment,
+  loadCommitments,
+  loadMoods,
+  loadProfile,
+  markAsked,
+  moodsForPrompt,
+  profileForPrompt,
+  saveCommitment,
+  saveProfileNotes,
+} from "./memory";
+
 
 /** A line does not come back for this many days. */
 const QUOTE_REST_DAYS = 7;
@@ -44,13 +65,26 @@ async function loadWhy(): Promise<string[]> {
   return out.map((l) => cleanCoachText(l));
 }
 
-function contextFrom(data: CoachData, why: string[]): ChatContext {
+/** What the coach has been told and what it has been holding them to. Every part is empty when its table cannot be read. */
+interface Extras {
+  profile: ChatContext["profile"];
+  commitments: ChatContext["commitments"];
+  moods: ChatContext["moods"];
+  recurring: boolean;
+}
+
+function contextFrom(data: CoachData, why: string[], extras: Extras): ChatContext {
   const snapshot = buildSnapshot(data, detectFlags(data));
   const day = summarizeDay(data.today, data.items, data.versions, data.logs);
+  const where = scheduleNow(data.blocks, timeNY());
   return {
     snapshot,
-    now: { time: formatTime(timeNY()), done: day.done, total: day.total, left: day.items.filter((r) => !r.done).map((r) => r.item.name) },
+    now: { time: formatTime(timeNY()), done: day.done, total: day.total, left: day.items.filter((r) => !r.done).map((r) => r.item.name), block: where.block, next: where.next },
     why,
+    profile: extras.profile,
+    commitments: extras.commitments,
+    moods: extras.moods,
+    recurring: extras.recurring,
   };
 }
 
@@ -68,6 +102,9 @@ interface Answer {
   body: string;
   source: "ai" | "fallback";
   quote: string | null;
+  mode: CoachMode | null;
+  /** Durable things the model picked out of their message, to be saved to the profile. */
+  notes: unknown[];
 }
 
 /** Ask the route. Offline or on any failure, answer here from the same rules. */
@@ -81,14 +118,20 @@ async function answer(ctx: ChatContext, turns: ChatTurn[], voice: CoachVoice, us
     if (res.ok) {
       const json = (await res.json()) as Partial<Answer>;
       if (typeof json.body === "string" && json.body.trim()) {
-        return { body: cleanCoachText(json.body), source: json.source === "ai" ? "ai" : "fallback", quote: quoteByKey(json.quote) || library.some((c) => c.key === json.quote) ? (json.quote as string) : null };
+        return {
+          body: cleanCoachText(json.body),
+          source: json.source === "ai" ? "ai" : "fallback",
+          quote: quoteByKey(json.quote) || library.some((c) => c.key === json.quote) ? (json.quote as string) : null,
+          mode: json.mode === "push" || json.mode === "support" || json.mode === "unclear" ? json.mode : null,
+          notes: Array.isArray(json.notes) ? json.notes : [],
+        };
       }
     }
   } catch {
     // Fall through to the local version.
   }
-  const local = chatFallback(turns[turns.length - 1].body, ctx, voice, used, library);
-  return { body: local.body, source: "fallback", quote: local.quote };
+  const local = chatFallback(turns[turns.length - 1].body, ctx, voice, used, library, turns);
+  return { body: local.body, source: "fallback", quote: local.quote, mode: local.mode ?? null, notes: [] };
 }
 
 /**
@@ -121,9 +164,50 @@ export async function sendMessage(text: string): Promise<void> {
 
   const [data, why, settings, history, used] = await Promise.all([loadCoachData(today), loadWhy(), getSettings(), recent(MAX_TURNS), usedQuotes(today)]);
   if (!data) return;
-  const turns: ChatTurn[] = history.map((m) => ({ sender: m.sender, body: m.body }));
-  const reply = await answer(contextFrom(data, why), turns, voiceOf(settings?.coach_voice), used, await libraryLines(body, turns, used));
+  const turns: ChatTurn[] = history.map((m) => (m.sender === "coach" && m.trigger !== "chat" ? { sender: m.sender, body: m.body, trigger: m.trigger } : { sender: m.sender, body: m.body }));
+  await keepWhatTheySaid(body, turns, data);
+  const extras = await loadExtras(today);
+  const reply = await answer(contextFrom(data, why, extras), turns, voiceOf(settings?.coach_voice), used, await libraryLines(body, turns, used));
   await db.insert("coach_message", { date: todayNY(), sent_at: nowIso(), sender: "coach", body: reply.body, trigger: "chat", source: reply.source, quote: reply.quote, check_key: null, read: true });
+  void saveProfileNotes(reply.notes);
+}
+
+/** The profile, the commitments and the last week of mood, for the context. */
+async function loadExtras(today: DateStr): Promise<Extras> {
+  const [profile, commitments, moods] = await Promise.all([loadProfile(), loadCommitments(), loadMoods(today)]);
+  return {
+    profile: profileForPrompt(profile),
+    commitments: commitmentsForPrompt(commitments, today),
+    moods: moodsForPrompt(moods, today),
+    recurring: recurringStruggle(moods, today),
+  };
+}
+
+/** How long after the coach asked a reply still counts as the answer. */
+const ANSWER_WINDOW_MS = 12 * 3_600_000;
+
+/**
+ * What a message says about commitments. If it answers one the coach asked
+ * about ("yeah did it", "no, got stuck at work"), that one is marked. If it
+ * says they will do something at a time ("lifting at 6:30"), that is saved,
+ * unless the conversation is heavy: then they are just talked to.
+ */
+async function keepWhatTheySaid(body: string, turns: readonly ChatTurn[], data: CoachData): Promise<void> {
+  try {
+    const topic = classifyMessage(body);
+    if (topic === "care" || topic === "emergency" || topic === "injury" || topic === "therapist" || careInPlay(turns.slice(-6))) return;
+    const rows = await loadCommitments();
+    const asked = askedCommitment(rows);
+    const verdict = asked && asked.asked_at && Date.now() - new Date(asked.asked_at).getTime() <= ANSWER_WINDOW_MS ? commitmentAnswer(body) : null;
+    if (asked && verdict) {
+      await db.update("coach_commitment", asked.id, { status: verdict });
+      return;
+    }
+    const parsed = parseCommitment(body, { date: data.today, time: timeNY(), blocks: data.blocks });
+    if (parsed) await saveCommitment(parsed);
+  } catch {
+    // The message was still sent and will be answered.
+  }
 }
 
 // One run at a time, so two mounts cannot send the same check-in twice.
@@ -139,17 +223,22 @@ export function syncCheckins(today: DateStr = todayNY()): Promise<number> {
   const run = async (): Promise<number> => {
     const settings = await getSettings();
     const enabled = checkinsOf(settings?.coach_checkins);
-    if (!enabled.post_workout && !enabled.slip && !enabled.missed_item) return 0;
+    if (!Object.values(enabled).some(Boolean)) return 0;
     const data = await loadCoachData(today);
     if (!data || today < data.historyStart) return 0;
     const sentRows = await db.list("coach_message", { from: addDays(today, -1), to: today });
     const day = summarizeDay(today, data.items, data.versions, data.logs);
     const main = data.workouts.find((w) => w.weekday === weekdayOf(today) && w.slot === "main") ?? null;
-    const due = dueCheckins({
+    const voice = voiceOf(settings?.coach_voice);
+    const time = timeNY();
+    const quiet = isQuiet(time, settings?.quiet_start ?? "22:00", settings?.quiet_end ?? "07:00");
+    const sent = new Set(sentRows.map((m) => m.check_key).filter((k): k is string => !!k));
+    const drift = enabled.drift ? detectFlags(data).filter((f) => DRIFT_KINDS.includes(f.kind)) : [];
+    const due: Checkin[] = dueCheckins({
       today,
       time: timeNY(),
       enabled,
-      voice: voiceOf(settings?.coach_voice),
+      voice,
       blocks: data.blocks,
       workoutName: main && main.kind !== "rest" ? main.name : null,
       workoutDone: day.items.some((r) => r.item.key === "workout" && r.done),
@@ -157,21 +246,56 @@ export function syncCheckins(today: DateStr = todayNY()): Promise<number> {
         .filter((s) => s.date === today)
         .map((s) => ({ id: s.id, vice: viceName(data.items.find((i) => i.id === s.item_id)?.name ?? "a vice"), time: s.time, trigger: s.trigger?.trim() || null })),
       yesterday: buildSnapshot(data, []).yesterday,
-      sent: new Set(sentRows.map((m) => m.check_key).filter((k): k is string => !!k)),
+      sent,
+      driftCoversMisses: drift.some((f) => f.kind === "missed_streak"),
     });
-    let sent = 0;
+
+    // Reaching out when they drift: going quiet, missed days running, a mood sliding. One a day, not in quiet hours.
+    due.push(
+      ...driftCheckins({
+        flags: drift,
+        voice,
+        today,
+        quiet,
+        sent,
+        sentToday: sentRows.some((m) => m.date === today && m.check_key?.startsWith("drift:")),
+      }),
+    );
+
+    // Asking after what they said they would do, once it is due.
+    const asking = new Map<string, string>();
+    if (enabled.commitment) {
+      const rows = await loadCommitments();
+      for (const step of commitmentSteps(rows, new Date())) {
+        if (step.action === "drop") {
+          await dropCommitment(step.id);
+          continue;
+        }
+        const row = rows.find((r) => r.id === step.id);
+        if (!row || quiet) continue;
+        const key = `commit:${row.id}`;
+        asking.set(key, row.id);
+        if (!sent.has(key)) due.push({ trigger: "commitment", check_key: key, body: commitmentAsk(row, today, voice) });
+      }
+    }
+
+    let count = 0;
     const base = Date.now();
     for (const [i, c] of due.entries()) {
       try {
         // A millisecond apart, so they keep this order in the thread.
-        await db.insert("coach_message", { date: today, sent_at: new Date(base + i).toISOString(), sender: "coach", body: c.body, trigger: c.trigger, source: "fallback", quote: null, check_key: c.check_key, read: false });
-        sent += 1;
+        await insertCheckin({ date: today, sent_at: new Date(base + i).toISOString(), sender: "coach", body: c.body, trigger: c.trigger, source: "fallback", quote: null, check_key: c.check_key, read: false });
+        count += 1;
       } catch (e) {
         // Another device sent this one first.
         if (!isUniqueViolation(e)) throw e;
       }
+      const id = asking.get(c.check_key);
+      if (id) await markAsked(id);
     }
-    return sent;
+    // A commitment whose question went out earlier but was never stamped (another device, a reload): stamp it now.
+    for (const [key, id] of asking) if (sent.has(key)) await markAsked(id);
+    return count;
   };
   const next = run();
   checking = next;
@@ -179,6 +303,21 @@ export function syncCheckins(today: DateStr = todayNY()): Promise<number> {
     if (checking === next) checking = null;
   });
   return next;
+}
+
+/**
+ * Save a check-in. Migration 0016 widens the reasons a coach message may have
+ * (commitment, drift). Before it has been run the database refuses those two,
+ * so they are saved as a plain chat message instead and the label comes from
+ * the check key.
+ */
+async function insertCheckin(row: NewRow<"coach_message">): Promise<void> {
+  try {
+    await db.insert("coach_message", row);
+  } catch (e) {
+    if (isUniqueViolation(e) || (row.trigger !== "commitment" && row.trigger !== "drift")) throw e;
+    await db.insert("coach_message", { ...row, trigger: "chat" });
+  }
 }
 
 /** The chat was opened: nothing is unread any more. */

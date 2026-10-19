@@ -288,16 +288,17 @@ describe("lifts dropping", () => {
   it("needs three weeks in a row, and the drop has to be recent", () => {
     const gap = base();
     gap.setLogs = [set("2026-09-07", "Bench press", 185, 6), set("2026-09-21", "Bench press", 180, 6), set("2026-09-28", "Bench press", 175, 6)];
-    expect(detectFlags(gap)).toEqual([]);
+    // The days with nothing logged raise the drift flag; the lift rule has nothing to say.
+    expect(kinds(detectFlags(gap))).not.toContain("lift_drop");
     const stale = base();
     stale.setLogs = [set("2026-08-31", "Bench press", 185, 6), set("2026-09-07", "Bench press", 180, 6), set("2026-09-14", "Bench press", 175, 6)];
-    expect(detectFlags(stale)).toEqual([]);
+    expect(kinds(detectFlags(stale))).not.toContain("lift_drop");
   });
 
   it("does not flag one down week or a recovery", () => {
     const d = base();
     d.setLogs = [set("2026-09-14", "Bench press", 185, 6), set("2026-09-21", "Bench press", 175, 6), set("2026-09-28", "Bench press", 180, 6)];
-    expect(detectFlags(d)).toEqual([]);
+    expect(kinds(detectFlags(d))).not.toContain("lift_drop");
   });
 
   it("treats fewer reps at the same weight as a drop, and compares bodyweight lifts by reps", () => {
