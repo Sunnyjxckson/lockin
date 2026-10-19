@@ -145,6 +145,7 @@ struct TopBar: View {
                     .font(.system(size: 19, weight: .regular))
                     .foregroundColor(theme.ink2)
                     .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
                     .overlay(alignment: .topTrailing) {
                         if coachUnread {
                             Circle().fill(theme.warn).frame(width: 8, height: 8).padding(.top, 9).padding(.trailing, 9)
@@ -163,6 +164,7 @@ struct TopBar: View {
                     .frame(width: 30, height: 30)
                     .background(Circle().fill(theme.gradient))
                     .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(LIPressStyle())
             .accessibilityLabel("More")
