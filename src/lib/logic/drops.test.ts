@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DROP_BODY_MAX, dropCandidates, dropKey, dropMessage, dropSlotTimes, dropWindow, dropsPerDay, pickDrop, trimForNotification, type ShortPool } from "./drops";
+import { DROP_BODY_MAX, OWN_LINE_TITLE, OWN_LINE_URL, dropCandidates, dropKey, dropMessage, dropSlotTimes, dropWindow, dropsPerDay, pickDrop, pickOwnLine, trimForNotification, withOwnLines, type ShortPool } from "./drops";
 import { dueNotifications, planDay, type PlanOptions } from "./reminders";
 import { nyInstant } from "./dates";
 import type { Reminder } from "../types";
@@ -139,5 +139,45 @@ describe("drops in the day's plan", () => {
     const due = dueNotifications(input);
     expect(due.map((n) => n.key)).toEqual([dropKey("2026-10-12", 0)]);
     expect(dueNotifications({ ...input, sent: [due[0].key] })).toEqual([]);
+  });
+});
+
+describe("your own lines at wake", () => {
+  const lines = [
+    { id: "b", body: "Embarrassment is an underexplored emotion. Go out there and make a fool of yourself." },
+    { id: "a", body: "Say it yourself." },
+    { id: "c", body: "   " },
+  ];
+  const base = (date: string, slot: number) => { const q = pickDrop(POOL, date, slot, 3); return q ? dropMessage(POOL, q) : null; };
+
+  it("walks his lines one a day in id order, the same every time, and skips blanks", () => {
+    expect(pickOwnLine([], "2026-10-12")).toBeNull();
+    const first = pickOwnLine(lines, "2026-10-12")!;
+    expect(pickOwnLine([...lines].reverse(), "2026-10-12")).toEqual(first);
+    const next = pickOwnLine(lines, "2026-10-13")!;
+    expect(next.id).not.toBe(first.id);
+    expect(pickOwnLine(lines, "2026-10-14")).toEqual(first);
+    expect(["a", "b"]).toContain(first.id);
+  });
+
+  it("makes slot 0 his line, titled Your line, opening Yours, and leaves the other slots alone", () => {
+    const pick = withOwnLines(base, lines);
+    const m = pick("2026-10-12", 0)!;
+    expect(m.title).toBe(OWN_LINE_TITLE);
+    expect(m.url).toBe(OWN_LINE_URL);
+    expect(m.body).toBe(trimForNotification(pickOwnLine(lines, "2026-10-12")!.body));
+    expect(pick("2026-10-12", 1)).toEqual(base("2026-10-12", 1));
+  });
+
+  it("is the library pick itself when he has no lines", () => {
+    expect(withOwnLines(base, [])).toBe(base);
+    expect(withOwnLines(base, [{ id: "x", body: " " }])).toBe(base);
+  });
+
+  it("puts his line in the day's plan at wake", () => {
+    const day = { date: "2026-10-12", blocks: [{ id: "w", block_name: "Wake", start: "05:45", kind: "wake" as const }, { id: "b", block_name: "Bed", start: "23:00", kind: "bed" as const }], earned: 0 };
+    const plan = planDay([], day, { floor: 100, quiet_start: "23:00", quiet_end: "05:30", drops: { perDay: 3, pick: withOwnLines(base, lines) } });
+    expect(plan.map((n) => [n.time, n.title === OWN_LINE_TITLE])).toEqual([["05:45", true], ["11:30", false], ["17:15", false]]);
+    expect(plan[0].url).toBe(OWN_LINE_URL);
   });
 });

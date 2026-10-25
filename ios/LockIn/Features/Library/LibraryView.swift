@@ -7,6 +7,7 @@ enum LibraryRoute: Hashable {
     case writer(String)
     case search
     case saved
+    case yours
 }
 
 /// The Library tab: a library of real quotes to finish, like a book. The number that matters is how far in you are.
@@ -62,6 +63,7 @@ private struct LibraryHome: View {
                         } else if model.ready, let counts = model.counts {
                             progress(counts)
                             actions(counts, index: index)
+                            yours
                             roughDay
                             writers(counts)
                             themes
@@ -87,6 +89,7 @@ private struct LibraryHome: View {
             case .writer(let slug): LibraryWriterView(slug: slug, model: model)
             case .search: LibrarySearchView(model: model)
             case .saved: LibrarySavedView(model: model)
+            case .yours: LibraryYoursView()
             }
         }
     }
@@ -180,6 +183,30 @@ private struct LibraryHome: View {
         .frame(maxWidth: .infinity, minHeight: 48)
         .background(Capsule().fill(theme.tile))
         .overlay(Capsule().strokeBorder(theme.tileLine, lineWidth: 1))
+    }
+
+    /// His own lines, ahead of the writers.
+    private var yours: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            LISectionLabel("Yours")
+            NavigationLink(value: LibraryRoute.yours) {
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Your own lines").liType(.body).foregroundColor(theme.ink)
+                        Text("What you said yourself. It leads the morning.").liType(.caption).foregroundColor(theme.ink2)
+                    }
+                    Spacer()
+                    Image(systemName: "chevron.right").font(.system(size: 13, weight: .regular)).foregroundColor(theme.ink2)
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 16)
+                .contentShape(Rectangle())
+                .background(LITileSurface(radius: 24))
+            }
+            .buttonStyle(LIPressStyle())
+            .simultaneousGesture(TapGesture().onEnded { LIHaptics.tap() })
+        }
+        .padding(.top, 32)
     }
 
     private var roughDay: some View {

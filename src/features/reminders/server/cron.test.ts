@@ -103,6 +103,7 @@ function world(subs: PushTarget[]) {
     earned: 0,
     blocks: [{ id: "template:t1", template_id: "t1", block_name: "Delivery: dinner", start: "17:00" }],
     drops: { enabled: false, perDay: 3 },
+    ownLines: [] as { id: string; body: string }[],
     /** Quote ids the person has read in the Library. */
     read: new Set<string>(),
   };
@@ -126,6 +127,7 @@ function world(subs: PushTarget[]) {
       quiet_end: "05:30",
       days: dates.map((date) => ({ date, blocks: state.blocks, earned: state.earned })),
       drops: state.drops,
+      ownLines: state.ownLines,
     }),
     drops: dropSource,
     getLastRun: async () => state.lastRun,
@@ -248,21 +250,21 @@ describe("philosophy drops in the job", () => {
     const phone = device(`${base}/push/phone`);
     const w = world([phone.target]);
     w.state.drops = { enabled: true, perDay: 3 };
-    // 05:30 to 23:00 is 1050 minutes: slots about 262 minutes apart, on five minute marks (9:55, 2:15 pm, 6:40 pm).
-    w.state.lastRun = nyInstant(D, "09:50");
-    const first = await w.run("09:55");
+    // 05:30 to 23:00 is 1050 minutes: the first slot is at wake (5:30), the others 350 minutes apart (11:20 am, 5:10 pm).
+    w.state.lastRun = nyInstant(D, "05:25");
+    const first = await w.run("05:30");
     expect(first.sent).toEqual([{ key: `${D}:drop:0`, delivered: 1, failed: 0 }]);
     const want = dropMessage(POOL, pickDrop(POOL, D, 0, 3)!);
     expect(phone.open(hits[0].body)).toEqual({ ...want, tag: `${D}:drop:0` });
     expect(want.url).toMatch(/^\/library\/read\?w=(seneca|marcus)&q=/);
     // The same run again, and a late run after, send nothing more for that slot.
-    await w.run("10:00");
+    await w.run("05:35");
     w.state.lastRun = null;
-    await w.run("10:05");
+    await w.run("05:40");
     expect(hits).toHaveLength(1);
     // The next slot is a different quote.
-    w.state.lastRun = nyInstant(D, "14:10");
-    await w.run("14:15");
+    w.state.lastRun = nyInstant(D, "11:15");
+    await w.run("11:20");
     expect(hits).toHaveLength(2);
     expect(phone.open(hits[1].body).tag).toBe(`${D}:drop:1`);
     expect(phone.open(hits[1].body).body).not.toBe(phone.open(hits[0].body).body);
@@ -274,16 +276,29 @@ describe("philosophy drops in the job", () => {
     w.state.drops = { enabled: true, perDay: 3 };
     const [first, second] = dropCandidates(POOL, D, 0, 3);
     w.state.read.add(first.id);
-    w.state.lastRun = nyInstant(D, "09:50");
-    await w.run("09:55");
+    w.state.lastRun = nyInstant(D, "05:25");
+    await w.run("05:30");
     expect(phone.open(hits[0].body).body).toBe(dropMessage(POOL, second).body);
+  });
+
+  it("sends one of his own lines at wake when he has any, and library quotes after", async () => {
+    const phone = device(`${base}/push/phone`);
+    const w = world([phone.target]);
+    w.state.drops = { enabled: true, perDay: 3 };
+    w.state.ownLines = [{ id: "x1", body: "Make a fool of yourself." }];
+    w.state.lastRun = nyInstant(D, "05:25");
+    await w.run("05:30");
+    expect(phone.open(hits[0].body)).toEqual({ title: "Your line", body: "Make a fool of yourself.", url: "/library/yours", tag: `${D}:drop:0` });
+    w.state.lastRun = nyInstant(D, "11:15");
+    await w.run("11:20");
+    expect(phone.open(hits[1].body).title).not.toBe("Your line");
   });
 
   it("sends none when drops are off", async () => {
     const phone = device(`${base}/push/phone`);
     const w = world([phone.target]);
-    w.state.lastRun = nyInstant(D, "09:50");
-    const res = await w.run("09:55");
+    w.state.lastRun = nyInstant(D, "05:25");
+    const res = await w.run("05:30");
     expect(res.due).toBe(0);
   });
 });

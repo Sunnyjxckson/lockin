@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import { workoutsFor } from "@/lib/db/helpers";
 import { useDayBlocks, useList, useMode, useSettings, useToday, useWorkouts } from "@/lib/db/hooks";
 import { weekdayOf } from "@/lib/logic/dates";
-import { dropsPerDay } from "@/lib/logic/drops";
+import { dropsPerDay, withOwnLines } from "@/lib/logic/drops";
 import { planDay, type PlannedNotification, type ReminderDay } from "@/lib/logic/reminders";
 import { activateDrops, useDropsPicker } from "./dropsPicker";
 
@@ -28,6 +28,8 @@ export function useTodayPlan(): TodayPlan {
   const earnings = useList("earning", { from: today, to: today });
   const settings = useSettings();
   const workouts = useWorkouts();
+  // His own lines: the drop at wake is one of them when he has any.
+  const lines = useList("motivation", { eq: { kind: "quote" } });
   // The floor in force today: a running challenge's own target for "Earned today" when it has one.
   const liveFloor = useMode().floor;
 
@@ -52,7 +54,7 @@ export function useTodayPlan(): TodayPlan {
       restDay: workoutsFor(workouts.data, weekdayOf(today)).main?.kind === "rest",
     };
     const perDay = dropsPerDay(settings.data.drops_per_day);
-    const drops = dropsOn && picker ? { perDay, pick: (date: string, slot: number) => picker(date, slot, perDay) } : null;
+    const drops = dropsOn && picker ? { perDay, pick: withOwnLines((date: string, slot: number) => picker(date, slot, perDay), lines.data) } : null;
     const opts = { floor, quiet_start: settings.data.quiet_start, quiet_end: settings.data.quiet_end, drops };
     return {
       loading: false,
@@ -62,5 +64,5 @@ export function useTodayPlan(): TodayPlan {
       floor,
       enabledCount,
     };
-  }, [loading, today, reminders.data, blocks.data, earnings.data, settings.data, workouts.data, liveFloor, dropsOn, picker]);
+  }, [loading, today, reminders.data, blocks.data, earnings.data, settings.data, workouts.data, liveFloor, dropsOn, picker, lines.data]);
 }

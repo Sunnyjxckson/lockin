@@ -21,6 +21,7 @@ final class AppRouter {
     enum Destination: Equatable {
         case tab(AppTab)
         case reader(LibraryScope, String)
+        case yours
         case focus
     }
 
@@ -44,6 +45,7 @@ final class AppRouter {
                 return .reader(scope, q)
             }
             return .tab(.library)
+        case "/library/yours": return .yours
         case "/library": return .tab(.library)
         case "/money": return .tab(.money)
         case "/body", "/body/workout": return .tab(.body)

@@ -139,6 +139,55 @@ export function pickDrop(pool: ShortPool, date: DateStr, slot: number, perDay: n
   return c.find((q) => !isRead(q.id)) ?? c[0] ?? null;
 }
 
+// ---------- your own lines ----------
+
+/** One of his own lines (a `motivation` row of kind quote). Only what the pick needs. */
+export interface OwnLine {
+  id: string;
+  body: string;
+}
+
+/** The title of a drop that is one of his own lines. */
+export const OWN_LINE_TITLE = "Your line";
+/** Where a tap on one of his own lines lands. */
+export const OWN_LINE_URL = "/library/yours";
+
+/**
+ * The line for a date: his own lines in id order, one a day, walking round.
+ * A function of the date and the lines alone, so the phone, the widget and
+ * the server agree. Null when he has none.
+ */
+export function pickOwnLine(lines: readonly OwnLine[], date: DateStr): OwnLine | null {
+  const usable = lines.filter((l) => l.body.trim().length > 0).sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  if (usable.length === 0) return null;
+  const day = diffDays("2026-01-01", date);
+  return usable[((day % usable.length) + usable.length) % usable.length];
+}
+
+/** The notification for one of his own lines: "Your line" as the title, the line as the body, a tap opens Yours. */
+export function ownLineMessage(line: OwnLine): DropMessage {
+  return { title: OWN_LINE_TITLE, body: trimForNotification(line.body), url: OWN_LINE_URL };
+}
+
+/**
+ * A drop picker with his own lines in front: slot 0 (the one at wake) is his
+ * line of the day when he has any, every other slot is whatever `pick` gives.
+ * With no lines it is `pick` itself.
+ */
+export function withOwnLines<A extends unknown[]>(
+  pick: (date: DateStr, slot: number, ...rest: A) => DropMessage | null,
+  lines: readonly OwnLine[],
+): (date: DateStr, slot: number, ...rest: A) => DropMessage | null {
+  if (!lines.some((l) => l.body.trim().length > 0)) return pick;
+  return (date, slot, ...rest) => {
+    if (slot === 0) {
+      const own = pickOwnLine(lines, date);
+      if (own) return ownLineMessage(own);
+    }
+    return pick(date, slot, ...rest);
+  };
+}
+
 // ---------- what it says ----------
 
 /**

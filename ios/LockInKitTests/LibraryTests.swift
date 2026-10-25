@@ -189,6 +189,42 @@ final class LibraryTests: XCTestCase {
         XCTAssertEqual(Set(plan.map { $0.identifier }).count, plan.count)
     }
 
+    func testOwnLinesWalkOneADayInIdOrderAndSkipBlanks() {
+        let lines = [OwnLine(id: "b", body: "Embarrassment is an underexplored emotion."), OwnLine(id: "a", body: "Say it yourself."), OwnLine(id: "c", body: "   ")]
+        XCTAssertNil(Drops.pickOwnLine([], date: "2026-10-12"))
+        let first = Drops.pickOwnLine(lines, date: "2026-10-12")
+        XCTAssertEqual(Drops.pickOwnLine(Array(lines.reversed()), date: "2026-10-12"), first)
+        XCTAssertNotEqual(Drops.pickOwnLine(lines, date: "2026-10-13"), first)
+        XCTAssertEqual(Drops.pickOwnLine(lines, date: "2026-10-14"), first)
+        XCTAssertTrue(["a", "b"].contains(first?.id ?? ""))
+        // Dates before the walk began still pick one.
+        XCTAssertNotNil(Drops.pickOwnLine(lines, date: "2025-03-01"))
+    }
+
+    func testOwnLineMessageIsTitledYourLineAndOpensYours() {
+        let m = Drops.ownLineMessage(OwnLine(id: "x1", body: "Make a fool of yourself."))
+        XCTAssertEqual(m.title, "Your line")
+        XCTAssertEqual(m.body, "Make a fool of yourself.")
+        XCTAssertEqual(m.url, "/library/yours")
+        XCTAssertEqual(m.quoteId, "own:x1")
+    }
+
+    func testPlanPutsAnOwnLineAtWakeAndLibraryQuotesAfter() {
+        let own = [OwnLine(id: "x1", body: "Make a fool of yourself.")]
+        let blocks = { (_: DateStr) in [WindowBlock(kind: "wake", start: "05:45"), WindowBlock(kind: "bed", start: "23:00")] }
+        let plan = Drops.plan(pool: pool(), perDay: 3, today: "2026-03-02", time: "00:00", quietStart: "23:00", quietEnd: "05:30", blocksFor: blocks, isRead: { _ in false }, days: 2, ownLines: own)
+        let today = plan.filter { $0.date == "2026-03-02" }
+        XCTAssertEqual(today.map { $0.time }, ["05:45", "11:30", "17:15"])
+        XCTAssertEqual(today[0].message.title, "Your line")
+        XCTAssertEqual(today[0].message.url, "/library/yours")
+        XCTAssertNotEqual(today[1].message.title, "Your line")
+        XCTAssertNotEqual(today[2].message.title, "Your line")
+        // With no lines of his own nothing changes.
+        let plain = Drops.plan(pool: pool(), perDay: 3, today: "2026-03-02", time: "00:00", quietStart: "23:00", quietEnd: "05:30", blocksFor: blocks, isRead: { _ in false }, days: 2)
+        XCTAssertNotEqual(plain.first?.message.title, "Your line")
+        XCTAssertEqual(plain.count, plan.count)
+    }
+
     func testPlanKeepsToTheCap() {
         let plan = Drops.plan(pool: pool(), perDay: 6, today: "2026-03-02", time: "00:00", quietStart: "22:00", quietEnd: "07:00", blocksFor: { _ in [] }, isRead: { _ in false }, days: 7, cap: 10)
         XCTAssertEqual(plan.count, 10)

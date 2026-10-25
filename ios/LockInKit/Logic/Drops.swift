@@ -64,6 +64,16 @@ public struct PlannedDrop: Equatable {
     public var message: DropMessage
 }
 
+/// One of his own lines (a `motivation` row of kind quote). Only what the pick needs.
+public struct OwnLine: Equatable {
+    public var id: String
+    public var body: String
+    public init(id: String, body: String) {
+        self.id = id
+        self.body = body
+    }
+}
+
 public struct WindowBlock: Equatable {
     public var kind: String
     public var start: TimeStr
@@ -86,6 +96,13 @@ public enum Drops {
 
     static let step = 5
     static let shuffleSeed = 1517
+
+    /// The title of a drop that is one of his own lines.
+    public static let ownLineTitle = "Your line"
+    /// Where a tap on one of his own lines lands.
+    public static let ownLineUrl = "/library/yours"
+    /// `DropMessage.quoteId` of an own line starts with this, then the row id.
+    public static let ownLineIdPrefix = "own:"
 
     /// A saved setting as a usable count: whole, 1 to 6, 3 when missing.
     public static func dropsPerDay(_ value: Double?) -> Int {
@@ -174,6 +191,25 @@ public enum Drops {
         return c.first(where: { !isRead($0.id) }) ?? c.first
     }
 
+    // MARK: your own lines
+
+    /// The line for a date: his own lines in id order, one a day, walking round. A function of the date and the
+    /// lines alone, so the phone, the widget and the server agree. Nil when he has none.
+    public static func pickOwnLine(_ lines: [OwnLine], date: DateStr) -> OwnLine? {
+        let usable = lines
+            .filter { !$0.body.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+            .sorted { $0.id < $1.id }
+        if usable.isEmpty { return nil }
+        let day = LIDate.diffDays("2026-01-01", date)
+        let n = usable.count
+        return usable[((day % n) + n) % n]
+    }
+
+    /// The notification for one of his own lines: "Your line" as the title, the line as the body, a tap opens Yours.
+    public static func ownLineMessage(_ line: OwnLine) -> DropMessage {
+        return DropMessage(title: ownLineTitle, body: trimForNotification(line.body), url: ownLineUrl, quoteId: ownLineIdPrefix + line.id, writer: "")
+    }
+
     // MARK: what it says
 
     /// A quote cut to fit a notification: whole when it fits, otherwise cut at a word and ended with three dots.
@@ -226,7 +262,8 @@ public enum Drops {
         blocksFor: (DateStr) -> [WindowBlock],
         isRead: (String) -> Bool,
         days: Int = 7,
-        cap: Int = 24
+        cap: Int = 24,
+        ownLines: [OwnLine] = []
     ) -> [PlannedDrop] {
         var out: [PlannedDrop] = []
         let per = dropsPerDay(perDay)
@@ -236,8 +273,16 @@ public enum Drops {
             let times = dropSlotTimes(per, wake: window.wake, bed: window.bed, quietStart: quietStart, quietEnd: quietEnd)
             for (slot, t) in times.enumerated() {
                 if offset == 0 && t <= time { continue }
-                guard let q = pickDrop(pool, date: date, slot: slot, perDay: per, isRead: isRead) else { continue }
-                out.append(PlannedDrop(identifier: "\(identifierPrefix)\(date).\(slot)", date: date, time: t, slot: slot, message: dropMessage(pool, q)))
+                // The drop at wake is one of his own lines when he has any.
+                let message: DropMessage
+                if slot == 0, let own = pickOwnLine(ownLines, date: date) {
+                    message = ownLineMessage(own)
+                } else if let q = pickDrop(pool, date: date, slot: slot, perDay: per, isRead: isRead) {
+                    message = dropMessage(pool, q)
+                } else {
+                    continue
+                }
+                out.append(PlannedDrop(identifier: "\(identifierPrefix)\(date).\(slot)", date: date, time: t, slot: slot, message: message))
                 if out.count >= cap { return out }
             }
         }

@@ -17,12 +17,14 @@ import type { PushTarget } from "./push";
 const RUN_ID = "cron";
 
 export async function loadCronData(dates: DateStr[]): Promise<CronData> {
-  const [reminders, settings, workouts, challenges, earned] = await Promise.all([
+  const [reminders, settings, workouts, challenges, earned, lines] = await Promise.all([
     db.list("reminder", { orderBy: "sort_order" }),
     getSettings(),
     getWorkouts(),
     getChallenges(),
     getItemByKey("earned"),
+    // His own lines. A database from before the table has none.
+    db.list("motivation", { eq: { kind: "quote" } }).catch(() => []),
   ]);
   // The floor in force today: a running challenge's own target for "Earned today" when it has one.
   const today = todayNY();
@@ -42,6 +44,7 @@ export async function loadCronData(dates: DateStr[]): Promise<CronData> {
   return {
     // A settings row from before the 0015 migration has no drops columns: drops are off.
     drops: { enabled: settings?.drops_enabled === true, perDay: dropsPerDay(settings?.drops_per_day) },
+    ownLines: lines.map((l) => ({ id: l.id, body: l.body })),
     reminders,
     floor: floorOn(settings?.daily_floor ?? 0, running, earned?.id),
     quiet_start: settings?.quiet_start ?? "23:00",

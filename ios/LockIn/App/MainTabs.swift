@@ -107,6 +107,13 @@ struct MainTabs: View {
             tab = t
         case .focus:
             showFocus = true
+        case .yours:
+            tab = .library
+            libraryPath = NavigationPath()
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 450_000_000)
+                libraryPath.append(LibraryRoute.yours)
+            }
         case .reader(let scope, let quoteId):
             tab = .library
             libraryPath = NavigationPath()

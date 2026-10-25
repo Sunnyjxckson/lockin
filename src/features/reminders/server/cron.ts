@@ -2,7 +2,7 @@
 // CronDeps, so the whole run can be tested with an in-memory store.
 
 import { addDays } from "@/lib/logic/dates";
-import type { DropMessage } from "@/lib/logic/drops";
+import { withOwnLines, type DropMessage, type OwnLine } from "@/lib/logic/drops";
 import { dueNotifications, windowDates, type ReminderDay } from "@/lib/logic/reminders";
 import type { DateStr, Reminder, TimeStr } from "@/lib/types";
 import type { PushTarget, Sender } from "./push";
@@ -15,6 +15,8 @@ export interface CronData {
   days: ReminderDay[];
   /** Philosophy drops from the settings. Off when the setting is off or its column is missing. */
   drops: { enabled: boolean; perDay: number };
+  /** His own lines. When he has any, the drop at wake is one of them. Leave out for none. */
+  ownLines?: OwnLine[];
 }
 
 /** How the job chooses and words a philosophy drop. */
@@ -59,13 +61,14 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   const dates = windowDates(lastRun, now);
   const [data, already, subs] = await Promise.all([deps.loadData(dates), deps.sentKeys(dates), deps.listSubscriptions()]);
 
+  const ownLines = data.ownLines ?? [];
   const due = dueNotifications({
     reminders: data.reminders,
     days: data.days,
     floor: data.floor,
     quiet_start: data.quiet_start,
     quiet_end: data.quiet_end,
-    drops: deps.drops && data.drops.enabled ? { perDay: data.drops.perDay, pick: (date, slot) => deps.drops?.pick(date, slot, data.drops.perDay) ?? null } : null,
+    drops: deps.drops && data.drops.enabled ? { perDay: data.drops.perDay, pick: withOwnLines((date, slot) => deps.drops?.pick(date, slot, data.drops.perDay) ?? null, ownLines) } : null,
     sent: already,
     lastRun,
     now,
@@ -89,7 +92,9 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       // Claim before sending. If two runs overlap, only one gets the row.
       if (!(await deps.claim(n.date, n.key))) continue;
       let payload = { title: n.title, body: n.body, url: n.url };
-      if (n.drop && deps.drops) {
+      // His own line at wake is final: there is no read state to skip.
+      const own = n.drop?.slot === 0 && ownLines.some((l) => l.body.trim().length > 0);
+      if (n.drop && deps.drops && !own) {
         // The plan chose from the date alone. Now that it is going out, skip what has been read since.
         const final = await deps.drops.resolve(n.date, n.drop.slot, n.drop.perDay).catch(() => null);
         if (final) payload = final;

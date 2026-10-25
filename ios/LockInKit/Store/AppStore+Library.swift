@@ -220,18 +220,29 @@ extension AppStore {
     /// How many days of morning quotes the widget snapshot carries: today and the next two.
     static let widgetQuoteDays = 3
 
-    /// The morning drop's quote (slot 0) for today and the next days, for the quote widgets. A day that already has a
-    /// quote in the last snapshot keeps it, so reading the quote in the Library does not swap it for another one.
+    /// The morning drop's quote (slot 0) for today and the next days, for the quote widgets. When he has lines of his
+    /// own the quote is one of them, picked by date like the drop. Otherwise a day that already has a library quote
+    /// in the last snapshot keeps it, so reading the quote in the Library does not swap it for another one.
     func widgetQuotes() -> [WidgetQuote] {
-        guard let pool = try? LibraryCatalog.shared.shortPool() else { return [] }
         let t = LIDate.todayNY()
+        if !AppStore.ownLines.isEmpty {
+            var mine: [WidgetQuote] = []
+            for offset in 0..<AppStore.widgetQuoteDays {
+                let date = LIDate.addDays(t, offset)
+                guard let line = Drops.pickOwnLine(AppStore.ownLines, date: date) else { continue }
+                let m = Drops.ownLineMessage(line)
+                mine.append(WidgetQuote(date: date, id: m.quoteId, writer: m.title, text: m.body, url: m.url))
+            }
+            if !mine.isEmpty { return mine }
+        }
+        guard let pool = try? LibraryCatalog.shared.shortPool() else { return [] }
         let per = Drops.dropsPerDay(settings?.dropsPerDay)
         let read = AppStore.readCache?.ids ?? []
         let kept = WidgetSnapshot.load()?.quotes ?? []
         var out: [WidgetQuote] = []
         for offset in 0..<AppStore.widgetQuoteDays {
             let date = LIDate.addDays(t, offset)
-            if let have = kept.first(where: { $0.date == date }) {
+            if let have = kept.first(where: { $0.date == date && !$0.id.hasPrefix(Drops.ownLineIdPrefix) }) {
                 out.append(have)
                 continue
             }
@@ -243,6 +254,8 @@ extension AppStore {
     }
 
     private func rescheduleDropsOnce() async {
+        // His own lines first: the drop at wake and the widget read them, drops on or not.
+        await syncOwnLines()
         let center = UNUserNotificationCenter.current()
         let pendingRequests = await center.pendingNotificationRequests()
         let budget = NotificationScheduler.dropBudget(pendingIds: pendingRequests.map { $0.identifier })
@@ -282,7 +295,8 @@ extension AppStore {
             blocksFor: { date in date == t ? todays : (date == tomorrowDate ? tomorrows : []) },
             isRead: { read.contains($0) },
             days: NotificationScheduler.dropHorizonDays,
-            cap: budget
+            cap: budget,
+            ownLines: AppStore.ownLines
         )
         if !mine.isEmpty { center.removePendingNotificationRequests(withIdentifiers: mine) }
 
