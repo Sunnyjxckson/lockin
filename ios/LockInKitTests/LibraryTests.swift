@@ -148,7 +148,14 @@ final class LibraryTests: XCTestCase {
 
     func testDropTimesSitInsideTheDay() {
         let times = Drops.dropSlotTimes(3, wake: "07:00", bed: "22:00", quietStart: "22:00", quietEnd: "07:00")
-        XCTAssertEqual(times, ["10:45", "14:30", "18:15"])
+        XCTAssertEqual(times, ["07:00", "12:00", "17:00"])
+    }
+
+    func testFirstDropIsAtWakeAndWakeInsideQuietHoursMovesToQuietEnd() {
+        XCTAssertEqual(Drops.dropSlotTimes(3, wake: "05:45", bed: "23:00", quietStart: "23:00", quietEnd: "05:30"), ["05:45", "11:30", "17:15"])
+        XCTAssertEqual(Drops.dropSlotTimes(1, wake: "06:00", bed: "22:00", quietStart: "23:00", quietEnd: "05:30"), ["06:00"])
+        XCTAssertEqual(Drops.dropSlotTimes(3, wake: "23:30", bed: "23:45", quietStart: "23:00", quietEnd: "05:30"), ["05:30", "11:20", "17:10"])
+        XCTAssertEqual(Drops.dropSlotTimes(2, wake: "04:00", bed: "22:00", quietStart: "23:00", quietEnd: "05:30").first, "05:30")
     }
 
     func testTrimForNotification() {

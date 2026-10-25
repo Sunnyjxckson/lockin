@@ -11,6 +11,7 @@ struct LockInWidgetBundle: WidgetBundle {
     var body: some Widget {
         TodayWidget()
         LockScreenWidget()
+        QuoteWidget()
         LockInLiveActivity()
     }
 }

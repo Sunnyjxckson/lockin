@@ -62,6 +62,10 @@ targets:
           - remote-notification
         NSSupportsLiveActivities: true
         NSSupportsLiveActivitiesFrequentUpdates: false
+        CFBundleURLTypes:
+          - CFBundleURLName: com.sunnyjackson.lockin
+            CFBundleURLSchemes:
+              - lockin
         NSCameraUsageDescription: Lock In uses the camera for meal and progress photos.
         NSPhotoLibraryUsageDescription: Lock In reads photos you pick for meals, boards and progress.
         NSPhotoLibraryAddUsageDescription: Lock In saves photos you take to your library.

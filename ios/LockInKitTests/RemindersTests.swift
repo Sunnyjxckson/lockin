@@ -29,6 +29,20 @@ final class RemindersTests: XCTestCase {
         XCTAssertEqual(plan.map { $0.kind }, [.wake, .workout, .delivery, .delivery, .earningsNudge, .checkin])
     }
 
+    func testWakeReminderFoldsIntoTheMorningDrop() {
+        let wakeBlock = ReminderBlock(id: "template:w", blockName: "Wake", start: "05:45", templateId: "w", kind: "wake")
+        let bedBlock = ReminderBlock(id: "template:b", blockName: "Bed", start: "23:00", templateId: "b", kind: "bed")
+        let d = ReminderDay(date: D, blocks: [wakeBlock, bedBlock])
+        let withDrops = ReminderPlanOptions(floor: 100, quietStart: "23:00", quietEnd: "05:30", dropsPerDay: 3)
+        // The morning drop lands at 05:45, so the wake reminder there is left out.
+        XCTAssertEqual(Reminders.planDay([wake, workout], d, withDrops).map { $0.kind }, [.workout])
+        // Drops off: the wake reminder stays.
+        XCTAssertEqual(Reminders.planDay([wake, workout], d, opts).map { $0.kind }, [.wake, .workout])
+        // A wake reminder at another minute stays.
+        let early = rem("r-early", .wake, time: "05:40")
+        XCTAssertEqual(Reminders.planDay([early], d, withDrops).map { $0.kind }, [.wake])
+    }
+
     func testBlockRelativeReminderFollowsTheBlockName() {
         let plan = Reminders.planDay([delivery], day(), opts)
         XCTAssertEqual(plan.map { $0.title }, ["Delivery: lunch", "Delivery: dinner"])

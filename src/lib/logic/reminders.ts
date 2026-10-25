@@ -168,7 +168,7 @@ export function planDay(
     push(r, r.id, r.time, r.label, r.body ?? "");
   }
 
-  // Philosophy drops: spread between wake and bedtime, outside quiet hours.
+  // Philosophy drops: the first at wake, the rest spread to bedtime, outside quiet hours.
   if (opts.drops) {
     const { wake, bed } = dropWindow(day.blocks, opts.quiet_start, opts.quiet_end);
     const perDay = dropsPerDay(opts.drops.perDay);
@@ -190,7 +190,13 @@ export function planDay(
     });
   }
 
-  return out.sort((a, b) => a.at - b.at || a.key.localeCompare(b.key));
+  // The morning drop is the first thing he sees. A wake reminder at the same
+  // minute would be a second notification at once, so the drop takes its place
+  // for that day.
+  const morning = out.find((n) => n.kind === "drop" && n.drop?.slot === 0);
+  const folded = morning ? out.filter((n) => !(n.kind === "wake" && n.at === morning.at)) : out;
+
+  return folded.sort((a, b) => a.at - b.at || a.key.localeCompare(b.key));
 }
 
 export interface DueInput extends PlanOptions {

@@ -167,6 +167,7 @@ final class SystemCoordinator {
         if !SystemPrefs.reminders || !NotificationScheduler.isAllowed(notificationStatus) {
             await NotificationScheduler.clearReminders()
             // The drops take what the reminders leave, which is now everything.
+            AppStore.tomorrowDropBlocks = tomorrowDate == LIDate.addDays(s.today, 1) ? (date: tomorrowDate, blocks: tomorrowBlocks) : nil
             await s.rescheduleDrops()
             return
         }
@@ -190,9 +191,11 @@ final class SystemCoordinator {
                 quietStart: s.settings?.quietStart ?? "22:00",
                 quietEnd: s.settings?.quietEnd ?? "07:00",
                 restToday: s.mainWorkout?.kind == .rest,
+                dropsPerDay: s.settings?.dropsEnabled == true ? Drops.dropsPerDay(s.settings?.dropsPerDay) : nil,
                 now: Date()
             )
             await NotificationScheduler.apply(plan)
+            AppStore.tomorrowDropBlocks = tomorrowDate == LIDate.addDays(s.today, 1) ? (date: tomorrowDate, blocks: tomorrowBlocks) : nil
             // Reminders first, then the quote drops fill the budget that is left.
             await s.rescheduleDrops()
         } while rescheduleAgain

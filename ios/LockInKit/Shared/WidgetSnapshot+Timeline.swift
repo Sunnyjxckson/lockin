@@ -13,6 +13,12 @@ extension WidgetSnapshot {
         return !date.isEmpty && date == LIDate.todayNY(at)
     }
 
+    /// The morning quote for the New York day of `at`, or nil when the snapshot has none for that day.
+    public func quote(at: Date) -> WidgetQuote? {
+        let today = LIDate.todayNY(at)
+        return quotes?.first { $0.date == today }
+    }
+
     /// The block the clock is inside and the next one to start, at `at`. Works from the whole day when the snapshot has it.
     /// A snapshot from another day has no blocks to offer.
     public func nowNext(at: Date) -> (now: WidgetBlock?, next: WidgetBlock?) {

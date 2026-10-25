@@ -67,6 +67,30 @@ final class WidgetSnapshotTests: XCTestCase {
         let old = Data("{\"date\":\"2026-10-06\",\"percent\":10,\"done\":1,\"total\":3,\"items\":[],\"moneyToday\":0,\"moneyFloor\":0,\"moneyTotal\":0,\"streak\":0,\"updatedAt\":\"\"}".utf8)
         let read = try JSONDecoder().decode(WidgetSnapshot.self, from: old)
         XCTAssertNil(read.blocks)
+        XCTAssertNil(read.quotes)
         XCTAssertEqual(read.percent, 10)
+    }
+
+    func testFindsTheMorningQuoteForTheDayOfTheEntry() throws {
+        let today = WidgetQuote(date: "2026-10-06", id: "seneca-a", writer: "Seneca", text: "Begin at once.", url: "/library/read?w=seneca&q=seneca-a")
+        let tomorrow = WidgetQuote(date: "2026-10-07", id: "epictetus-b", writer: "Epictetus", text: "First say to yourself what you would be.", url: "/library/read?w=epictetus&q=epictetus-b")
+        var s = snap()
+        s.quotes = [today, tomorrow]
+        XCTAssertEqual(s.quote(at: afternoon), today)
+        // After midnight New York the next day's quote is the one, with no new snapshot.
+        XCTAssertEqual(s.quote(at: iso("2026-10-07T04:30:00.000Z")), tomorrow)
+        // A day the snapshot has no quote for shows none.
+        XCTAssertNil(s.quote(at: iso("2026-10-09T16:00:00.000Z")))
+        XCTAssertNil(snap().quote(at: afternoon))
+        let decoded = try JSONDecoder().decode(WidgetSnapshot.self, from: JSONEncoder().encode(s))
+        XCTAssertEqual(decoded.quotes, [today, tomorrow])
+    }
+
+    func testTheQuoteLinkOpensTheAppAtTheReaderPath() {
+        let q = WidgetQuote(date: "2026-10-06", id: "seneca-a", writer: "Seneca", text: "Begin at once.", url: "/library/read?w=seneca&q=seneca-a")
+        let link = q.deepLink
+        XCTAssertEqual(link?.scheme, "lockin")
+        XCTAssertEqual(link?.path, "/library/read")
+        XCTAssertEqual(link?.query, "w=seneca&q=seneca-a")
     }
 }

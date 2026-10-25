@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { DROP_BODY_MAX, dropCandidates, dropKey, dropMessage, dropSlotTimes, dropWindow, dropsPerDay, pickDrop, trimForNotification, type ShortPool } from "./drops";
 import { dueNotifications, planDay, type PlanOptions } from "./reminders";
 import { nyInstant } from "./dates";
+import type { Reminder } from "../types";
 
 const POOL: ShortPool = {
   names: { seneca: "Seneca", epictetus: "Epictetus" },
@@ -24,16 +25,20 @@ describe("how many drops", () => {
 });
 
 describe("when the drops land", () => {
-  it("spreads them evenly from wake to bed, off the ends, on five minute marks", () => {
-    expect(dropSlotTimes(3, "05:45", "23:00", "23:00", "05:30")).toEqual(["10:05", "14:25", "18:40"]);
-    expect(dropSlotTimes(1, "06:00", "22:00", "23:00", "05:30")).toEqual(["14:00"]);
+  it("puts the first at wake and spreads the rest evenly to bed, on five minute marks", () => {
+    expect(dropSlotTimes(3, "05:45", "23:00", "23:00", "05:30")).toEqual(["05:45", "11:30", "17:15"]);
+    expect(dropSlotTimes(1, "06:00", "22:00", "23:00", "05:30")).toEqual(["06:00"]);
     for (const t of dropSlotTimes(6, "05:45", "23:00", "23:00", "05:30")) expect(t >= "05:45" && t < "23:00").toBe(true);
   });
 
   it("never lands in quiet hours, even with a late bedtime or an early wake", () => {
     for (const t of dropSlotTimes(6, "04:00", "23:59", "23:00", "05:30")) expect(t >= "05:30" && t < "23:00", t).toBe(true);
     // A wake and bed that are both in quiet hours fall back to the whole waking day.
-    expect(dropSlotTimes(3, "23:30", "23:45", "23:00", "05:30")).toEqual(["09:55", "14:15", "18:40"]);
+    expect(dropSlotTimes(3, "23:30", "23:45", "23:00", "05:30")).toEqual(["05:30", "11:20", "17:10"]);
+  });
+
+  it("puts the morning drop at the end of quiet hours when wake is inside them", () => {
+    expect(dropSlotTimes(2, "04:00", "22:00", "23:00", "05:30")[0]).toBe("05:30");
   });
 
   it("takes wake and bed from the day's blocks, else the ends of quiet hours", () => {
@@ -107,12 +112,21 @@ describe("drops in the day's plan", () => {
   it("adds one notification per slot, keyed by date and slot, that opens the quote", () => {
     const plan = planDay([], day, opts(3));
     expect(plan.map((n) => [n.key, n.time, n.kind])).toEqual([
-      [dropKey("2026-10-12", 0), "10:05", "drop"],
-      [dropKey("2026-10-12", 1), "14:25", "drop"],
-      [dropKey("2026-10-12", 2), "18:40", "drop"],
+      [dropKey("2026-10-12", 0), "05:45", "drop"],
+      [dropKey("2026-10-12", 1), "11:30", "drop"],
+      [dropKey("2026-10-12", 2), "17:15", "drop"],
     ]);
     expect(plan[0].url).toMatch(/^\/library\/read\?w=(seneca|epictetus)&q=/);
     expect(plan[0].drop).toEqual({ slot: 0, perDay: 3 });
+  });
+
+  it("folds a wake reminder at the same minute into the morning drop", () => {
+    const wake = { id: "r-wake", kind: "wake", label: "Wake", body: null, time: "05:45", block_name: null, offset_minutes: 0, enabled: true } as unknown as Reminder;
+    const early = { ...wake, id: "r-early", time: "05:40" } as Reminder;
+    const same = planDay([wake], day, opts(3));
+    expect(same.map((n) => n.kind)).toEqual(["drop", "drop", "drop"]);
+    // A wake reminder at another minute stays.
+    expect(planDay([early], day, opts(3)).map((n) => n.kind)).toEqual(["wake", "drop", "drop", "drop"]);
   });
 
   it("adds nothing when drops are off", () => {
@@ -121,7 +135,7 @@ describe("drops in the day's plan", () => {
   });
 
   it("is due once, and not again after it is sent", () => {
-    const input = { ...opts(3), reminders: [], days: [day], sent: [] as string[], lastRun: nyInstant("2026-10-12", "10:00"), now: nyInstant("2026-10-12", "10:05") };
+    const input = { ...opts(3), reminders: [], days: [day], sent: [] as string[], lastRun: nyInstant("2026-10-12", "05:30"), now: nyInstant("2026-10-12", "05:45") };
     const due = dueNotifications(input);
     expect(due.map((n) => n.key)).toEqual([dropKey("2026-10-12", 0)]);
     expect(dueNotifications({ ...input, sent: [due[0].key] })).toEqual([]);

@@ -48,9 +48,10 @@ export function dropsPerDay(value: unknown): number {
 const STEP = 5;
 
 /**
- * The times of a day's drops: `perDay` of them spread evenly between wake and
- * bedtime, none inside quiet hours. The first and the last sit a whole gap in
- * from the ends, not on them.
+ * The times of a day's drops: `perDay` of them, none inside quiet hours. The
+ * first is the morning drop and lands exactly at wake (at the end of quiet
+ * hours when wake falls inside them). The rest spread evenly after it, up to
+ * bedtime, so the last sits a whole gap before bed, not on it.
  */
 export function dropSlotTimes(perDay: number, wake: TimeStr, bed: TimeStr, quietStart: TimeStr, quietEnd: TimeStr): TimeStr[] {
   let lo = minutesOf(wake);
@@ -61,8 +62,8 @@ export function dropSlotTimes(perDay: number, wake: TimeStr, bed: TimeStr, quiet
   if (hi <= lo) return [];
   const n = dropsPerDay(perDay);
   const out: TimeStr[] = [];
-  for (let i = 1; i <= n; i++) {
-    const at = Math.round((lo + ((hi - lo) * i) / (n + 1)) / STEP) * STEP;
+  for (let i = 0; i < n; i++) {
+    const at = i === 0 ? lo : Math.round((lo + ((hi - lo) * i) / n) / STEP) * STEP;
     const time = timeFromMinutes(Math.min(24 * 60 - 1, at));
     if (!isQuiet(time, quietStart, quietEnd)) out.push(time);
   }

@@ -453,7 +453,8 @@ public final class AppStore {
             updatedAt: LIDate.nowIso(),
             blocks: blocks.map { WidgetBlock(name: $0.blockName, start: $0.start, end: $0.end, kind: $0.kind.rawValue) },
             themeBase: (themeRow?.base ?? .dark).rawValue,
-            themePalette: themeRow?.palette
+            themePalette: themeRow?.palette,
+            quotes: widgetQuotes()
         )
     }
 

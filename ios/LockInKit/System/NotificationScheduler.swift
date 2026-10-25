@@ -49,13 +49,13 @@ public enum NotificationScheduler {
     // MARK: planning (pure)
 
     /// What to schedule for today and tomorrow, soonest first. The earnings nudge is left out once today's floor is met.
-    public static func plan(reminders: [Reminder], blocksByDate: [DateStr: [DayBlock]], today: DateStr, earned: Double, floor: Double, quietStart: TimeStr, quietEnd: TimeStr, restToday: Bool, now: Date) -> [PlannedNotification] {
+    public static func plan(reminders: [Reminder], blocksByDate: [DateStr: [DayBlock]], today: DateStr, earned: Double, floor: Double, quietStart: TimeStr, quietEnd: TimeStr, restToday: Bool, dropsPerDay: Int? = nil, now: Date) -> [PlannedNotification] {
         var rems = reminders
         let hasNudge = rems.contains { $0.enabled && $0.kind == .earningsNudge && $0.time != nil }
         if !hasNudge && floor > 0 {
             rems.append(Reminder(id: "local-nudge", kind: .earningsNudge, label: "Earnings nudge", body: nil, time: nudgeTime))
         }
-        let opts = ReminderPlanOptions(floor: floor, quietStart: quietStart, quietEnd: quietEnd)
+        let opts = ReminderPlanOptions(floor: floor, quietStart: quietStart, quietEnd: quietEnd, dropsPerDay: dropsPerDay)
         let tomorrow = LIDate.addDays(today, 1)
         var out: [PlannedNotification] = []
         for date in [today, tomorrow] {

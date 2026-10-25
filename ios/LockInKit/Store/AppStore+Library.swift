@@ -212,7 +212,35 @@ extension AppStore {
 
     private static var dropsRunning = false
     private static var dropsAgain = false
+    /// Tomorrow's blocks when the app has them, so tomorrow's morning drop lands at tomorrow's wake block and the
+    /// reminder planner folds against the same time. Set by the coordinator before it replans.
+    public static var tomorrowDropBlocks: (date: DateStr, blocks: [DayBlock])? = nil
     private static var readCache: (at: Date, ids: Set<String>)? = nil
+
+    /// How many days of morning quotes the widget snapshot carries: today and the next two.
+    static let widgetQuoteDays = 3
+
+    /// The morning drop's quote (slot 0) for today and the next days, for the quote widgets. A day that already has a
+    /// quote in the last snapshot keeps it, so reading the quote in the Library does not swap it for another one.
+    func widgetQuotes() -> [WidgetQuote] {
+        guard let pool = try? LibraryCatalog.shared.shortPool() else { return [] }
+        let t = LIDate.todayNY()
+        let per = Drops.dropsPerDay(settings?.dropsPerDay)
+        let read = AppStore.readCache?.ids ?? []
+        let kept = WidgetSnapshot.load()?.quotes ?? []
+        var out: [WidgetQuote] = []
+        for offset in 0..<AppStore.widgetQuoteDays {
+            let date = LIDate.addDays(t, offset)
+            if let have = kept.first(where: { $0.date == date }) {
+                out.append(have)
+                continue
+            }
+            guard let q = Drops.pickDrop(pool, date: date, slot: 0, perDay: per, isRead: { read.contains($0) }) else { continue }
+            let m = Drops.dropMessage(pool, q)
+            out.append(WidgetQuote(date: date, id: m.quoteId, writer: m.title, text: m.body, url: m.url))
+        }
+        return out
+    }
 
     private func rescheduleDropsOnce() async {
         let center = UNUserNotificationCenter.current()
@@ -238,6 +266,12 @@ extension AppStore {
         }
         let t = LIDate.todayNY()
         let todays = blocks.map { WindowBlock(kind: $0.kind.rawValue, start: $0.start) }
+        var tomorrowDate = ""
+        var tomorrows: [WindowBlock] = []
+        if let tb = AppStore.tomorrowDropBlocks, tb.date == LIDate.addDays(t, 1) {
+            tomorrowDate = tb.date
+            tomorrows = tb.blocks.map { WindowBlock(kind: $0.kind.rawValue, start: $0.start) }
+        }
         let plan = Drops.plan(
             pool: pool,
             perDay: s.dropsPerDay,
@@ -245,7 +279,7 @@ extension AppStore {
             time: LIDate.timeNY(),
             quietStart: s.quietStart,
             quietEnd: s.quietEnd,
-            blocksFor: { date in date == t ? todays : [] },
+            blocksFor: { date in date == t ? todays : (date == tomorrowDate ? tomorrows : []) },
             isRead: { read.contains($0) },
             days: NotificationScheduler.dropHorizonDays,
             cap: budget

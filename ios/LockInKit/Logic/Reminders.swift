@@ -3,7 +3,8 @@ import Foundation
 // Port of the planning half of src/lib/logic/reminders.ts. planDay turns the stored reminders plus one
 // day's blocks into the list of notifications that day could send. The phone schedules them as local
 // notifications, so a reminder means the same thing here as on the server.
-// Philosophy drops (drops.ts) are not part of this port.
+// Philosophy drops (drops.ts) are not part of this port, except that planDay knows when the morning drop lands so a
+// wake reminder at the same minute is folded into it.
 
 /// The part of a schedule block the rules need.
 public struct ReminderBlock: Equatable {
@@ -11,16 +12,19 @@ public struct ReminderBlock: Equatable {
     public var blockName: String
     public var start: TimeStr
     public var templateId: String?
+    /// The block kind's raw value ("wake", "bed", ...). Empty when unknown. Only the drop window reads it.
+    public var kind: String
 
-    public init(id: String, blockName: String, start: TimeStr, templateId: String? = nil) {
+    public init(id: String, blockName: String, start: TimeStr, templateId: String? = nil, kind: String = "") {
         self.id = id
         self.blockName = blockName
         self.start = start
         self.templateId = templateId
+        self.kind = kind
     }
 
     public init(_ b: DayBlock) {
-        self.init(id: b.id, blockName: b.blockName, start: b.start, templateId: b.templateId)
+        self.init(id: b.id, blockName: b.blockName, start: b.start, templateId: b.templateId, kind: b.kind.rawValue)
     }
 }
 
@@ -59,11 +63,14 @@ public struct ReminderPlanOptions: Equatable {
     public var floor: Double
     public var quietStart: TimeStr
     public var quietEnd: TimeStr
+    /// Drops per day when philosophy drops are on, nil when off. Lets planDay fold a wake reminder into the morning drop.
+    public var dropsPerDay: Int?
 
-    public init(floor: Double, quietStart: TimeStr, quietEnd: TimeStr) {
+    public init(floor: Double, quietStart: TimeStr, quietEnd: TimeStr, dropsPerDay: Int? = nil) {
         self.floor = floor
         self.quietStart = quietStart
         self.quietEnd = quietEnd
+        self.dropsPerDay = dropsPerDay
     }
 }
 
@@ -165,7 +172,18 @@ public enum Reminders {
             push(r, r.id, time, r.label, r.body ?? "")
         }
 
-        return out.sorted { a, b in
+        // The morning drop is the first thing he sees. A wake reminder at the same minute would be a second
+        // notification at once, so the drop takes its place for that day.
+        var folded = out
+        if let per = opts.dropsPerDay {
+            let window = Drops.dropWindow(day.blocks.map { WindowBlock(kind: $0.kind, start: $0.start) }, quietStart: opts.quietStart, quietEnd: opts.quietEnd)
+            let times = Drops.dropSlotTimes(per, wake: window.wake, bed: window.bed, quietStart: opts.quietStart, quietEnd: opts.quietEnd)
+            if let morning = times.first {
+                folded = out.filter { !($0.kind == .wake && $0.time == morning) }
+            }
+        }
+
+        return folded.sorted { a, b in
             if a.at != b.at { return a.at < b.at }
             return a.key < b.key
         }

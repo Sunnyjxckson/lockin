@@ -101,7 +101,9 @@ public enum Drops {
 
     // MARK: when
 
-    /// The times of a day's drops: `perDay` of them spread evenly between wake and bedtime, none inside quiet hours.
+    /// The times of a day's drops: `perDay` of them, none inside quiet hours. The first is the morning drop and lands
+    /// exactly at wake (at the end of quiet hours when wake falls inside them). The rest spread evenly after it, up to
+    /// bedtime, so the last sits a whole gap before bed, not on it.
     public static func dropSlotTimes(_ perDay: Int, wake: TimeStr, bed: TimeStr, quietStart: TimeStr, quietEnd: TimeStr) -> [TimeStr] {
         var lo = LIDate.minutesOf(wake)
         var hi = LIDate.minutesOf(bed)
@@ -111,9 +113,9 @@ public enum Drops {
         if hi <= lo { return [] }
         let n = dropsPerDay(perDay)
         var out: [TimeStr] = []
-        for i in 1...n {
-            let raw = Double(lo) + (Double(hi - lo) * Double(i)) / Double(n + 1)
-            let at = Int((raw / Double(step)).rounded()) * step
+        for i in 0..<n {
+            let raw = Double(lo) + (Double(hi - lo) * Double(i)) / Double(n)
+            let at = i == 0 ? lo : Int((raw / Double(step)).rounded()) * step
             let time = LIDate.timeFromMinutes(min(24 * 60 - 1, at))
             if !LIDate.isQuiet(time, quietStart: quietStart, quietEnd: quietEnd) { out.append(time) }
         }

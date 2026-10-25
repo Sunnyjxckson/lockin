@@ -30,6 +30,31 @@ public struct WidgetBlock: Codable, Equatable {
     }
 }
 
+/// The morning quote for one New York date, as the quote widgets draw it. The app writes today's and the next days'.
+public struct WidgetQuote: Codable, Equatable {
+    /// New York calendar date this is the morning quote for.
+    public var date: String
+    public var id: String
+    /// The writer's display name.
+    public var writer: String
+    public var text: String
+    /// App path that opens the quote in the Library reader, as in a drop notification.
+    public var url: String
+
+    public init(date: String, id: String, writer: String, text: String, url: String) {
+        self.date = date
+        self.id = id
+        self.writer = writer
+        self.text = text
+        self.url = url
+    }
+
+    /// The URL a widget tap opens: the app's own scheme in front of the reader path.
+    public var deepLink: URL? {
+        return URL(string: "lockin://app" + url)
+    }
+}
+
 /// Everything the widgets and Live Activities draw from. The app writes it to the app group, the extensions read it.
 public struct WidgetSnapshot: Codable, Equatable {
     /// New York calendar date this snapshot is for.
@@ -57,8 +82,10 @@ public struct WidgetSnapshot: Codable, Equatable {
     /// The look the app is wearing: "dark" or "contrast", and the palette laid over it. Nil in older snapshots.
     public var themeBase: String?
     public var themePalette: ThemePalette?
+    /// The morning quote for today and the next days, so the quote widgets can move to the next day without the app running. Nil in older snapshots.
+    public var quotes: [WidgetQuote]?
 
-    public init(date: String = "", dayNumber: Int? = nil, dayLength: Int? = nil, percent: Int = 0, done: Int = 0, total: Int = 0, items: [WidgetItem] = [], now: WidgetBlock? = nil, next: WidgetBlock? = nil, moneyToday: Double = 0, moneyFloor: Double = 0, moneyTotal: Double = 0, moneyTarget: Double? = nil, streak: Int = 0, updatedAt: String = "", blocks: [WidgetBlock]? = nil, themeBase: String? = nil, themePalette: ThemePalette? = nil) {
+    public init(date: String = "", dayNumber: Int? = nil, dayLength: Int? = nil, percent: Int = 0, done: Int = 0, total: Int = 0, items: [WidgetItem] = [], now: WidgetBlock? = nil, next: WidgetBlock? = nil, moneyToday: Double = 0, moneyFloor: Double = 0, moneyTotal: Double = 0, moneyTarget: Double? = nil, streak: Int = 0, updatedAt: String = "", blocks: [WidgetBlock]? = nil, themeBase: String? = nil, themePalette: ThemePalette? = nil, quotes: [WidgetQuote]? = nil) {
         self.date = date
         self.dayNumber = dayNumber
         self.dayLength = dayLength
@@ -77,6 +104,7 @@ public struct WidgetSnapshot: Codable, Equatable {
         self.blocks = blocks
         self.themeBase = themeBase
         self.themePalette = themePalette
+        self.quotes = quotes
     }
 
     public static let empty = WidgetSnapshot()
